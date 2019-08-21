@@ -3,6 +3,7 @@ package me.jingbin.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,16 @@ public class JRecyclerView extends RecyclerView {
 //            mWrapAdapter.notifyDataSetChanged();
 //        }
     }
+
+    public void clearHeader() {
+        mHeaderViews.clear();
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        View view = new View(getContext());
+        view.setLayoutParams(params);
+        sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
+        mHeaderViews.add(view);
+    }
+
 
     //根据header的ViewType判断是哪个header
     private View getHeaderViewByType(int itemType) {
