@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_loading"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/iv_progress"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+             />
+        <!--android:indeterminateDrawable="@drawable/rotate_progress"-->
+
+        <TextView
+            android:id="@+id/msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/listview_loading"
+            android:textColor="#333333" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_no_more"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="1dp"
+            android:background="#CCCCCC" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:text="@string/no_more_loading"
+            android:textColor="#CCCCCC" />
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="1dp"
+            android:background="#CCCCCC" />
+    </LinearLayout>
+
+    <!--首页底部实现毛玻璃效果，为了显示加载更多，这里提高一个底部栏的高度-->
+    <View
+        android:id="@+id/view_home_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone" />
+</LinearLayout>
