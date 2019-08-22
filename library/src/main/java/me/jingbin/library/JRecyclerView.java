@@ -55,7 +55,7 @@ public class JRecyclerView extends RecyclerView {
     /**
      * 设置是否能 下拉刷新
      */
-    private boolean pullRefreshEnabled = true;
+    private boolean pullRefreshEnabled = false;
     /**
      * 设置是否能 加载更多
      */
@@ -87,9 +87,7 @@ public class JRecyclerView extends RecyclerView {
     }
 
     private void init() {
-        if (pullRefreshEnabled) {
-            mRefreshHeader = new YunRefreshHeader(getContext());
-        }
+        mRefreshHeader = new YunRefreshHeader(getContext());
         mFootView = new LoadingMoreFooter(getContext());
         mFootView.setVisibility(GONE);
     }
@@ -120,7 +118,7 @@ public class JRecyclerView extends RecyclerView {
     }
 
     /**
-     * 判断是否是XRecyclerView保留的itemViewType
+     * 判断是否是JRecyclerView保留的itemViewType
      */
     private boolean isReservedItemViewType(int itemViewType) {
         if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || sHeaderTypes.contains(itemViewType)) {
@@ -447,7 +445,7 @@ public class JRecyclerView extends RecyclerView {
             if (isHeader(position) || isRefreshHeader(position)) {
                 return;
             }
-            // 如果可以下拉刷新，就需要+1
+            // 如果可以下拉刷新，就需要 +1
             int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
             int adapterCount;
             if (adapter != null) {
@@ -462,20 +460,19 @@ public class JRecyclerView extends RecyclerView {
          * some times we need to override this
          */
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> objectList) {
             if (isHeader(position) || isRefreshHeader(position)) {
                 return;
             }
-            // 如果可以下拉刷新，就需要+1
-            int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
-            int adapterCount;
             if (adapter != null) {
-                adapterCount = adapter.getItemCount();
+                // 如果可以下拉刷新，就需要+1
+                int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
+                int adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
-                    if (payloads.isEmpty()) {
+                    if (objectList.isEmpty()) {
                         adapter.onBindViewHolder(holder, adjPosition);
                     } else {
-                        adapter.onBindViewHolder(holder, adjPosition, payloads);
+                        adapter.onBindViewHolder(holder, adjPosition, objectList);
                     }
                 }
             }
@@ -483,18 +480,10 @@ public class JRecyclerView extends RecyclerView {
 
         @Override
         public int getItemCount() {
-            if (loadingMoreEnabled) {
-                if (adapter != null) {
-                    return getHeadersCount() + adapter.getItemCount() + 1 + getPullHeaderSize();
-                } else {
-                    return getHeadersCount() + 1 + getPullHeaderSize();
-                }
+            if (adapter != null) {
+                return getPullHeaderSize() + getHeadersCount() + adapter.getItemCount() + getLoadingMoreSize();
             } else {
-                if (adapter != null) {
-                    return getHeadersCount() + adapter.getItemCount() + getPullHeaderSize();
-                } else {
-                    return getHeadersCount() + getPullHeaderSize();
-                }
+                return getPullHeaderSize() + getHeadersCount() + getLoadingMoreSize();
             }
         }
 
@@ -655,6 +644,17 @@ public class JRecyclerView extends RecyclerView {
      */
     private int getPullHeaderSize() {
         if (pullRefreshEnabled) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * 如果使用上拉刷新，则计算position时需要算上
+     */
+    private int getLoadingMoreSize() {
+        if (loadingMoreEnabled) {
             return 1;
         } else {
             return 0;
