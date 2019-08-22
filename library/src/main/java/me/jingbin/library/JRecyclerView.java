@@ -52,7 +52,13 @@ public class JRecyclerView extends RecyclerView {
      * 是否没有更多数据了
      */
     private boolean isNoMore = false;
+    /**
+     * 设置是否能 下拉刷新
+     */
     private boolean pullRefreshEnabled = true;
+    /**
+     * 设置是否能 加载更多
+     */
     private boolean loadingMoreEnabled = true;
     /**
      * 首页列表增加一个tabhost的高度
@@ -380,25 +386,25 @@ public class JRecyclerView extends RecyclerView {
 
         private RecyclerView.Adapter adapter;
 
-        public WrapAdapter(RecyclerView.Adapter adapter) {
+        WrapAdapter(RecyclerView.Adapter adapter) {
             this.adapter = adapter;
         }
 
-        public RecyclerView.Adapter getOriginalAdapter() {
+        RecyclerView.Adapter getOriginalAdapter() {
             return this.adapter;
         }
 
         /**
          * 是否是 HeaderView 布局
          */
-        public boolean isHeader(int position) {
-            return position >= 1 && position < mHeaderViews.size() + 1;
+        boolean isHeader(int position) {
+            return position >= getPullHeaderSize() && position < mHeaderViews.size() + getPullHeaderSize();
         }
 
         /**
          * 是否是 上拉加载 footer 布局
          */
-        public boolean isFooter(int position) {
+        boolean isFooter(int position) {
             if (loadingMoreEnabled) {
                 return position == getItemCount() - 1;
             } else {
@@ -409,14 +415,18 @@ public class JRecyclerView extends RecyclerView {
         /**
          * 是否是 头部刷新布局
          */
-        public boolean isRefreshHeader(int position) {
-            return position == 0;
+        boolean isRefreshHeader(int position) {
+            if (pullRefreshEnabled) {
+                return position == 0;
+            } else {
+                return false;
+            }
         }
 
         /**
          * 获取 HeaderView的个数
          */
-        public int getHeadersCount() {
+        int getHeadersCount() {
             return mHeaderViews.size();
         }
 
@@ -437,7 +447,8 @@ public class JRecyclerView extends RecyclerView {
             if (isHeader(position) || isRefreshHeader(position)) {
                 return;
             }
-            int adjPosition = position - (getHeadersCount() + 1);
+            // 如果可以下拉刷新，就需要+1
+            int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
             int adapterCount;
             if (adapter != null) {
                 adapterCount = adapter.getItemCount();
@@ -455,7 +466,8 @@ public class JRecyclerView extends RecyclerView {
             if (isHeader(position) || isRefreshHeader(position)) {
                 return;
             }
-            int adjPosition = position - (getHeadersCount() + 1);
+            // 如果可以下拉刷新，就需要+1
+            int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
             int adapterCount;
             if (adapter != null) {
                 adapterCount = adapter.getItemCount();
@@ -473,15 +485,15 @@ public class JRecyclerView extends RecyclerView {
         public int getItemCount() {
             if (loadingMoreEnabled) {
                 if (adapter != null) {
-                    return getHeadersCount() + adapter.getItemCount() + 2;
+                    return getHeadersCount() + adapter.getItemCount() + 1 + getPullHeaderSize();
                 } else {
-                    return getHeadersCount() + 2;
+                    return getHeadersCount() + 1 + getPullHeaderSize();
                 }
             } else {
                 if (adapter != null) {
-                    return getHeadersCount() + adapter.getItemCount() + 1;
+                    return getHeadersCount() + adapter.getItemCount() + getPullHeaderSize();
                 } else {
-                    return getHeadersCount() + 1;
+                    return getHeadersCount() + getPullHeaderSize();
                 }
             }
         }
@@ -495,7 +507,7 @@ public class JRecyclerView extends RecyclerView {
                 return TYPE_REFRESH_HEADER;
             }
             if (isHeader(position)) {
-                position = position - 1;
+                position = position - getPullHeaderSize();
                 return sHeaderTypes.get(position);
             }
             if (isFooter(position)) {
@@ -503,12 +515,12 @@ public class JRecyclerView extends RecyclerView {
             }
             int adapterCount;
             if (adapter != null) {
-                int adjPosition = position - (getHeadersCount() + 1);
+                int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
                 adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
                     int type = adapter.getItemViewType(adjPosition);
                     if (isReservedItemViewType(type)) {
-                        throw new IllegalStateException("JRecyclerView require itemViewType in adapter should be less than 10000 ");
+                        throw new IllegalStateException("JRecyclerView require itemViewType in adapter should be less than 10000 !");
                     }
                     return type;
                 }
@@ -518,8 +530,8 @@ public class JRecyclerView extends RecyclerView {
 
         @Override
         public long getItemId(int position) {
-            if (adapter != null && position >= getHeadersCount() + 1) {
-                int adjPosition = position - (getHeadersCount() + 1);
+            if (adapter != null && position >= getHeadersCount() + getPullHeaderSize()) {
+                int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
                 if (adjPosition < adapter.getItemCount()) {
                     return adapter.getItemId(adjPosition);
                 }
@@ -559,7 +571,6 @@ public class JRecyclerView extends RecyclerView {
                 StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
                 p.setFullSpan(true);
             }
-//            adapter.onViewAttachedToWindow(holder);
         }
 
         @Override
@@ -588,7 +599,7 @@ public class JRecyclerView extends RecyclerView {
         }
 
         private class SimpleViewHolder extends RecyclerView.ViewHolder {
-            public SimpleViewHolder(View itemView) {
+            SimpleViewHolder(View itemView) {
                 super(itemView);
             }
         }
@@ -635,6 +646,18 @@ public class JRecyclerView extends RecyclerView {
                     }
                 });
             }
+        }
+    }
+
+    /**
+     * 区别是否需要算上刷新布局
+     * 如果使用控件自带的下拉刷新，则计算position时需要算上
+     */
+    private int getPullHeaderSize() {
+        if (pullRefreshEnabled) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 }
