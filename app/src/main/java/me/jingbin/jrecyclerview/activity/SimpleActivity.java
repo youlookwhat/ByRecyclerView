@@ -26,7 +26,10 @@ public class SimpleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_simple);
 
         recyclerView = findViewById(R.id.recyclerView);
+        initAdapter();
+    }
 
+    private void initAdapter() {
         homeAdapter = new HomeAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);

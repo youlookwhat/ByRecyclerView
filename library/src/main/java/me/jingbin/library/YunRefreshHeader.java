@@ -12,14 +12,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
- *
  * @author jingbin
  * @date 2016/1/27
  */
 public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader {
 
     private Context mContext;
-    //    private AnimationDrawable animationDrawable;
     private TextView msg;
     private int mState = STATE_NORMAL;
     private int mMeasuredHeight;
@@ -41,12 +39,7 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
 
     private void initView() {
         LayoutInflater.from(mContext).inflate(R.layout.kaws_refresh_header, this);
-        ProgressBar img = (ProgressBar) findViewById(R.id.img);
 
-//        animationDrawable = (AnimationDrawable) img.getDrawable();
-//        if (animationDrawable.isRunning()) {
-//            animationDrawable.stop();
-//        }
         msg = (TextView) findViewById(R.id.msg);
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mMeasuredHeight = getMeasuredHeight();
@@ -72,21 +65,15 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
     }
 
     void setState(int state) {
-        if (state == mState) return;
+        if (state == mState) {
+            return;
+        }
         switch (state) {
             case STATE_NORMAL:
-//                if (animationDrawable.isRunning()) {
-//                    animationDrawable.stop();
-//                }
                 msg.setText(R.string.listview_header_hint_normal);
                 break;
             case STATE_RELEASE_TO_REFRESH:
-                if (mState != STATE_RELEASE_TO_REFRESH) {
-//                    if (!animationDrawable.isRunning()) {
-//                        animationDrawable.start();
-//                    }
-                    msg.setText(R.string.listview_header_hint_release);
-                }
+                msg.setText(R.string.listview_header_hint_release);
                 break;
             case STATE_REFRESHING:
                 msg.setText(R.string.refreshing);
@@ -108,8 +95,10 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
     public boolean releaseAction() {
         boolean isOnRefresh = false;
         int height = getVisiableHeight();
-        if (height == 0) // not visible.
+        if (height == 0) {
+            // not visible.
             isOnRefresh = false;
+        }
 
         if (getVisiableHeight() > mMeasuredHeight && mState < STATE_REFRESHING) {
             setState(STATE_REFRESHING);

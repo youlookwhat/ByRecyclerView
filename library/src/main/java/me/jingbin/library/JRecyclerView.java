@@ -38,6 +38,9 @@ public class JRecyclerView extends RecyclerView {
      * 每个header必须有不同的type,不然滚动的时候顺序会变化（不要随便加静态，改了一天！！！！！！！！！！）
      */
     private List<Integer> sHeaderTypes = new ArrayList<>();
+    /**
+     * HeaderView 数组
+     */
     private ArrayList<View> mHeaderViews = new ArrayList<>();
 
     private WrapAdapter mWrapAdapter;
@@ -51,7 +54,9 @@ public class JRecyclerView extends RecyclerView {
     private boolean isNoMore = false;
     private boolean pullRefreshEnabled = true;
     private boolean loadingMoreEnabled = true;
-    // 首页列表增加一个tabhost的高度
+    /**
+     * 首页列表增加一个tabhost的高度
+     */
     private boolean isFooterMoreHeight = false;
 
     private LoadingListener mLoadingListener;
@@ -306,7 +311,7 @@ public class JRecyclerView extends RecyclerView {
                 }
                 break;
             default:
-                mLastY = -1; // reset
+                mLastY = -1;
                 if (isOnTop() && pullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (mRefreshHeader.releaseAction()) {
                         if (mLoadingListener != null) {
@@ -383,10 +388,16 @@ public class JRecyclerView extends RecyclerView {
             return this.adapter;
         }
 
+        /**
+         * 是否是 HeaderView 布局
+         */
         public boolean isHeader(int position) {
             return position >= 1 && position < mHeaderViews.size() + 1;
         }
 
+        /**
+         * 是否是 上拉加载 footer 布局
+         */
         public boolean isFooter(int position) {
             if (loadingMoreEnabled) {
                 return position == getItemCount() - 1;
@@ -395,10 +406,16 @@ public class JRecyclerView extends RecyclerView {
             }
         }
 
+        /**
+         * 是否是 头部刷新布局
+         */
         public boolean isRefreshHeader(int position) {
             return position == 0;
         }
 
+        /**
+         * 获取 HeaderView的个数
+         */
         public int getHeadersCount() {
             return mHeaderViews.size();
         }
@@ -430,7 +447,9 @@ public class JRecyclerView extends RecyclerView {
             }
         }
 
-        // some times we need to override this
+        /**
+         * some times we need to override this
+         */
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
             if (isHeader(position) || isRefreshHeader(position)) {
@@ -467,9 +486,11 @@ public class JRecyclerView extends RecyclerView {
             }
         }
 
+        /**
+         * 获取 item 类型
+         */
         @Override
         public int getItemViewType(int position) {
-            int adjPosition = position - (getHeadersCount() + 1);
             if (isRefreshHeader(position)) {
                 return TYPE_REFRESH_HEADER;
             }
@@ -482,11 +503,12 @@ public class JRecyclerView extends RecyclerView {
             }
             int adapterCount;
             if (adapter != null) {
+                int adjPosition = position - (getHeadersCount() + 1);
                 adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
                     int type = adapter.getItemViewType(adjPosition);
                     if (isReservedItemViewType(type)) {
-                        throw new IllegalStateException("XRecyclerView require itemViewType in adapter should be less than 10000 ");
+                        throw new IllegalStateException("JRecyclerView require itemViewType in adapter should be less than 10000 ");
                     }
                     return type;
                 }
