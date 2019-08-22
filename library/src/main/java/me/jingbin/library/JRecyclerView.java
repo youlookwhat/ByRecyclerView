@@ -26,30 +26,41 @@ import java.util.List;
  */
 public class JRecyclerView extends RecyclerView {
 
-    private boolean isLoadingData = false;
-    private boolean isNoMore = false;
+    /**
+     * 下面的ItemViewType是保留值(ReservedItemViewType),如果用户的adapter与它们重复将会强制抛出异常。
+     * 不过为了简化,我们检测到重复时对用户的提示是ItemViewType必须小于10000
+     * 设置一个很大的数字,尽可能避免和用户的adapter冲突
+     */
+    private static final int TYPE_REFRESH_HEADER = 10000;
+    private static final int TYPE_FOOTER = 10001;
+    private static final int HEADER_INIT_INDEX = 10002;
+    /**
+     * 每个header必须有不同的type,不然滚动的时候顺序会变化（不要随便加静态，改了一天！！！！！！！！！！）
+     */
+    private List<Integer> sHeaderTypes = new ArrayList<>();
     private ArrayList<View> mHeaderViews = new ArrayList<>();
+
     private WrapAdapter mWrapAdapter;
-    private float mLastY = -1;
-    private static final float DRAG_RATE = 3;
-    private LoadingListener mLoadingListener;
-    private YunRefreshHeader mRefreshHeader;
+    /**
+     * 是否正在加载更多
+     */
+    private boolean isLoadingData = false;
+    /**
+     * 是否没有更多数据了
+     */
+    private boolean isNoMore = false;
     private boolean pullRefreshEnabled = true;
     private boolean loadingMoreEnabled = true;
     // 首页列表增加一个tabhost的高度
     private boolean isFooterMoreHeight = false;
-    //下面的ItemViewType是保留值(ReservedItemViewType),如果用户的adapter与它们重复将会强制抛出异常。不过为了简化,我们检测到重复时对用户的提示是ItemViewType必须小于10000
-    private static final int TYPE_REFRESH_HEADER = 10000;//设置一个很大的数字,尽可能避免和用户的adapter冲突
-    private static final int TYPE_FOOTER = 10001;
-    private static final int HEADER_INIT_INDEX = 10002;
-    //每个header必须有不同的type,不然滚动的时候顺序会变化（不要随便加静态，改了一天！！！！！！！！！！）
-    private List<Integer> sHeaderTypes = new ArrayList<>();
-    private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
-    private int mPageCount = 0;
-    //adapter没有数据的时候显示,类似于listView的emptyView
-//    private View mEmptyView;
+
+    private LoadingListener mLoadingListener;
+    private YunRefreshHeader mRefreshHeader;
     private View mFootView;
+    private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
+    private float mLastY = -1;
+    private static final float DRAG_RATE = 3;
 
     public JRecyclerView(Context context) {
         this(context, null);
@@ -80,17 +91,9 @@ public class JRecyclerView extends RecyclerView {
 //        }
     }
 
-    public void clearHeader() {
-        mHeaderViews.clear();
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
-        View view = new View(getContext());
-        view.setLayoutParams(params);
-        sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
-        mHeaderViews.add(view);
-    }
-
-
-    //根据header的ViewType判断是哪个header
+    /**
+     * 根据header的ViewType判断是哪个header
+     */
     private View getHeaderViewByType(int itemType) {
         if (!isHeaderType(itemType)) {
             return null;
@@ -98,12 +101,16 @@ public class JRecyclerView extends RecyclerView {
         return mHeaderViews.get(itemType - HEADER_INIT_INDEX);
     }
 
-    //判断一个type是否为HeaderType
+    /**
+     * 判断一个type是否为HeaderType
+     */
     private boolean isHeaderType(int itemViewType) {
         return mHeaderViews.size() > 0 && sHeaderTypes.contains(itemViewType);
     }
 
-    //判断是否是XRecyclerView保留的itemViewType
+    /**
+     * 判断是否是XRecyclerView保留的itemViewType
+     */
     private boolean isReservedItemViewType(int itemViewType) {
         if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || sHeaderTypes.contains(itemViewType)) {
             return true;
@@ -211,7 +218,9 @@ public class JRecyclerView extends RecyclerView {
         mDataObserver.onChanged();
     }
 
-    //避免用户自己调用getAdapter() 引起的ClassCastException
+    /**
+     * 避免用户自己调用getAdapter() 引起的ClassCastException
+     */
     @Override
     public Adapter getAdapter() {
         if (mWrapAdapter != null) {
