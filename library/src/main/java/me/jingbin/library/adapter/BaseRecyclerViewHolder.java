@@ -8,11 +8,11 @@ import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * Created by jingbin on 2016/11/25
+ * @author jingbin
  */
 public abstract class BaseRecyclerViewHolder<T, D extends ViewDataBinding> extends RecyclerView.ViewHolder {
 
-    public D binding;
+    protected D binding;
 
     /**
      * root:如果attachToRoot(也就是第三个参数)为true, 那么root就是为新加载的View指定的父View。
@@ -21,23 +21,25 @@ public abstract class BaseRecyclerViewHolder<T, D extends ViewDataBinding> exten
      * （列如：根布局为LinearLayout，则用LinearLayout.LayoutParam）。
      */
     public BaseRecyclerViewHolder(ViewGroup viewGroup, int layoutId) {
-        // 注意要依附 viewGroup，不然显示item不全!! https://juejin.im/entry/5979349e5188253def54b052
+        // 注意要依附 viewGroup，不然显示item不全
         super(DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), layoutId, viewGroup, false).getRoot());
         // 得到这个View绑定的Binding
         binding = DataBindingUtil.getBinding(this.itemView);
     }
 
     /**
-     * @param object   the data of bind
+     * Called by RecyclerView to display the data at the specified position.
+     *
+     * @param bean     the data of bind
      * @param position the item position of recyclerView
      */
-    public abstract void onBindViewHolder(T object, final int position);
+    public abstract void onBindViewHolder(T bean, final int position);
 
     /**
      * 当数据改变时，binding会在下一帧去改变数据，如果我们需要立即改变，就去调用executePendingBindings方法。
      */
-    void onBaseBindViewHolder(T object, final int position) {
-        onBindViewHolder(object, position);
+    void onBaseBindViewHolder(T bean, final int position) {
+        onBindViewHolder(bean, position);
         binding.executePendingBindings();
     }
 }

@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import me.jingbin.jrecyclerview.databinding.ItemHomeBinding;
 import me.jingbin.jrecyclerview.utils.LogHelper;
 import me.jingbin.jrecyclerview.view.MyDividerItemDecoration;
 import me.jingbin.library.JRecyclerView;
+import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
 
 public class SwipeRefreshActivity extends AppCompatActivity {
 
@@ -116,6 +118,19 @@ public class SwipeRefreshActivity extends AppCompatActivity {
                         }
                     }
                 }, 2000);
+            }
+        });
+        homeAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<HomeItemBean>() {
+            @Override
+            public void onClick(View v, HomeItemBean homeItemBean, int position) {
+                LogHelper.e("---title:" + homeItemBean.getTitle());
+            }
+        });
+        homeAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener<HomeItemBean>() {
+            @Override
+            public boolean onLongClick(View v, HomeItemBean homeItemBean, int position) {
+                LogHelper.e("---哈哈哈------title:" + homeItemBean.getTitle());
+                return true;
             }
         });
     }
