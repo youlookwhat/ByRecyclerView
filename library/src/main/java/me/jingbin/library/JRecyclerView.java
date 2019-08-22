@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -95,9 +96,6 @@ public class JRecyclerView extends RecyclerView {
     public void addHeaderView(View view) {
         sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(view);
-//        if (mWrapAdapter != null) {
-//            mWrapAdapter.notifyDataSetChanged();
-//        }
     }
 
     /**
@@ -428,8 +426,9 @@ public class JRecyclerView extends RecyclerView {
             return mHeaderViews.size();
         }
 
+        @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (viewType == TYPE_REFRESH_HEADER) {
                 return new SimpleViewHolder(mRefreshHeader);
             } else if (isHeaderType(viewType)) {
@@ -441,7 +440,7 @@ public class JRecyclerView extends RecyclerView {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             if (isHeader(position) || isRefreshHeader(position)) {
                 return;
             }
@@ -460,7 +459,7 @@ public class JRecyclerView extends RecyclerView {
          * some times we need to override this
          */
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> objectList) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> objectList) {
             if (isHeader(position) || isRefreshHeader(position)) {
                 return;
             }
@@ -529,7 +528,7 @@ public class JRecyclerView extends RecyclerView {
         }
 
         @Override
-        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
             RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
             if (manager instanceof GridLayoutManager) {
@@ -546,12 +545,12 @@ public class JRecyclerView extends RecyclerView {
         }
 
         @Override
-        public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
             adapter.onDetachedFromRecyclerView(recyclerView);
         }
 
         @Override
-        public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
             super.onViewAttachedToWindow(holder);
             ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
             if (lp != null
@@ -563,27 +562,27 @@ public class JRecyclerView extends RecyclerView {
         }
 
         @Override
-        public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
             adapter.onViewDetachedFromWindow(holder);
         }
 
         @Override
-        public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
             adapter.onViewRecycled(holder);
         }
 
         @Override
-        public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+        public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
             return adapter.onFailedToRecycleView(holder);
         }
 
         @Override
-        public void unregisterAdapterDataObserver(AdapterDataObserver observer) {
+        public void unregisterAdapterDataObserver(@NonNull AdapterDataObserver observer) {
             adapter.unregisterAdapterDataObserver(observer);
         }
 
         @Override
-        public void registerAdapterDataObserver(AdapterDataObserver observer) {
+        public void registerAdapterDataObserver(@NonNull AdapterDataObserver observer) {
             adapter.registerAdapterDataObserver(observer);
         }
 
