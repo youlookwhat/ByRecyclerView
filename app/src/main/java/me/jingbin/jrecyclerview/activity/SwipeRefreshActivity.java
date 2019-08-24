@@ -22,6 +22,7 @@ import me.jingbin.jrecyclerview.adapter.HomeAdapter;
 import me.jingbin.jrecyclerview.bean.HomeItemBean;
 import me.jingbin.jrecyclerview.databinding.ItemHomeBinding;
 import me.jingbin.jrecyclerview.utils.LogHelper;
+import me.jingbin.jrecyclerview.utils.ToastUtil;
 import me.jingbin.jrecyclerview.view.MyDividerItemDecoration;
 import me.jingbin.library.JRecyclerView;
 import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
@@ -120,16 +121,17 @@ public class SwipeRefreshActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
-        homeAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<HomeItemBean>() {
+        recyclerView.setOnItemClickListener(new JRecyclerView.OnItemClickListener() {
             @Override
-            public void onClick(View v, HomeItemBean homeItemBean, int position) {
-                LogHelper.e("---title:" + homeItemBean.getTitle());
+            public void onClick(View v, int position) {
+                homeAdapter.getItemData(position);
+                ToastUtil.showToast(position + "-----" + homeAdapter.getItemData(position).getTitle());
             }
         });
-        homeAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener<HomeItemBean>() {
+        recyclerView.setOnItemLongClickListener(new JRecyclerView.OnItemLongClickListener() {
             @Override
-            public boolean onLongClick(View v, HomeItemBean homeItemBean, int position) {
-                LogHelper.e("---哈哈哈------title:" + homeItemBean.getTitle());
+            public boolean onLongClick(View v, int position) {
+                ToastUtil.showToast(position + "---长按--" + homeAdapter.getItemData(position).getTitle());
                 return true;
             }
         });

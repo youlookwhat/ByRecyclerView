@@ -31,12 +31,12 @@ public class HomeAdapter extends BaseRecyclerViewAdapter<HomeItemBean> {
         @Override
         public void onBindViewHolder(HomeItemBean bean, final int position) {
             binding.tvText.setText(bean.getTitle());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LogHelper.e("内部点击:" + position);
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    LogHelper.e("内部点击:" + position);
+//                }
+//            });
         }
     }
 }

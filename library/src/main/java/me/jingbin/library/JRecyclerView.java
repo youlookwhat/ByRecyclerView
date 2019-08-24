@@ -3,13 +3,17 @@ package me.jingbin.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DebugUtils;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +24,8 @@ import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
 
 /**
  * @author jingbin
@@ -419,13 +425,6 @@ public class JRecyclerView extends RecyclerView {
             }
         }
 
-        /**
-         * 获取 HeaderView的个数
-         */
-        int getHeadersCount() {
-            return mHeaderViews.size();
-        }
-
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -436,7 +435,9 @@ public class JRecyclerView extends RecyclerView {
             } else if (viewType == TYPE_FOOTER) {
                 return new SimpleViewHolder(mFootView);
             }
-            return adapter.onCreateViewHolder(parent, viewType);
+            ViewHolder viewHolder = adapter.onCreateViewHolder(parent, viewType);
+            bindViewClickListener(viewHolder);
+            return viewHolder;
         }
 
         @Override
@@ -593,6 +594,39 @@ public class JRecyclerView extends RecyclerView {
         }
     }
 
+    /**
+     * 获取 HeaderView的个数
+     */
+    int getHeadersCount() {
+        return mHeaderViews.size();
+    }
+
+    /**
+     * 给itemView设置点击事件和长按事件
+     */
+    private void bindViewClickListener(final ViewHolder viewHolder) {
+        if (viewHolder == null) {
+            return;
+        }
+        final View view = viewHolder.itemView;
+        if (onItemClickListener != null) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onClick(v, viewHolder.getLayoutPosition() - (getHeadersCount() + getPullHeaderSize()));
+                }
+            });
+        }
+        if (onItemLongClickListener != null) {
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return onItemLongClickListener.onLongClick(v, viewHolder.getLayoutPosition() - (getHeadersCount() + getPullHeaderSize()));
+                }
+            });
+        }
+    }
+
     public void setLoadingListener(LoadingListener listener) {
         mLoadingListener = listener;
     }
@@ -659,4 +693,50 @@ public class JRecyclerView extends RecyclerView {
             return 0;
         }
     }
+
+    /**
+     * Register a callback to be invoked when an item in this RecyclerView has
+     * been clicked.
+     *
+     * @param listener The callback that will be invoked.
+     */
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
+
+    /**
+     * Register a callback to be invoked when an item in this RecyclerView has
+     * been long clicked and held
+     *
+     * @param listener The callback that will run
+     */
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.onItemLongClickListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v        The view that was clicked.
+         * @param position The position of the view in the adapter.
+         */
+        void onClick(View v, int position);
+    }
+
+    public interface OnItemLongClickListener {
+
+        /**
+         * Called when a view has been clicked and held.
+         *
+         * @param v        The view that was clicked and held.
+         * @param position The position of the view in the adapter.
+         * @return true if the callback consumed the long click, false otherwise.
+         */
+        boolean onLongClick(View v, int position);
+    }
+
+    private OnItemClickListener onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
 }
