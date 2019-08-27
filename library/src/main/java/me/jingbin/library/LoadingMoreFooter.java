@@ -29,10 +29,6 @@ public class LoadingMoreFooter extends LinearLayout {
         isFooterMoreHeight = footerMoreHeight;
     }
 
-    /**
-     * @param context
-     * @param attrs
-     */
     public LoadingMoreFooter(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);

@@ -4,9 +4,8 @@ package me.jingbin.library;
 import com.google.android.material.appbar.AppBarLayout;
 
 /**
- * Created by jianghejie on 16/6/19.
+ * @author jingbin
  */
-
 public abstract class AppBarStateChangeListener implements AppBarLayout.OnOffsetChangedListener {
 
     public enum State {
@@ -36,6 +35,7 @@ public abstract class AppBarStateChangeListener implements AppBarLayout.OnOffset
             mCurrentState = State.IDLE;
         }
     }
+
     public abstract void onStateChanged(AppBarLayout appBarLayout, State state);
 }
 

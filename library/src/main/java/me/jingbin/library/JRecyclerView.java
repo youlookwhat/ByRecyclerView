@@ -29,7 +29,7 @@ import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
 
 /**
  * @author jingbin
- * @date 2019/08/20
+ * link to https://github.com/youlookwhat/JRecyclerView
  */
 public class JRecyclerView extends RecyclerView {
 
@@ -73,7 +73,7 @@ public class JRecyclerView extends RecyclerView {
     private boolean isFooterMoreHeight = false;
 
     private LoadingListener mLoadingListener;
-    private YunRefreshHeader mRefreshHeader;
+    private BaseRefreshHeader mRefreshHeader;
     private View mFootView;
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
@@ -94,7 +94,6 @@ public class JRecyclerView extends RecyclerView {
     }
 
     private void init() {
-        mRefreshHeader = new YunRefreshHeader(getContext());
         mFootView = new LoadingMoreFooter(getContext());
         mFootView.setVisibility(GONE);
     }
@@ -102,6 +101,9 @@ public class JRecyclerView extends RecyclerView {
     public void addHeaderView(View view) {
         sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(view);
+//        if (mWrapAdapter != null) {
+//            mWrapAdapter.notifyDataSetChanged();
+//        }
     }
 
     /**
@@ -157,7 +159,7 @@ public class JRecyclerView extends RecyclerView {
 
     public void refresh() {
         if (pullRefreshEnabled && mLoadingListener != null) {
-            mRefreshHeader.setState(YunRefreshHeader.STATE_REFRESHING);
+            mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
             mLoadingListener.onRefresh();
         }
     }
@@ -169,7 +171,9 @@ public class JRecyclerView extends RecyclerView {
     }
 
     public void refreshComplete() {
-        mRefreshHeader.refreshComplate();
+        if (pullRefreshEnabled) {
+            mRefreshHeader.refreshComplete();
+        }
         setNoMore(false);
     }
 
@@ -194,12 +198,15 @@ public class JRecyclerView extends RecyclerView {
         isNoMore = true;
     }
 
-    public void setRefreshHeader(YunRefreshHeader refreshHeader) {
+    public void setRefreshHeader(BaseRefreshHeader refreshHeader) {
         mRefreshHeader = refreshHeader;
     }
 
     public void setPullRefreshEnabled(boolean enabled) {
         pullRefreshEnabled = enabled;
+        if (mRefreshHeader == null) {
+            mRefreshHeader = new YunRefreshHeader(getContext());
+        }
     }
 
     /**
@@ -287,7 +294,7 @@ public class JRecyclerView extends RecyclerView {
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
 //                    && layoutManager.getItemCount() > layoutManager.getChildCount()
                     && !isNoMore
-                    && mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING) {
+                    && (!pullRefreshEnabled || mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING)) {
                 isLoadingData = true;
                 if (mFootView instanceof LoadingMoreFooter) {
                     ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_LOADING);
@@ -311,7 +318,7 @@ public class JRecyclerView extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 final float deltaY = ev.getRawY() - mLastY;
                 mLastY = ev.getRawY();
-                if (isOnTop() && pullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                if (pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     mRefreshHeader.onMove(deltaY / DRAG_RATE);
                     if (mRefreshHeader.getVisibleHeight() > 0 && mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING) {
                         return false;
@@ -320,7 +327,7 @@ public class JRecyclerView extends RecyclerView {
                 break;
             default:
                 mLastY = -1;
-                if (isOnTop() && pullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                if (pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (mRefreshHeader.releaseAction()) {
                         if (mLoadingListener != null) {
                             mLoadingListener.onRefresh();
@@ -343,7 +350,9 @@ public class JRecyclerView extends RecyclerView {
     }
 
     private boolean isOnTop() {
-        if (mRefreshHeader != null && mRefreshHeader.getParent() != null) {
+        if (mRefreshHeader != null
+                && mRefreshHeader instanceof View
+                && ((View) mRefreshHeader).getParent() != null) {
             return true;
         } else {
             return false;
@@ -429,7 +438,7 @@ public class JRecyclerView extends RecyclerView {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (viewType == TYPE_REFRESH_HEADER) {
-                return new SimpleViewHolder(mRefreshHeader);
+                return new SimpleViewHolder((View) mRefreshHeader);
             } else if (isHeaderType(viewType)) {
                 return new SimpleViewHolder(getHeaderViewByType(viewType));
             } else if (viewType == TYPE_FOOTER) {
@@ -691,6 +700,20 @@ public class JRecyclerView extends RecyclerView {
             return 1;
         } else {
             return 0;
+        }
+    }
+
+    /**
+     * call it when you finish the activity,
+     */
+    public void destroy() {
+        if (mHeaderViews != null) {
+            mHeaderViews.clear();
+            mHeaderViews = null;
+        }
+        if (sHeaderTypes != null) {
+            sHeaderTypes.clear();
+            mHeaderViews = null;
         }
     }
 

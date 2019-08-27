@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingBottom="10dp">
+    android:orientation="horizontal">
 
     <ProgressBar
         android:id="@+id/iv_progress"
@@ -14,7 +14,7 @@
         android:layout_height="18dp" />
 
     <TextView
-        android:id="@+id/msg"
+        android:id="@+id/tv_refresh_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

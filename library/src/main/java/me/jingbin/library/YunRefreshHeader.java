@@ -12,12 +12,11 @@ import android.widget.TextView;
 
 /**
  * @author jingbin
- * @date 2016/1/27
  */
 public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader {
 
     private Context mContext;
-    private TextView msg;
+    private TextView tvRefreshTip;
     private int mState = STATE_NORMAL;
     private int mMeasuredHeight;
     private LinearLayout mContainer;
@@ -39,7 +38,7 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
     private void initView() {
         LayoutInflater.from(mContext).inflate(R.layout.kaws_refresh_header, this);
 
-        msg = (TextView) findViewById(R.id.msg);
+        tvRefreshTip = (TextView) findViewById(R.id.tv_refresh_tip);
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mMeasuredHeight = getMeasuredHeight();
         setGravity(Gravity.CENTER_HORIZONTAL);
@@ -51,10 +50,10 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
 
     @Override
     public void onMove(float delta) {
-        if (getVisiableHeight() > 0 || delta > 0) {
-            setVisiableHeight((int) delta + getVisiableHeight());
-            if (mState <= STATE_RELEASE_TO_REFRESH) { // 未处于刷新状态，更新箭头
-                if (getVisiableHeight() > mMeasuredHeight) {
+        if (getVisibleHeight() > 0 || delta > 0) {
+            setVisibleHeight((int) delta + getVisibleHeight());
+            if (mState <= STATE_RELEASE_TO_REFRESH) {
+                if (getVisibleHeight() > mMeasuredHeight) {
                     setState(STATE_RELEASE_TO_REFRESH);
                 } else {
                     setState(STATE_NORMAL);
@@ -63,43 +62,40 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
         }
     }
 
-    void setState(int state) {
+    @Override
+    public void setState(int state) {
         if (state == mState) {
             return;
         }
         switch (state) {
             case STATE_NORMAL:
-                msg.setText(R.string.header_hint_normal);
+                tvRefreshTip.setText(R.string.header_hint_normal);
                 break;
             case STATE_RELEASE_TO_REFRESH:
-                msg.setText(R.string.header_hint_release);
+                tvRefreshTip.setText(R.string.header_hint_release);
                 break;
             case STATE_REFRESHING:
-                msg.setText(R.string.refreshing);
+                tvRefreshTip.setText(R.string.refreshing);
                 break;
             case STATE_DONE:
-                msg.setText(R.string.refresh_done);
+                tvRefreshTip.setText(R.string.refresh_done);
                 break;
             default:
         }
         mState = state;
     }
 
-    public int getVisibleHeight() {
-        LayoutParams lp = (LayoutParams) mContainer.getLayoutParams();
-        return lp.height;
-    }
 
     @Override
     public boolean releaseAction() {
         boolean isOnRefresh = false;
-        int height = getVisiableHeight();
+        int height = getVisibleHeight();
         if (height == 0) {
             // not visible.
             isOnRefresh = false;
         }
 
-        if (getVisiableHeight() > mMeasuredHeight && mState < STATE_REFRESHING) {
+        if (getVisibleHeight() > mMeasuredHeight && mState < STATE_REFRESHING) {
             setState(STATE_REFRESHING);
             isOnRefresh = true;
         }
@@ -118,9 +114,10 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
     }
 
     @Override
-    public void refreshComplate() {
+    public void refreshComplete() {
         setState(STATE_DONE);
-        new Handler().postDelayed(new Runnable() {
+        tvRefreshTip.postDelayed(new Runnable() {
+            @Override
             public void run() {
                 reset();
             }
@@ -137,7 +134,8 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
      */
     public void handlerRefreshComplate() {
         setState(STATE_DONE);
-        new Handler().postDelayed(new Runnable() {
+        tvRefreshTip.postDelayed(new Runnable() {
+            @Override
             public void run() {
                 setState(STATE_NORMAL);
             }
@@ -145,18 +143,18 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
     }
 
     private void smoothScrollTo(int destHeight) {
-        ValueAnimator animator = ValueAnimator.ofInt(getVisiableHeight(), destHeight);
+        ValueAnimator animator = ValueAnimator.ofInt(getVisibleHeight(), destHeight);
         animator.setDuration(300).start();
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                setVisiableHeight((int) animation.getAnimatedValue());
+                setVisibleHeight((int) animation.getAnimatedValue());
             }
         });
         animator.start();
     }
 
-    private void setVisiableHeight(int height) {
+    private void setVisibleHeight(int height) {
         if (height < 0) {
             height = 0;
         }
@@ -166,10 +164,11 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
     }
 
     @Override
-    public int getVisiableHeight() {
+    public int getVisibleHeight() {
         return mContainer.getHeight();
     }
 
+    @Override
     public int getState() {
         return mState;
     }

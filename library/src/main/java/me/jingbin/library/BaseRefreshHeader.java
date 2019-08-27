@@ -28,7 +28,11 @@ interface BaseRefreshHeader {
 
     boolean releaseAction();
 
-    void refreshComplate();
+    void refreshComplete();
 
-    int getVisiableHeight();
+    void setState(int state);
+
+    int getState();
+
+    int getVisibleHeight();
 }

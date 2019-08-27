@@ -36,13 +36,19 @@ public class SimpleActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(homeAdapter);
+        recyclerView.setPullRefreshEnabled(true);
         homeAdapter.addAll(get());
         recyclerView.loadMoreComplete();
         recyclerView.setLoadingListener(new JRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 page = 1;
-                recyclerView.reset();
+                recyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.reset();
+                    }
+                },3000);
             }
 
             @Override
