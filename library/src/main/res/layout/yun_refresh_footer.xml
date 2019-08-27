@@ -13,10 +13,8 @@
 
         <ProgressBar
             android:id="@+id/iv_progress"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-             />
-        <!--android:indeterminateDrawable="@drawable/rotate_progress"-->
+            android:layout_width="18dp"
+            android:layout_height="18dp" />
 
         <TextView
             android:id="@+id/msg"
@@ -24,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:text="@string/listview_loading"
+            android:text="@string/footer_loading"
             android:textColor="#333333" />
     </LinearLayout>
 
@@ -46,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:text="@string/no_more_loading"
+            android:text="@string/footer_no_more"
             android:textColor="#CCCCCC" />
 
         <View

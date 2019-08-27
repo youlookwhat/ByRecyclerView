@@ -1,5 +1,11 @@
 package me.jingbin.jrecyclerview.activity;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -9,23 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 
 import me.jingbin.jrecyclerview.R;
 import me.jingbin.jrecyclerview.adapter.HomeAdapter;
 import me.jingbin.jrecyclerview.bean.HomeItemBean;
 import me.jingbin.jrecyclerview.databinding.ItemHomeBinding;
-import me.jingbin.jrecyclerview.utils.LogHelper;
 import me.jingbin.jrecyclerview.utils.ToastUtil;
 import me.jingbin.jrecyclerview.view.MyDividerItemDecoration;
 import me.jingbin.library.JRecyclerView;
-import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
 
 public class SwipeRefreshActivity extends AppCompatActivity {
 
@@ -62,7 +60,6 @@ public class SwipeRefreshActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
                 if (layoutManager != null) {
                     //得到当前界面，第一个子视图的position
                     int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();

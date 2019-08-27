@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -70,10 +69,10 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
         }
         switch (state) {
             case STATE_NORMAL:
-                msg.setText(R.string.listview_header_hint_normal);
+                msg.setText(R.string.header_hint_normal);
                 break;
             case STATE_RELEASE_TO_REFRESH:
-                msg.setText(R.string.listview_header_hint_release);
+                msg.setText(R.string.header_hint_release);
                 break;
             case STATE_REFRESHING:
                 msg.setText(R.string.refreshing);
