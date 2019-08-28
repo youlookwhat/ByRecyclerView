@@ -2,7 +2,6 @@ package me.jingbin.library;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 /**
  * @author jingbin
  */
-public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader {
+public class ProgressRefreshHeader extends LinearLayout implements BaseRefreshHeader {
 
     private Context mContext;
     private TextView tvRefreshTip;
@@ -21,15 +20,15 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
     private int mMeasuredHeight;
     private LinearLayout mContainer;
 
-    public YunRefreshHeader(Context context) {
+    public ProgressRefreshHeader(Context context) {
         this(context, null);
     }
 
-    public YunRefreshHeader(Context context, AttributeSet attrs) {
+    public ProgressRefreshHeader(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public YunRefreshHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ProgressRefreshHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
         initView();

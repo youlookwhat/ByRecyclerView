@@ -3,17 +3,12 @@ package me.jingbin.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.DebugUtils;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.MotionEvent;
-import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,8 +19,6 @@ import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
 
 /**
  * @author jingbin
@@ -205,7 +198,7 @@ public class JRecyclerView extends RecyclerView {
     public void setPullRefreshEnabled(boolean enabled) {
         pullRefreshEnabled = enabled;
         if (mRefreshHeader == null) {
-            mRefreshHeader = new YunRefreshHeader(getContext());
+            mRefreshHeader = new ProgressRefreshHeader(getContext());
         }
     }
 
@@ -294,7 +287,7 @@ public class JRecyclerView extends RecyclerView {
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
 //                    && layoutManager.getItemCount() > layoutManager.getChildCount()
                     && !isNoMore
-                    && (!pullRefreshEnabled || mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING)) {
+                    && (!pullRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 isLoadingData = true;
                 if (mFootView instanceof LoadingMoreFooter) {
                     ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_LOADING);
@@ -320,7 +313,7 @@ public class JRecyclerView extends RecyclerView {
                 mLastY = ev.getRawY();
                 if (pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     mRefreshHeader.onMove(deltaY / DRAG_RATE);
-                    if (mRefreshHeader.getVisibleHeight() > 0 && mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING) {
+                    if (mRefreshHeader.getVisibleHeight() > 0 && mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING) {
                         return false;
                     }
                 }
