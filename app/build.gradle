@@ -33,7 +33,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation project(':library')
+    implementation project(':recyclerview')
 
     implementation 'com.android.support:multidex:1.0.3'
 }
