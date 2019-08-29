@@ -136,7 +136,7 @@ public class SwipeRefreshActivity extends AppCompatActivity {
 
     private ArrayList<HomeItemBean> get() {
         ArrayList<HomeItemBean> list = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 5; i++) {
             HomeItemBean bean = new HomeItemBean();
             bean.setTitle("jingbin:" + i);
             list.add(bean);

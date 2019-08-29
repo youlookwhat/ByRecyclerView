@@ -3,6 +3,7 @@ package me.jingbin.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,10 @@ public class JRecyclerView extends RecyclerView {
      */
     private boolean loadingMoreEnabled = true;
     /**
+     * 手指是否上滑
+     */
+    private boolean isScrollUp = false;
+    /**
      * 首页列表增加一个tabhost的高度
      */
     private boolean isFooterMoreHeight = false;
@@ -71,6 +76,7 @@ public class JRecyclerView extends RecyclerView {
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
     private float mLastY = -1;
+    private float mPullStartY = 0;
     private static final float DRAG_RATE = 3;
 
     public JRecyclerView(Context context) {
@@ -144,7 +150,7 @@ public class JRecyclerView extends RecyclerView {
         isLoadingData = false;
         isNoMore = noMore;
         if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setState(isNoMore ? LoadingMoreFooter.STATE_NOMORE : LoadingMoreFooter.STATE_COMPLETE);
+            ((LoadingMoreFooter) mFootView).setState(isNoMore ? LoadingMoreFooter.STATE_NO_MORE : LoadingMoreFooter.STATE_COMPLETE);
         } else {
             mFootView.setVisibility(View.GONE);
         }
@@ -177,7 +183,7 @@ public class JRecyclerView extends RecyclerView {
         isLoadingData = false;
         isNoMore = true;
         if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_NOMORE);
+            ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_NO_MORE);
         } else {
             mFootView.setVisibility(View.GONE);
         }
@@ -287,6 +293,7 @@ public class JRecyclerView extends RecyclerView {
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
 //                    && layoutManager.getItemCount() > layoutManager.getChildCount()
                     && !isNoMore
+                    && isScrollUp
                     && (!pullRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 isLoadingData = true;
                 if (mFootView instanceof LoadingMoreFooter) {
@@ -294,7 +301,9 @@ public class JRecyclerView extends RecyclerView {
                 } else {
                     mFootView.setVisibility(View.VISIBLE);
                 }
+
                 mLoadingListener.onLoadMore();
+                isScrollUp = false;
             }
         }
     }
@@ -304,8 +313,12 @@ public class JRecyclerView extends RecyclerView {
         if (mLastY == -1) {
             mLastY = ev.getRawY();
         }
+        if (mPullStartY == 0) {
+            mPullStartY = ev.getY();
+        }
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                // 如果item设置点击事件，则这里获取不到值  一直为0
                 mLastY = ev.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -319,6 +332,9 @@ public class JRecyclerView extends RecyclerView {
                 }
                 break;
             default:
+                // ==0 原点向下惯性滑动会有效
+                isScrollUp = loadingMoreEnabled && ev.getY() - mPullStartY <= 0;
+                mPullStartY = 0;
                 mLastY = -1;
                 if (pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (mRefreshHeader.releaseAction()) {

@@ -36,7 +36,7 @@ public class SimpleActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(homeAdapter);
-        recyclerView.setPullRefreshEnabled(true);
+        recyclerView.setPullRefreshEnabled(false);
         homeAdapter.addAll(get());
         recyclerView.loadMoreComplete();
         recyclerView.setLoadingListener(new JRecyclerView.LoadingListener() {
@@ -48,7 +48,7 @@ public class SimpleActivity extends AppCompatActivity {
                     public void run() {
                         recyclerView.reset();
                     }
-                },3000);
+                },1000);
             }
 
             @Override
@@ -64,14 +64,14 @@ public class SimpleActivity extends AppCompatActivity {
                             recyclerView.loadMoreComplete();
                         }
                     }
-                }, 2000);
+                }, 1000);
             }
         });
     }
 
     private ArrayList<HomeItemBean> get() {
         ArrayList<HomeItemBean> list = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 5; i++) {
             HomeItemBean bean = new HomeItemBean();
             bean.setTitle("jingbin:" + i);
             list.add(bean);

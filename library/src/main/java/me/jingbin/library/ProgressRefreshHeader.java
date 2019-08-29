@@ -35,7 +35,7 @@ public class ProgressRefreshHeader extends LinearLayout implements BaseRefreshHe
     }
 
     private void initView() {
-        LayoutInflater.from(mContext).inflate(R.layout.kaws_refresh_header, this);
+        LayoutInflater.from(mContext).inflate(R.layout.progress_refresh_header, this);
 
         tvRefreshTip = (TextView) findViewById(R.id.tv_refresh_tip);
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

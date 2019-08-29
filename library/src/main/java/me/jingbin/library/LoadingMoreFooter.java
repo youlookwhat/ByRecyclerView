@@ -14,7 +14,7 @@ public class LoadingMoreFooter extends LinearLayout {
 
     public final static int STATE_LOADING = 0;
     public final static int STATE_COMPLETE = 1;
-    public final static int STATE_NOMORE = 2;
+    public final static int STATE_NO_MORE = 2;
     private View viewHomeBottom;
     private boolean isFooterMoreHeight = false;
     private LinearLayout llNoMore;
@@ -35,7 +35,7 @@ public class LoadingMoreFooter extends LinearLayout {
     }
 
     public void initView(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.yun_refresh_footer, this);
+        LayoutInflater.from(context).inflate(R.layout.loading_more_footer, this);
         viewHomeBottom = findViewById(R.id.view_home_bottom);
         llLoading = (LinearLayout) findViewById(R.id.ll_loading);
         llNoMore = (LinearLayout) findViewById(R.id.ll_no_more);
@@ -54,7 +54,7 @@ public class LoadingMoreFooter extends LinearLayout {
                 llNoMore.setVisibility(GONE);
                 this.setVisibility(View.GONE);
                 break;
-            case STATE_NOMORE:
+            case STATE_NO_MORE:
                 llLoading.setVisibility(GONE);
                 llNoMore.setVisibility(VISIBLE);
                 this.setVisibility(View.VISIBLE);
