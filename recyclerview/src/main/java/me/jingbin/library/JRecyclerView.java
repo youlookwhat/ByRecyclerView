@@ -3,11 +3,12 @@ package me.jingbin.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -33,10 +34,14 @@ public class JRecyclerView extends RecyclerView {
      * 设置一个很大的数字,尽可能避免和用户的adapter冲突
      */
     private static final int TYPE_REFRESH_HEADER = 10000;
-    private static final int TYPE_FOOTER = 10001;
-    private static final int HEADER_INIT_INDEX = 10002;
+    private static final int TYPE_LOADING_FOOTER = 10001;
+    private static final int TYPE_EMPTY_VIEW = 10002;
     /**
-     * 每个header必须有不同的type,不然滚动的时候顺序会变化（不要随便加静态，改了一天！！！！！！！！！！）
+     * HeaderView 起始type
+     */
+    private static final int HEADER_INIT_INDEX = 10003;
+    /**
+     * 每个header必须有不同的type,不然滚动的时候顺序会变化
      */
     private List<Integer> sHeaderTypes = new ArrayList<>();
     /**
@@ -45,6 +50,14 @@ public class JRecyclerView extends RecyclerView {
     private ArrayList<View> mHeaderViews = new ArrayList<>();
 
     private WrapAdapter mWrapAdapter;
+    /**
+     * EmptyView 布局
+     */
+    private FrameLayout mEmptyLayout;
+    /**
+     * 是否使用EmptyView
+     */
+    private boolean mIsUseEmpty = true;
     /**
      * 是否正在加载更多
      */
@@ -56,11 +69,11 @@ public class JRecyclerView extends RecyclerView {
     /**
      * 设置是否能 下拉刷新
      */
-    private boolean pullRefreshEnabled = false;
+    private boolean mRefreshEnabled = false;
     /**
      * 设置是否能 加载更多
      */
-    private boolean loadingMoreEnabled = true;
+    private boolean mLoadMoreEnabled = false;
     /**
      * 手指是否上滑
      */
@@ -70,14 +83,15 @@ public class JRecyclerView extends RecyclerView {
      */
     private boolean isFooterMoreHeight = false;
 
-    private LoadingListener mLoadingListener;
+    private OnLoadMoreListener mLoadMoreListener;
+    private OnRefreshListener mRefreshListener;
     private BaseRefreshHeader mRefreshHeader;
     private View mFootView;
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
     private float mLastY = -1;
     private float mPullStartY = 0;
-    private static final float DRAG_RATE = 3;
+    private float mDragRate = 3;
 
     public JRecyclerView(Context context) {
         this(context, null);
@@ -97,12 +111,22 @@ public class JRecyclerView extends RecyclerView {
         mFootView.setVisibility(GONE);
     }
 
-    public void addHeaderView(View view) {
+    /**
+     * 添加HeaderView；不可重复添加相同的View
+     *
+     * @param headerView HeaderView
+     * @param isNotify   是否立即刷新
+     */
+    public void addHeaderView(View headerView, boolean isNotify) {
         sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
-        mHeaderViews.add(view);
-//        if (mWrapAdapter != null) {
-//            mWrapAdapter.notifyDataSetChanged();
-//        }
+        mHeaderViews.add(headerView);
+        if (mWrapAdapter != null && isNotify) {
+            mWrapAdapter.getOriginalAdapter().notifyItemInserted(getPullHeaderSize() + getHeadersCount() - 1);
+        }
+    }
+
+    public void addHeaderView(View view) {
+        addHeaderView(view, false);
     }
 
     /**
@@ -126,7 +150,7 @@ public class JRecyclerView extends RecyclerView {
      * 判断是否是JRecyclerView保留的itemViewType
      */
     private boolean isReservedItemViewType(int itemViewType) {
-        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || sHeaderTypes.contains(itemViewType)) {
+        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOADING_FOOTER || itemViewType == TYPE_EMPTY_VIEW || sHeaderTypes.contains(itemViewType)) {
             return true;
         } else {
             return false;
@@ -157,9 +181,9 @@ public class JRecyclerView extends RecyclerView {
     }
 
     public void refresh() {
-        if (pullRefreshEnabled && mLoadingListener != null) {
+        if (mRefreshEnabled && mRefreshListener != null) {
             mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
-            mLoadingListener.onRefresh();
+            mRefreshListener.onRefresh();
         }
     }
 
@@ -170,7 +194,7 @@ public class JRecyclerView extends RecyclerView {
     }
 
     public void refreshComplete() {
-        if (pullRefreshEnabled) {
+        if (mRefreshEnabled) {
             mRefreshHeader.refreshComplete();
         }
         setNoMore(false);
@@ -179,7 +203,7 @@ public class JRecyclerView extends RecyclerView {
     /**
      * 没有更多内容
      */
-    public void noMoreLoading() {
+    public void loadMoreEnd() {
         isLoadingData = false;
         isNoMore = true;
         if (mFootView instanceof LoadingMoreFooter) {
@@ -189,27 +213,19 @@ public class JRecyclerView extends RecyclerView {
         }
     }
 
-    /**
-     * 不显示"没有更多内容了"且不能继续刷新
-     */
-    public void noRefresh() {
-        isLoadingData = false;
-        isNoMore = true;
-    }
-
     public void setRefreshHeader(BaseRefreshHeader refreshHeader) {
         mRefreshHeader = refreshHeader;
     }
 
-    public void setPullRefreshEnabled(boolean enabled) {
-        pullRefreshEnabled = enabled;
+    public void setRefreshEnabled(boolean enabled) {
+        mRefreshEnabled = enabled;
         if (mRefreshHeader == null) {
             mRefreshHeader = new ProgressRefreshHeader(getContext());
         }
     }
 
     /**
-     * 首页和修行社：设置列表底部增加一个tabhost的高度
+     * 设置列表底部增加一个tabhost的高度
      *
      * @param enabled 默认为不增加，正常
      */
@@ -220,8 +236,8 @@ public class JRecyclerView extends RecyclerView {
         }
     }
 
-    public void setLoadingMoreEnabled(boolean enabled) {
-        loadingMoreEnabled = enabled;
+    public void setLoadMoreEnabled(boolean enabled) {
+        mLoadMoreEnabled = enabled;
         if (!enabled) {
             if (mFootView instanceof LoadingMoreFooter) {
                 ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_COMPLETE);
@@ -258,7 +274,10 @@ public class JRecyclerView extends RecyclerView {
                 gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return (mWrapAdapter.isHeader(position) || mWrapAdapter.isFooter(position) || mWrapAdapter.isRefreshHeader(position))
+                        return (mWrapAdapter.isHeader(position)
+                                || mWrapAdapter.isFooter(position)
+                                || mWrapAdapter.isEmptyView(position)
+                                || mWrapAdapter.isRefreshHeader(position))
                                 ? gridManager.getSpanCount() : 1;
                     }
                 });
@@ -270,7 +289,7 @@ public class JRecyclerView extends RecyclerView {
     @Override
     public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
-        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadingListener != null && !isLoadingData && loadingMoreEnabled) {
+        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadMoreListener != null && !isLoadingData && mLoadMoreEnabled) {
             LayoutManager layoutManager = getLayoutManager();
             int lastVisibleItemPosition;
             if (layoutManager instanceof GridLayoutManager) {
@@ -287,23 +306,23 @@ public class JRecyclerView extends RecyclerView {
 //            Log.e("-----22-list1``", "--" + (layoutManager.getItemCount()));
 //            Log.e("-----22-list2``", "--" + (layoutManager.getChildCount()));
 //            Log.e("-----33", "--" + (!isNoMore));
-//            Log.e("-----44", "--" + (mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING));
+//            Log.e("-----44", "--" + (mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING));
             // 取消那条后，只有一条信息也可以刷新
             if (layoutManager.getChildCount() > 0
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
 //                    && layoutManager.getItemCount() > layoutManager.getChildCount()
                     && !isNoMore
                     && isScrollUp
-                    && (!pullRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
+                    && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 isLoadingData = true;
+                isScrollUp = false;
                 if (mFootView instanceof LoadingMoreFooter) {
                     ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_LOADING);
                 } else {
                     mFootView.setVisibility(View.VISIBLE);
                 }
 
-                mLoadingListener.onLoadMore();
-                isScrollUp = false;
+                mLoadMoreListener.onLoadMore();
             }
         }
     }
@@ -324,8 +343,8 @@ public class JRecyclerView extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 final float deltaY = ev.getRawY() - mLastY;
                 mLastY = ev.getRawY();
-                if (pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    mRefreshHeader.onMove(deltaY / DRAG_RATE);
+                if (mRefreshEnabled && mRefreshListener != null && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                    mRefreshHeader.onMove(deltaY / mDragRate);
                     if (mRefreshHeader.getVisibleHeight() > 0 && mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING) {
                         return false;
                     }
@@ -333,14 +352,12 @@ public class JRecyclerView extends RecyclerView {
                 break;
             default:
                 // ==0 原点向下惯性滑动会有效
-                isScrollUp = loadingMoreEnabled && ev.getY() - mPullStartY <= 0;
+                isScrollUp = mLoadMoreEnabled && ev.getY() - mPullStartY <= 0;
                 mPullStartY = 0;
                 mLastY = -1;
-                if (pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                if (mRefreshEnabled && mRefreshListener != null && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (mRefreshHeader.releaseAction()) {
-                        if (mLoadingListener != null) {
-                            mLoadingListener.onRefresh();
-                        }
+                        mRefreshListener.onRefresh();
                     }
                 }
                 break;
@@ -415,6 +432,13 @@ public class JRecyclerView extends RecyclerView {
         }
 
         /**
+         * 是否是 EmptyView 布局
+         */
+        boolean isEmptyView(int position) {
+            return mIsUseEmpty && mEmptyLayout != null && position == mHeaderViews.size() + getPullHeaderSize();
+        }
+
+        /**
          * 是否是 HeaderView 布局
          */
         boolean isHeader(int position) {
@@ -425,7 +449,7 @@ public class JRecyclerView extends RecyclerView {
          * 是否是 上拉加载 footer 布局
          */
         boolean isFooter(int position) {
-            if (loadingMoreEnabled) {
+            if (mLoadMoreEnabled) {
                 return position == getItemCount() - 1;
             } else {
                 return false;
@@ -436,7 +460,7 @@ public class JRecyclerView extends RecyclerView {
          * 是否是 头部刷新布局
          */
         boolean isRefreshHeader(int position) {
-            if (pullRefreshEnabled) {
+            if (mRefreshEnabled && mRefreshListener != null) {
                 return position == 0;
             } else {
                 return false;
@@ -450,7 +474,9 @@ public class JRecyclerView extends RecyclerView {
                 return new SimpleViewHolder((View) mRefreshHeader);
             } else if (isHeaderType(viewType)) {
                 return new SimpleViewHolder(getHeaderViewByType(viewType));
-            } else if (viewType == TYPE_FOOTER) {
+            } else if (viewType == TYPE_EMPTY_VIEW) {
+                return new SimpleViewHolder(mEmptyLayout);
+            } else if (viewType == TYPE_LOADING_FOOTER) {
                 return new SimpleViewHolder(mFootView);
             }
             ViewHolder viewHolder = adapter.onCreateViewHolder(parent, viewType);
@@ -460,11 +486,10 @@ public class JRecyclerView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            if (isHeader(position) || isRefreshHeader(position)) {
+            if (isHeader(position) || isRefreshHeader(position) || isEmptyView(position)) {
                 return;
             }
-            // 如果可以下拉刷新，就需要 +1
-            int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
+            int adjPosition = position - (getHeadersCount() + getPullHeaderSize() + getEmptyViewSize());
             int adapterCount;
             if (adapter != null) {
                 adapterCount = adapter.getItemCount();
@@ -479,12 +504,12 @@ public class JRecyclerView extends RecyclerView {
          */
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> objectList) {
-            if (isHeader(position) || isRefreshHeader(position)) {
+            if (isHeader(position) || isRefreshHeader(position) || isEmptyView(position)) {
                 return;
             }
             if (adapter != null) {
                 // 如果可以下拉刷新，就需要+1
-                int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
+                int adjPosition = position - (getHeadersCount() + getPullHeaderSize() + getEmptyViewSize());
                 int adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
                     if (objectList.isEmpty()) {
@@ -499,9 +524,9 @@ public class JRecyclerView extends RecyclerView {
         @Override
         public int getItemCount() {
             if (adapter != null) {
-                return getPullHeaderSize() + getHeadersCount() + adapter.getItemCount() + getLoadingMoreSize();
+                return getPullHeaderSize() + getHeadersCount() + adapter.getItemCount() + getLoadingMoreSize() + getEmptyViewSize();
             } else {
-                return getPullHeaderSize() + getHeadersCount() + getLoadingMoreSize();
+                return getPullHeaderSize() + getHeadersCount() + getLoadingMoreSize() + getEmptyViewSize();
             }
         }
 
@@ -517,12 +542,15 @@ public class JRecyclerView extends RecyclerView {
                 position = position - getPullHeaderSize();
                 return sHeaderTypes.get(position);
             }
+            if (isEmptyView(position)) {
+                return TYPE_EMPTY_VIEW;
+            }
             if (isFooter(position)) {
-                return TYPE_FOOTER;
+                return TYPE_LOADING_FOOTER;
             }
             int adapterCount;
             if (adapter != null) {
-                int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
+                int adjPosition = position - (getHeadersCount() + getPullHeaderSize() + getEmptyViewSize());
                 adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
                     int type = adapter.getItemViewType(adjPosition);
@@ -537,8 +565,8 @@ public class JRecyclerView extends RecyclerView {
 
         @Override
         public long getItemId(int position) {
-            if (adapter != null && position >= getHeadersCount() + getPullHeaderSize()) {
-                int adjPosition = position - (getHeadersCount() + getPullHeaderSize());
+            if (adapter != null && position >= getHeadersCount() + getPullHeaderSize() + getEmptyViewSize()) {
+                int adjPosition = position - (getHeadersCount() + getPullHeaderSize() + getEmptyViewSize());
                 if (adjPosition < adapter.getItemCount()) {
                     return adapter.getItemId(adjPosition);
                 }
@@ -555,7 +583,8 @@ public class JRecyclerView extends RecyclerView {
                 gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return (isHeader(position) || isFooter(position) || isRefreshHeader(position))
+                        // 占一行
+                        return (isHeader(position) || isFooter(position) || isEmptyView(position) || isRefreshHeader(position))
                                 ? gridManager.getSpanCount() : 1;
                     }
                 });
@@ -574,7 +603,10 @@ public class JRecyclerView extends RecyclerView {
             ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
             if (lp != null
                     && lp instanceof StaggeredGridLayoutManager.LayoutParams
-                    && (isHeader(holder.getLayoutPosition()) || isRefreshHeader(holder.getLayoutPosition()) || isFooter(holder.getLayoutPosition()))) {
+                    && (isHeader(holder.getLayoutPosition())
+                    || isRefreshHeader(holder.getLayoutPosition())
+                    || isFooter(holder.getLayoutPosition())
+                    || isEmptyView(holder.getLayoutPosition()))) {
                 StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
                 p.setFullSpan(true);
             }
@@ -613,6 +645,13 @@ public class JRecyclerView extends RecyclerView {
     }
 
     /**
+     * 获取空布局的个数
+     */
+    int getEmptyViewSize() {
+        return mIsUseEmpty && mEmptyLayout != null && mEmptyLayout.getChildCount() != 0 ? 1 : 0;
+    }
+
+    /**
      * 获取 HeaderView的个数
      */
     int getHeadersCount() {
@@ -631,7 +670,7 @@ public class JRecyclerView extends RecyclerView {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onClick(v, viewHolder.getLayoutPosition() - (getHeadersCount() + getPullHeaderSize()));
+                    onItemClickListener.onClick(v, viewHolder.getLayoutPosition() - (getHeadersCount() + getPullHeaderSize() + getEmptyViewSize()));
                 }
             });
         }
@@ -639,22 +678,33 @@ public class JRecyclerView extends RecyclerView {
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    return onItemLongClickListener.onLongClick(v, viewHolder.getLayoutPosition() - (getHeadersCount() + getPullHeaderSize()));
+                    return onItemLongClickListener.onLongClick(v, viewHolder.getLayoutPosition() - (getHeadersCount() + getPullHeaderSize() + getEmptyViewSize()));
                 }
             });
         }
     }
 
-    public void setLoadingListener(LoadingListener listener) {
-        mLoadingListener = listener;
-    }
 
-    public interface LoadingListener {
-
-        void onRefresh();
+    public interface OnLoadMoreListener {
 
         void onLoadMore();
     }
+
+    public interface OnRefreshListener {
+
+        void onRefresh();
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener listener) {
+        setLoadMoreEnabled(true);
+        mLoadMoreListener = listener;
+    }
+
+    public void setOnRefreshListener(OnRefreshListener listener) {
+        setRefreshEnabled(true);
+        mRefreshListener = listener;
+    }
+
 
     @Override
     protected void onAttachedToWindow() {
@@ -694,7 +744,7 @@ public class JRecyclerView extends RecyclerView {
      * 如果使用控件自带的下拉刷新，则计算position时需要算上
      */
     private int getPullHeaderSize() {
-        if (pullRefreshEnabled) {
+        if (mRefreshEnabled && mRefreshListener != null) {
             return 1;
         } else {
             return 0;
@@ -705,11 +755,83 @@ public class JRecyclerView extends RecyclerView {
      * 如果使用上拉刷新，则计算position时需要算上
      */
     private int getLoadingMoreSize() {
-        if (loadingMoreEnabled) {
+        if (mLoadMoreEnabled) {
             return 1;
         } else {
             return 0;
         }
+    }
+
+    /**
+     * @param layoutResId layoutResId
+     * @param viewGroup   recyclerView.getParent()
+     */
+    public void setEmptyView(int layoutResId, ViewGroup viewGroup) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(layoutResId, viewGroup, false);
+        setEmptyView(view);
+    }
+
+    public void setIsUseEmpty(boolean issUseEmpty) {
+        this.mIsUseEmpty = issUseEmpty;
+    }
+
+    public void setEmptyView(View emptyView) {
+        boolean insert = false;
+        if (mEmptyLayout == null) {
+            mEmptyLayout = new FrameLayout(emptyView.getContext());
+            final LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            final ViewGroup.LayoutParams lp = emptyView.getLayoutParams();
+            if (lp != null) {
+                layoutParams.width = lp.width;
+                layoutParams.height = lp.height;
+            }
+            mEmptyLayout.setLayoutParams(layoutParams);
+            insert = true;
+        }
+        mEmptyLayout.removeAllViews();
+        mEmptyLayout.addView(emptyView);
+        mIsUseEmpty = true;
+        if (insert) {
+            if (getEmptyViewSize() == 1) {
+                int position = getHeadersCount() + getPullHeaderSize();
+                if (mWrapAdapter != null) {
+                    mWrapAdapter.getOriginalAdapter().notifyItemInserted(position);
+                }
+            }
+        }
+    }
+
+    /**
+     * 设置下拉时候的偏移计量因子。y = deltaY/mDragRate，默认值 3
+     *
+     * @param rate 越大，意味着，用户要下拉滑动更久来触发下拉刷新。相反越小，就越短距离
+     */
+    public void setDragRate(float rate) {
+        if (rate <= 0.5) {
+            return;
+        }
+        mDragRate = rate;
+    }
+
+    public interface OnItemClickListener {
+
+        void onClick(View v, int position);
+    }
+
+    public interface OnItemLongClickListener {
+
+        boolean onLongClick(View v, int position);
+    }
+
+    private OnItemClickListener onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.onItemLongClickListener = listener;
     }
 
     /**
@@ -724,51 +846,9 @@ public class JRecyclerView extends RecyclerView {
             sHeaderTypes.clear();
             mHeaderViews = null;
         }
+        if (mEmptyLayout != null) {
+            mEmptyLayout.removeAllViews();
+            mEmptyLayout = null;
+        }
     }
-
-    /**
-     * Register a callback to be invoked when an item in this RecyclerView has
-     * been clicked.
-     *
-     * @param listener The callback that will be invoked.
-     */
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.onItemClickListener = listener;
-    }
-
-
-    /**
-     * Register a callback to be invoked when an item in this RecyclerView has
-     * been long clicked and held
-     *
-     * @param listener The callback that will run
-     */
-    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        this.onItemLongClickListener = listener;
-    }
-
-    public interface OnItemClickListener {
-        /**
-         * Called when a view has been clicked.
-         *
-         * @param v        The view that was clicked.
-         * @param position The position of the view in the adapter.
-         */
-        void onClick(View v, int position);
-    }
-
-    public interface OnItemLongClickListener {
-
-        /**
-         * Called when a view has been clicked and held.
-         *
-         * @param v        The view that was clicked and held.
-         * @param position The position of the view in the adapter.
-         * @return true if the callback consumed the long click, false otherwise.
-         */
-        boolean onLongClick(View v, int position);
-    }
-
-    private OnItemClickListener onItemClickListener;
-    private OnItemLongClickListener onItemLongClickListener;
 }
