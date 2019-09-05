@@ -57,7 +57,7 @@ public class JRecyclerView extends RecyclerView {
     /**
      * 是否使用EmptyView
      */
-    private boolean mIsUseEmpty = true;
+    private boolean mEmptyViewEnabled = true;
     /**
      * 是否正在加载更多
      */
@@ -435,7 +435,7 @@ public class JRecyclerView extends RecyclerView {
          * 是否是 EmptyView 布局
          */
         boolean isEmptyView(int position) {
-            return mIsUseEmpty && mEmptyLayout != null && position == mHeaderViews.size() + getPullHeaderSize();
+            return mEmptyViewEnabled && mEmptyLayout != null && position == mHeaderViews.size() + getPullHeaderSize();
         }
 
         /**
@@ -524,9 +524,9 @@ public class JRecyclerView extends RecyclerView {
         @Override
         public int getItemCount() {
             if (adapter != null) {
-                return getPullHeaderSize() + getHeadersCount() + adapter.getItemCount() + getLoadingMoreSize() + getEmptyViewSize();
+                return getPullHeaderSize() + getHeadersCount() + adapter.getItemCount() + getLoadMoreSize() + getEmptyViewSize();
             } else {
-                return getPullHeaderSize() + getHeadersCount() + getLoadingMoreSize() + getEmptyViewSize();
+                return getPullHeaderSize() + getHeadersCount() + getLoadMoreSize() + getEmptyViewSize();
             }
         }
 
@@ -648,7 +648,7 @@ public class JRecyclerView extends RecyclerView {
      * 获取空布局的个数
      */
     int getEmptyViewSize() {
-        return mIsUseEmpty && mEmptyLayout != null && mEmptyLayout.getChildCount() != 0 ? 1 : 0;
+        return mEmptyViewEnabled && mEmptyLayout != null && mEmptyLayout.getChildCount() != 0 ? 1 : 0;
     }
 
     /**
@@ -754,7 +754,7 @@ public class JRecyclerView extends RecyclerView {
     /**
      * 如果使用上拉刷新，则计算position时需要算上
      */
-    private int getLoadingMoreSize() {
+    private int getLoadMoreSize() {
         if (mLoadMoreEnabled) {
             return 1;
         } else {
@@ -771,8 +771,11 @@ public class JRecyclerView extends RecyclerView {
         setEmptyView(view);
     }
 
-    public void setIsUseEmpty(boolean issUseEmpty) {
-        this.mIsUseEmpty = issUseEmpty;
+    /**
+     * 设置是否显示 EmptyView
+     */
+    public void setEmptyViewEnabled(boolean emptyViewEnabled) {
+        this.mEmptyViewEnabled = emptyViewEnabled;
     }
 
     public void setEmptyView(View emptyView) {
@@ -790,7 +793,7 @@ public class JRecyclerView extends RecyclerView {
         }
         mEmptyLayout.removeAllViews();
         mEmptyLayout.addView(emptyView);
-        mIsUseEmpty = true;
+        mEmptyViewEnabled = true;
         if (insert) {
             if (getEmptyViewSize() == 1) {
                 int position = getHeadersCount() + getPullHeaderSize();
