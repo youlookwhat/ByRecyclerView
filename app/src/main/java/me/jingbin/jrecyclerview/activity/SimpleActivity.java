@@ -36,37 +36,15 @@ public class SimpleActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(homeAdapter);
-        recyclerView.setPullRefreshEnabled(false);
         homeAdapter.addAll(get());
         recyclerView.loadMoreComplete();
-        recyclerView.setLoadingListener(new JRecyclerView.LoadingListener() {
+        recyclerView.setOnRefreshListener(new JRecyclerView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 1;
-                recyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        recyclerView.reset();
-                    }
-                },1000);
-            }
-
-            @Override
-            public void onLoadMore() {
-                recyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (page == 2) {
-                            recyclerView.noMoreLoading();
-                        } else {
-                            page++;
-                            homeAdapter.addAll(get());
-                            recyclerView.loadMoreComplete();
-                        }
-                    }
-                }, 1000);
+                recyclerView.refreshComplete();
             }
         });
+
     }
 
     private ArrayList<HomeItemBean> get() {

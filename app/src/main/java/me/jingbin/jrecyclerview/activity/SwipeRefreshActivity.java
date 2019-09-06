@@ -75,45 +75,68 @@ public class SwipeRefreshActivity extends AppCompatActivity {
     private void initAdapter() {
         // (ViewGroup) recyclerView.getParent()
         ItemHomeBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.item_home, (ViewGroup) recyclerView.getParent(), false);
+        final ItemHomeBinding headerBinding7 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.item_home, (ViewGroup) recyclerView.getParent(), false);
         headerBinding2 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.item_home, (ViewGroup) recyclerView.getParent(), false);
 
         headerBinding.tvText.setText("header_1");
         headerBinding2.tvText.setText("header_2");
+        headerBinding.tvText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.addHeaderView(headerBinding7.getRoot(), true);
+            }
+        });
+        headerBinding2.tvText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                page = 1;
+                recyclerView.reset();
+                recyclerView.setEmptyViewEnabled(false);
+                homeAdapter.addAll(get());
+                homeAdapter.notifyDataSetChanged();
+                recyclerView.loadMoreComplete();
+            }
+        });
         homeAdapter = new HomeAdapter();
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(null);
+//        recyclerView.setItemAnimator(null);
         recyclerView.addHeaderView(headerBinding.getRoot());
         recyclerView.addHeaderView(headerBinding2.getRoot());
-        MyDividerItemDecoration itemDecoration = new MyDividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL, false, true, true);
+        MyDividerItemDecoration itemDecoration = new MyDividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL, false, false, false);
         itemDecoration.setDrawable(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.shape_line));
         recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setEmptyView(R.layout.layout_empty, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(homeAdapter);
 
-        homeAdapter.addAll(get());
-        homeAdapter.notifyDataSetChanged();
-        recyclerView.loadMoreComplete();
-        recyclerView.setLoadingListener(new JRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                page = 1;
-                recyclerView.reset();
-            }
+        recyclerView.setEmptyView(R.layout.layout_empty, (ViewGroup) recyclerView.getParent());
 
+        recyclerView.setOnLoadMoreListener(new JRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+                page++;
                 recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (page == 2) {
-                            recyclerView.noMoreLoading();
-                        } else {
-                            page++;
-                            homeAdapter.addAll(get());
-                            homeAdapter.notifyDataSetChanged();
-                            recyclerView.loadMoreComplete();
-                        }
+
+
+                        homeAdapter.clear();
+                        homeAdapter.addAll(get());
+                        homeAdapter.notifyDataSetChanged();
+                        recyclerView.setEmptyViewEnabled(false);
+                        recyclerView.loadMoreEnd();
+
+//                        if (page == 2) {
+//                            recyclerView.setEmptyView(R.layout.layout_empty, (ViewGroup) recyclerView.getParent());
+//                            recyclerView.noMoreLoading();
+//                        } else {
+//                            recyclerView.setIsUseEmpty(false);
+//                            page++;
+//                            homeAdapter.addAll(get());
+//                            homeAdapter.notifyDataSetChanged();
+//                            recyclerView.loadMoreComplete();
+//                        }
                     }
                 }, 2000);
             }
@@ -123,6 +146,10 @@ public class SwipeRefreshActivity extends AppCompatActivity {
             public void onClick(View v, int position) {
                 homeAdapter.getItemData(position);
                 ToastUtil.showToast(position + "-----" + homeAdapter.getItemData(position).getTitle());
+                ItemHomeBinding headerBinding3 = DataBindingUtil.inflate(LayoutInflater.from(SwipeRefreshActivity.this), R.layout.item_home, (ViewGroup) recyclerView.getParent(), false);
+                headerBinding3.tvText.setText(homeAdapter.getItemData(position).getTitle());
+                recyclerView.addHeaderView(headerBinding3.getRoot());
+                homeAdapter.notifyDataSetChanged();
             }
         });
         recyclerView.setOnItemLongClickListener(new JRecyclerView.OnItemLongClickListener() {
@@ -142,5 +169,11 @@ public class SwipeRefreshActivity extends AppCompatActivity {
             list.add(bean);
         }
         return list;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        recyclerView.destroy();
     }
 }
