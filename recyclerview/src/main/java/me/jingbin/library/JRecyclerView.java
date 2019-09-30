@@ -77,6 +77,7 @@ public class JRecyclerView extends RecyclerView {
      */
     private boolean mLoadMoreEnabled = false;
     private boolean mFootViewEnabled = false;
+    private boolean mHeaderViewEnabled = false;
     /**
      * 手指是否上滑
      */
@@ -123,6 +124,7 @@ public class JRecyclerView extends RecyclerView {
     public void addHeaderView(View headerView, boolean isNotify) {
         sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(headerView);
+        mHeaderViewEnabled = true;
         if (mWrapAdapter != null && isNotify) {
             mWrapAdapter.getOriginalAdapter().notifyItemInserted(getPullHeaderSize() + getHeadersCount() - 1);
         }
@@ -446,7 +448,7 @@ public class JRecyclerView extends RecyclerView {
          * 是否是 HeaderView 布局
          */
         boolean isHeaderView(int position) {
-            return position >= getPullHeaderSize() && position < mHeaderViews.size() + getPullHeaderSize();
+            return mHeaderViewEnabled && position >= getPullHeaderSize() && position < mHeaderViews.size() + getPullHeaderSize();
         }
 
         /**
@@ -687,7 +689,7 @@ public class JRecyclerView extends RecyclerView {
      * 获取 HeaderView的个数
      */
     int getHeadersCount() {
-        return mHeaderViews.size();
+        return mHeaderViewEnabled ? mHeaderViews.size() : 0;
     }
 
     /**
@@ -880,6 +882,18 @@ public class JRecyclerView extends RecyclerView {
         return index;
     }
 
+    public void setHeaderViewEnabled(boolean headerViewEnabled) {
+        this.mHeaderViewEnabled = headerViewEnabled;
+        if (!mHeaderViewEnabled) {
+            if (mHeaderViews.size() > 0) {
+                if (mWrapAdapter != null) {
+                    mWrapAdapter.getOriginalAdapter().notifyItemRangeRemoved(getPullHeaderSize(), mHeaderViews.size());
+                    mHeaderViews.clear();
+                }
+            }
+        }
+    }
+
     public void setFootViewEnabled(boolean footViewEnabled) {
         this.mFootViewEnabled = footViewEnabled;
         if (!mFootViewEnabled) {
@@ -964,6 +978,8 @@ public class JRecyclerView extends RecyclerView {
      * call it when you finish the activity,
      */
     public void destroy() {
+        mLoadMoreEnabled = false;
+        mRefreshEnabled = false;
         if (mHeaderViews != null) {
             mHeaderViews.clear();
             mHeaderViews = null;
