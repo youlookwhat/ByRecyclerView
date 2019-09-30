@@ -25,11 +25,11 @@ import me.jingbin.jrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.jrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.jrecyclerview.utils.ToastUtil;
 import me.jingbin.jrecyclerview.view.MyDividerItemDecoration;
-import me.jingbin.library.JRecyclerView;
+import me.jingbin.library.ByRecyclerView;
 
 public class SwipeRefreshActivity extends AppCompatActivity {
 
-    private JRecyclerView recyclerView;
+    private ByRecyclerView recyclerView;
     private HomeAdapter homeAdapter;
     private int page = 1;
     private TextView tvPosition;
@@ -116,7 +116,7 @@ public class SwipeRefreshActivity extends AppCompatActivity {
 
         recyclerView.setEmptyView(R.layout.layout_empty, (ViewGroup) recyclerView.getParent());
 
-        recyclerView.setOnLoadMoreListener(new JRecyclerView.OnLoadMoreListener() {
+        recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 page++;
@@ -145,7 +145,7 @@ public class SwipeRefreshActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
-        recyclerView.setOnItemClickListener(new JRecyclerView.OnItemClickListener() {
+        recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
                 homeAdapter.getItemData(position);
@@ -156,7 +156,7 @@ public class SwipeRefreshActivity extends AppCompatActivity {
                 homeAdapter.notifyDataSetChanged();
             }
         });
-        recyclerView.setOnItemLongClickListener(new JRecyclerView.OnItemLongClickListener() {
+        recyclerView.setOnItemLongClickListener(new ByRecyclerView.OnItemLongClickListener() {
             @Override
             public boolean onLongClick(View v, int position) {
                 ToastUtil.showToast(position + "---长按--" + homeAdapter.getItemData(position).getTitle());

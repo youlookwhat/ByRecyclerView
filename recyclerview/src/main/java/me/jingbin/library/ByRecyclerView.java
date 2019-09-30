@@ -27,7 +27,7 @@ import java.util.List;
  * @author jingbin
  * link to https://github.com/youlookwhat/JRecyclerView
  */
-public class JRecyclerView extends RecyclerView {
+public class ByRecyclerView extends RecyclerView {
 
     /**
      * 下面的ItemViewType是保留值(ReservedItemViewType),如果用户的adapter与它们重复将会强制抛出异常。
@@ -97,15 +97,15 @@ public class JRecyclerView extends RecyclerView {
     private float mPullStartY = 0;
     private float mDragRate = 3;
 
-    public JRecyclerView(Context context) {
+    public ByRecyclerView(Context context) {
         this(context, null);
     }
 
-    public JRecyclerView(Context context, AttributeSet attrs) {
+    public ByRecyclerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public JRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public ByRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }

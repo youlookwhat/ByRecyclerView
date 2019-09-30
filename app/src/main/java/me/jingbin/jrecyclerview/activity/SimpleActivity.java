@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -19,13 +17,13 @@ import me.jingbin.jrecyclerview.adapter.HomeAdapter;
 import me.jingbin.jrecyclerview.bean.HomeItemBean;
 import me.jingbin.jrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.jrecyclerview.databinding.LayoutHeaderViewBinding;
-import me.jingbin.library.JRecyclerView;
+import me.jingbin.library.ByRecyclerView;
 
 public class SimpleActivity extends AppCompatActivity {
 
     private int page = 1;
     private HomeAdapter homeAdapter;
-    private JRecyclerView recyclerView;
+    private ByRecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +59,14 @@ public class SimpleActivity extends AppCompatActivity {
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.addAll(get());
         recyclerView.loadMoreComplete();
-        recyclerView.setOnLoadMoreListener(new JRecyclerView.OnLoadMoreListener() {
+        recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
 
             }
         });
         recyclerView.setLoadMoreEnabled(false);
-        recyclerView.setOnRefreshListener(new JRecyclerView.OnRefreshListener() {
+        recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 recyclerView.refreshComplete();

@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <me.jingbin.library.JRecyclerView
+        <me.jingbin.library.ByRecyclerView
             android:scrollbars="vertical"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

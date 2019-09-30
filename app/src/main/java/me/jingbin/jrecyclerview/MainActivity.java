@@ -14,10 +14,12 @@ import android.view.View;
 import me.jingbin.jrecyclerview.activity.SimpleActivity;
 import me.jingbin.jrecyclerview.activity.SwipeRefreshActivity;
 import me.jingbin.jrecyclerview.adapter.HomeAdapter;
+import me.jingbin.jrecyclerview.adapter.MainAdapter;
 import me.jingbin.jrecyclerview.bean.HomeItemBean;
+import me.jingbin.jrecyclerview.bean.MainItemBean;
 import me.jingbin.jrecyclerview.databinding.ActivityMainBinding;
 import me.jingbin.jrecyclerview.utils.DataUtil;
-import me.jingbin.library.JRecyclerView;
+import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.config.ByDividerItemDecoration;
 
 /**
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
 
-        final HomeAdapter homeAdapter = new HomeAdapter(DataUtil.getMainActivityList());
+        final MainAdapter homeAdapter = new MainAdapter(DataUtil.getMainActivityList());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -42,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
         ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.VERTICAL, false);
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
-        binding.recyclerView.setOnItemClickListener(new JRecyclerView.OnItemClickListener() {
+        binding.recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                HomeItemBean itemData = homeAdapter.getItemData(position);
+                MainItemBean itemData = homeAdapter.getItemData(position);
                 startActivity(new Intent(MainActivity.this, itemData.getCls()));
             }
         });
