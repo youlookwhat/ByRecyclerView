@@ -1,5 +1,7 @@
 package me.jingbin.jrecyclerview.utils;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +18,18 @@ public class DataUtil {
     /**
      * 首页的数据
      */
-    public static List<MainItemBean> getMainActivityList() {
+    public static List<MainItemBean> getMainActivityList(Context context) {
         ArrayList<MainItemBean> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            MainItemBean itemBean = new MainItemBean();
-            itemBean.setTitle("基本使用");
-            itemBean.setCls(SimpleActivity.class);
-            list.add(itemBean);
-        }
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("基本使用", SimpleActivity.class));
         return list;
     }
 

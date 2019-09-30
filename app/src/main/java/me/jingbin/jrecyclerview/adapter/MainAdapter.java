@@ -10,6 +10,7 @@ import me.jingbin.jrecyclerview.R;
 import me.jingbin.jrecyclerview.bean.HomeItemBean;
 import me.jingbin.jrecyclerview.bean.MainItemBean;
 import me.jingbin.jrecyclerview.databinding.ItemHomeBinding;
+import me.jingbin.jrecyclerview.databinding.ItemMainBinding;
 import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseRecyclerViewHolder;
 
@@ -17,8 +18,6 @@ import me.jingbin.library.adapter.BaseRecyclerViewHolder;
  * @author jingbin
  */
 public class MainAdapter extends BaseRecyclerViewAdapter<MainItemBean> {
-    public MainAdapter() {
-    }
 
     public MainAdapter(List<MainItemBean> data) {
         super(data);
@@ -27,23 +26,17 @@ public class MainAdapter extends BaseRecyclerViewAdapter<MainItemBean> {
     @NonNull
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(parent, R.layout.item_home);
+        return new ViewHolder(parent, R.layout.item_main);
     }
 
-    private class ViewHolder extends BaseRecyclerViewHolder<MainItemBean, ItemHomeBinding> {
+    private class ViewHolder extends BaseRecyclerViewHolder<MainItemBean, ItemMainBinding> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
         @Override
         public void onBindViewHolder(MainItemBean bean, final int position) {
-            binding.tvText.setText(bean.getTitle());
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    LogHelper.e("内部点击:" + position);
-//                }
-//            });
+            binding.tvText.setText(position + 1 + "、 " + bean.getTitle());
         }
     }
 }

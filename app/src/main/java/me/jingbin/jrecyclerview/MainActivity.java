@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
 
-        final MainAdapter homeAdapter = new MainAdapter(DataUtil.getMainActivityList());
+        final MainAdapter homeAdapter = new MainAdapter(DataUtil.getMainActivityList(this));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, itemData.getCls()));
             }
         });
+        binding.recyclerView.setLoadMoreEnabled(true);
+        binding.recyclerView.loadMoreEnd();
     }
 
 
