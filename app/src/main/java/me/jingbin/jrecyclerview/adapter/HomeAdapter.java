@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 import me.jingbin.jrecyclerview.R;
 import me.jingbin.jrecyclerview.bean.HomeItemBean;
 import me.jingbin.jrecyclerview.databinding.ItemHomeBinding;
@@ -16,6 +18,12 @@ import me.jingbin.library.adapter.BaseRecyclerViewHolder;
  * @author jingbin
  */
 public class HomeAdapter extends BaseRecyclerViewAdapter<HomeItemBean> {
+    public HomeAdapter() {
+    }
+
+    public HomeAdapter(List<HomeItemBean> data) {
+        super(data);
+    }
 
     @NonNull
     @Override

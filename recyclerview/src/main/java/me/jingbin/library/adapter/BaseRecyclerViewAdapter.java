@@ -15,6 +15,13 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     private List<T> data = new ArrayList<>();
 
+    public BaseRecyclerViewAdapter() {
+    }
+
+    public BaseRecyclerViewAdapter(List<T> data) {
+        this.data = data;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull BaseRecyclerViewHolder holder, final int position) {
         holder.onBaseBindViewHolder(data.get(position), position);

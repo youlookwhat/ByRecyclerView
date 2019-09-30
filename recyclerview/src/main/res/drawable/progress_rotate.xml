@@ -6,7 +6,7 @@
     android:toDegrees="360">
 
     <shape
-        android:innerRadius="9dp"
+        android:innerRadius="6dp"
         android:innerRadiusRatio="3"
         android:shape="ring"
         android:thickness="2dp"
@@ -18,10 +18,10 @@
             android:height="45dp" />
 
         <gradient
-            android:centerColor="#DDbd87fd"
+            android:centerColor="#DDbbbbbb"
             android:centerY="0.50"
-            android:endColor="#AC69FE"
-            android:startColor="#00e0c7fd"
+            android:endColor="#bbbbbb"
+            android:startColor="#00bbbbbb"
             android:type="sweep"
             android:useLevel="false" />
     </shape>

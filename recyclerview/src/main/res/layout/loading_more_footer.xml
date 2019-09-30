@@ -14,7 +14,8 @@
         <ProgressBar
             android:id="@+id/iv_progress"
             android:layout_width="18dp"
-            android:layout_height="18dp" />
+            android:layout_height="18dp"
+            android:indeterminateDrawable="@drawable/progress_rotate" />
 
         <TextView
             android:id="@+id/msg"

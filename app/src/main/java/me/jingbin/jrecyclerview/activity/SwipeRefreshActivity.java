@@ -21,6 +21,8 @@ import me.jingbin.jrecyclerview.R;
 import me.jingbin.jrecyclerview.adapter.HomeAdapter;
 import me.jingbin.jrecyclerview.bean.HomeItemBean;
 import me.jingbin.jrecyclerview.databinding.ItemHomeBinding;
+import me.jingbin.jrecyclerview.databinding.LayoutFooterViewBinding;
+import me.jingbin.jrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.jrecyclerview.utils.ToastUtil;
 import me.jingbin.jrecyclerview.view.MyDividerItemDecoration;
 import me.jingbin.library.JRecyclerView;
@@ -76,6 +78,8 @@ public class SwipeRefreshActivity extends AppCompatActivity {
         // (ViewGroup) recyclerView.getParent()
         ItemHomeBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.item_home, (ViewGroup) recyclerView.getParent(), false);
         final ItemHomeBinding headerBinding7 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.item_home, (ViewGroup) recyclerView.getParent(), false);
+        final LayoutHeaderViewBinding headerViewBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) recyclerView.getParent(), false);
+        final LayoutFooterViewBinding footerViewBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) recyclerView.getParent(), false);
         headerBinding2 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.item_home, (ViewGroup) recyclerView.getParent(), false);
 
         headerBinding.tvText.setText("header_1");
@@ -83,7 +87,7 @@ public class SwipeRefreshActivity extends AppCompatActivity {
         headerBinding.tvText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.addHeaderView(headerBinding7.getRoot(), true);
+                recyclerView.addHeaderView(headerViewBinding.getRoot());
             }
         });
         headerBinding2.tvText.setOnClickListener(new View.OnClickListener() {
@@ -101,9 +105,9 @@ public class SwipeRefreshActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setItemAnimator(null);
         recyclerView.addHeaderView(headerBinding.getRoot());
         recyclerView.addHeaderView(headerBinding2.getRoot());
+        recyclerView.addFooterView(footerViewBinding.getRoot());
         MyDividerItemDecoration itemDecoration = new MyDividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL, false, false, false);
         itemDecoration.setDrawable(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.shape_line));
         recyclerView.addItemDecoration(itemDecoration);

@@ -1,6 +1,6 @@
 package me.jingbin.jrecyclerview.bean;
 
-public class HomeItemBean {
+public class MainItemBean {
 
     private String title;
     private Class<?> cls;
