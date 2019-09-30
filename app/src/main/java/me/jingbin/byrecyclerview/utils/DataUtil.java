@@ -1,12 +1,12 @@
-package me.jingbin.jrecyclerview.utils;
+package me.jingbin.byrecyclerview.utils;
 
 import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.jingbin.jrecyclerview.activity.SimpleActivity;
-import me.jingbin.jrecyclerview.bean.MainItemBean;
+import me.jingbin.byrecyclerview.activity.SimpleActivity;
+import me.jingbin.byrecyclerview.bean.MainItemBean;
 
 /**
  * 生成数据工具类

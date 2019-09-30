@@ -1,4 +1,4 @@
-package me.jingbin.jrecyclerview;
+package me.jingbin.byrecyclerview;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -11,14 +11,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import me.jingbin.jrecyclerview.activity.SimpleActivity;
-import me.jingbin.jrecyclerview.activity.SwipeRefreshActivity;
-import me.jingbin.jrecyclerview.adapter.HomeAdapter;
-import me.jingbin.jrecyclerview.adapter.MainAdapter;
-import me.jingbin.jrecyclerview.bean.HomeItemBean;
-import me.jingbin.jrecyclerview.bean.MainItemBean;
-import me.jingbin.jrecyclerview.databinding.ActivityMainBinding;
-import me.jingbin.jrecyclerview.utils.DataUtil;
+import me.jingbin.byrecyclerview.activity.SimpleActivity;
+import me.jingbin.byrecyclerview.activity.SwipeRefreshActivity;
+import me.jingbin.byrecyclerview.adapter.MainAdapter;
+import me.jingbin.byrecyclerview.bean.MainItemBean;
+import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
+import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.config.ByDividerItemDecoration;
 

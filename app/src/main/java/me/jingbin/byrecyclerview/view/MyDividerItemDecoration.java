@@ -1,4 +1,4 @@
-package me.jingbin.jrecyclerview.view;
+package me.jingbin.byrecyclerview.view;
 
 /**
  * @author jingbin

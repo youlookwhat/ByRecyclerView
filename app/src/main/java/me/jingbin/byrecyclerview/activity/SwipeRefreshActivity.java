@@ -1,4 +1,4 @@
-package me.jingbin.jrecyclerview.activity;
+package me.jingbin.byrecyclerview.activity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,14 +17,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 
-import me.jingbin.jrecyclerview.R;
-import me.jingbin.jrecyclerview.adapter.HomeAdapter;
-import me.jingbin.jrecyclerview.bean.HomeItemBean;
-import me.jingbin.jrecyclerview.databinding.ItemHomeBinding;
-import me.jingbin.jrecyclerview.databinding.LayoutFooterViewBinding;
-import me.jingbin.jrecyclerview.databinding.LayoutHeaderViewBinding;
-import me.jingbin.jrecyclerview.utils.ToastUtil;
-import me.jingbin.jrecyclerview.view.MyDividerItemDecoration;
+import me.jingbin.byrecyclerview.R;
+import me.jingbin.byrecyclerview.adapter.HomeAdapter;
+import me.jingbin.byrecyclerview.bean.HomeItemBean;
+import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
+import me.jingbin.byrecyclerview.utils.ToastUtil;
+import me.jingbin.byrecyclerview.view.MyDividerItemDecoration;
 import me.jingbin.library.ByRecyclerView;
 
 public class SwipeRefreshActivity extends AppCompatActivity {

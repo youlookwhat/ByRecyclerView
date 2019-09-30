@@ -1,14 +1,9 @@
-package me.jingbin.jrecyclerview.bean;
+package me.jingbin.byrecyclerview.bean;
 
-public class MainItemBean {
+public class HomeItemBean {
 
     private String title;
     private Class<?> cls;
-
-    public MainItemBean(String title, Class<?> cls) {
-        this.title = title;
-        this.cls = cls;
-    }
 
     public Class<?> getCls() {
         return cls;

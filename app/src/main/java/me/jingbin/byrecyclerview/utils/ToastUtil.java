@@ -1,8 +1,8 @@
-package me.jingbin.jrecyclerview.utils;
+package me.jingbin.byrecyclerview.utils;
 
 import android.widget.Toast;
 
-import me.jingbin.jrecyclerview.App;
+import me.jingbin.byrecyclerview.App;
 
 /**
  * @author jingbin

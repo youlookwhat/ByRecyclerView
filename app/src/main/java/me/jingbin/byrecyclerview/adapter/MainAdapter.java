@@ -1,4 +1,4 @@
-package me.jingbin.jrecyclerview.adapter;
+package me.jingbin.byrecyclerview.adapter;
 
 import android.view.ViewGroup;
 
@@ -6,11 +6,9 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
-import me.jingbin.jrecyclerview.R;
-import me.jingbin.jrecyclerview.bean.HomeItemBean;
-import me.jingbin.jrecyclerview.bean.MainItemBean;
-import me.jingbin.jrecyclerview.databinding.ItemHomeBinding;
-import me.jingbin.jrecyclerview.databinding.ItemMainBinding;
+import me.jingbin.byrecyclerview.R;
+import me.jingbin.byrecyclerview.bean.MainItemBean;
+import me.jingbin.byrecyclerview.databinding.ItemMainBinding;
 import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseRecyclerViewHolder;
 

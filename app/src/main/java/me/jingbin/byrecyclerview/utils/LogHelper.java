@@ -1,4 +1,4 @@
-package me.jingbin.jrecyclerview.utils;
+package me.jingbin.byrecyclerview.utils;
 
 import android.util.Log;
 
