@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".activity.SwipeRefreshActivity" />
         <activity android:name=".activity.SimpleActivity" />
+        <activity android:name=".activity.RefreshActivity" />
     </application>
 
 </manifest>

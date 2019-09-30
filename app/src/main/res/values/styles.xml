@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--TabLayout 格式   app:tabGravity -->
+    <style name="tabLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+        <item name="tabMode">fixed</item>
+        <item name="android:fillViewport">false</item>
+    </style>
+    <!--<item name="tabTextColor">@color/colorPrimary</item>-->
+    <!--<item name="tabBackground">@drawable/ripple_tab_bg</item>-->
+    <!--<item name="tabIndicator">@drawable/shape_tab_indicator</item>-->
 </resources>

@@ -3,6 +3,7 @@ package me.jingbin.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DebugUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.jingbin.library.config.LogHelper;
 
 /**
  * @author jingbin
@@ -358,7 +361,11 @@ public class ByRecyclerView extends RecyclerView {
                 break;
             default:
                 // ==0 原点向下惯性滑动会有效
-                isScrollUp = mLoadMoreEnabled && ev.getY() - mPullStartY <= 0;
+//                isScrollUp = mLoadMoreEnabled && ev.getY() - mPullStartY <= 0;
+                // 按下的纵坐标 - 当前的纵坐标(为了更灵敏)
+                isScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10;
+                LogHelper.e("isScrollUp:  ", isScrollUp + " --- mPullStartY:  " + mPullStartY + " --- " + "ev.getY(): " + ev.getY());
+
                 mPullStartY = 0;
                 mLastY = -1;
                 if (mRefreshEnabled && mRefreshListener != null && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {

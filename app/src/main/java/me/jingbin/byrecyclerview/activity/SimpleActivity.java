@@ -1,87 +1,74 @@
 package me.jingbin.byrecyclerview.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.view.View;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import java.util.ArrayList;
-
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.adapter.HomeAdapter;
-import me.jingbin.byrecyclerview.bean.HomeItemBean;
-import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
-import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
+import me.jingbin.byrecyclerview.adapter.DataAdapter;
+import me.jingbin.byrecyclerview.app.BaseActivity;
+import me.jingbin.byrecyclerview.bean.DataItemBean;
+import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
+import me.jingbin.byrecyclerview.utils.DataUtil;
+import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
+import me.jingbin.library.config.ByDividerItemDecoration;
 
-public class SimpleActivity extends AppCompatActivity {
+/**
+ * @author jingbin
+ */
+public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
 
     private int page = 1;
-    private HomeAdapter homeAdapter;
-    private ByRecyclerView recyclerView;
+    private DataAdapter mAdapter;
+//    private ByRecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
+        setTitle("基本使用");
 
-        recyclerView = findViewById(R.id.recyclerView);
+//        recyclerView = findViewById(R.id.recyclerView);
         initAdapter();
     }
 
     private void initAdapter() {
-        final LayoutHeaderViewBinding header1 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) recyclerView.getParent(), false);
-        final LayoutHeaderViewBinding header2 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) recyclerView.getParent(), false);
-        final LayoutFooterViewBinding footerViewBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) recyclerView.getParent(), false);
-        final LayoutFooterViewBinding footerViewBinding2 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) recyclerView.getParent(), false);
-
-        homeAdapter = new HomeAdapter();
+        mAdapter = new DataAdapter(DataUtil.get(this, 6));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-
-
-        footerViewBinding2.tvText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                recyclerView.removeFooterView(footerViewBinding2.getRoot());
-                recyclerView.setHeaderViewEnabled(false);
-            }
-        });
-        recyclerView.addHeaderView(header1.getRoot());
-        recyclerView.addHeaderView(header2.getRoot());
-        recyclerView.addFooterView(footerViewBinding2.getRoot());
-        recyclerView.setAdapter(homeAdapter);
-        homeAdapter.addAll(get());
-        recyclerView.loadMoreComplete();
-        recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
+        binding.recyclerView.setLayoutManager(layoutManager);
+        ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.VERTICAL, false);
+        itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
+        binding.recyclerView.addItemDecoration(itemDecoration);
+        binding.recyclerView.setAdapter(mAdapter);
+        binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                binding.recyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (page == 3) {
+                            binding.recyclerView.loadMoreEnd();
+                            return;
+                        }
+                        page++;
+                        mAdapter.addAll(DataUtil.getMore(SimpleActivity.this, 20, page));
+                        binding.recyclerView.loadMoreComplete();
+                    }
+                }, 500);
             }
         });
-        recyclerView.setLoadMoreEnabled(false);
-        recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+        binding.recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
-            public void onRefresh() {
-                recyclerView.refreshComplete();
+            public void onClick(View v, int position) {
+                DataItemBean itemData = mAdapter.getItemData(position);
+                ToastUtil.showToast(itemData.getTitle());
             }
         });
-
-    }
-
-    private ArrayList<HomeItemBean> get() {
-        ArrayList<HomeItemBean> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            HomeItemBean bean = new HomeItemBean();
-            bean.setTitle("jingbin:" + i);
-            list.add(bean);
-        }
-        return list;
     }
 }

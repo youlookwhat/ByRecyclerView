@@ -9,10 +9,11 @@
         tools:context=".MainActivity">
 
         <me.jingbin.library.ByRecyclerView
-            android:scrollbars="vertical"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_main" />
         <!--<Button-->
         <!--android:id="@+id/bt_jichu"-->
         <!--style="@style/TextAppearance.AppCompat.Button"-->

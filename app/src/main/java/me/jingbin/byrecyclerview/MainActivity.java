@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 MainItemBean itemData = homeAdapter.getItemData(position);
-                startActivity(new Intent(MainActivity.this, itemData.getCls()));
+                if (itemData.getCls() != null) {
+                    startActivity(new Intent(MainActivity.this, itemData.getCls()));
+                }
             }
         });
         binding.recyclerView.setLoadMoreEnabled(true);

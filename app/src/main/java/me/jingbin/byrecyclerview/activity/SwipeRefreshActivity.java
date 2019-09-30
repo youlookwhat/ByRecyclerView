@@ -18,8 +18,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.adapter.HomeAdapter;
-import me.jingbin.byrecyclerview.bean.HomeItemBean;
+import me.jingbin.byrecyclerview.adapter.DataAdapter;
+import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
@@ -30,7 +30,7 @@ import me.jingbin.library.ByRecyclerView;
 public class SwipeRefreshActivity extends AppCompatActivity {
 
     private ByRecyclerView recyclerView;
-    private HomeAdapter homeAdapter;
+    private DataAdapter homeAdapter;
     private int page = 1;
     private TextView tvPosition;
 
@@ -101,7 +101,7 @@ public class SwipeRefreshActivity extends AppCompatActivity {
                 recyclerView.loadMoreComplete();
             }
         });
-        homeAdapter = new HomeAdapter();
+        homeAdapter = new DataAdapter();
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -165,10 +165,10 @@ public class SwipeRefreshActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<HomeItemBean> get() {
-        ArrayList<HomeItemBean> list = new ArrayList<>();
+    private ArrayList<DataItemBean> get() {
+        ArrayList<DataItemBean> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            HomeItemBean bean = new HomeItemBean();
+            DataItemBean bean = new DataItemBean();
             bean.setTitle("jingbin:" + i);
             list.add(bean);
         }

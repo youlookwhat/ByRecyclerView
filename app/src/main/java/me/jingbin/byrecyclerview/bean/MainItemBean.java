@@ -10,6 +10,10 @@ public class MainItemBean {
         this.cls = cls;
     }
 
+    public MainItemBean(String title) {
+        this.title = title;
+    }
+
     public Class<?> getCls() {
         return cls;
     }
