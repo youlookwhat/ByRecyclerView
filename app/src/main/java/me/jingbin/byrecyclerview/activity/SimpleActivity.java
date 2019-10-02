@@ -38,7 +38,7 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
     }
 
     private void initAdapter() {
-        mAdapter = new DataAdapter(DataUtil.get(this, 6));
+        mAdapter = new DataAdapter(binding.recyclerView,DataUtil.get(this, 6));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -57,7 +57,7 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
                             return;
                         }
                         page++;
-                        mAdapter.addAll(DataUtil.getMore(SimpleActivity.this, 20, page));
+                        mAdapter.addData(DataUtil.getMore(SimpleActivity.this, 20, page));
                         binding.recyclerView.loadMoreComplete();
                     }
                 }, 500);

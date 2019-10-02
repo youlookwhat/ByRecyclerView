@@ -3,7 +3,6 @@ package me.jingbin.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.DebugUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -196,7 +195,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     public void reset() {
-        setNoMore(false);
+//        setNoMore(false);
         loadMoreComplete();
         refreshComplete();
     }
@@ -695,7 +694,7 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 获取 HeaderView的个数
      */
-    int getHeadersCount() {
+    public int getHeadersCount() {
         return mHeaderViewEnabled ? mHeaderViews.size() : 0;
     }
 
@@ -790,7 +789,7 @@ public class ByRecyclerView extends RecyclerView {
      * 区别是否需要算上刷新布局
      * 如果使用控件自带的下拉刷新，则计算position时需要算上
      */
-    private int getPullHeaderSize() {
+    public int getPullHeaderSize() {
         if (mRefreshEnabled && mRefreshListener != null) {
             return 1;
         } else {

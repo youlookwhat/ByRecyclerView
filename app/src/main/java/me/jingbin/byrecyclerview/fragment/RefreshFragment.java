@@ -9,11 +9,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import me.jingbin.byrecyclerview.MainActivity;
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.activity.RefreshActivity;
 import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.FragmentRefreshBinding;
@@ -82,7 +79,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private void initAdapter() {
         recyclerView = getView(R.id.recyclerView);
-        mAdapter = new DataAdapter(DataUtil.get(activity, 6));
+        mAdapter = new DataAdapter(bindingView.recyclerView, DataUtil.get(activity, 6));
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -101,8 +98,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
                             return;
                         }
                         page++;
-                        mAdapter.addAll(DataUtil.getMore(activity, 6, page));
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.addData(DataUtil.getMore(activity, 6, page));
                         recyclerView.loadMoreComplete();
                     }
                 }, 500);
@@ -121,12 +117,8 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
                 recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        recyclerView.reset();
                         page = 1;
-                        mAdapter.clear();
-                        mAdapter.addAll(DataUtil.getMore(activity, 6, page));
-                        mAdapter.notifyDataSetChanged();
-                        recyclerView.refreshComplete();
+                        mAdapter.setNewData(DataUtil.getMore(activity, 6, page));
                     }
                 }, 500);
             }
