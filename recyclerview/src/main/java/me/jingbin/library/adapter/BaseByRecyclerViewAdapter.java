@@ -16,7 +16,7 @@ import me.jingbin.library.ByRecyclerView;
  * @author jingbin
  * link to https://github.com/youlookwhat/ByRecyclerView
  */
-public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
+public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseByRecyclerViewHolder> {
 
     /**
      * 如果使用ByRecyclerView，请先绑定。用于刷新列表定位。
@@ -24,24 +24,24 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     private ByRecyclerView mRecyclerView;
     private List<T> mData = new ArrayList<>();
 
-    public BaseRecyclerViewAdapter() {
+    public BaseByRecyclerViewAdapter() {
     }
 
-    public BaseRecyclerViewAdapter(ByRecyclerView recyclerView) {
+    public BaseByRecyclerViewAdapter(ByRecyclerView recyclerView) {
         this.mRecyclerView = recyclerView;
     }
 
-    public BaseRecyclerViewAdapter(List<T> data) {
+    public BaseByRecyclerViewAdapter(List<T> data) {
         this.mData = data;
     }
 
-    public BaseRecyclerViewAdapter(ByRecyclerView recyclerView, List<T> data) {
+    public BaseByRecyclerViewAdapter(ByRecyclerView recyclerView, List<T> data) {
         this.mRecyclerView = recyclerView;
         this.mData = data;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseRecyclerViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull BaseByRecyclerViewHolder holder, final int position) {
         holder.onBaseBindViewHolder(mData.get(position), position);
     }
 
@@ -78,7 +78,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         this.mData.retainAll(data);
     }
 
-    public List<T> getmData() {
+    public List<T> getData() {
         return mData;
     }
 
@@ -93,16 +93,20 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         mRecyclerView = recyclerView;
     }
 
+    public void addData(int position, T data) {
+        mData.add(position, data);
+        position = position + getRecyclerViewListTopViewSize();
+        notifyItemRangeInserted(position, 1);
+    }
+
     /**
      * 添加一条数据
      * 请注意是否绑定了recyclerView，如不绑定就是普通的RecyclerView操作
      */
     public void addData(T data) {
         int startPosition = mData.size();
-        this.mData.add(data);
-        if (mRecyclerView != null) {
-            startPosition = startPosition + mRecyclerView.getPullHeaderSize() + mRecyclerView.getHeadersCount();
-        }
+        mData.add(data);
+        startPosition = startPosition + getRecyclerViewListTopViewSize();
         notifyItemRangeInserted(startPosition, 1);
     }
 
@@ -112,9 +116,14 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     public void addData(List<T> data) {
         int startPosition = mData.size();
         this.mData.addAll(data);
-        if (mRecyclerView != null) {
-            startPosition = startPosition + mRecyclerView.getPullHeaderSize() + mRecyclerView.getHeadersCount();
-        }
+        startPosition = startPosition + getRecyclerViewListTopViewSize();
+        notifyItemRangeInserted(startPosition, data.size());
+    }
+
+    public void addData(int position, List<T> data) {
+        int startPosition = mData.size();
+        this.mData.addAll(data);
+        startPosition = startPosition + getRecyclerViewListTopViewSize();
         notifyItemRangeInserted(startPosition, data.size());
     }
 
@@ -139,14 +148,22 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
      */
     public void removeData(@IntRange(from = 0) int position) {
         mData.remove(position);
-        int internalPosition = position;
-        if (mRecyclerView != null) {
-            internalPosition = internalPosition + mRecyclerView.getPullHeaderSize() + mRecyclerView.getHeadersCount();
-        }
+        int internalPosition = position + getRecyclerViewListTopViewSize();
         notifyItemRemoved(internalPosition);
         // 如果移除的是最后一个，忽略
         if (position != mData.size()) {
             notifyItemRangeChanged(internalPosition, mData.size() - internalPosition);
+        }
+    }
+
+    /**
+     * RefreshView + HeaderView + EmptyView
+     */
+    private int getRecyclerViewListTopViewSize() {
+        if (mRecyclerView != null) {
+            return mRecyclerView.getPullHeaderSize() + mRecyclerView.getHeadersCount() + mRecyclerView.getEmptyViewSize();
+        } else {
+            return 0;
         }
     }
 }

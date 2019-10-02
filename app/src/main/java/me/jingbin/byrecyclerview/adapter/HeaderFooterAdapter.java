@@ -16,12 +16,10 @@ import me.jingbin.library.adapter.BaseByRecyclerViewHolder;
 /**
  * @author jingbin
  */
-public class DataAdapter extends BaseByRecyclerViewAdapter<DataItemBean> {
+public class HeaderFooterAdapter extends BaseByRecyclerViewAdapter<DataItemBean> {
 
-    public DataAdapter() {
-    }
 
-    public DataAdapter(ByRecyclerView recyclerView, List<DataItemBean> data) {
+    public HeaderFooterAdapter(ByRecyclerView recyclerView, List<DataItemBean> data) {
         super(recyclerView, data);
     }
 
@@ -41,4 +39,5 @@ public class DataAdapter extends BaseByRecyclerViewAdapter<DataItemBean> {
             binding.tvText.setText(bean.getTitle());
         }
     }
+
 }

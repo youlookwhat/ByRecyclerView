@@ -687,7 +687,7 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 获取空布局的个数
      */
-    int getEmptyViewSize() {
+    public int getEmptyViewSize() {
         return mEmptyViewEnabled && mEmptyLayout != null && mEmptyLayout.getChildCount() != 0 ? 1 : 0;
     }
 

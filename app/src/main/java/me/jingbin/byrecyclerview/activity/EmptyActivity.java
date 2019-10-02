@@ -1,9 +1,12 @@
 package me.jingbin.byrecyclerview.activity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +16,9 @@ import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutEmptyBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
@@ -21,7 +27,7 @@ import me.jingbin.library.config.ByDividerItemDecoration;
 /**
  * @author jingbin
  */
-public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
+public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
 
     private int page = 1;
     private DataAdapter mAdapter;
@@ -30,13 +36,18 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        setTitle("基本使用");
+        setTitle("设置EmptyView");
 
         initAdapter();
     }
 
     private void initAdapter() {
-        mAdapter = new DataAdapter(binding.recyclerView,DataUtil.get(this, 6));
+        LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
+        LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) binding.recyclerView.getParent(), false);
+        LayoutEmptyBinding emptyBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_empty, (ViewGroup) binding.recyclerView.getParent(), false);
+
+
+        mAdapter = new DataAdapter(binding.recyclerView, DataUtil.get(this, 6));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -50,12 +61,12 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
                 binding.recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (page == 3) {
+                        if (page == 2) {
                             binding.recyclerView.loadMoreEnd();
                             return;
                         }
                         page++;
-                        mAdapter.addData(DataUtil.getMore(SimpleActivity.this, 20, page));
+                        mAdapter.addData(DataUtil.getMore(EmptyActivity.this, 6, page));
                         binding.recyclerView.loadMoreComplete();
                     }
                 }, 500);
@@ -68,5 +79,22 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
                 ToastUtil.showToast(itemData.getTitle());
             }
         });
+
+        binding.recyclerView.addFooterView(footerBinding.getRoot());
+        binding.recyclerView.addHeaderView(headerBinding.getRoot());
+        binding.recyclerView.setEmptyView(emptyBinding.getRoot());
+
+        headerBinding.tvText.setText("头布局\n(点我只展示空布局，且不能上拉刷新)");
+        headerBinding.tvText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.setNewData(null);
+                binding.recyclerView.setFootViewEnabled(false);
+                binding.recyclerView.setHeaderViewEnabled(false);
+                binding.recyclerView.setLoadMoreEnabled(false);
+            }
+        });
+
     }
+
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.jingbin.byrecyclerview.activity.EmptyActivity;
+import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.RefreshActivity;
 import me.jingbin.byrecyclerview.activity.SimpleActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
@@ -24,8 +26,8 @@ public class DataUtil {
         ArrayList<MainItemBean> list = new ArrayList<>();
         list.add(new MainItemBean("基本使用", SimpleActivity.class));
         list.add(new MainItemBean("使用自带刷新 或 SwipeRefreshLayout", RefreshActivity.class));
-        list.add(new MainItemBean("添加HeaderView,FooterView", SimpleActivity.class));
-        list.add(new MainItemBean("设置EmptyView(含有HeaderView,FooterView)", SimpleActivity.class));
+        list.add(new MainItemBean("添加HeaderView,FooterView", HeaderFooterActivity.class));
+        list.add(new MainItemBean("设置EmptyView(含有HeaderView,FooterView)", EmptyActivity.class));
         list.add(new MainItemBean("在CoordinatorLayout+AppBarLayout+ViewPager+RecyclerView中使用"));
         list.add(new MainItemBean("在CoordinatorLayout+AppBarLayout+RecyclerView中使用"));
         list.add(new MainItemBean("基本使用"));
@@ -61,4 +63,5 @@ public class DataUtil {
         }
         return list;
     }
+
 }

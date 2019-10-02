@@ -23,6 +23,8 @@
         <activity android:name=".activity.SwipeRefreshActivity" />
         <activity android:name=".activity.SimpleActivity" />
         <activity android:name=".activity.RefreshActivity" />
+        <activity android:name=".activity.EmptyActivity" />
+        <activity android:name=".activity.HeaderFooterActivity" />
     </application>
 
 </manifest>

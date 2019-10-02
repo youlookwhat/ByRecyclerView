@@ -9,13 +9,13 @@ import java.util.List;
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.bean.MainItemBean;
 import me.jingbin.byrecyclerview.databinding.ItemMainBinding;
-import me.jingbin.library.adapter.BaseRecyclerViewAdapter;
-import me.jingbin.library.adapter.BaseRecyclerViewHolder;
+import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
+import me.jingbin.library.adapter.BaseByRecyclerViewHolder;
 
 /**
  * @author jingbin
  */
-public class MainAdapter extends BaseRecyclerViewAdapter<MainItemBean> {
+public class MainAdapter extends BaseByRecyclerViewAdapter<MainItemBean> {
 
     public MainAdapter(List<MainItemBean> data) {
         super(data);
@@ -23,11 +23,11 @@ public class MainAdapter extends BaseRecyclerViewAdapter<MainItemBean> {
 
     @NonNull
     @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseByRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.item_main);
     }
 
-    private class ViewHolder extends BaseRecyclerViewHolder<MainItemBean, ItemMainBinding> {
+    private class ViewHolder extends BaseByRecyclerViewHolder<MainItemBean, ItemMainBinding> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }

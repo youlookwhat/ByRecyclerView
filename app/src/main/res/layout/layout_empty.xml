@@ -4,14 +4,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="200dp"
         tools:context=".MainActivity">
 
         <TextView
             android:id="@+id/tv_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
+            android:background="@color/color_c"
             android:gravity="center"
             android:text="空布局"
             android:textColor="@color/colorPrimary"
