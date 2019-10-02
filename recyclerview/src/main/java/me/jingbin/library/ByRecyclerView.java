@@ -39,7 +39,7 @@ public class ByRecyclerView extends RecyclerView {
     private static final int TYPE_REFRESH_HEADER = 10000;
     private static final int TYPE_LOADING_FOOTER = 10001;
     private static final int TYPE_EMPTY_VIEW = 10002;
-    private static final int TYPE_FOOTET_VIEW = 10003;
+    private static final int TYPE_FOOTER_VIEW = 10003;
     /**
      * HeaderView 起始type
      */
@@ -499,7 +499,7 @@ public class ByRecyclerView extends RecyclerView {
                 return new SimpleViewHolder(getHeaderViewByType(viewType));
             } else if (viewType == TYPE_EMPTY_VIEW) {
                 return new SimpleViewHolder(mEmptyLayout);
-            } else if (viewType == TYPE_FOOTET_VIEW) {
+            } else if (viewType == TYPE_FOOTER_VIEW) {
                 return new SimpleViewHolder(mFooterLayout);
             } else if (viewType == TYPE_LOADING_FOOTER) {
                 return new SimpleViewHolder(mFootView);
@@ -511,7 +511,7 @@ public class ByRecyclerView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            if (isHeaderView(position) || isRefreshHeader(position) || isEmptyView(position) || isFootView(position)) {
+            if (isRefreshHeader(position) || isHeaderView(position) || isEmptyView(position) || isFootView(position)) {
                 return;
             }
             int adjPosition = position - getCustomItemUpViewCount();
@@ -568,7 +568,7 @@ public class ByRecyclerView extends RecyclerView {
                 return sHeaderTypes.get(position);
             }
             if (isFootView(position)) {
-                return TYPE_FOOTET_VIEW;
+                return TYPE_FOOTER_VIEW;
             }
             if (isEmptyView(position)) {
                 return TYPE_EMPTY_VIEW;
@@ -725,7 +725,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 自定义类型头部布局的个数 = 刷新头布局 + HeaderView  + EmptyView
+     * 自定义类型头部布局的个数 = RefreshView + HeaderView  + EmptyView
      */
     private int getCustomItemUpViewCount() {
         return getHeadersCount() + getPullHeaderSize() + getEmptyViewSize();

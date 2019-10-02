@@ -21,6 +21,10 @@ public class DataAdapter extends BaseByRecyclerViewAdapter<DataItemBean> {
     public DataAdapter() {
     }
 
+    public DataAdapter(ByRecyclerView recyclerView) {
+        super(recyclerView);
+    }
+
     public DataAdapter(ByRecyclerView recyclerView, List<DataItemBean> data) {
         super(recyclerView, data);
     }

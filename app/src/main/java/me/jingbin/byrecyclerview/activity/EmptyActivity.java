@@ -42,12 +42,12 @@ public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
     }
 
     private void initAdapter() {
-        LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
+        final LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
         LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) binding.recyclerView.getParent(), false);
-        LayoutEmptyBinding emptyBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_empty, (ViewGroup) binding.recyclerView.getParent(), false);
+        final LayoutEmptyBinding emptyBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_empty, (ViewGroup) binding.recyclerView.getParent(), false);
 
 
-        mAdapter = new DataAdapter(binding.recyclerView, DataUtil.get(this, 6));
+        mAdapter = new DataAdapter(binding.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -83,15 +83,15 @@ public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
         binding.recyclerView.addFooterView(footerBinding.getRoot());
         binding.recyclerView.addHeaderView(headerBinding.getRoot());
         binding.recyclerView.setEmptyView(emptyBinding.getRoot());
+        binding.recyclerView.setLoadMoreEnabled(false);
 
-        headerBinding.tvText.setText("头布局\n(点我只展示空布局，且不能上拉刷新)");
-        headerBinding.tvText.setOnClickListener(new View.OnClickListener() {
+        emptyBinding.tvText.setText("空布局\n(点我展示列表数据)");
+        emptyBinding.tvText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapter.setNewData(null);
-                binding.recyclerView.setFootViewEnabled(false);
-                binding.recyclerView.setHeaderViewEnabled(false);
-                binding.recyclerView.setLoadMoreEnabled(false);
+                mAdapter.setNewData(DataUtil.get(EmptyActivity.this, 6));
+                binding.recyclerView.setLoadMoreEnabled(true);
+                binding.recyclerView.setEmptyViewEnabled(false);
             }
         });
 

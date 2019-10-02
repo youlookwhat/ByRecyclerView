@@ -97,6 +97,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
         mData.add(position, data);
         position = position + getRecyclerViewListTopViewSize();
         notifyItemRangeInserted(position, 1);
+        compatibilityDataSizeChanged(1);
     }
 
     /**
@@ -108,6 +109,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
         mData.add(data);
         startPosition = startPosition + getRecyclerViewListTopViewSize();
         notifyItemRangeInserted(startPosition, 1);
+        compatibilityDataSizeChanged(1);
     }
 
     /**
@@ -118,6 +120,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
         this.mData.addAll(data);
         startPosition = startPosition + getRecyclerViewListTopViewSize();
         notifyItemRangeInserted(startPosition, data.size());
+        compatibilityDataSizeChanged(data.size());
     }
 
     public void addData(int position, List<T> data) {
@@ -125,6 +128,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
         this.mData.addAll(data);
         startPosition = startPosition + getRecyclerViewListTopViewSize();
         notifyItemRangeInserted(startPosition, data.size());
+        compatibilityDataSizeChanged(data.size());
     }
 
     /**
@@ -166,4 +170,17 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
             return 0;
         }
     }
+
+    /**
+     * compatible getPullHeaderSize、getHeadersCount and getEmptyViewSize may change
+     *
+     * @param size Need compatible data size
+     */
+    private void compatibilityDataSizeChanged(int size) {
+        final int dataSize = mData == null ? 0 : mData.size();
+        if (dataSize == size) {
+            notifyDataSetChanged();
+        }
+    }
+
 }
