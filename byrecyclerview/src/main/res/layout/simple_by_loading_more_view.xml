@@ -54,9 +54,9 @@
             android:background="#CCCCCC" />
     </LinearLayout>
 
-    <!--首页底部实现毛玻璃效果，为了显示加载更多，这里提高一个底部栏的高度-->
+    <!--为了部分页面底部实现透明效果，这里提高一个底部栏的高度-->
     <View
-        android:id="@+id/view_home_bottom"
+        android:id="@+id/view_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:visibility="gone" />

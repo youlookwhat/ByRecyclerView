@@ -10,38 +10,35 @@ import android.widget.LinearLayout;
 /**
  * @author jingbin
  */
-public class LoadingMoreFooter extends LinearLayout {
+public class SimpleLoadingMoreView extends LinearLayout implements BaseLoadingMore {
 
-    public final static int STATE_LOADING = 0;
-    public final static int STATE_COMPLETE = 1;
-    public final static int STATE_NO_MORE = 2;
-    private View viewHomeBottom;
+    private View viewBottom;
     private boolean isFooterMoreHeight = false;
     private LinearLayout llNoMore;
     private LinearLayout llLoading;
 
-    public LoadingMoreFooter(Context context) {
-        super(context);
-        initView(context);
+    public SimpleLoadingMoreView(Context context) {
+        this(context, null);
     }
 
-    public void setFooterMoreHeight(boolean footerMoreHeight) {
-        isFooterMoreHeight = footerMoreHeight;
+    public SimpleLoadingMoreView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public LoadingMoreFooter(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public SimpleLoadingMoreView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         initView(context);
     }
 
     public void initView(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.loading_more_footer, this);
-        viewHomeBottom = findViewById(R.id.view_home_bottom);
-        llLoading = (LinearLayout) findViewById(R.id.ll_loading);
-        llNoMore = (LinearLayout) findViewById(R.id.ll_no_more);
+        LayoutInflater.from(context).inflate(R.layout.simple_by_loading_more_view, this);
+        viewBottom = findViewById(R.id.view_bottom);
+        llLoading = findViewById(R.id.ll_loading);
+        llNoMore = findViewById(R.id.ll_no_more);
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
+    @Override
     public void setState(int state) {
         switch (state) {
             case STATE_LOADING:
@@ -63,11 +60,24 @@ public class LoadingMoreFooter extends LinearLayout {
                 break;
         }
         if (isFooterMoreHeight) {
-            viewHomeBottom.setVisibility(View.VISIBLE);
+            viewBottom.setVisibility(View.VISIBLE);
         }
     }
 
-    public void reSet() {
-        this.setVisibility(GONE);
+    /**
+     * 为了部分页面底部实现透明效果，这里提高一个底部栏的高度
+     * 如果没有可不用理会
+     */
+    public void setFooterMoreHeight(boolean footerMoreHeight) {
+        isFooterMoreHeight = footerMoreHeight;
     }
+
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public int dip2px(float dpValue) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
 }

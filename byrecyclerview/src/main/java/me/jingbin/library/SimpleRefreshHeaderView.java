@@ -12,7 +12,7 @@ import android.widget.TextView;
 /**
  * @author jingbin
  */
-public class ProgressRefreshHeader extends LinearLayout implements BaseRefreshHeader {
+public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefreshHeader {
 
     private Context mContext;
     private TextView tvRefreshTip;
@@ -20,15 +20,15 @@ public class ProgressRefreshHeader extends LinearLayout implements BaseRefreshHe
     private int mMeasuredHeight;
     private LinearLayout mContainer;
 
-    public ProgressRefreshHeader(Context context) {
+    public SimpleRefreshHeaderView(Context context) {
         this(context, null);
     }
 
-    public ProgressRefreshHeader(Context context, AttributeSet attrs) {
+    public SimpleRefreshHeaderView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ProgressRefreshHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SimpleRefreshHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
         initView();

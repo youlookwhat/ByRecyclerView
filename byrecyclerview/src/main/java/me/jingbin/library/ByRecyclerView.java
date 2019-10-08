@@ -96,7 +96,7 @@ public class ByRecyclerView extends RecyclerView {
     private OnLoadMoreListener mLoadMoreListener;
     private OnRefreshListener mRefreshListener;
     private BaseRefreshHeader mRefreshHeader;
-    private View mFootView;
+    private BaseLoadingMore mFootView;
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
     private float mLastY = -1;
@@ -117,8 +117,8 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     private void init() {
-        mFootView = new LoadingMoreFooter(getContext());
-        mFootView.setVisibility(GONE);
+        mFootView = new SimpleLoadingMoreView(getContext());
+        ((View) mFootView).setVisibility(GONE);
     }
 
     /**
@@ -168,27 +168,19 @@ public class ByRecyclerView extends RecyclerView {
         }
     }
 
-    public void setFootView(final View view) {
+    public void setLoadingMoreView(BaseLoadingMore view) {
         mFootView = view;
     }
 
     public void loadMoreComplete() {
         isLoadingData = false;
-        if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_COMPLETE);
-        } else {
-            mFootView.setVisibility(View.GONE);
-        }
+        mFootView.setState(BaseLoadingMore.STATE_COMPLETE);
     }
 
     public void setNoMore(boolean noMore) {
         isLoadingData = false;
         isNoMore = noMore;
-        if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setState(isNoMore ? LoadingMoreFooter.STATE_NO_MORE : LoadingMoreFooter.STATE_COMPLETE);
-        } else {
-            mFootView.setVisibility(View.GONE);
-        }
+        mFootView.setState(isNoMore ? BaseLoadingMore.STATE_NO_MORE : BaseLoadingMore.STATE_COMPLETE);
     }
 
     public void refresh() {
@@ -217,11 +209,7 @@ public class ByRecyclerView extends RecyclerView {
     public void loadMoreEnd() {
         isLoadingData = false;
         isNoMore = true;
-        if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_NO_MORE);
-        } else {
-            mFootView.setVisibility(View.GONE);
-        }
+        mFootView.setState(BaseLoadingMore.STATE_NO_MORE);
     }
 
     public void setRefreshHeader(BaseRefreshHeader refreshHeader) {
@@ -231,7 +219,7 @@ public class ByRecyclerView extends RecyclerView {
     public void setRefreshEnabled(boolean enabled) {
         mRefreshEnabled = enabled;
         if (mRefreshHeader == null) {
-            mRefreshHeader = new ProgressRefreshHeader(getContext());
+            mRefreshHeader = new SimpleRefreshHeaderView(getContext());
         }
     }
 
@@ -242,17 +230,15 @@ public class ByRecyclerView extends RecyclerView {
      */
     public void setFooterMoreHeightEnabled(boolean enabled) {
         isFooterMoreHeight = enabled;
-        if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setFooterMoreHeight(true);
+        if (mFootView instanceof SimpleLoadingMoreView) {
+            ((SimpleLoadingMoreView) mFootView).setFooterMoreHeight(true);
         }
     }
 
     public void setLoadMoreEnabled(boolean enabled) {
         mLoadMoreEnabled = enabled;
         if (!enabled) {
-            if (mFootView instanceof LoadingMoreFooter) {
-                ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_COMPLETE);
-            }
+            mFootView.setState(BaseLoadingMore.STATE_COMPLETE);
         }
     }
 
@@ -328,12 +314,7 @@ public class ByRecyclerView extends RecyclerView {
                     && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 isLoadingData = true;
                 isScrollUp = false;
-                if (mFootView instanceof LoadingMoreFooter) {
-                    ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_LOADING);
-                } else {
-                    mFootView.setVisibility(View.VISIBLE);
-                }
-
+                mFootView.setState(BaseLoadingMore.STATE_LOADING);
                 mLoadMoreListener.onLoadMore();
             }
         }
@@ -506,7 +487,7 @@ public class ByRecyclerView extends RecyclerView {
             } else if (viewType == TYPE_FOOTER_VIEW) {
                 return new SimpleViewHolder(mFooterLayout);
             } else if (viewType == TYPE_LOADING_FOOTER) {
-                return new SimpleViewHolder(mFootView);
+                return new SimpleViewHolder((View) mFootView);
             }
             ViewHolder viewHolder = adapter.onCreateViewHolder(parent, viewType);
             bindViewClickListener(viewHolder);

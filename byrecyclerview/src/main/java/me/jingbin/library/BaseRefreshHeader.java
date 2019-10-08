@@ -1,7 +1,7 @@
 package me.jingbin.library;
 
 /**
- * 刷新头必须实现此接口
+ * 下拉刷新布局 必须实现此接口
  *
  * @author jingbin
  */
