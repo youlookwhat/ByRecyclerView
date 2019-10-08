@@ -9,17 +9,17 @@ import android.widget.GridView;
  *
  * @author jingbin
  */
-public class MyGridView extends GridView {
+public class InGridView extends GridView {
 
-    public MyGridView(Context context, AttributeSet attrs, int defStyle) {
+    public InGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public MyGridView(Context context, AttributeSet attrs) {
+    public InGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyGridView(Context context) {
+    public InGridView(Context context) {
         super(context);
     }
 

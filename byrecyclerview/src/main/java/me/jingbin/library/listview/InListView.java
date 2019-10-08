@@ -7,18 +7,18 @@ import android.widget.ListView;
 /**
  * @author jingbin
  */
-public class MyListView extends ListView {
+public class InListView extends ListView {
 	
-	public MyListView(Context context) {
+	public InListView(Context context) {
 		super(context);
 	}
 	
-	public MyListView(Context context, AttributeSet attrs) {
+	public InListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
 
-	public MyListView(Context context, AttributeSet attrs, int defStyle) {
+	public InListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 

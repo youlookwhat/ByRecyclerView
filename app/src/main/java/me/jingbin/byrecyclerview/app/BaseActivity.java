@@ -11,11 +11,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 import me.jingbin.byrecyclerview.R;
+import me.jingbin.library.ByRecyclerView;
 
 /**
  * @author jingbin
  */
-public abstract class BaseActivity< V extends ViewDataBinding> extends AppCompatActivity {
+public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatActivity {
 
     protected int mPage = 1;
     protected V binding;
@@ -25,6 +26,10 @@ public abstract class BaseActivity< V extends ViewDataBinding> extends AppCompat
         super.onCreate(savedInstanceState);
 
         initActionBar();
+        ByRecyclerView view = getView(R.id.recyclerView);
+        if (view != null) {
+            view.destroy();
+        }
     }
 
     private void initActionBar() {
