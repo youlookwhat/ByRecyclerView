@@ -27,7 +27,7 @@ import me.jingbin.library.config.LogHelper;
 
 /**
  * @author jingbin
- * link to https://github.com/youlookwhat/JRecyclerView
+ * link to https://github.com/youlookwhat/ByRecyclerView
  */
 public class ByRecyclerView extends RecyclerView {
 

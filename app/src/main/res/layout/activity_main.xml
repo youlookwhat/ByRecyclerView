@@ -14,24 +14,6 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             tools:listitem="@layout/item_main" />
-        <!--<Button-->
-        <!--android:id="@+id/bt_jichu"-->
-        <!--style="@style/TextAppearance.AppCompat.Button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:onClick="goSimple"-->
-        <!--android:text="基础调用"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--<Button-->
-        <!--style="@style/TextAppearance.AppCompat.Button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:onClick="goSwipeRefresh"-->
-        <!--android:text="SwipeRefresh"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/bt_jichu" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
