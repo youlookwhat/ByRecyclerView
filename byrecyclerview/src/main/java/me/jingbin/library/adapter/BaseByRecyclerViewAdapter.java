@@ -24,20 +24,20 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     private ByRecyclerView mRecyclerView;
     private List<T> mData = new ArrayList<>();
 
-    public BaseByRecyclerViewAdapter() {
+    protected BaseByRecyclerViewAdapter() {
     }
 
-    public BaseByRecyclerViewAdapter(ByRecyclerView recyclerView) {
+    protected BaseByRecyclerViewAdapter(ByRecyclerView recyclerView) {
         this.mRecyclerView = recyclerView;
     }
 
-    public BaseByRecyclerViewAdapter(List<T> data) {
+    protected BaseByRecyclerViewAdapter(List<T> data) {
         this.mData = data;
     }
 
-    public BaseByRecyclerViewAdapter(ByRecyclerView recyclerView, List<T> data) {
+    protected BaseByRecyclerViewAdapter(ByRecyclerView recyclerView, List<T> data) {
         this.mRecyclerView = recyclerView;
-        this.mData = data;
+        this.mData = data == null ? new ArrayList<T>() : data;
     }
 
     @Override
@@ -54,28 +54,8 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
         this.mData.addAll(data);
     }
 
-    public void add(T object) {
-        mData.add(object);
-    }
-
-    public void addFirst(int position, T object) {
-        mData.add(position, object);
-    }
-
     public void clear() {
         mData.clear();
-    }
-
-    public void remove(T object) {
-        mData.remove(object);
-    }
-
-    public void remove(int position) {
-        mData.remove(position);
-    }
-
-    public void removeAll(List<T> data) {
-        this.mData.retainAll(data);
     }
 
     public List<T> getData() {

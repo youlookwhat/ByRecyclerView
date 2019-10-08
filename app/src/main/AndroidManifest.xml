@@ -25,6 +25,7 @@
         <activity android:name=".activity.RefreshActivity" />
         <activity android:name=".activity.EmptyActivity" />
         <activity android:name=".activity.HeaderFooterActivity" />
+        <activity android:name=".activity.ListViewActivity" />
     </application>
 
 </manifest>
