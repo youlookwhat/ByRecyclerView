@@ -34,7 +34,8 @@ public class MainAdapter extends BaseByRecyclerViewAdapter<MainItemBean> {
 
         @Override
         public void onBindViewHolder(MainItemBean bean, final int position) {
-            binding.tvText.setText(position + 1 + "、 " + bean.getTitle());
+            binding.tvSort.setText(position + 1 + "、 ");
+            binding.tvText.setText(bean.getTitle());
         }
     }
 }

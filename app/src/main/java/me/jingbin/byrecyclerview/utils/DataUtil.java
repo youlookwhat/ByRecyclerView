@@ -26,10 +26,10 @@ public class DataUtil {
         ArrayList<MainItemBean> list = new ArrayList<>();
         list.add(new MainItemBean("基本使用", SimpleActivity.class));
         list.add(new MainItemBean("使用自带刷新 或 SwipeRefreshLayout", RefreshActivity.class));
-        list.add(new MainItemBean("添加HeaderView,FooterView", HeaderFooterActivity.class));
-        list.add(new MainItemBean("设置EmptyView(含有HeaderView,FooterView)", EmptyActivity.class));
-        list.add(new MainItemBean("在CoordinatorLayout+AppBarLayout+ViewPager+RecyclerView中使用"));
-        list.add(new MainItemBean("在CoordinatorLayout+AppBarLayout+RecyclerView中使用"));
+        list.add(new MainItemBean("添加HeaderView，FooterView", HeaderFooterActivity.class));
+        list.add(new MainItemBean("设置EmptyView", EmptyActivity.class));
+        list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + ViewPager + RecyclerView 中使用"));
+        list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + RecyclerView 中使用"));
         list.add(new MainItemBean("基本使用"));
         list.add(new MainItemBean("基本使用"));
         list.add(new MainItemBean("基本使用"));

@@ -56,4 +56,12 @@ public abstract class BaseActivity< V extends ViewDataBinding> extends AppCompat
     protected <T extends View> T getView(int id) {
         return (T) findViewById(id);
     }
+
+    public int getPage() {
+        return mPage;
+    }
+
+    public void setPage(int mPage) {
+        this.mPage = mPage;
+    }
 }
