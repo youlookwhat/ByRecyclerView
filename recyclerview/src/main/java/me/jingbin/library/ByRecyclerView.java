@@ -75,6 +75,10 @@ public class ByRecyclerView extends RecyclerView {
      */
     private boolean mRefreshEnabled = false;
     /**
+     * 设置是否滑动到列表底部就触发刷新，建议不使用SwipeRefreshLayout等类似下拉刷新时设置为true
+     */
+    private boolean mScrollBottomLoad = false;
+    /**
      * 设置是否能 加载更多
      */
     private boolean mLoadMoreEnabled = false;
@@ -319,8 +323,8 @@ public class ByRecyclerView extends RecyclerView {
             if (layoutManager.getChildCount() > 0
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
 //                    && layoutManager.getItemCount() > layoutManager.getChildCount()
+                    && isScrollBottomLoad()
                     && !isNoMore
-                    && isScrollUp
                     && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 isLoadingData = true;
                 isScrollUp = false;
@@ -911,6 +915,23 @@ public class ByRecyclerView extends RecyclerView {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * 建议不使用SwipeRefreshLayout等类似下拉刷新控件时设置为true
+     *
+     * @param scrollBottomLoad 是否滑动到底就刷新，不根据上滑距离判断
+     */
+    public void setScrollBottomLoad(boolean scrollBottomLoad) {
+        mScrollBottomLoad = scrollBottomLoad;
+    }
+
+    private boolean isScrollBottomLoad() {
+        if (mScrollBottomLoad) {
+            return true;
+        } else {
+            return isScrollUp;
         }
     }
 

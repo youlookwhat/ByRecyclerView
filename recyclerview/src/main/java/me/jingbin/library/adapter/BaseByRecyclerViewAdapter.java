@@ -87,7 +87,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     /**
-     * 如果使用{@link #addData(T)#addData(List)#setNewData(List) 请绑定RecyclerView}
+     * 如果使用{@link #addData(List)#setNewData(List) 请绑定RecyclerView}
      */
     public void setRecyclerView(ByRecyclerView recyclerView) {
         mRecyclerView = recyclerView;

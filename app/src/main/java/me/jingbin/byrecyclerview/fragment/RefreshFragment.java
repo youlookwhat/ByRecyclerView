@@ -86,6 +86,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
         ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL, false);
         itemDecoration.setDrawable(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.shape_line));
         recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setScrollBottomLoad(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
