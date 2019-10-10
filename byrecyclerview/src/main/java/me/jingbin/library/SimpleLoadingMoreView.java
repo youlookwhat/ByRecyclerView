@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 public class SimpleLoadingMoreView extends LinearLayout implements BaseLoadingMore {
 
     private View viewBottom;
-    private boolean isFooterMoreHeight = false;
+    private boolean isShowLoadingMoreHeight = false;
     private LinearLayout llNoMore;
     private LinearLayout llLoading;
 
@@ -59,8 +59,10 @@ public class SimpleLoadingMoreView extends LinearLayout implements BaseLoadingMo
             default:
                 break;
         }
-        if (isFooterMoreHeight) {
+        if (isShowLoadingMoreHeight) {
             viewBottom.setVisibility(View.VISIBLE);
+        } else {
+            viewBottom.setVisibility(View.GONE);
         }
     }
 
@@ -68,8 +70,13 @@ public class SimpleLoadingMoreView extends LinearLayout implements BaseLoadingMo
      * 为了部分页面底部实现透明效果，这里提高一个底部栏的高度
      * 如果没有可不用理会
      */
-    public void setFooterMoreHeight(boolean footerMoreHeight) {
-        isFooterMoreHeight = footerMoreHeight;
+    @Override
+    public void setLoadingMoreBottomHeight(float heightDp) {
+        if (heightDp > 0) {
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(heightDp));
+            viewBottom.setLayoutParams(lp);
+            isShowLoadingMoreHeight = true;
+        }
     }
 
     /**

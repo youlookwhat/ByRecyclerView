@@ -45,6 +45,7 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
         binding.recyclerView.setScrollBottomLoad(true);
+        binding.recyclerView.setLoadingMoreBottomHeight(50);
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

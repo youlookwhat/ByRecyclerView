@@ -25,5 +25,10 @@ interface BaseLoadingMore {
      */
     void setState(int state);
 
-
+    /**
+     * 给加载更多底部增加一定的空白高度
+     *
+     * @param heightDp 单位dp
+     */
+    void setLoadingMoreBottomHeight(float heightDp);
 }

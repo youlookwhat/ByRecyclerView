@@ -54,7 +54,7 @@
             android:background="#CCCCCC" />
     </LinearLayout>
 
-    <!--为了部分页面底部实现透明效果，这里提高一个底部栏的高度-->
+    <!--为了部分页面实现底部透明效果，提高一个底部栏的高度-->
     <View
         android:id="@+id/view_bottom"
         android:layout_width="match_parent"

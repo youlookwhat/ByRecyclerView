@@ -88,10 +88,6 @@ public class ByRecyclerView extends RecyclerView {
      * 手指是否上滑
      */
     private boolean isScrollUp = false;
-    /**
-     * 首页列表增加一个tabhost的高度
-     */
-    private boolean isFooterMoreHeight = false;
 
     private OnLoadMoreListener mLoadMoreListener;
     private OnRefreshListener mRefreshListener;
@@ -224,15 +220,12 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 设置列表底部增加一个tabhost的高度
+     * 给加载更多布局一个底部的高度，用于部分页面需要透明显示
      *
-     * @param enabled 默认为不增加，正常
+     * @param heightDp 单位dp
      */
-    public void setFooterMoreHeightEnabled(boolean enabled) {
-        isFooterMoreHeight = enabled;
-        if (mFootView instanceof SimpleLoadingMoreView) {
-            ((SimpleLoadingMoreView) mFootView).setFooterMoreHeight(true);
-        }
+    public void setLoadingMoreBottomHeight(float heightDp) {
+        mFootView.setLoadingMoreBottomHeight(heightDp);
     }
 
     public void setLoadMoreEnabled(boolean enabled) {
