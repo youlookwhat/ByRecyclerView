@@ -75,9 +75,9 @@ public class ByRecyclerView extends RecyclerView {
      */
     private boolean mRefreshEnabled = false;
     /**
-     * 设置是否滑动到列表底部就触发刷新，建议不使用SwipeRefreshLayout等类似下拉刷新时设置为true
+     * 设置数据不满一屏是否加载
      */
-    private boolean mScrollBottomLoad = false;
+    private boolean isNoLoadLoadMoreIfNotFullScreen = false;
     /**
      * 设置是否能 加载更多
      */
@@ -301,8 +301,8 @@ public class ByRecyclerView extends RecyclerView {
             // 取消那条后，只有一条信息也可以刷新
             if (layoutManager.getChildCount() > 0
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
-//                    && layoutManager.getItemCount() > layoutManager.getChildCount()
-                    && isScrollBottomLoad()
+                    && isNoFullScreenLoad(layoutManager)
+                    && isScrollBottomLoad(layoutManager)
                     && !isNoMore
                     && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 isLoadingData = true;
@@ -893,20 +893,39 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 建议不使用SwipeRefreshLayout等类似下拉刷新控件时设置为true
-     *
-     * @param scrollBottomLoad 是否滑动到底就刷新，不根据上滑距离判断
+     * 不满一屏时，根据上滑的距离判断是否加载
      */
-    public void setScrollBottomLoad(boolean scrollBottomLoad) {
-        mScrollBottomLoad = scrollBottomLoad;
-    }
-
-    private boolean isScrollBottomLoad() {
-        if (mScrollBottomLoad) {
+    private boolean isScrollBottomLoad(LayoutManager layoutManager) {
+        if (isFullScreen(layoutManager)) {
             return true;
         } else {
             return isScrollUp;
         }
+    }
+
+    /**
+     * 设置不满一屏不加载
+     */
+    public void disableLoadMoreIfNotFullScreen() {
+        isNoLoadLoadMoreIfNotFullScreen = true;
+    }
+
+    /**
+     * 全屏是否加载，默认加载
+     */
+    private boolean isNoFullScreenLoad(LayoutManager layoutManager) {
+        if (isNoLoadLoadMoreIfNotFullScreen) {
+            return isFullScreen(layoutManager);
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 是否是满屏
+     */
+    private boolean isFullScreen(LayoutManager layoutManager) {
+        return layoutManager.getItemCount() > layoutManager.getChildCount();
     }
 
     /**
