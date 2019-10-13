@@ -10,10 +10,10 @@ import androidx.databinding.ViewDataBinding;
 /**
  * @author jingbin
  */
-public abstract class BaseByListViewHolder<T, D extends ViewDataBinding> {
+public abstract class BaseByListViewHolder<T, V extends ViewDataBinding> {
 
     private View itemView;
-    public D binding;
+    protected V binding;
 
     public BaseByListViewHolder(ViewGroup parent, int layoutId) {
         this.itemView = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), layoutId, parent, false).getRoot();

@@ -49,7 +49,7 @@ public class HeaderFooterActivity extends BaseActivity<ActivitySimpleBinding> {
         final LayoutFooterViewBinding footer2Binding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) binding.recyclerView.getParent(), false);
 
 
-        mAdapter = new DataAdapter(binding.recyclerView, DataUtil.get(this, 6));
+        mAdapter = new DataAdapter(DataUtil.get(this, 6));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);

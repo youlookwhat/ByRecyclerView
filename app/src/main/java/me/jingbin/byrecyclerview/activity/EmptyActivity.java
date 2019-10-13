@@ -46,8 +46,7 @@ public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
         LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) binding.recyclerView.getParent(), false);
         final LayoutEmptyBinding emptyBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_empty, (ViewGroup) binding.recyclerView.getParent(), false);
 
-
-        mAdapter = new DataAdapter(binding.recyclerView);
+        mAdapter = new DataAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -55,7 +54,6 @@ public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
-        binding.recyclerView.setScrollBottomLoad(true);
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

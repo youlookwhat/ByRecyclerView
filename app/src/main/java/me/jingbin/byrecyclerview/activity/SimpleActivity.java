@@ -36,7 +36,8 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
     }
 
     private void initAdapter() {
-        mAdapter = new DataAdapter(binding.recyclerView, DataUtil.get(this, 6));
+        mAdapter = new DataAdapter(DataUtil.get(this, 6));
+//        mAdapter.setRecyclerView(binding.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -44,8 +45,6 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
-        binding.recyclerView.setScrollBottomLoad(true);
-        binding.recyclerView.setLoadingMoreBottomHeight(50);
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

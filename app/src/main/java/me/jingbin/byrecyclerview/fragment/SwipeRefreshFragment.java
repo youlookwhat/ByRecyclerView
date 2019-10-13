@@ -25,9 +25,8 @@ import me.jingbin.library.config.ByDividerItemDecoration;
  */
 public class SwipeRefreshFragment extends BaseFragment<FragmentSwipeRefreshBinding> {
 
-    private static final String TAG = "AndroidFragment";
     private static final String TYPE = "mType";
-    private String mType = "Android";
+    private String mType = "";
     private boolean mIsPrepared;
     private boolean mIsFirst = true;
     private DataAdapter mAdapter;
@@ -79,7 +78,7 @@ public class SwipeRefreshFragment extends BaseFragment<FragmentSwipeRefreshBindi
 
     private void initAdapter() {
         recyclerView = getView(R.id.recyclerView);
-        mAdapter = new DataAdapter(bindingView.recyclerView, DataUtil.get(activity, 10));
+        mAdapter = new DataAdapter(DataUtil.get(activity, 10));
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

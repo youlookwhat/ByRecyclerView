@@ -23,7 +23,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.jingbin.library.config.LogHelper;
+import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 
 /**
  * @author jingbin
@@ -237,6 +237,9 @@ public class ByRecyclerView extends RecyclerView {
 
     @Override
     public void setAdapter(Adapter adapter) {
+        if (adapter instanceof BaseByRecyclerViewAdapter) {
+            ((BaseByRecyclerViewAdapter) adapter).setRecyclerView(this);
+        }
         mWrapAdapter = new WrapAdapter(adapter);
         super.setAdapter(mWrapAdapter);
         adapter.registerAdapterDataObserver(mDataObserver);
@@ -341,7 +344,7 @@ public class ByRecyclerView extends RecyclerView {
 //                isScrollUp = mLoadMoreEnabled && ev.getY() - mPullStartY <= 0;
                 // 按下的纵坐标 - 当前的纵坐标(为了更灵敏)
                 isScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10;
-                LogHelper.e("isScrollUp:  ", isScrollUp + " --- mPullStartY:  " + mPullStartY + " --- " + "ev.getY(): " + ev.getY());
+//                LogHelper.e("isScrollUp:  ", isScrollUp + " --- mPullStartY:  " + mPullStartY + " --- " + "ev.getY(): " + ev.getY());
 
                 mPullStartY = 0;
                 mLastY = -1;

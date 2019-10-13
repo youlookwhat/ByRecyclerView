@@ -18,31 +18,19 @@ import me.jingbin.library.ByRecyclerView;
  */
 public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseByRecyclerViewHolder> {
 
-    /**
-     * 如果使用ByRecyclerView，请先绑定。用于刷新列表定位。
-     */
     private ByRecyclerView mRecyclerView;
     private List<T> mData = new ArrayList<>();
 
     protected BaseByRecyclerViewAdapter() {
     }
 
-    protected BaseByRecyclerViewAdapter(ByRecyclerView recyclerView) {
-        this.mRecyclerView = recyclerView;
-    }
-
     protected BaseByRecyclerViewAdapter(List<T> data) {
-        this.mData = data;
-    }
-
-    protected BaseByRecyclerViewAdapter(ByRecyclerView recyclerView, List<T> data) {
-        this.mRecyclerView = recyclerView;
         this.mData = data == null ? new ArrayList<T>() : data;
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseByRecyclerViewHolder holder, final int position) {
-        holder.onBaseBindViewHolder(mData.get(position), position);
+        holder.onBaseBindView(mData.get(position), position);
     }
 
     @Override
@@ -67,7 +55,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     /**
-     * 如果使用{@link #addData(List)#setNewData(List) 请绑定RecyclerView}
+     * 绑定RecyclerView使用
      */
     public void setRecyclerView(ByRecyclerView recyclerView) {
         mRecyclerView = recyclerView;
