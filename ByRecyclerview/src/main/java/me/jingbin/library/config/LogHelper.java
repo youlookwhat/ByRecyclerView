@@ -2,30 +2,12 @@ package me.jingbin.library.config;
 
 import android.util.Log;
 
+import me.jingbin.library.BuildConfig;
+
 public final class LogHelper {
-    private static volatile boolean DEBUG = true;
-    public static String logTag = "jingbin";
 
-    private LogHelper() {
-    }
-
-    /**
-     * 打开Log
-     *
-     */
-    public static void enableLogging() {
-        DEBUG = true;
-    }
-
-    /**
-     * 关闭Log
-     *
-     * @author mslan
-     * @date 2015年3月1日 下午5:14:50
-     */
-    public static void disableLogging() {
-        DEBUG = false;
-    }
+    private static volatile boolean DEBUG = BuildConfig.DEBUG;
+    private final static String LOG_TAG = "jingbin";
 
     public static void v(String tag, String message) {
         if (DEBUG) {
@@ -65,7 +47,7 @@ public final class LogHelper {
 
     public static void e(String message) {
         if (DEBUG) {
-            Log.e(logTag, message);
+            Log.e(LOG_TAG, message);
         }
     }
 }

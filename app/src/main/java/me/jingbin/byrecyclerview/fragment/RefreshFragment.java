@@ -24,7 +24,6 @@ import me.jingbin.library.config.ByDividerItemDecoration;
  */
 public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
 
-    private static final String TAG = "AndroidFragment";
     private static final String TYPE = "mType";
     private String mType = "Android";
     private boolean mIsPrepared;
@@ -101,7 +100,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
                         mAdapter.addData(DataUtil.getMore(activity, 6, page));
                         recyclerView.loadMoreComplete();
                     }
-                }, 500);
+                }, 1000);
             }
         });
         recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
@@ -109,6 +108,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
             public void onClick(View v, int position) {
                 DataItemBean itemData = mAdapter.getItemData(position);
                 ToastUtil.showToast(itemData.getTitle());
+                recyclerView.refresh();
             }
         });
         recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
@@ -120,7 +120,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
                         page = 1;
                         mAdapter.setNewData(DataUtil.getMore(activity, 6, page));
                     }
-                }, 500);
+                }, 1000);
             }
         });
         mIsFirst = false;

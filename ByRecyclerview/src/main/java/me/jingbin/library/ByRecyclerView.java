@@ -32,72 +32,40 @@ import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 public class ByRecyclerView extends RecyclerView {
 
     /**
-     * 下面的ItemViewType是保留值(ReservedItemViewType),如果用户的adapter与它们重复将会强制抛出异常。
-     * 不过为了简化,我们检测到重复时对用户的提示是ItemViewType必须小于10000
-     * 设置一个很大的数字,尽可能避免和用户的adapter冲突
+     * 请设置多类型adapter的 ItemViewType 时，将其值设置为小于10000。
+     * 如果用户的adapter中的 ItemViewType 值与它们重复将会强制抛出异常。
      */
-    private static final int TYPE_REFRESH_HEADER = 10000;
-    private static final int TYPE_LOADING_FOOTER = 10001;
-    private static final int TYPE_EMPTY_VIEW = 10002;
-    private static final int TYPE_FOOTER_VIEW = 10003;
-    /**
-     * HeaderView 起始type
-     */
-    private static final int HEADER_INIT_INDEX = 10004;
-    /**
-     * 每个header必须有不同的type,不然滚动的时候顺序会变化
-     */
-    private List<Integer> sHeaderTypes = new ArrayList<>();
-    /**
-     * HeaderView 数组
-     */
-    private ArrayList<View> mHeaderViews = new ArrayList<>();
+    private static final int TYPE_REFRESH_HEADER = 10000;     // RefreshHeader type
+    private static final int TYPE_LOADING_FOOTER = 10001;     // LoadingMore type
+    private static final int TYPE_EMPTY_VIEW = 10002;         // EmptyView type
+    private static final int TYPE_FOOTER_VIEW = 10003;        // FooterView type
+    private static final int HEADER_INIT_INDEX = 10004;       // HeaderView 起始type
+    private List<Integer> mHeaderTypes = new ArrayList<>();   // HeaderView type集合
+    private ArrayList<View> mHeaderViews = new ArrayList<>(); // HeaderView view集合
+    private FrameLayout mEmptyLayout;                         // EmptyView 布局
 
-    private WrapAdapter mWrapAdapter;
-    /**
-     * EmptyView 布局
-     */
-    private FrameLayout mEmptyLayout;
-    /**
-     * 是否使用EmptyView
-     */
-    private boolean mEmptyViewEnabled = true;
-    /**
-     * 是否正在加载更多
-     */
-    private boolean isLoadingData = false;
-    /**
-     * 是否没有更多数据了
-     */
-    private boolean isNoMore = false;
-    /**
-     * 设置是否能 下拉刷新
-     */
-    private boolean mRefreshEnabled = false;
-    /**
-     * 设置数据不满一屏是否加载
-     */
-    private boolean isNoLoadLoadMoreIfNotFullScreen = false;
-    /**
-     * 设置是否能 加载更多
-     */
-    private boolean mLoadMoreEnabled = false;
-    private boolean mFootViewEnabled = false;
-    private boolean mHeaderViewEnabled = false;
-    /**
-     * 手指是否上滑
-     */
-    private boolean isScrollUp = false;
+    private boolean mRefreshEnabled = false;              // 设置是否 使用下拉刷新
+    private boolean mLoadMoreEnabled = false;             // 设置是否 使用加载更多
+    private boolean mHeaderViewEnabled = false;           // 设置是否 显示HeaderView布局
+    private boolean mFootViewEnabled = false;             // 设置是否 显示FooterView布局
+    private boolean mEmptyViewEnabled = true;             // 设置是否 显示EmptyView布局
+    private boolean misNoLoadMoreIfNotFullScreen = false; // 设置是否 数据不满一屏时进行加载
 
-    private OnLoadMoreListener mLoadMoreListener;
-    private OnRefreshListener mRefreshListener;
-    private BaseRefreshHeader mRefreshHeader;
-    private BaseLoadingMore mFootView;
+    private boolean mIsLoadingData = false; // 是否正在加载更多
+    private boolean mIsNoMore = false;      // 是否没有更多数据了
+    private boolean mIsScrollUp = false;    // 手指是否上滑
+    private float mLastY = -1;              // 手指按下的Y坐标值，用于处理下拉刷新View的高度
+    private float mPullStartY = 0;          // 手指按下的Y坐标值，用于处理不满全屏时是否可进行上拉加载
+    private float mDragRate = 2.5f;         // 下拉时候的偏移计量因子，越小拉动距离越短
+
+    private OnRefreshListener mRefreshListener;    // 下拉刷新监听
+    private BaseRefreshHeader mRefreshHeader;      // 下拉刷新接口
+    private OnLoadMoreListener mLoadMoreListener;  // 加载更多监听
+    private BaseLoadingMore mLoadingMore;          // 加载更多接口
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
-    private float mLastY = -1;
-    private float mPullStartY = 0;
-    private float mDragRate = 3;
+
+    private WrapAdapter mWrapAdapter;
 
     public ByRecyclerView(Context context) {
         this(context, null);
@@ -113,27 +81,22 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     private void init() {
-        mFootView = new SimpleLoadingMoreView(getContext());
-        ((View) mFootView).setVisibility(GONE);
+        mLoadingMore = new SimpleLoadingMoreView(getContext());
+        ((View) mLoadingMore).setVisibility(GONE);
     }
 
     /**
      * 添加HeaderView；不可重复添加相同的View
      *
      * @param headerView HeaderView
-     * @param isNotify   是否立即刷新
      */
-    public void addHeaderView(View headerView, boolean isNotify) {
-        sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
+    public void addHeaderView(View headerView) {
+        mHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(headerView);
         mHeaderViewEnabled = true;
-        if (mWrapAdapter != null && isNotify) {
+        if (mWrapAdapter != null) {
             mWrapAdapter.getOriginalAdapter().notifyItemInserted(getPullHeaderSize() + getHeadersCount() - 1);
         }
-    }
-
-    public void addHeaderView(View view) {
-        addHeaderView(view, true);
     }
 
     /**
@@ -150,35 +113,57 @@ public class ByRecyclerView extends RecyclerView {
      * 判断一个type是否为HeaderType
      */
     private boolean isHeaderType(int itemViewType) {
-        return mHeaderViews.size() > 0 && sHeaderTypes.contains(itemViewType);
+        return mHeaderViews.size() > 0 && mHeaderTypes.contains(itemViewType);
     }
 
     /**
      * 判断是否是JRecyclerView保留的itemViewType
      */
     private boolean isReservedItemViewType(int itemViewType) {
-        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOADING_FOOTER || itemViewType == TYPE_EMPTY_VIEW || sHeaderTypes.contains(itemViewType)) {
+        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOADING_FOOTER || itemViewType == TYPE_EMPTY_VIEW || mHeaderTypes.contains(itemViewType)) {
             return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * 设置 自定义加载更多View
+     */
     public void setLoadingMoreView(BaseLoadingMore view) {
-        mFootView = view;
+        mLoadingMore = view;
     }
 
+    /**
+     * 设置 自定义下拉刷新View
+     */
+    public void setRefreshHeader(BaseRefreshHeader refreshHeader) {
+        mRefreshHeader = refreshHeader;
+    }
+
+    /**
+     * 下拉加载完成
+     */
+    public void refreshComplete() {
+        if (mRefreshEnabled) {
+            mRefreshHeader.refreshComplete();
+        }
+        mIsNoMore = false;
+        mIsLoadingData = false;
+        mLoadingMore.setState(BaseLoadingMore.STATE_COMPLETE);
+    }
+
+    /**
+     * 加载更多完成
+     */
     public void loadMoreComplete() {
-        isLoadingData = false;
-        mFootView.setState(BaseLoadingMore.STATE_COMPLETE);
+        mIsLoadingData = false;
+        mLoadingMore.setState(BaseLoadingMore.STATE_COMPLETE);
     }
 
-    public void setNoMore(boolean noMore) {
-        isLoadingData = false;
-        isNoMore = noMore;
-        mFootView.setState(isNoMore ? BaseLoadingMore.STATE_NO_MORE : BaseLoadingMore.STATE_COMPLETE);
-    }
-
+    /**
+     * 手动设置头部刷新
+     */
     public void refresh() {
         if (mRefreshEnabled && mRefreshListener != null) {
             mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
@@ -186,36 +171,40 @@ public class ByRecyclerView extends RecyclerView {
         }
     }
 
+    /**
+     * 重置，一般在重新开始刷新时使用
+     */
     public void reset() {
-//        setNoMore(false);
         loadMoreComplete();
         refreshComplete();
-    }
-
-    public void refreshComplete() {
-        if (mRefreshEnabled) {
-            mRefreshHeader.refreshComplete();
-        }
-        setNoMore(false);
     }
 
     /**
      * 没有更多内容
      */
     public void loadMoreEnd() {
-        isLoadingData = false;
-        isNoMore = true;
-        mFootView.setState(BaseLoadingMore.STATE_NO_MORE);
+        mIsLoadingData = false;
+        mIsNoMore = true;
+        mLoadingMore.setState(BaseLoadingMore.STATE_NO_MORE);
     }
 
-    public void setRefreshHeader(BaseRefreshHeader refreshHeader) {
-        mRefreshHeader = refreshHeader;
-    }
-
+    /**
+     * 设置是否开启下拉刷新
+     */
     public void setRefreshEnabled(boolean enabled) {
         mRefreshEnabled = enabled;
         if (mRefreshHeader == null) {
             mRefreshHeader = new SimpleRefreshHeaderView(getContext());
+        }
+    }
+
+    /**
+     * 设置是否开启加载更多
+     */
+    public void setLoadMoreEnabled(boolean enabled) {
+        mLoadMoreEnabled = enabled;
+        if (!enabled) {
+            mLoadingMore.setState(BaseLoadingMore.STATE_COMPLETE);
         }
     }
 
@@ -225,14 +214,7 @@ public class ByRecyclerView extends RecyclerView {
      * @param heightDp 单位dp
      */
     public void setLoadingMoreBottomHeight(float heightDp) {
-        mFootView.setLoadingMoreBottomHeight(heightDp);
-    }
-
-    public void setLoadMoreEnabled(boolean enabled) {
-        mLoadMoreEnabled = enabled;
-        if (!enabled) {
-            mFootView.setState(BaseLoadingMore.STATE_COMPLETE);
-        }
+        mLoadingMore.setLoadingMoreBottomHeight(heightDp);
     }
 
     @Override
@@ -283,7 +265,7 @@ public class ByRecyclerView extends RecyclerView {
     @Override
     public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
-        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadMoreListener != null && !isLoadingData && mLoadMoreEnabled) {
+        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadMoreListener != null && !mIsLoadingData && mLoadMoreEnabled) {
             LayoutManager layoutManager = getLayoutManager();
             int lastVisibleItemPosition;
             if (layoutManager instanceof GridLayoutManager) {
@@ -295,22 +277,15 @@ public class ByRecyclerView extends RecyclerView {
             } else {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
-//            Log.e("-----11", "--" + (lastVisibleItemPosition >= layoutManager.getItemCount() - 1));
-//            Log.e("-----22", "--" + (layoutManager.getItemCount() > layoutManager.getChildCount()));
-//            Log.e("-----22-list1``", "--" + (layoutManager.getItemCount()));
-//            Log.e("-----22-list2``", "--" + (layoutManager.getChildCount()));
-//            Log.e("-----33", "--" + (!isNoMore));
-//            Log.e("-----44", "--" + (mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING));
-            // 取消那条后，只有一条信息也可以刷新
             if (layoutManager.getChildCount() > 0
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
                     && isNoFullScreenLoad(layoutManager)
-                    && isScrollBottomLoad(layoutManager)
-                    && !isNoMore
+                    && isScrollLoad(layoutManager)
+                    && !mIsNoMore
                     && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
-                isLoadingData = true;
-                isScrollUp = false;
-                mFootView.setState(BaseLoadingMore.STATE_LOADING);
+                mIsLoadingData = true;
+                mIsScrollUp = false;
+                mLoadingMore.setState(BaseLoadingMore.STATE_LOADING);
                 mLoadMoreListener.onLoadMore();
             }
         }
@@ -341,14 +316,16 @@ public class ByRecyclerView extends RecyclerView {
                 break;
             default:
                 // ==0 原点向下惯性滑动会有效
-//                isScrollUp = mLoadMoreEnabled && ev.getY() - mPullStartY <= 0;
                 // 按下的纵坐标 - 当前的纵坐标(为了更灵敏)
-                isScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10;
-//                LogHelper.e("isScrollUp:  ", isScrollUp + " --- mPullStartY:  " + mPullStartY + " --- " + "ev.getY(): " + ev.getY());
+                mIsScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10;
+                // LogHelper.e("mIsScrollUp:  ", mIsScrollUp + " --- mPullStartY:  " + mPullStartY + " --- " + "ev.getY(): " + ev.getY());
 
                 mPullStartY = 0;
                 mLastY = -1;
-                if (mRefreshEnabled && mRefreshListener != null && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                if (mRefreshEnabled
+                        && mRefreshListener != null
+                        && isOnTop()
+                        && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (mRefreshHeader.releaseAction()) {
                         mRefreshListener.onRefresh();
                     }
@@ -483,7 +460,7 @@ public class ByRecyclerView extends RecyclerView {
             } else if (viewType == TYPE_FOOTER_VIEW) {
                 return new SimpleViewHolder(mFooterLayout);
             } else if (viewType == TYPE_LOADING_FOOTER) {
-                return new SimpleViewHolder((View) mFootView);
+                return new SimpleViewHolder((View) mLoadingMore);
             }
             ViewHolder viewHolder = adapter.onCreateViewHolder(parent, viewType);
             bindViewClickListener(viewHolder);
@@ -546,7 +523,7 @@ public class ByRecyclerView extends RecyclerView {
             }
             if (isHeaderView(position)) {
                 position = position - getPullHeaderSize();
-                return sHeaderTypes.get(position);
+                return mHeaderTypes.get(position);
             }
             if (isFootView(position)) {
                 return TYPE_FOOTER_VIEW;
@@ -898,26 +875,26 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 不满一屏时，根据上滑的距离判断是否加载
      */
-    private boolean isScrollBottomLoad(LayoutManager layoutManager) {
+    private boolean isScrollLoad(LayoutManager layoutManager) {
         if (isFullScreen(layoutManager)) {
             return true;
         } else {
-            return isScrollUp;
+            return mIsScrollUp;
         }
     }
 
     /**
      * 设置不满一屏不加载
      */
-    public void disableLoadMoreIfNotFullScreen() {
-        isNoLoadLoadMoreIfNotFullScreen = true;
+    public void setNotFullScreenNoLoadMore() {
+        misNoLoadMoreIfNotFullScreen = true;
     }
 
     /**
-     * 全屏是否加载，默认加载
+     * 不满一屏是否加载，默认加载
      */
     private boolean isNoFullScreenLoad(LayoutManager layoutManager) {
-        if (isNoLoadLoadMoreIfNotFullScreen) {
+        if (misNoLoadMoreIfNotFullScreen) {
             return isFullScreen(layoutManager);
         } else {
             return true;
@@ -1007,8 +984,8 @@ public class ByRecyclerView extends RecyclerView {
             mHeaderViews.clear();
             mHeaderViews = null;
         }
-        if (sHeaderTypes != null) {
-            sHeaderTypes.clear();
+        if (mHeaderTypes != null) {
+            mHeaderTypes.clear();
             mHeaderViews = null;
         }
         if (mEmptyLayout != null) {

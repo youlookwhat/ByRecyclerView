@@ -37,7 +37,6 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
 
     private void initAdapter() {
         mAdapter = new DataAdapter(DataUtil.get(this, 6));
-//        mAdapter.setRecyclerView(binding.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);

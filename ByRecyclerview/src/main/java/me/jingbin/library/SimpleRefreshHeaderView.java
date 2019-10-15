@@ -1,12 +1,19 @@
 package me.jingbin.library;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -14,11 +21,18 @@ import android.widget.TextView;
  */
 public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefreshHeader {
 
-    private Context mContext;
+    private static final int ROTATE_ANIM_DURATION = 180;
+
     private TextView tvRefreshTip;
+    private ImageView mIvArrow;
+    private ProgressBar mProgress;
+    private LinearLayout mContainer;
+
+    private Animation mRotateUpAnim;
+    private Animation mRotateDownAnim;
+
     private int mState = STATE_NORMAL;
     private int mMeasuredHeight;
-    private LinearLayout mContainer;
 
     public SimpleRefreshHeaderView(Context context) {
         this(context, null);
@@ -30,22 +44,34 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
 
     public SimpleRefreshHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.mContext = context;
-        initView();
+        initView(context);
     }
 
-    private void initView() {
-        LayoutInflater.from(mContext).inflate(R.layout.progress_refresh_header, this);
+    private void initView(Context context) {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0);
+        mContainer = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.simple_by_refresh_view, null);
+        addView(mContainer, lp);
+        setGravity(Gravity.BOTTOM);
 
+        mIvArrow = (ImageView) findViewById(R.id.iv_arrow);
+        mProgress = (ProgressBar) findViewById(R.id.iv_progress);
         tvRefreshTip = (TextView) findViewById(R.id.tv_refresh_tip);
-        measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mMeasuredHeight = getMeasuredHeight();
-        setGravity(Gravity.CENTER_HORIZONTAL);
-        mContainer = (LinearLayout) findViewById(R.id.container);
-        mContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 0));
+
+        mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        mRotateUpAnim.setDuration(ROTATE_ANIM_DURATION);
+        mRotateUpAnim.setFillAfter(true);
+
+        mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        mRotateDownAnim.setDuration(ROTATE_ANIM_DURATION);
+        mRotateDownAnim.setFillAfter(true);
+
         this.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
-
 
     @Override
     public void onMove(float delta) {
@@ -66,11 +92,34 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
         if (state == mState) {
             return;
         }
+        if (state == STATE_REFRESHING) {
+            // show progress
+            mIvArrow.clearAnimation();
+            mIvArrow.setVisibility(View.INVISIBLE);
+            mProgress.setVisibility(View.VISIBLE);
+            smoothScrollTo(mMeasuredHeight);
+        } else if (state == STATE_DONE) {
+            mIvArrow.setVisibility(View.INVISIBLE);
+            mProgress.setVisibility(View.INVISIBLE);
+        } else {
+            // show arrow image
+            mIvArrow.setVisibility(View.VISIBLE);
+            mProgress.setVisibility(View.INVISIBLE);
+        }
+
         switch (state) {
             case STATE_NORMAL:
+                if (mState == STATE_RELEASE_TO_REFRESH) {
+                    mIvArrow.startAnimation(mRotateDownAnim);
+                }
+                if (mState == STATE_REFRESHING) {
+                    mIvArrow.clearAnimation();
+                }
                 tvRefreshTip.setText(R.string.header_hint_normal);
                 break;
             case STATE_RELEASE_TO_REFRESH:
+                mIvArrow.clearAnimation();
+                mIvArrow.startAnimation(mRotateUpAnim);
                 tvRefreshTip.setText(R.string.header_hint_release);
                 break;
             case STATE_REFRESHING:
@@ -88,23 +137,14 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
     @Override
     public boolean releaseAction() {
         boolean isOnRefresh = false;
-        int height = getVisibleHeight();
-        if (height == 0) {
-            // not visible.
-            isOnRefresh = false;
-        }
 
         if (getVisibleHeight() > mMeasuredHeight && mState < STATE_REFRESHING) {
             setState(STATE_REFRESHING);
             isOnRefresh = true;
         }
-        // refreshing and header isn't shown fully. do nothing.
-        if (mState == STATE_REFRESHING && height <= mMeasuredHeight) {
-            //return;
-        }
-        int destHeight = 0; // default: scroll back to dismiss header.
-        // is refreshing, just scroll back to show all the header.
+        int destHeight = 0;
         if (mState == STATE_REFRESHING) {
+            // 处理刷新中时，让其定位到 destHeight 高度
             destHeight = mMeasuredHeight;
         }
         smoothScrollTo(destHeight);
@@ -118,36 +158,27 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
         tvRefreshTip.postDelayed(new Runnable() {
             @Override
             public void run() {
-                reset();
+                smoothScrollTo(0);
             }
         }, 500);
     }
 
-    public void reset() {
-        smoothScrollTo(0);
-        setState(STATE_NORMAL);
-    }
-
-    /**
-     * 这个不会回到顶端
-     */
-    public void handlerRefreshComplate() {
-        setState(STATE_DONE);
-        tvRefreshTip.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setState(STATE_NORMAL);
-            }
-        }, 500);
-    }
-
-    private void smoothScrollTo(int destHeight) {
+    private void smoothScrollTo(final int destHeight) {
         ValueAnimator animator = ValueAnimator.ofInt(getVisibleHeight(), destHeight);
         animator.setDuration(300).start();
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 setVisibleHeight((int) animation.getAnimatedValue());
+            }
+        });
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (destHeight == 0) {
+                    setState(STATE_NORMAL);
+                }
             }
         });
         animator.start();
@@ -157,7 +188,7 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
         if (height < 0) {
             height = 0;
         }
-        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mContainer.getLayoutParams();
         lp.height = height;
         mContainer.setLayoutParams(lp);
     }
