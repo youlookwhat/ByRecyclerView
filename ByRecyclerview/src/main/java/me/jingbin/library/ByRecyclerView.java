@@ -166,8 +166,17 @@ public class ByRecyclerView extends RecyclerView {
      */
     public void refresh() {
         if (mRefreshEnabled && mRefreshListener != null) {
+            LayoutManager layoutManager = getLayoutManager();
+            if (layoutManager != null) {
+                layoutManager.scrollToPosition(0);
+            }
             mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
-            mRefreshListener.onRefresh();
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRefreshListener.onRefresh();
+                }
+            }, 300);
         }
     }
 

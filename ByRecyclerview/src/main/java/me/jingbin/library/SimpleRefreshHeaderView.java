@@ -92,6 +92,8 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
         if (state == mState) {
             return;
         }
+
+        tvRefreshTip.setVisibility(VISIBLE);
         if (state == STATE_REFRESHING) {
             // show progress
             mIvArrow.clearAnimation();
@@ -101,6 +103,7 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
         } else if (state == STATE_DONE) {
             mIvArrow.setVisibility(View.INVISIBLE);
             mProgress.setVisibility(View.INVISIBLE);
+            tvRefreshTip.setVisibility(INVISIBLE);
         } else {
             // show arrow image
             mIvArrow.setVisibility(View.VISIBLE);
@@ -155,12 +158,8 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
     @Override
     public void refreshComplete() {
         setState(STATE_DONE);
-        tvRefreshTip.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                smoothScrollTo(0);
-            }
-        }, 500);
+        setState(STATE_NORMAL);
+        smoothScrollTo(0);
     }
 
     private void smoothScrollTo(final int destHeight) {
