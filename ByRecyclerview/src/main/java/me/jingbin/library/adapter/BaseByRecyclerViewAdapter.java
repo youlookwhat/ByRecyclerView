@@ -63,7 +63,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
 
     public void addData(int position, T data) {
         mData.add(position, data);
-        position = position + getRecyclerViewListTopViewSize();
+        position = position + getRecyclerViewTopViewSize();
         notifyItemRangeInserted(position, 1);
         compatibilityDataSizeChanged(1);
     }
@@ -75,7 +75,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     public void addData(T data) {
         int startPosition = mData.size();
         mData.add(data);
-        startPosition = startPosition + getRecyclerViewListTopViewSize();
+        startPosition = startPosition + getRecyclerViewTopViewSize();
         notifyItemRangeInserted(startPosition, 1);
         compatibilityDataSizeChanged(1);
     }
@@ -86,7 +86,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     public void addData(List<T> data) {
         int startPosition = mData.size();
         this.mData.addAll(data);
-        startPosition = startPosition + getRecyclerViewListTopViewSize();
+        startPosition = startPosition + getRecyclerViewTopViewSize();
         notifyItemRangeInserted(startPosition, data.size());
         compatibilityDataSizeChanged(data.size());
     }
@@ -94,7 +94,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     public void addData(int position, List<T> data) {
         int startPosition = mData.size();
         this.mData.addAll(data);
-        startPosition = startPosition + getRecyclerViewListTopViewSize();
+        startPosition = startPosition + getRecyclerViewTopViewSize();
         notifyItemRangeInserted(startPosition, data.size());
         compatibilityDataSizeChanged(data.size());
     }
@@ -120,7 +120,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
      */
     public void removeData(@IntRange(from = 0) int position) {
         mData.remove(position);
-        int internalPosition = position + getRecyclerViewListTopViewSize();
+        int internalPosition = position + getRecyclerViewTopViewSize();
         notifyItemRemoved(internalPosition);
         // 如果移除的是最后一个，忽略
         if (position != mData.size()) {
@@ -129,14 +129,21 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     /**
-     * RefreshView + HeaderView + EmptyView
+     * list列表数据前部分的view数量：RefreshView + HeaderView + EmptyView
      */
-    private int getRecyclerViewListTopViewSize() {
+    public int getRecyclerViewTopViewSize() {
         if (mRecyclerView != null) {
             return mRecyclerView.getPullHeaderSize() + mRecyclerView.getHeadersCount() + mRecyclerView.getEmptyViewSize();
         } else {
             return 0;
         }
+    }
+
+    /**
+     * 如果使用了 RefreshView 、 HeaderView 、EmptyView，则刷新position的时候需要加上使用的view的数量
+     */
+    public final void refreshNotifyItemChanged(int position) {
+        notifyItemChanged(position + getRecyclerViewTopViewSize());
     }
 
     /**
