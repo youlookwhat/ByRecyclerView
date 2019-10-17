@@ -15,8 +15,8 @@ RecyclerView 下拉刷新、上拉加载，集合 databinding 的通用adapter�
 
 ||ByRecyclerView|XRecyclerView|BaseRecyclerViewAdapterHelper|
 |:--:|:--:|:--:|:--:|
-|下拉刷新布局|继承基类自定义|简单设置样式，自定义麻烦|无|
-|加载更多布局|继承基类自定义|继承基类自定义|有，继承后直接设置布局|
+|下拉刷新布局|继承基类自定义布局|只能简单设置样式|无|
+|加载更多布局|继承基类自定义布局|继承基类自定义类|继承基类设置对应布局|
 |加载更多机制|不足满屏上拉加载，超过后触底加载|触底加载|不足满屏即加载|
 |HeaderView|每个header即一个item|每个header即一个item|多个header是同一个item|
 |FooterView|多个footer是同一个item|不能添加|多个footer是同一个item|
