@@ -55,7 +55,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     /**
-     * 绑定RecyclerView使用
+     * 绑定ByRecyclerView使用，自己不必调用，已自动匹配
      */
     public void setRecyclerView(ByRecyclerView recyclerView) {
         mRecyclerView = recyclerView;
@@ -70,7 +70,6 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
 
     /**
      * 添加一条数据
-     * 请注意是否绑定了recyclerView，如不绑定就是普通的RecyclerView操作
      */
     public void addData(T data) {
         int startPosition = mData.size();
@@ -81,7 +80,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     /**
-     * 请注意是否绑定了recyclerView，如不绑定就是普通的RecyclerView操作
+     * 添加一组数据
      */
     public void addData(List<T> data) {
         int startPosition = mData.size();
@@ -101,7 +100,6 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
 
     /**
      * 用户初始化数据，当滑动到底后再次下拉刷新
-     * 请注意是否绑定了recyclerView，如不绑定就是普通的RecyclerView操作
      */
     public void setNewData(List<T> data) {
         this.mData = data == null ? new ArrayList<T>() : data;
@@ -115,8 +113,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     /**
-     * remove one data
-     * 请注意是否绑定了recyclerView，如不绑定就是普通的RecyclerView操作
+     * 移除一条数据
      */
     public void removeData(@IntRange(from = 0) int position) {
         mData.remove(position);
@@ -133,7 +130,7 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
      */
     public int getRecyclerViewTopViewSize() {
         if (mRecyclerView != null) {
-            return mRecyclerView.getPullHeaderSize() + mRecyclerView.getHeadersCount() + mRecyclerView.getEmptyViewSize();
+            return mRecyclerView.getPullHeaderSize() + mRecyclerView.getHeaderViewCount() + mRecyclerView.getEmptyViewSize();
         } else {
             return 0;
         }
@@ -146,8 +143,13 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
         notifyItemChanged(position + getRecyclerViewTopViewSize());
     }
 
+    public final void refreshNotifyItemRemoved(int position) {
+        notifyItemRemoved(position + getRecyclerViewTopViewSize());
+    }
+
+
     /**
-     * compatible getPullHeaderSize、getHeadersCount and getEmptyViewSize may change
+     * compatible getPullHeaderSize、getHeaderViewCount and getEmptyViewSize may change
      *
      * @param size Need compatible data size
      */

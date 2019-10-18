@@ -42,7 +42,8 @@ public class ByRecyclerView extends RecyclerView {
     private static final int HEADER_INIT_INDEX = 10004;       // HeaderView 起始type
     private List<Integer> mHeaderTypes = new ArrayList<>();   // HeaderView type集合
     private ArrayList<View> mHeaderViews = new ArrayList<>(); // HeaderView view集合
-    private FrameLayout mEmptyLayout;                         // EmptyView 布局
+    private LinearLayout mFooterLayout;                       // FooterView 布局
+    private FrameLayout mEmptyLayout;                         // EmptyView  布局
 
     private boolean mRefreshEnabled = false;              // 设置是否 使用下拉刷新
     private boolean mLoadMoreEnabled = false;             // 设置是否 使用加载更多
@@ -87,15 +88,13 @@ public class ByRecyclerView extends RecyclerView {
 
     /**
      * 添加HeaderView；不可重复添加相同的View
-     *
-     * @param headerView HeaderView
      */
     public void addHeaderView(View headerView) {
         mHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(headerView);
         mHeaderViewEnabled = true;
         if (mWrapAdapter != null) {
-            mWrapAdapter.getOriginalAdapter().notifyItemInserted(getPullHeaderSize() + getHeadersCount() - 1);
+            mWrapAdapter.getOriginalAdapter().notifyItemInserted(getPullHeaderSize() + getHeaderViewCount() - 1);
         }
     }
 
@@ -113,11 +112,11 @@ public class ByRecyclerView extends RecyclerView {
      * 判断一个type是否为HeaderType
      */
     private boolean isHeaderType(int itemViewType) {
-        return mHeaderViews.size() > 0 && mHeaderTypes.contains(itemViewType);
+        return mHeaderViewEnabled && getHeaderViewCount() > 0 && mHeaderTypes.contains(itemViewType);
     }
 
     /**
-     * 判断是否是JRecyclerView保留的itemViewType
+     * 判断是否是ByRecyclerView保留的itemViewType
      */
     private boolean isReservedItemViewType(int itemViewType) {
         if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOADING_FOOTER || itemViewType == TYPE_EMPTY_VIEW || mHeaderTypes.contains(itemViewType)) {
@@ -130,14 +129,14 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 设置 自定义加载更多View
      */
-    public void setLoadingMoreView(BaseLoadingMore view) {
-        mLoadingMore = view;
+    public void setLoadingMoreView(BaseLoadingMore loadingMore) {
+        mLoadingMore = loadingMore;
     }
 
     /**
      * 设置 自定义下拉刷新View
      */
-    public void setRefreshHeader(BaseRefreshHeader refreshHeader) {
+    public void setRefreshHeaderView(BaseRefreshHeader refreshHeader) {
         mRefreshHeader = refreshHeader;
     }
 
@@ -414,14 +413,14 @@ public class ByRecyclerView extends RecyclerView {
          * 是否是 EmptyView 布局
          */
         boolean isEmptyView(int position) {
-            return mEmptyViewEnabled && mEmptyLayout != null && position == mHeaderViews.size() + getPullHeaderSize();
+            return mEmptyViewEnabled && mEmptyLayout != null && position == getHeaderViewCount() + getPullHeaderSize();
         }
 
         /**
          * 是否是 HeaderView 布局
          */
         boolean isHeaderView(int position) {
-            return mHeaderViewEnabled && position >= getPullHeaderSize() && position < mHeaderViews.size() + getPullHeaderSize();
+            return mHeaderViewEnabled && position >= getPullHeaderSize() && position < getHeaderViewCount() + getPullHeaderSize();
         }
 
         /**
@@ -516,9 +515,9 @@ public class ByRecyclerView extends RecyclerView {
         @Override
         public int getItemCount() {
             if (adapter != null) {
-                return getPullHeaderSize() + getHeadersCount() + getFooterViewSize() + getLoadMoreSize() + getEmptyViewSize() + adapter.getItemCount();
+                return getPullHeaderSize() + getHeaderViewCount() + getFooterViewSize() + getLoadMoreSize() + getEmptyViewSize() + adapter.getItemCount();
             } else {
-                return getPullHeaderSize() + getHeadersCount() + getFooterViewSize() + getLoadMoreSize() + getEmptyViewSize();
+                return getPullHeaderSize() + getHeaderViewCount() + getFooterViewSize() + getLoadMoreSize() + getEmptyViewSize();
             }
         }
 
@@ -550,7 +549,7 @@ public class ByRecyclerView extends RecyclerView {
                 if (adjPosition < adapterCount) {
                     int type = adapter.getItemViewType(adjPosition);
                     if (isReservedItemViewType(type)) {
-                        throw new IllegalStateException("JRecyclerView require itemViewType in adapter should be less than 10000 !");
+                        throw new IllegalStateException("ByRecyclerView require itemViewType in adapter should be less than 10000 !");
                     }
                     return type;
                 }
@@ -661,7 +660,7 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 获取 HeaderView的个数
      */
-    public int getHeadersCount() {
+    public int getHeaderViewCount() {
         return mHeaderViewEnabled ? mHeaderViews.size() : 0;
     }
 
@@ -695,7 +694,7 @@ public class ByRecyclerView extends RecyclerView {
      * 自定义类型头部布局的个数 = RefreshView + HeaderView  + EmptyView
      */
     private int getCustomItemUpViewCount() {
-        return getHeadersCount() + getPullHeaderSize() + getEmptyViewSize();
+        return getHeaderViewCount() + getPullHeaderSize() + getEmptyViewSize();
     }
 
     public interface OnLoadMoreListener {
@@ -809,15 +808,13 @@ public class ByRecyclerView extends RecyclerView {
         mEmptyViewEnabled = true;
         if (insert) {
             if (getEmptyViewSize() == 1) {
-                int position = getHeadersCount() + getPullHeaderSize();
+                int position = getHeaderViewCount() + getPullHeaderSize();
                 if (mWrapAdapter != null) {
                     mWrapAdapter.getOriginalAdapter().notifyItemInserted(position);
                 }
             }
         }
     }
-
-    private LinearLayout mFooterLayout;
 
     public int addFooterView(View footer) {
         return addFooterView(footer, -1, LinearLayout.VERTICAL);
@@ -857,28 +854,10 @@ public class ByRecyclerView extends RecyclerView {
 
     public void setHeaderViewEnabled(boolean headerViewEnabled) {
         this.mHeaderViewEnabled = headerViewEnabled;
-        if (!mHeaderViewEnabled) {
-            if (mHeaderViews.size() > 0) {
-                if (mWrapAdapter != null) {
-                    mWrapAdapter.getOriginalAdapter().notifyItemRangeRemoved(getPullHeaderSize(), mHeaderViews.size());
-                    mHeaderViews.clear();
-                }
-            }
-        }
     }
 
     public void setFootViewEnabled(boolean footViewEnabled) {
         this.mFootViewEnabled = footViewEnabled;
-        if (!mFootViewEnabled) {
-            if (mFooterLayout.getChildCount() != 0) {
-                if (mWrapAdapter != null) {
-                    int position = mWrapAdapter.getOriginalAdapter().getItemCount() + getCustomItemUpViewCount();
-                    if (position != -1) {
-                        mWrapAdapter.getOriginalAdapter().notifyItemRemoved(position);
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -918,10 +897,47 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * remove footer view from mFooterLayout,
-     * When the child count of mFooterLayout is 0, mFooterLayout will be set to null.
-     *
-     * @param footer
+     * 移除单个HeaderView
+     * tip: 移除后不能再次添加HeaderView,可能type重复导致添加失败
+     */
+    public void removeHeaderView(@NonNull View header) {
+        if (getHeaderViewCount() == 0) {
+            return;
+        }
+        if (mWrapAdapter != null) {
+            int index = -1;
+            for (int i = 0; i < mHeaderViews.size(); i++) {
+                if (mHeaderViews.get(i) == header) {
+                    mHeaderViews.remove(mHeaderViews.get(i));
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1) {
+                mHeaderTypes.remove(index);
+                mWrapAdapter.getOriginalAdapter().notifyItemRemoved(getPullHeaderSize() + index);
+            }
+        }
+    }
+
+    /**
+     * 移除所有HeaderView
+     */
+    public void removeAllHeaderView() {
+        if (getHeaderViewCount() == 0) {
+            return;
+        }
+        mHeaderViewEnabled = false;
+        if (mWrapAdapter != null) {
+            mHeaderViews.clear();
+            mHeaderTypes.clear();
+            mWrapAdapter.getOriginalAdapter().notifyItemRangeRemoved(getPullHeaderSize(), getHeaderViewCount());
+        }
+    }
+
+    /**
+     * 移除FooterView
+     * 因为都是在一个item中处理布局，所以不必刷新布局，除非删除掉全部的FooterView
      */
     public void removeFooterView(View footer) {
         if (mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0) {
@@ -987,15 +1003,15 @@ public class ByRecyclerView extends RecyclerView {
      * call it when you finish the activity,
      */
     public void destroy() {
-        mLoadMoreEnabled = false;
         mRefreshEnabled = false;
+        mLoadMoreEnabled = false;
         if (mHeaderViews != null) {
             mHeaderViews.clear();
             mHeaderViews = null;
         }
         if (mHeaderTypes != null) {
             mHeaderTypes.clear();
-            mHeaderViews = null;
+            mHeaderTypes = null;
         }
         if (mEmptyLayout != null) {
             mEmptyLayout.removeAllViews();

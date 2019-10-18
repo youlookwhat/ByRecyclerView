@@ -22,7 +22,7 @@ import me.jingbin.library.config.ByDividerItemDecoration;
 
 /**
  * @author jingbin
- * link to https://github.com/youlookwhat/JRecyclerView
+ * link to https://github.com/youlookwhat/ByRecyclerView
  */
 public class MainActivity extends AppCompatActivity {
 
