@@ -35,23 +35,12 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <View
-            android:layout_width="16dp"
-            android:layout_height="1dp"
-            android:background="#CCCCCC" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:text="@string/footer_no_more"
-            android:textColor="#CCCCCC" />
+            android:textColor="@android:color/darker_gray" />
 
-        <View
-            android:layout_width="16dp"
-            android:layout_height="1dp"
-            android:background="#CCCCCC" />
     </LinearLayout>
 
     <!--为了部分页面实现底部透明效果，提高一个底部栏的高度-->

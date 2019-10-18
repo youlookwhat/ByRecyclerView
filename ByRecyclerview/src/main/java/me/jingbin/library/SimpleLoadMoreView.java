@@ -10,28 +10,28 @@ import android.widget.LinearLayout;
 /**
  * @author jingbin
  */
-public class SimpleLoadingMoreView extends LinearLayout implements BaseLoadingMore {
+public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
 
     private View viewBottom;
     private boolean isShowLoadingMoreHeight = false;
     private LinearLayout llNoMore;
     private LinearLayout llLoading;
 
-    public SimpleLoadingMoreView(Context context) {
+    public SimpleLoadMoreView(Context context) {
         this(context, null);
     }
 
-    public SimpleLoadingMoreView(Context context, AttributeSet attrs) {
+    public SimpleLoadMoreView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SimpleLoadingMoreView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SimpleLoadMoreView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
     }
 
     public void initView(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.simple_by_loading_more_view, this);
+        LayoutInflater.from(context).inflate(R.layout.simple_by_load_more_view, this);
         viewBottom = findViewById(R.id.view_bottom);
         llLoading = findViewById(R.id.ll_loading);
         llNoMore = findViewById(R.id.ll_no_more);

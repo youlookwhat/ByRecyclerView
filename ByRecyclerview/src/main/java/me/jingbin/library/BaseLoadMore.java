@@ -5,7 +5,7 @@ package me.jingbin.library;
  *
  * @author jingbin
  */
-interface BaseLoadingMore {
+interface BaseLoadMore {
 
     /**
      * 加载中...，显示布局

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">library</string>
 
-    <string name="header_hint_normal">drop down refresh</string>
-    <string name="header_hint_release">release refresh</string>
-    <string name="footer_loading">loading</string>
-    <string name="footer_no_more">END</string>
-    <string name="refreshing">refreshing</string>
-    <string name="refresh_done">refresh done</string>
+    <string name="header_hint_normal">Drop down refresh</string>
+    <string name="header_hint_release">Release refresh</string>
+    <string name="refreshing">Refreshing</string>
+    <string name="refresh_done">Refresh done</string>
+    <string name="footer_loading">Loading</string>
+    <string name="footer_no_more">No more data</string>
 </resources>

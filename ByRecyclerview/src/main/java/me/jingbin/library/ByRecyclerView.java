@@ -36,7 +36,7 @@ public class ByRecyclerView extends RecyclerView {
      * 如果用户的adapter中的 ItemViewType 值与它们重复将会强制抛出异常。
      */
     private static final int TYPE_REFRESH_HEADER = 10000;     // RefreshHeader type
-    private static final int TYPE_LOADING_FOOTER = 10001;     // LoadingMore type
+    private static final int TYPE_LOAD_MORE_VIEW = 10001;     // LoadingMore type
     private static final int TYPE_EMPTY_VIEW = 10002;         // EmptyView type
     private static final int TYPE_FOOTER_VIEW = 10003;        // FooterView type
     private static final int HEADER_INIT_INDEX = 10004;       // HeaderView 起始type
@@ -52,17 +52,17 @@ public class ByRecyclerView extends RecyclerView {
     private boolean mEmptyViewEnabled = true;             // 设置是否 显示EmptyView布局
     private boolean misNoLoadMoreIfNotFullScreen = false; // 设置是否 数据不满一屏时进行加载
 
-    private boolean mIsLoadingData = false; // 是否正在加载更多
-    private boolean mIsNoMore = false;      // 是否没有更多数据了
-    private boolean mIsScrollUp = false;    // 手指是否上滑
-    private float mLastY = -1;              // 手指按下的Y坐标值，用于处理下拉刷新View的高度
-    private float mPullStartY = 0;          // 手指按下的Y坐标值，用于处理不满全屏时是否可进行上拉加载
-    private float mDragRate = 2.5f;         // 下拉时候的偏移计量因子，越小拉动距离越短
+    private boolean mIsLoadingData = false;        // 是否正在加载更多
+    private boolean mIsNoMore = false;             // 是否没有更多数据了
+    private boolean mIsScrollUp = false;           // 手指是否上滑
+    private float mLastY = -1;                     // 手指按下的Y坐标值，用于处理下拉刷新View的高度
+    private float mPullStartY = 0;                 // 手指按下的Y坐标值，用于处理不满全屏时是否可进行上拉加载
+    private float mDragRate = 2.5f;                // 下拉时候的偏移计量因子，越小拉动距离越短
 
     private OnRefreshListener mRefreshListener;    // 下拉刷新监听
     private BaseRefreshHeader mRefreshHeader;      // 下拉刷新接口
     private OnLoadMoreListener mLoadMoreListener;  // 加载更多监听
-    private BaseLoadingMore mLoadingMore;          // 加载更多接口
+    private BaseLoadMore mLoadMore;          // 加载更多接口
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
 
@@ -82,8 +82,8 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     private void init() {
-        mLoadingMore = new SimpleLoadingMoreView(getContext());
-        ((View) mLoadingMore).setVisibility(GONE);
+        mLoadMore = new SimpleLoadMoreView(getContext());
+        ((View) mLoadMore).setVisibility(GONE);
     }
 
     /**
@@ -119,7 +119,7 @@ public class ByRecyclerView extends RecyclerView {
      * 判断是否是ByRecyclerView保留的itemViewType
      */
     private boolean isReservedItemViewType(int itemViewType) {
-        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOADING_FOOTER || itemViewType == TYPE_EMPTY_VIEW || mHeaderTypes.contains(itemViewType)) {
+        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOAD_MORE_VIEW || itemViewType == TYPE_EMPTY_VIEW || mHeaderTypes.contains(itemViewType)) {
             return true;
         } else {
             return false;
@@ -129,8 +129,8 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 设置 自定义加载更多View
      */
-    public void setLoadingMoreView(BaseLoadingMore loadingMore) {
-        mLoadingMore = loadingMore;
+    public void setLoadingMoreView(BaseLoadMore loadingMore) {
+        mLoadMore = loadingMore;
     }
 
     /**
@@ -149,7 +149,7 @@ public class ByRecyclerView extends RecyclerView {
         }
         mIsNoMore = false;
         mIsLoadingData = false;
-        mLoadingMore.setState(BaseLoadingMore.STATE_COMPLETE);
+        mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
     }
 
     /**
@@ -157,7 +157,7 @@ public class ByRecyclerView extends RecyclerView {
      */
     public void loadMoreComplete() {
         mIsLoadingData = false;
-        mLoadingMore.setState(BaseLoadingMore.STATE_COMPLETE);
+        mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
     }
 
     /**
@@ -193,7 +193,7 @@ public class ByRecyclerView extends RecyclerView {
     public void loadMoreEnd() {
         mIsLoadingData = false;
         mIsNoMore = true;
-        mLoadingMore.setState(BaseLoadingMore.STATE_NO_MORE);
+        mLoadMore.setState(BaseLoadMore.STATE_NO_MORE);
     }
 
     /**
@@ -212,7 +212,7 @@ public class ByRecyclerView extends RecyclerView {
     public void setLoadMoreEnabled(boolean enabled) {
         mLoadMoreEnabled = enabled;
         if (!enabled) {
-            mLoadingMore.setState(BaseLoadingMore.STATE_COMPLETE);
+            mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
         }
     }
 
@@ -222,7 +222,7 @@ public class ByRecyclerView extends RecyclerView {
      * @param heightDp 单位dp
      */
     public void setLoadingMoreBottomHeight(float heightDp) {
-        mLoadingMore.setLoadingMoreBottomHeight(heightDp);
+        mLoadMore.setLoadingMoreBottomHeight(heightDp);
     }
 
     @Override
@@ -293,7 +293,7 @@ public class ByRecyclerView extends RecyclerView {
                     && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 mIsLoadingData = true;
                 mIsScrollUp = false;
-                mLoadingMore.setState(BaseLoadingMore.STATE_LOADING);
+                mLoadMore.setState(BaseLoadMore.STATE_LOADING);
                 mLoadMoreListener.onLoadMore();
             }
         }
@@ -467,8 +467,8 @@ public class ByRecyclerView extends RecyclerView {
                 return new SimpleViewHolder(mEmptyLayout);
             } else if (viewType == TYPE_FOOTER_VIEW) {
                 return new SimpleViewHolder(mFooterLayout);
-            } else if (viewType == TYPE_LOADING_FOOTER) {
-                return new SimpleViewHolder((View) mLoadingMore);
+            } else if (viewType == TYPE_LOAD_MORE_VIEW) {
+                return new SimpleViewHolder((View) mLoadMore);
             }
             ViewHolder viewHolder = adapter.onCreateViewHolder(parent, viewType);
             bindViewClickListener(viewHolder);
@@ -540,7 +540,7 @@ public class ByRecyclerView extends RecyclerView {
                 return TYPE_EMPTY_VIEW;
             }
             if (isLoadMore(position)) {
-                return TYPE_LOADING_FOOTER;
+                return TYPE_LOAD_MORE_VIEW;
             }
             int adapterCount;
             if (adapter != null) {
