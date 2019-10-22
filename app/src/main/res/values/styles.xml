@@ -17,7 +17,26 @@
         <item name="tabMode">fixed</item>
         <item name="android:fillViewport">false</item>
     </style>
+
+    <style name="ThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
     <!--<item name="tabTextColor">@color/colorPrimary</item>-->
     <!--<item name="tabBackground">@drawable/ripple_tab_bg</item>-->
     <!--<item name="tabIndicator">@drawable/shape_tab_indicator</item>-->
+
+    <!--titlebar 标题-->
+    <style name="ToolBar.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+    <style name="collapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 </resources>

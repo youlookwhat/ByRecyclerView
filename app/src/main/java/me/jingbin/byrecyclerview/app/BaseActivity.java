@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import com.gyf.barlibrary.ImmersionBar;
+
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.library.ByRecyclerView;
 
@@ -68,5 +70,11 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
 
     public void setPage(int mPage) {
         this.mPage = mPage;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ImmersionBar.with(this).destroy();
     }
 }

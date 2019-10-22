@@ -32,7 +32,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    // 状态栏
+    api 'com.gyf.immersionbar:immersionbar:2.3.3'
     implementation project(':ByRecyclerview')
 
     implementation 'androidx.multidex:multidex:2.0.0'

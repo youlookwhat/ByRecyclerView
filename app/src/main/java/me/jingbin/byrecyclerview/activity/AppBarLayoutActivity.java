@@ -18,11 +18,10 @@ import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivityAppbarLayoutBinding;
-import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
-import me.jingbin.byrecyclerview.databinding.LayoutEmptyBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
+import me.jingbin.byrecyclerview.utils.StatusBarUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.config.ByDividerItemDecoration;
@@ -39,8 +38,8 @@ public class AppBarLayoutActivity extends BaseActivity<ActivityAppbarLayoutBindi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appbar_layout);
-        setTitle("设置EmptyView");
-
+        StatusBarUtil.showTransparentStatusBarPadding(this, binding.toolbar);
+        binding.collapsing.setTitle("在CoordinatorLayout里使用");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
