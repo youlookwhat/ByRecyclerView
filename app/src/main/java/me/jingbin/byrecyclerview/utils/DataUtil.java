@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.jingbin.byrecyclerview.activity.AppBarLayoutActivity;
 import me.jingbin.byrecyclerview.activity.EmptyActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ListViewActivity;
@@ -30,7 +31,7 @@ public class DataUtil {
         list.add(new MainItemBean("添加HeaderView，FooterView", HeaderFooterActivity.class));
         list.add(new MainItemBean("设置EmptyView", EmptyActivity.class));
         list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + ViewPager + RecyclerView 中使用"));
-        list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + RecyclerView 中使用"));
+        list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class));
         list.add(new MainItemBean("BaseByListViewAdapter的使用", ListViewActivity.class));
         list.add(new MainItemBean("基本使用"));
         list.add(new MainItemBean("基本使用"));
