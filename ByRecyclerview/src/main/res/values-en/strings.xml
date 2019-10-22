@@ -7,4 +7,5 @@
     <string name="refresh_done">Refresh done</string>
     <string name="footer_loading">Loading</string>
     <string name="footer_no_more">No more data</string>
+    <string name="footer_load_failed">Load more failed</string>
 </resources>

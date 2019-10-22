@@ -26,6 +26,8 @@ RecyclerView 下拉刷新、上拉加载，集合 databinding 的通用adapter�
 |item点击/长按事件|有|无|有|
 
 
+## 问题
+ - xml文件预览是需要加上 `tools:layoutManager="LinearLayoutManager"`
 
 ## 接入文档
 
@@ -46,4 +48,4 @@ RecyclerView 下拉刷新、上拉加载，集合 databinding 的通用adapter�
  -keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
       <init>(...);
  }
-```
+```w

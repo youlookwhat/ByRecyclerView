@@ -62,7 +62,7 @@ public class ByRecyclerView extends RecyclerView {
     private OnRefreshListener mRefreshListener;    // 下拉刷新监听
     private BaseRefreshHeader mRefreshHeader;      // 下拉刷新接口
     private OnLoadMoreListener mLoadMoreListener;  // 加载更多监听
-    private BaseLoadMore mLoadMore;          // 加载更多接口
+    private BaseLoadMore mLoadMore;                // 加载更多接口
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
 
@@ -83,7 +83,7 @@ public class ByRecyclerView extends RecyclerView {
 
     private void init() {
         mLoadMore = new SimpleLoadMoreView(getContext());
-        ((View) mLoadMore).setVisibility(GONE);
+        mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
     }
 
     /**
@@ -144,9 +144,10 @@ public class ByRecyclerView extends RecyclerView {
      * 下拉加载完成
      */
     public void refreshComplete() {
-        if (mRefreshEnabled) {
-            mRefreshHeader.refreshComplete();
+        if (getPullHeaderSize() == 0) {
+            return;
         }
+        mRefreshHeader.refreshComplete();
         mIsNoMore = false;
         mIsLoadingData = false;
         mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
@@ -156,35 +157,11 @@ public class ByRecyclerView extends RecyclerView {
      * 加载更多完成
      */
     public void loadMoreComplete() {
+        if (getLoadMoreSize() == 0) {
+            return;
+        }
         mIsLoadingData = false;
         mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
-    }
-
-    /**
-     * 手动设置头部刷新
-     */
-    public void refresh() {
-        if (mRefreshEnabled && mRefreshListener != null) {
-            LayoutManager layoutManager = getLayoutManager();
-            if (layoutManager != null) {
-                layoutManager.scrollToPosition(0);
-            }
-            mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mRefreshListener.onRefresh();
-                }
-            }, 300);
-        }
-    }
-
-    /**
-     * 重置，一般在重新开始刷新时使用
-     */
-    public void reset() {
-        loadMoreComplete();
-        refreshComplete();
     }
 
     /**
@@ -194,6 +171,53 @@ public class ByRecyclerView extends RecyclerView {
         mIsLoadingData = false;
         mIsNoMore = true;
         mLoadMore.setState(BaseLoadMore.STATE_NO_MORE);
+    }
+
+    /**
+     * 加载更多失败
+     */
+    public void loadMoreFail() {
+        if (getLoadMoreSize() == 0 || mLoadMore.getFailureView() == null || mLoadMoreListener == null) {
+            return;
+        }
+        mIsLoadingData = false;
+        mLoadMore.setState(BaseLoadMore.STATE_FAILURE);
+        mLoadMore.getFailureView().setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIsLoadingData = true;
+                mLoadMore.setState(BaseLoadMore.STATE_LOADING);
+                mLoadMoreListener.onLoadMore();
+            }
+        });
+    }
+
+    /**
+     * 手动设置头部刷新
+     */
+    public void setRefreshing() {
+        if (getPullHeaderSize() == 0) {
+            return;
+        }
+        LayoutManager layoutManager = getLayoutManager();
+        if (layoutManager != null) {
+            layoutManager.scrollToPosition(0);
+        }
+        mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshListener.onRefresh();
+            }
+        }, 300);
+    }
+
+    /**
+     * 重置，一般在显示“无更多内容了”后，重新开始刷新时使用
+     */
+    public void reset() {
+        loadMoreComplete();
+        refreshComplete();
     }
 
     /**
@@ -291,8 +315,8 @@ public class ByRecyclerView extends RecyclerView {
                     && isScrollLoad(layoutManager)
                     && !mIsNoMore
                     && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
-                mIsLoadingData = true;
                 mIsScrollUp = false;
+                mIsLoadingData = true;
                 mLoadMore.setState(BaseLoadMore.STATE_LOADING);
                 mLoadMoreListener.onLoadMore();
             }

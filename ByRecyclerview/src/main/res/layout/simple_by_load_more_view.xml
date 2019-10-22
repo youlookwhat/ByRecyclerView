@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/ll_loading"
+        android:id="@+id/ll_more_loading"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center"
@@ -27,21 +28,24 @@
             android:textColor="#333333" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_no_more"
+    <TextView
+        android:id="@+id/tv_no_more"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:text="@string/footer_no_more"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/footer_no_more"
-            android:textColor="@android:color/darker_gray" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_more_failed"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:text="@string/footer_load_failed"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <!--为了部分页面实现底部透明效果，提高一个底部栏的高度-->
     <View

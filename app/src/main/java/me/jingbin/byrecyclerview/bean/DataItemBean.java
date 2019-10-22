@@ -17,7 +17,8 @@ public class DataItemBean {
         return title;
     }
 
-    public void setTitle(String title) {
+    public DataItemBean setTitle(String title) {
         this.title = title;
+        return this;
     }
 }

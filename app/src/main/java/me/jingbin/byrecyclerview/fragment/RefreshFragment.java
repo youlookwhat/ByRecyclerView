@@ -30,7 +30,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
     private boolean mIsFirst = true;
     private DataAdapter mAdapter;
     private ByRecyclerView recyclerView;
-    private int page;
+    private int page = 1;
 
 
     @Override
@@ -92,8 +92,13 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
                 recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (page == 3) {
+                        if (page == 4) {
                             recyclerView.loadMoreEnd();
+                            return;
+                        }
+                        if (page == 2) {
+                            page++;
+                            recyclerView.loadMoreFail();
                             return;
                         }
                         page++;
@@ -108,7 +113,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
             public void onClick(View v, int position) {
                 DataItemBean itemData = mAdapter.getItemData(position);
                 ToastUtil.showToast(itemData.getTitle());
-                recyclerView.refresh();
+                recyclerView.setRefreshing();
             }
         });
         recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {

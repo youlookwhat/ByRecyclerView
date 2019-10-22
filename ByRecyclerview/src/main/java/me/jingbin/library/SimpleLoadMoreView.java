@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * @author jingbin
@@ -14,8 +15,9 @@ public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
 
     private View viewBottom;
     private boolean isShowLoadingMoreHeight = false;
-    private LinearLayout llNoMore;
-    private LinearLayout llLoading;
+    private TextView tvNoMore;
+    private TextView tvMoreFailed;
+    private LinearLayout llMoreLoading;
 
     public SimpleLoadMoreView(Context context) {
         this(context, null);
@@ -33,28 +35,37 @@ public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
     public void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.simple_by_load_more_view, this);
         viewBottom = findViewById(R.id.view_bottom);
-        llLoading = findViewById(R.id.ll_loading);
-        llNoMore = findViewById(R.id.ll_no_more);
+        llMoreLoading = findViewById(R.id.ll_more_loading);
+        tvNoMore = findViewById(R.id.tv_no_more);
+        tvMoreFailed = findViewById(R.id.tv_more_failed);
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
     public void setState(int state) {
+        this.setVisibility(View.VISIBLE);
+
         switch (state) {
             case STATE_LOADING:
-                llLoading.setVisibility(VISIBLE);
-                llNoMore.setVisibility(GONE);
-                this.setVisibility(View.VISIBLE);
+                llMoreLoading.setVisibility(VISIBLE);
+                tvNoMore.setVisibility(GONE);
+                tvMoreFailed.setVisibility(GONE);
                 break;
             case STATE_COMPLETE:
-                llLoading.setVisibility(VISIBLE);
-                llNoMore.setVisibility(GONE);
+                llMoreLoading.setVisibility(VISIBLE);
+                tvNoMore.setVisibility(GONE);
+                tvMoreFailed.setVisibility(GONE);
                 this.setVisibility(View.GONE);
                 break;
             case STATE_NO_MORE:
-                llLoading.setVisibility(GONE);
-                llNoMore.setVisibility(VISIBLE);
-                this.setVisibility(View.VISIBLE);
+                tvNoMore.setVisibility(VISIBLE);
+                llMoreLoading.setVisibility(GONE);
+                tvMoreFailed.setVisibility(GONE);
+                break;
+            case STATE_FAILURE:
+                tvMoreFailed.setVisibility(VISIBLE);
+                llMoreLoading.setVisibility(GONE);
+                tvNoMore.setVisibility(GONE);
                 break;
             default:
                 break;
@@ -77,6 +88,14 @@ public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
             viewBottom.setLayoutParams(lp);
             isShowLoadingMoreHeight = true;
         }
+    }
+
+    /**
+     * 得到失败的布局，给设置点击重试
+     */
+    @Override
+    public View getFailureView() {
+        return tvMoreFailed;
     }
 
     /**
