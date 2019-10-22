@@ -35,7 +35,7 @@ public class ListViewActivity extends BaseActivity<ActivityListViewBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-        setTitle("BaseByListViewAdapter的使用");
+        setTitle("BaseListAdapter的使用");
 
         initAdapter();
     }

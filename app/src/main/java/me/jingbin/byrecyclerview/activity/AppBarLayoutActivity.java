@@ -55,7 +55,9 @@ public class AppBarLayoutActivity extends BaseActivity<ActivityAppbarLayoutBindi
 
     private void initAdapter() {
         final LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
-        LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) binding.recyclerView.getParent(), false);
+        final LayoutHeaderViewBinding headerBinding2 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
+        final LayoutHeaderViewBinding headerBinding3 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
+        final LayoutHeaderViewBinding headerBinding4 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
 
         mAdapter = new DataAdapter(DataUtil.getMore(AppBarLayoutActivity.this, 20, page));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -66,7 +68,6 @@ public class AppBarLayoutActivity extends BaseActivity<ActivityAppbarLayoutBindi
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
 
-        binding.recyclerView.addFooterView(footerBinding.getRoot());
         binding.recyclerView.addHeaderView(headerBinding.getRoot());
 
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {

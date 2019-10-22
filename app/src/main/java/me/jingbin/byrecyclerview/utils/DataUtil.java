@@ -32,7 +32,7 @@ public class DataUtil {
         list.add(new MainItemBean("设置EmptyView", EmptyActivity.class));
         list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + ViewPager + RecyclerView 中使用"));
         list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class));
-        list.add(new MainItemBean("BaseByListViewAdapter的使用", ListViewActivity.class));
+        list.add(new MainItemBean("BaseListAdapter的使用", ListViewActivity.class));
         list.add(new MainItemBean("基本使用"));
         list.add(new MainItemBean("基本使用"));
         list.add(new MainItemBean("基本使用"));
@@ -48,7 +48,7 @@ public class DataUtil {
         ArrayList<DataItemBean> list = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             DataItemBean bean = new DataItemBean();
-            bean.setTitle("数据展示:" + i);
+            bean.setTitle("数据展示");
             list.add(bean);
         }
         return list;
@@ -61,7 +61,7 @@ public class DataUtil {
         ArrayList<DataItemBean> list = new ArrayList<>();
         for (int i = num * (page - 1); i < num * (page); i++) {
             DataItemBean bean = new DataItemBean();
-            bean.setTitle("数据展示:" + i);
+            bean.setTitle("数据展示");
             list.add(bean);
         }
         return list;

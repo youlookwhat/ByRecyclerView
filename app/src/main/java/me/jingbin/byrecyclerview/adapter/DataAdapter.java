@@ -22,7 +22,7 @@ public class DataAdapter extends BaseRecyclerAdapter<DataItemBean, ItemHomeBindi
 
     @Override
     protected void bindView(DataItemBean bean, ItemHomeBinding binding, int position) {
-        binding.tvText.setText(bean.getTitle());
+        binding.tvText.setText(bean.getTitle() + ": " + position);
     }
 
 }
