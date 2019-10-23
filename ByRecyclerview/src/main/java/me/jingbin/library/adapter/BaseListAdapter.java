@@ -9,8 +9,8 @@ import java.util.List;
 
 /**
  * @author jingbin
- * @data 2019-10-11
- * @description ListView adapter精简适配器
+ * ListView adapter精简适配器
+ * https://github.com/youlookwhat/ByRecyclerView
  */
 public abstract class BaseListAdapter<T, V extends ViewDataBinding> extends BaseByListViewAdapter<T> {
 

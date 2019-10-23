@@ -27,7 +27,7 @@ import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 
 /**
  * @author jingbin
- * link to https://github.com/youlookwhat/ByRecyclerView
+ * https://github.com/youlookwhat/ByRecyclerView
  */
 public class ByRecyclerView extends RecyclerView {
 

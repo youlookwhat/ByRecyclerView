@@ -2,8 +2,6 @@ package me.jingbin.library.config;
 
 /**
  * @author jingbin
- * @data 2019/1/19
- * @description
  */
 
 import android.content.Context;

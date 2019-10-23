@@ -10,8 +10,7 @@ import java.util.List;
 
 /**
  * @author jingbin
- * @data 2019-10-11
- * @description RecyclerView adapter适配器 适合单种item类型的情况
+ * RecyclerView adapter适配器 适合单种item类型的情况
  */
 public abstract class BaseRecyclerAdapter<T, V extends ViewDataBinding> extends BaseByRecyclerViewAdapter<T> {
 
