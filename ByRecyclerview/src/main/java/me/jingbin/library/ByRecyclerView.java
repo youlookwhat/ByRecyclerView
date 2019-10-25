@@ -504,7 +504,7 @@ public class ByRecyclerView extends RecyclerView {
             if (isRefreshHeader(position) || isHeaderView(position) || isEmptyView(position) || isFootView(position)) {
                 return;
             }
-            int adjPosition = position - getCustomItemUpViewCount();
+            int adjPosition = position - getCustomTopItemViewCount();
             int adapterCount;
             if (adapter != null) {
                 adapterCount = adapter.getItemCount();
@@ -524,7 +524,7 @@ public class ByRecyclerView extends RecyclerView {
             }
             if (adapter != null) {
                 // 如果可以下拉刷新，就需要+1
-                int adjPosition = position - getCustomItemUpViewCount();
+                int adjPosition = position - getCustomTopItemViewCount();
                 int adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
                     if (objectList.isEmpty()) {
@@ -568,7 +568,7 @@ public class ByRecyclerView extends RecyclerView {
             }
             int adapterCount;
             if (adapter != null) {
-                int adjPosition = position - getCustomItemUpViewCount();
+                int adjPosition = position - getCustomTopItemViewCount();
                 adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
                     int type = adapter.getItemViewType(adjPosition);
@@ -583,8 +583,8 @@ public class ByRecyclerView extends RecyclerView {
 
         @Override
         public long getItemId(int position) {
-            if (adapter != null && position >= getCustomItemUpViewCount()) {
-                int adjPosition = position - getCustomItemUpViewCount();
+            if (adapter != null && position >= getCustomTopItemViewCount()) {
+                int adjPosition = position - getCustomTopItemViewCount();
                 if (adjPosition < adapter.getItemCount()) {
                     return adapter.getItemId(adjPosition);
                 }
@@ -700,7 +700,7 @@ public class ByRecyclerView extends RecyclerView {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onClick(v, viewHolder.getLayoutPosition() - getCustomItemUpViewCount());
+                    onItemClickListener.onClick(v, viewHolder.getLayoutPosition() - getCustomTopItemViewCount());
                 }
             });
         }
@@ -708,7 +708,7 @@ public class ByRecyclerView extends RecyclerView {
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    return onItemLongClickListener.onLongClick(v, viewHolder.getLayoutPosition() - getCustomItemUpViewCount());
+                    return onItemLongClickListener.onLongClick(v, viewHolder.getLayoutPosition() - getCustomTopItemViewCount());
                 }
             });
         }
@@ -717,7 +717,7 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 自定义类型头部布局的个数 = RefreshView + HeaderView  + EmptyView
      */
-    private int getCustomItemUpViewCount() {
+    public int getCustomTopItemViewCount() {
         return getHeaderViewCount() + getPullHeaderSize() + getEmptyViewSize();
     }
 
@@ -867,7 +867,7 @@ public class ByRecyclerView extends RecyclerView {
         mFootViewEnabled = true;
         if (mFooterLayout.getChildCount() == 1) {
             if (mWrapAdapter != null) {
-                int position = mWrapAdapter.getOriginalAdapter().getItemCount() + getCustomItemUpViewCount();
+                int position = mWrapAdapter.getOriginalAdapter().getItemCount() + getCustomTopItemViewCount();
                 if (position != -1) {
                     mWrapAdapter.getOriginalAdapter().notifyItemInserted(position);
                 }
@@ -967,7 +967,7 @@ public class ByRecyclerView extends RecyclerView {
         if (mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0) {
             mFooterLayout.removeView(footer);
             if (mWrapAdapter != null && mFooterLayout.getChildCount() == 0) {
-                int position = mWrapAdapter.getOriginalAdapter().getItemCount() + getCustomItemUpViewCount();
+                int position = mWrapAdapter.getOriginalAdapter().getItemCount() + getCustomTopItemViewCount();
                 if (position != -1) {
                     mWrapAdapter.getOriginalAdapter().notifyItemRemoved(position);
                 }
@@ -982,7 +982,7 @@ public class ByRecyclerView extends RecyclerView {
         if (mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0) {
             mFooterLayout.removeAllViews();
             if (mWrapAdapter != null) {
-                int position = mWrapAdapter.getOriginalAdapter().getItemCount() + getCustomItemUpViewCount();
+                int position = mWrapAdapter.getOriginalAdapter().getItemCount() + getCustomTopItemViewCount();
                 if (position != -1) {
                     mWrapAdapter.getOriginalAdapter().notifyItemRemoved(position);
                 }
