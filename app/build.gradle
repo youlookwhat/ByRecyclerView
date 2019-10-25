@@ -18,6 +18,11 @@ android {
         }
     }
 
+    // gradle link错误终止编译
+    lintOptions {
+        abortOnError false
+    }
+
     // 主app也需要
     dataBinding {
         enabled = true
