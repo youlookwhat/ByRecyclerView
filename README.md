@@ -21,10 +21,10 @@ RecyclerView 下拉刷新、加载更多、HeaderView，FooterView，EmptyView�
 
 ```
 allprojects {
-		repositories {
-			...
-			maven { url "https://jitpack.io" }
-		}
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
+	}
 }
 ```
 
