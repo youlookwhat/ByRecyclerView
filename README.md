@@ -3,15 +3,15 @@ RecyclerView 下拉刷新、加载更多、HeaderView，FooterView，EmptyView�
 
 
 ## 功能特性
- - 1. 支持 下拉刷新、加载更多
- - 2. 可设置自定义 下拉刷新布局 和 加载更多布局
- - 3. 添加/移除 HeaderView、FooterView
- - 4. 设置空布局 EmptyView
- - 5. 添加item的点击/长按事件
- - 6. 优化过的BaseRecyclerAdapter (结合databinding，简易高效)
- - 7. 优化过的BaseListAdapter (ListView结合databinding适配器)
- - 8. 可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
- - 9. 默认使用AndoridX，且支持Support
+ - 1.支持 下拉刷新、加载更多
+ - 2.可设置自定义 下拉刷新布局 和 加载更多布局
+ - 3.添加/移除 HeaderView、FooterView
+ - 4.设置空布局 EmptyView
+ - 5.添加item的点击/长按事件
+ - 6.优化过的BaseRecyclerAdapter (结合databinding，简易高效)
+ - 7.优化过的BaseListAdapter (ListView结合databinding适配器)
+ - 8.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
+ - 9.默认使用AndoridX，且支持Support
 
 
 ## 接入文档
