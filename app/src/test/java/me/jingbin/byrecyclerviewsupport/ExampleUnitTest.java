@@ -1,4 +1,4 @@
-package me.jingbin.library;
+package me.jingbin.byrecyclerviewsupport;
 
 import org.junit.Test;
 

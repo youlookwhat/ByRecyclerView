@@ -2,11 +2,11 @@ package me.jingbin.library.config;
 
 import android.util.Log;
 
-import me.jingbin.library.BuildConfig;
+
 
 public final class LogHelper {
 
-    private static volatile boolean DEBUG = BuildConfig.DEBUG;
+    private static volatile boolean DEBUG = true;
     private final static String LOG_TAG = "jingbin";
 
     public static void v(String tag, String message) {

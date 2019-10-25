@@ -1,7 +1,7 @@
 package me.jingbin.library;
 
 
-import com.google.android.material.appbar.AppBarLayout;
+import android.support.design.widget.AppBarLayout;
 
 /**
  * @author jingbin

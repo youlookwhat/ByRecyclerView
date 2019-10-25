@@ -1,9 +1,9 @@
 package me.jingbin.library.adapter;
 
+import android.databinding.ViewDataBinding;
+import android.support.annotation.LayoutRes;
 import android.view.ViewGroup;
 
-import androidx.annotation.LayoutRes;
-import androidx.databinding.ViewDataBinding;
 
 import java.util.List;
 

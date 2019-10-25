@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="40dp"
         tools:context=".MainActivity">
 
         <TextView
-            android:id="@+id/tv_text"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_c"
+            android:layout_height="40dp"
             android:gravity="center"
-            android:text="空布局"
-            android:textColor="@color/colorPrimary"
+            android:text="@string/app_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>
