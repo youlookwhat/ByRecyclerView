@@ -137,3 +137,26 @@ public class DataAdapter extends BaseRecyclerAdapter<DataItemBean, ItemHomeBindi
  - [XRecyclerView](https://github.com/XRecyclerView/XRecyclerView)
  - [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
 
+## About me
+ - **QQ：** 770413277
+ - **简书：**[Jingbin_](http://www.jianshu.com/users/e43c6e979831/latest_articles)
+ - **Blog：**[http://jingbin.me](http://jingbin.me)
+ - **Email：** jingbin127@163.com
+ - **QQ交流群：**[![](https://img.shields.io/badge/%E7%BE%A4%E5%8F%B7-727379132-orange.svg?style=flat-square)](https://shang.qq.com/wpa/qunwpa?idkey=5685061359b0a767674cd831d8261d36b347bde04cc23746cb6570e09ee5c8aa)
+
+## License
+```
+Copyright (C) 2016 Bin Jing
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
