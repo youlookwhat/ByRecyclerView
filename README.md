@@ -92,7 +92,7 @@ public class DataAdapter extends BaseRecyclerAdapter<DataItemBean, ItemHomeBindi
         mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-					mAdapter.addData(list);             // 设置及刷新数据
+                 mAdapter.addData(list);            // 设置及刷新数据
                  mRecyclerView.loadMoreComplete();  // 加载更多完成 
                  mRecyclerView.loadMoreEnd();       // 没有更多内容了
                  mRecyclerView.loadMoreFail();      // 加载更多失败
@@ -103,7 +103,7 @@ public class DataAdapter extends BaseRecyclerAdapter<DataItemBean, ItemHomeBindi
 
 ### 添加item点击事件
 ```java
-		mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
+        mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
 	            DataItemBean itemData = mAdapter.getItemData(position);
