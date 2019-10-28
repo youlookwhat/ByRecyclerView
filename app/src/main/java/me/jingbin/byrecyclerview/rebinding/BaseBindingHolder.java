@@ -1,4 +1,4 @@
-package me.jingbin.byrecyclerview.databinding;
+package me.jingbin.byrecyclerview.rebinding;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -18,9 +18,7 @@ public abstract class BaseBindingHolder<T, B extends ViewDataBinding> extends Ba
     public final B binding;
 
     public BaseBindingHolder(ViewGroup viewGroup, int layoutId) {
-        // 注意要依附 viewGroup，不然显示item不全
         super(DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), layoutId, viewGroup, false).getRoot());
-        // 得到这个View绑定的Binding
         binding = DataBindingUtil.getBinding(this.itemView);
     }
 

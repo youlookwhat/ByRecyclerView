@@ -1,7 +1,5 @@
 package me.jingbin.byrecyclerview.adapter;
 
-import android.widget.TextView;
-
 import java.util.List;
 
 import me.jingbin.byrecyclerview.R;
@@ -21,7 +19,7 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
 
     @Override
     protected void bindView(BaseByViewHolder<DataItemBean> holder, DataItemBean bean, int position) {
-        TextView view = holder.getView(R.id.tv_sort);
+        holder.setText(R.id.view_bottom, "ddd");
     }
 
 }

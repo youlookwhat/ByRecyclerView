@@ -14,7 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
-import me.jingbin.byrecyclerview.databinding.FragmentSwipeRefreshBinding;
+import me.jingbin.byrecyclerview.rebinding.FragmentSwipeRefreshBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;

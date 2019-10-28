@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.app.BaseActivity;
-import me.jingbin.byrecyclerview.databinding.ActivityRefreshBinding;
+import me.jingbin.byrecyclerview.rebinding.ActivityRefreshBinding;
 import me.jingbin.byrecyclerview.fragment.RefreshFragment;
 import me.jingbin.byrecyclerview.fragment.SwipeRefreshFragment;
 import me.jingbin.byrecyclerview.view.MyFragmentPagerAdapter;

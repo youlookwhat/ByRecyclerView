@@ -1,18 +1,21 @@
-package me.jingbin.library.adapter;
+package me.jingbin.byrecyclerview.listbinding;
+
 
 import android.view.ViewGroup;
 
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 
 import java.util.List;
 
+import me.jingbin.library.adapter.BaseByListViewAdapter;
+
 /**
  * @author jingbin
- * ListView adapter精简适配器
- * https://github.com/youlookwhat/ByRecyclerView
  */
-public abstract class BaseListAdapter<T, V extends ViewDataBinding> extends BaseByListViewAdapter<T> {
+
+public abstract class BaseListAdapter<T, B extends ViewDataBinding> extends BaseByListViewAdapter<T, BaseListBindingHolder<T, B>> {
 
     private int mLayoutId;
 
@@ -25,23 +28,23 @@ public abstract class BaseListAdapter<T, V extends ViewDataBinding> extends Base
         mLayoutId = layoutId;
     }
 
+    @NonNull
     @Override
-    protected BaseByListViewHolder createHolder(ViewGroup parent, int position) {
+    public BaseListBindingHolder<T, B> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(parent, mLayoutId);
     }
 
-    private class ViewHolder extends BaseByListViewHolder<T, V> {
-
+    private class ViewHolder extends BaseListBindingHolder<T, B> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
         @Override
-        public void onBindView(T bean, int position) {
+        protected void onBindingView(B binding, T bean, int position) {
             bindView(bean, binding, position);
         }
     }
 
-    protected abstract void bindView(T bean, V binding, int position);
-
+    protected abstract void bindView(T bean, B binding, int position);
 }
+

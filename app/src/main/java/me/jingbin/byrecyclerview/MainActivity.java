@@ -15,7 +15,7 @@ import me.jingbin.byrecyclerview.activity.SimpleActivity;
 import me.jingbin.byrecyclerview.activity.SwipeRefreshActivity;
 import me.jingbin.byrecyclerview.adapter.MainAdapter;
 import me.jingbin.byrecyclerview.bean.MainItemBean;
-import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
+import me.jingbin.byrecyclerview.rebinding.ActivityMainBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.config.ByDividerItemDecoration;

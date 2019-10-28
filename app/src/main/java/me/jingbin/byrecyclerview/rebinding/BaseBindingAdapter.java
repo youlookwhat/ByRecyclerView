@@ -1,4 +1,4 @@
-package me.jingbin.byrecyclerview.databinding;
+package me.jingbin.byrecyclerview.rebinding;
 
 
 import android.view.ViewGroup;
