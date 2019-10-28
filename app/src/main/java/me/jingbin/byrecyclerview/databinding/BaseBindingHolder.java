@@ -1,4 +1,4 @@
-package me.jingbin.byrecyclerview.base;
+package me.jingbin.byrecyclerview.databinding;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -13,7 +13,7 @@ import me.jingbin.library.adapter.BaseByViewHolder;
  * @author jingbin
  */
 
-public abstract class BaseBindingHolder<T, B extends ViewDataBinding> extends BaseByViewHolder {
+public abstract class BaseBindingHolder<T, B extends ViewDataBinding> extends BaseByViewHolder<T> {
 
     public final B binding;
 
@@ -22,23 +22,12 @@ public abstract class BaseBindingHolder<T, B extends ViewDataBinding> extends Ba
         super(DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), layoutId, viewGroup, false).getRoot());
         // 得到这个View绑定的Binding
         binding = DataBindingUtil.getBinding(this.itemView);
-
     }
 
-//    @Override
-//    protected void onBindView(BaseByViewHolder holder, T bean, int position) {
-//        onBindView(binding, bean, position);
-//    }
+    @Override
+    protected void onBaseBindView(BaseByViewHolder<T> holder, T bean, int position) {
+        onBindingView(binding, bean, position);
+    }
 
-    abstract void onBindView(B binding, T bean, int position);
-//
-//    public BaseBindingHolder(View view) {
-//        super(view);
-//        this.binding = (B) view.getTag(R.id.BaseQuickAdapter_databinding_support);
-//    }
-//
-//    @Override
-//    public void onBindView(BaseByViewHolder holder, T bean, int position) {
-//
-//    }
+    protected abstract void onBindingView(B binding, T bean, int position);
 }

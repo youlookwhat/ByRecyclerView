@@ -12,13 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * @author jingbin
  */
-public class BaseByViewHolder extends RecyclerView.ViewHolder {
+public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
 
     private final SparseArray<View> views;
 
     public BaseByViewHolder(ViewGroup viewGroup, int layoutId) {
-        super(LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false));
-        this.views = new SparseArray<>();
+        this(LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false));
     }
 
     public BaseByViewHolder(@NonNull View itemView) {
@@ -26,25 +25,21 @@ public class BaseByViewHolder extends RecyclerView.ViewHolder {
         this.views = new SparseArray<>();
     }
 
-//    /**
-//     * Called by RecyclerView to display the data at the specified position.
-//     *
-//     * @param bean     the data of bind
-//     * @param position the item position of recyclerView
-//     */
-//    protected  abstract void onBindView(BaseByViewHolder holder, T bean, int position);
-
-//    void onBaseBindView(T bean, int position) {
-//        onBindView(this, bean, position);
-//    }
+    /**
+     * Called by RecyclerView to display the data at the specified position.
+     *
+     * @param bean     the data of bind
+     * @param position the item position of recyclerView
+     */
+    protected abstract void onBaseBindView(BaseByViewHolder<T> holder, T bean, int position);
 
     @SuppressWarnings("unchecked")
-    public <T extends View> T getView(@IdRes int viewId) {
+    public <V extends View> V getView(@IdRes int viewId) {
         View view = views.get(viewId);
         if (view == null) {
             view = itemView.findViewById(viewId);
             views.put(viewId, view);
         }
-        return (T) view;
+        return (V) view;
     }
 }

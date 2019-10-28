@@ -1,4 +1,4 @@
-package me.jingbin.byrecyclerview.base;
+package me.jingbin.byrecyclerview.databinding;
 
 
 import android.view.ViewGroup;
@@ -9,13 +9,15 @@ import androidx.databinding.ViewDataBinding;
 
 import java.util.List;
 
-import me.jingbin.library.adapter.BaseByRecyclerAdapter;
+import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 
 /**
+ * 【databinding】单一 item 类型 adapter
+ *
  * @author jingbin
  */
 
-public  abstract class BaseBindingAdapter<T, B extends ViewDataBinding> extends BaseByRecyclerAdapter<T, BaseBindingHolder<T, B>> {
+public abstract class BaseBindingAdapter<T, B extends ViewDataBinding> extends BaseByRecyclerViewAdapter<T, BaseBindingHolder<T, B>> {
 
     private int mLayoutId;
 
@@ -34,21 +36,15 @@ public  abstract class BaseBindingAdapter<T, B extends ViewDataBinding> extends 
         return new ViewHolder(parent, mLayoutId);
     }
 
-    @Override
-    protected void onBindView(BaseBindingHolder<T, B> holder, T bean, int position) {
-
-    }
-
     private class ViewHolder extends BaseBindingHolder<T, B> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
         @Override
-        void onBindView(B binding, T bean, int position) {
+        protected void onBindingView(B binding, T bean, int position) {
             bindView(bean, binding, position);
         }
-
     }
 
     protected abstract void bindView(T bean, B binding, int position);
