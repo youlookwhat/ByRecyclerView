@@ -2,6 +2,7 @@
 
 [![jitpack][1]][2] 
 [![Apache License 2.0][3]][4]
+[![API][5]][6]
 
 自定义RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击事件；
 
@@ -155,9 +156,11 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
+```
 
 [1]:https://jitpack.io/v/youlookwhat/ByRecyclerView.svg
 [2]:https://jitpack.io/#youlookwhat/ByRecyclerView
 [3]:https://img.shields.io/:License-Apache-blue.svg
 [4]:https://www.apache.org/licenses/LICENSE-2.0.html
+[5]:https://img.shields.io/badge/API-14%2B-red.svg?style=flat
+[6]:https://android-arsenal.com/api?level=14
