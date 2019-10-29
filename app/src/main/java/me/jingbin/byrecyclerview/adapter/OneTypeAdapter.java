@@ -19,7 +19,7 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
 
     @Override
     protected void bindView(BaseByViewHolder<DataItemBean> holder, DataItemBean bean, int position) {
-        holder.setText(R.id.view_bottom, "ddd");
+        holder.setText(R.id.view_bottom, bean.getTitle());
     }
 
 }
