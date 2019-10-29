@@ -8,10 +8,11 @@ RecyclerView 下拉刷新、加载更多、HeaderView，FooterView，EmptyView�
  - 3.添加/移除 HeaderView、FooterView
  - 4.设置空布局 EmptyView
  - 5.添加item的点击/长按事件
- - 6.优化过的BaseRecyclerAdapter (结合databinding，简易高效)
- - 7.优化过的BaseListAdapter (ListView结合databinding适配器)
- - 8.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
- - 9.默认使用AndoridX，且支持Support
+ - 6.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
+ - 7.优化过的BaseRecyclerAdapter
+ - 8.优化过的BaseListAdapter
+ - 9.结合DataBinding (RecyclerView / ListView)
+ - 10.默认使用AndoridX，且支持Support
 
 
 ## 接入文档
@@ -36,18 +37,6 @@ dependencies {
 }
 ```
 
-3.最后在android里添加
-
-```
-android {
-    // adapter 使用到
-    dataBinding {
-        enabled = true
-    }
-}
-
-```
-
 ### 加入布局
 ```xml
 <me.jingbin.library.ByRecyclerView
@@ -60,15 +49,15 @@ android {
 
 ### 使用BaseRecyclerAdapter
 ```java
-public class DataAdapter extends BaseRecyclerAdapter<DataItemBean, ItemHomeBinding> {
+public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
 
-    public DataAdapter(List<DataItemBean> data) {
-        super(R.layout.item_home, data);
+    public OneTypeAdapter(List<DataItemBean> data) {
+        super(R.layout.item_main, data);
     }
 
     @Override
-    protected void bindView(DataItemBean bean, ItemHomeBinding binding, int position) {
-        binding.tvText.setText(bean.getTitle() + ": " + position);
+    protected void bindView(BaseByViewHolder<DataItemBean> holder, DataItemBean bean, int position) {
+        holder.setText(R.id.view_bottom, bean.getTitle());
     }
 
 }
@@ -115,22 +104,22 @@ public class DataAdapter extends BaseRecyclerAdapter<DataItemBean, ItemHomeBindi
 <!--## Demo-->
 
 
-## 与XRecyclerView、BRVAH对比
+## 与BRVAH、XRecyclerView对比
 
 <!--ByRecyclerView 借鉴了XRecyclerView和BRVAH的很多地方。
 
  - 其中上拉刷新、加载更多、添加HeaderView参考于XRecyclerView，且在其基础上进行了深度优化，使其可以设置自定义的下拉刷新布局 和 加载更多布局。
  - FooterView、EmptyView、item点击/长按事件 参考于BRVAH，优化了BRVAH的加载更多逻辑，使其首屏上拉才加载而不是不足一屏才加载。-->
 
-||ByRecyclerView|XRecyclerView|BaseRecyclerViewAdapterHelper|
+||ByRecyclerView| BaseRecyclerViewAdapterHelper | XRecyclerView |
 |:--:|:--:|:--:|:--:|
-|下拉刷新布局|继承基类自定义布局|只能简单设置样式|无|
-|加载更多布局|继承基类自定义布局|继承基类自定义类|继承基类设置对应布局|
-|加载更多机制|不足满屏上拉加载，超过后触底加载|触底加载|不足满屏即加载|
-|HeaderView|多ViewType区别|多ViewType区别|同一个item|
-|FooterView|同一个item|不能添加|同一个item|
-|EmptyView|可设置|不能设置|可设置|
-|item点击/长按事件|有|无|有|
+|下拉刷新布局|继承基类自定义布局|无|只能简单设置样式|
+|加载更多布局|继承基类自定义布局|继承基类设置简单布局|继承基类自定义类|
+|加载更多机制|不足满屏上拉加载，超过后触底加载|不足满屏即加载|触底加载|
+|HeaderView|多ViewType区别|同一个item|多ViewType区别|
+|FooterView|同一个item|同一个item|不能添加|
+|EmptyView|可设置|可设置|不能设置|
+|item点击/长按事件|有|有| 无 |
 
 
 ## 感谢与参考
