@@ -143,16 +143,13 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 下拉加载完成
+     * 下拉刷新完成
      */
     public void refreshComplete() {
-        if (getPullHeaderSize() == 0) {
-            return;
+        if (getPullHeaderSize() > 0) {
+            mRefreshHeader.refreshComplete();
         }
-        mRefreshHeader.refreshComplete();
-        mIsNoMore = false;
-        mIsLoadingData = false;
-        mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
+        loadMoreComplete();
     }
 
     /**
@@ -162,6 +159,7 @@ public class ByRecyclerView extends RecyclerView {
         if (getLoadMoreSize() == 0) {
             return;
         }
+        mIsNoMore = false;
         mIsLoadingData = false;
         mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
     }
@@ -215,10 +213,9 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 重置，一般在显示“无更多内容了”后，重新开始刷新时使用
+     * 重置所有状态
      */
     public void reset() {
-        loadMoreComplete();
         refreshComplete();
     }
 
