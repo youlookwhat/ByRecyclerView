@@ -3,27 +3,16 @@ package me.jingbin.byrecyclerview.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.adapter.ListView2Adapter;
-import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.FragmentListviewBinding;
-import me.jingbin.byrecyclerview.databinding.FragmentRefreshBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
-import me.jingbin.byrecyclerview.utils.ToastUtil;
-import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.config.ByDividerItemDecoration;
 
 /**
  * @author jingbin

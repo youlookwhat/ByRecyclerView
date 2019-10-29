@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +15,7 @@ import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.config.ByDividerItemDecoration;
+import me.jingbin.library.config.DividerItemDecoration;
 
 /**
  * @author jingbin
@@ -40,7 +39,7 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
-        ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.VERTICAL, false);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL);
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);

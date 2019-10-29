@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
  *
  * @author Ethan Lee
  */
-public class ByDividerItemDecoration extends RecyclerView.ItemDecoration {
+public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     public static final int HORIZONTAL = LinearLayout.HORIZONTAL;
     public static final int VERTICAL = LinearLayout.VERTICAL;
@@ -41,6 +41,15 @@ public class ByDividerItemDecoration extends RecyclerView.ItemDecoration {
     private int mOrientation;
     private final Rect mBounds = new Rect();
 
+
+    public DividerItemDecoration(Context context, int orientation) {
+        this(context, orientation, false, true, true);
+    }
+
+    public DividerItemDecoration(Context context, int orientation, boolean isShowBottomDivider) {
+        this(context, orientation, isShowBottomDivider, true, true);
+    }
+
     /**
      * Creates a divider {@link RecyclerView.ItemDecoration} that can be used with a
      * {@link androidx.recyclerview.widget.LinearLayoutManager}.
@@ -50,12 +59,8 @@ public class ByDividerItemDecoration extends RecyclerView.ItemDecoration {
      *                            {@link #VERTICAL}.
      * @param isShowBottomDivider true show bottom divider false not show bottom divider
      */
-    public ByDividerItemDecoration(Context context, int orientation, boolean isShowBottomDivider) {
-        this(context, orientation, isShowBottomDivider, true, true);
-    }
-
-    public ByDividerItemDecoration(Context context, int orientation,
-                                   boolean isShowBottomDivider, boolean isShowFirstDivider, boolean isShowSecondDivider) {
+    public DividerItemDecoration(Context context, int orientation,
+                                 boolean isShowBottomDivider, boolean isShowFirstDivider, boolean isShowSecondDivider) {
         mIsShowBottomDivider = isShowBottomDivider;
         mIsShowFirstDivider = isShowFirstDivider;
         mIsShowSecondDivider = isShowSecondDivider;
@@ -89,7 +94,7 @@ public class ByDividerItemDecoration extends RecyclerView.ItemDecoration {
      *
      * @param drawable Drawable that should be used as a divider.
      */
-    public void setDrawable(@NonNull Drawable drawable) {
+    public void setDrawable(Drawable drawable) {
         if (drawable == null) {
             throw new IllegalArgumentException("Drawable cannot be null.");
         }

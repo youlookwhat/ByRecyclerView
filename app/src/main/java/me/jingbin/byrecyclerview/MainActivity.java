@@ -3,7 +3,6 @@ package me.jingbin.byrecyclerview;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +17,7 @@ import me.jingbin.byrecyclerview.bean.MainItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.config.ByDividerItemDecoration;
+import me.jingbin.library.config.DividerItemDecoration;
 
 /**
  * @author jingbin
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setAdapter(homeAdapter);
-        ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(binding.recyclerView.getContext(), DividerItemDecoration.VERTICAL, false);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL, false);
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {

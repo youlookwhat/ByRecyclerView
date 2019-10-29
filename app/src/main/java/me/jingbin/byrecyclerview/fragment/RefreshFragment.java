@@ -6,7 +6,6 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +16,7 @@ import me.jingbin.byrecyclerview.databinding.FragmentRefreshBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.config.ByDividerItemDecoration;
+import me.jingbin.library.config.DividerItemDecoration;
 
 /**
  * @author jingbin
@@ -82,7 +81,9 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL, false);
+        DividerItemDecoration itemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL,
+                        false, false, true);
         itemDecoration.setDrawable(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.shape_line));
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setAdapter(mAdapter);

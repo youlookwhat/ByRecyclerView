@@ -6,6 +6,6 @@
     <string name="refreshing">刷新中…</string>
     <string name="refresh_done">刷新完成</string>
     <string name="footer_loading">努力加载中…</string>
-    <string name="footer_no_more">没有更多内容了</string>
+    <string name="footer_no_more">没有更多数据了</string>
     <string name="footer_load_failed">加载失败，请点我重试</string>
 </resources>
