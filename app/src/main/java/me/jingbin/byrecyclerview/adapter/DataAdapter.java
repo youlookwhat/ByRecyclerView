@@ -5,7 +5,7 @@ import java.util.List;
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
-import me.jingbin.byrecyclerview.rxbinding.BaseBindingAdapter;
+import me.jingbin.byrecyclerview.binding.BaseBindingAdapter;
 
 /**
  * @author jingbin

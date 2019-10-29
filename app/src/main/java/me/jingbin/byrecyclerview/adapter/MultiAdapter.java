@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.databinding.LayoutEmptyBinding;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
-import me.jingbin.byrecyclerview.rxbinding.BaseBindingHolder;
+import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseByViewHolder;
 

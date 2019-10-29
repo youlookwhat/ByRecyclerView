@@ -27,6 +27,7 @@
         <activity android:name=".activity.HeaderFooterActivity" />
         <activity android:name=".activity.ListViewActivity" />
         <activity android:name=".activity.AppBarLayoutActivity" />
+        <activity android:name=".activity.DataBindingActivity" />
     </application>
 
 </manifest>

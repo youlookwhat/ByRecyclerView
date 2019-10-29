@@ -15,7 +15,7 @@
         <item name="android:textSize">12sp</item>
         <item name="tabSelectedTextColor">@color/colorPrimary</item>
         <item name="tabMode">fixed</item>
-        <item name="android:fillViewport">false</item>
+        <item name="tabIndicatorFullWidth">false</item>
     </style>
 
     <style name="ThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
@@ -35,6 +35,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+
     <style name="collapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
         <item name="android:textSize">18.0sp</item>
         <item name="android:textColor">@color/colorWhite</item>
