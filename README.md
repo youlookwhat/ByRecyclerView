@@ -1,4 +1,8 @@
 # ByRecyclerView
+
+[![jitpack][1]][2] 
+[![Apache License 2.0][3]][4]
+
 自定义RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击事件；
 
 BaseRecyclerAdapter、BaseListAdapter
@@ -35,7 +39,8 @@ allprojects {
 
 ```
 dependencies {
-	compile 'com.github.youlookwhat:ByRecyclerView:1.0'
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0'         // 默认AndroidX版本
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0-support" // support版本引入
 }
 ```
 
@@ -151,3 +156,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+
+[1]:https://jitpack.io/v/youlookwhat/ByRecyclerView.svg
+[2]:https://jitpack.io/#youlookwhat/ByRecyclerView
+[3]:https://img.shields.io/:License-Apache-blue.svg
+[4]:https://www.apache.org/licenses/LICENSE-2.0.html
