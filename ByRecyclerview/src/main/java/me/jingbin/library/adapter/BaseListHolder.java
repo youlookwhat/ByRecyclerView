@@ -27,16 +27,16 @@ import androidx.annotation.StringRes;
 /**
  * @author jingbin
  */
-public abstract class BaseByListHolder<T> {
+public  class BaseListHolder {
 
     private View itemView;
     private final SparseArray<View> views;
 
-    public BaseByListHolder(ViewGroup viewGroup, int layoutId) {
+    public BaseListHolder(ViewGroup viewGroup, int layoutId) {
         this(LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false));
     }
 
-    public BaseByListHolder(@NonNull View itemView) {
+    public BaseListHolder(@NonNull View itemView) {
         this.itemView = itemView;
         this.views = new SparseArray<>();
     }
@@ -51,7 +51,7 @@ public abstract class BaseByListHolder<T> {
      * @param bean     the data of bind
      * @param position the item position of recyclerView
      */
-    protected abstract void onBaseBindView(BaseByListHolder<T> holder, T bean, int position);
+//    protected abstract void onBindView(BaseByListHolder<T> holder, T bean, int position);
 
     @SuppressWarnings("unchecked")
     public <V extends View> V getView(@IdRes int viewId) {
@@ -70,13 +70,13 @@ public abstract class BaseByListHolder<T> {
      * @param value  The text to put in the text view.
      * @return The BaseByViewHolder for chaining.
      */
-    public BaseByListHolder setText(@IdRes int viewId, CharSequence value) {
+    public BaseListHolder setText(@IdRes int viewId, CharSequence value) {
         TextView view = getView(viewId);
         view.setText(value);
         return this;
     }
 
-    public BaseByListHolder setText(@IdRes int viewId, @StringRes int strId) {
+    public BaseListHolder setText(@IdRes int viewId, @StringRes int strId) {
         TextView view = getView(viewId);
         view.setText(strId);
         return this;
@@ -89,7 +89,7 @@ public abstract class BaseByListHolder<T> {
      * @param imageResId The image resource id.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setImageResource(@IdRes int viewId, @DrawableRes int imageResId) {
+    public BaseListHolder setImageResource(@IdRes int viewId, @DrawableRes int imageResId) {
         ImageView view = getView(viewId);
         view.setImageResource(imageResId);
         return this;
@@ -102,7 +102,7 @@ public abstract class BaseByListHolder<T> {
      * @param color  A color, not a resource id.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setBackgroundColor(@IdRes int viewId, @ColorInt int color) {
+    public BaseListHolder setBackgroundColor(@IdRes int viewId, @ColorInt int color) {
         View view = getView(viewId);
         view.setBackgroundColor(color);
         return this;
@@ -115,7 +115,7 @@ public abstract class BaseByListHolder<T> {
      * @param backgroundRes A resource to use as a background.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setBackgroundRes(@IdRes int viewId, @DrawableRes int backgroundRes) {
+    public BaseListHolder setBackgroundRes(@IdRes int viewId, @DrawableRes int backgroundRes) {
         View view = getView(viewId);
         view.setBackgroundResource(backgroundRes);
         return this;
@@ -128,7 +128,7 @@ public abstract class BaseByListHolder<T> {
      * @param textColor The text color (not a resource id).
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setTextColor(@IdRes int viewId, @ColorInt int textColor) {
+    public BaseListHolder setTextColor(@IdRes int viewId, @ColorInt int textColor) {
         TextView view = getView(viewId);
         view.setTextColor(textColor);
         return this;
@@ -142,7 +142,7 @@ public abstract class BaseByListHolder<T> {
      * @param drawable The image drawable.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setImageDrawable(@IdRes int viewId, Drawable drawable) {
+    public BaseListHolder setImageDrawable(@IdRes int viewId, Drawable drawable) {
         ImageView view = getView(viewId);
         view.setImageDrawable(drawable);
         return this;
@@ -151,7 +151,7 @@ public abstract class BaseByListHolder<T> {
     /**
      * Add an action to set the image of an image view. Can be called multiple times.
      */
-    public BaseByListHolder setImageBitmap(@IdRes int viewId, Bitmap bitmap) {
+    public BaseListHolder setImageBitmap(@IdRes int viewId, Bitmap bitmap) {
         ImageView view = getView(viewId);
         view.setImageBitmap(bitmap);
         return this;
@@ -161,7 +161,7 @@ public abstract class BaseByListHolder<T> {
      * Add an action to set the alpha of a view. Can be called multiple times.
      * Alpha between 0-1.
      */
-    public BaseByListHolder setAlpha(@IdRes int viewId, float value) {
+    public BaseListHolder setAlpha(@IdRes int viewId, float value) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getView(viewId).setAlpha(value);
         } else {
@@ -181,7 +181,7 @@ public abstract class BaseByListHolder<T> {
      * @param visible True for VISIBLE, false for GONE.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setGone(@IdRes int viewId, boolean visible) {
+    public BaseListHolder setGone(@IdRes int viewId, boolean visible) {
         View view = getView(viewId);
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
@@ -194,7 +194,7 @@ public abstract class BaseByListHolder<T> {
      * @param visible True for VISIBLE, false for INVISIBLE.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setVisible(@IdRes int viewId, boolean visible) {
+    public BaseListHolder setVisible(@IdRes int viewId, boolean visible) {
         View view = getView(viewId);
         view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         return this;
@@ -206,7 +206,7 @@ public abstract class BaseByListHolder<T> {
      * @param viewId The id of the TextView to linkify.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder linkify(@IdRes int viewId) {
+    public BaseListHolder linkify(@IdRes int viewId) {
         TextView view = getView(viewId);
         Linkify.addLinks(view, Linkify.ALL);
         return this;
@@ -215,7 +215,7 @@ public abstract class BaseByListHolder<T> {
     /**
      * Apply the typeface to the given viewId, and enable subpixel rendering.
      */
-    public BaseByListHolder setTypeface(@IdRes int viewId, Typeface typeface) {
+    public BaseListHolder setTypeface(@IdRes int viewId, Typeface typeface) {
         TextView view = getView(viewId);
         view.setTypeface(typeface);
         view.setPaintFlags(view.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
@@ -225,7 +225,7 @@ public abstract class BaseByListHolder<T> {
     /**
      * Apply the typeface to all the given viewIds, and enable subpixel rendering.
      */
-    public BaseByListHolder setTypeface(Typeface typeface, int... viewIds) {
+    public BaseListHolder setTypeface(Typeface typeface, int... viewIds) {
         for (int viewId : viewIds) {
             TextView view = getView(viewId);
             view.setTypeface(typeface);
@@ -241,7 +241,7 @@ public abstract class BaseByListHolder<T> {
      * @param progress The progress.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setProgress(@IdRes int viewId, int progress) {
+    public BaseListHolder setProgress(@IdRes int viewId, int progress) {
         ProgressBar view = getView(viewId);
         view.setProgress(progress);
         return this;
@@ -255,7 +255,7 @@ public abstract class BaseByListHolder<T> {
      * @param max      The max value of a ProgressBar.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setProgress(@IdRes int viewId, int progress, int max) {
+    public BaseListHolder setProgress(@IdRes int viewId, int progress, int max) {
         ProgressBar view = getView(viewId);
         view.setMax(max);
         view.setProgress(progress);
@@ -269,7 +269,7 @@ public abstract class BaseByListHolder<T> {
      * @param max    The max value of a ProgressBar.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setMax(@IdRes int viewId, int max) {
+    public BaseListHolder setMax(@IdRes int viewId, int max) {
         ProgressBar view = getView(viewId);
         view.setMax(max);
         return this;
@@ -282,7 +282,7 @@ public abstract class BaseByListHolder<T> {
      * @param rating The rating.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setRating(@IdRes int viewId, float rating) {
+    public BaseListHolder setRating(@IdRes int viewId, float rating) {
         RatingBar view = getView(viewId);
         view.setRating(rating);
         return this;
@@ -296,7 +296,7 @@ public abstract class BaseByListHolder<T> {
      * @param max    The range of the RatingBar to 0...max.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setRating(@IdRes int viewId, float rating, int max) {
+    public BaseListHolder setRating(@IdRes int viewId, float rating, int max) {
         RatingBar view = getView(viewId);
         view.setMax(max);
         view.setRating(rating);
@@ -310,7 +310,7 @@ public abstract class BaseByListHolder<T> {
      * @param tag    The tag;
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setTag(@IdRes int viewId, Object tag) {
+    public BaseListHolder setTag(@IdRes int viewId, Object tag) {
         View view = getView(viewId);
         view.setTag(tag);
         return this;
@@ -324,7 +324,7 @@ public abstract class BaseByListHolder<T> {
      * @param tag    The tag;
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setTag(@IdRes int viewId, int key, Object tag) {
+    public BaseListHolder setTag(@IdRes int viewId, int key, Object tag) {
         View view = getView(viewId);
         view.setTag(key, tag);
         return this;
@@ -337,7 +337,7 @@ public abstract class BaseByListHolder<T> {
      * @param checked The checked status;
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setChecked(@IdRes int viewId, boolean checked) {
+    public BaseListHolder setChecked(@IdRes int viewId, boolean checked) {
         View view = getView(viewId);
         // View unable cast to Checkable
         if (view instanceof Checkable) {
@@ -353,7 +353,7 @@ public abstract class BaseByListHolder<T> {
      * @param enable The checked status;
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setEnabled(@IdRes int viewId, boolean enable) {
+    public BaseListHolder setEnabled(@IdRes int viewId, boolean enable) {
         View view = getView(viewId);
         view.setEnabled(enable);
         return this;
@@ -366,7 +366,7 @@ public abstract class BaseByListHolder<T> {
      * @param listener The checked change listener of compound button.
      * @return The BaseByListHolder for chaining.
      */
-    public BaseByListHolder setOnCheckedChangeListener(@IdRes int viewId, CompoundButton.OnCheckedChangeListener listener) {
+    public BaseListHolder setOnCheckedChangeListener(@IdRes int viewId, CompoundButton.OnCheckedChangeListener listener) {
         CompoundButton view = getView(viewId);
         view.setOnCheckedChangeListener(listener);
         return this;

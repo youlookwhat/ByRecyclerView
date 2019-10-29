@@ -1,4 +1,4 @@
-package me.jingbin.byrecyclerview.rebinding;
+package me.jingbin.byrecyclerview.rxbinding;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

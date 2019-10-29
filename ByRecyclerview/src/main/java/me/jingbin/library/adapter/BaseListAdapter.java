@@ -13,14 +13,14 @@ import java.util.List;
  * @author jingbin
  * link to https://github.com/youlookwhat/ByRecyclerView
  */
-public abstract class BaseByListViewAdapter<T, VH extends BaseByListHolder<T>> extends BaseAdapter {
+public abstract class BaseListAdapter<T, VH extends BaseListHolder> extends BaseAdapter {
 
     private List<T> mData = new ArrayList<>();
 
-    protected BaseByListViewAdapter() {
+    protected BaseListAdapter() {
     }
 
-    protected BaseByListViewAdapter(List<T> data) {
+    protected BaseListAdapter(List<T> data) {
         this.mData = data == null ? new ArrayList<T>() : data;
     }
 
@@ -50,12 +50,14 @@ public abstract class BaseByListViewAdapter<T, VH extends BaseByListHolder<T>> e
             holder = (VH) convertView.getTag();
         }
         if (holder != null) {
-            holder.onBaseBindView(holder,getItem(position), position);
+            onBindView(holder, getItem(position), position);
         }
         return convertView;
     }
 
     protected abstract VH onCreateViewHolder(ViewGroup parent, int position);
+
+    protected abstract void onBindView(VH holder, T bean, int position);
 
 
     public List<T> getData() {

@@ -1,4 +1,4 @@
-package me.jingbin.byrecyclerview.listbinding;
+package me.jingbin.byrecyclerview.rxbinding;
 
 
 import android.view.ViewGroup;
@@ -9,32 +9,34 @@ import androidx.databinding.ViewDataBinding;
 
 import java.util.List;
 
-import me.jingbin.library.adapter.BaseByListViewAdapter;
+import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 
 /**
+ * 【databinding】单一 item 类型 adapter
+ *
  * @author jingbin
  */
 
-public abstract class BaseListAdapter<T, B extends ViewDataBinding> extends BaseByListViewAdapter<T, BaseListBindingHolder<T, B>> {
+public abstract class BaseBindingAdapter<T, B extends ViewDataBinding> extends BaseByRecyclerViewAdapter<T, BaseBindingHolder<T, B>> {
 
     private int mLayoutId;
 
-    public BaseListAdapter(@LayoutRes int layoutId) {
+    public BaseBindingAdapter(@LayoutRes int layoutId) {
         mLayoutId = layoutId;
     }
 
-    public BaseListAdapter(@LayoutRes int layoutId, List<T> data) {
+    public BaseBindingAdapter(@LayoutRes int layoutId, List<T> data) {
         super(data);
         mLayoutId = layoutId;
     }
 
     @NonNull
     @Override
-    public BaseListBindingHolder<T, B> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseBindingHolder<T, B> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(parent, mLayoutId);
     }
 
-    private class ViewHolder extends BaseListBindingHolder<T, B> {
+    private class ViewHolder extends BaseBindingHolder<T, B> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }

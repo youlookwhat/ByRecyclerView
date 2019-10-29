@@ -3,9 +3,9 @@ package me.jingbin.byrecyclerview.adapter;
 import java.util.List;
 
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.rebinding.BaseBindingAdapter;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
-import me.jingbin.byrecyclerview.rebinding.ItemHomeBinding;
+import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
+import me.jingbin.byrecyclerview.rxbinding.BaseBindingAdapter;
 
 /**
  * @author jingbin

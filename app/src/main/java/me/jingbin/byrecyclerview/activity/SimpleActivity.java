@@ -12,7 +12,7 @@ import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
-import me.jingbin.byrecyclerview.rebinding.ActivitySimpleBinding;
+import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
