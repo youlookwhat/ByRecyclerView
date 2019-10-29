@@ -1,5 +1,7 @@
 # ByRecyclerView
-RecyclerView 下拉刷新、加载更多、HeaderView，FooterView，EmptyView、item点击事件；BaseRecyclerAdapter、BaseListAdapter
+自定义RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击事件；
+
+BaseRecyclerAdapter、BaseListAdapter
 
 
 ## 功能特性
@@ -65,39 +67,39 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
 
 ### 使用下拉刷新
 ```java
-        mRecyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mAdapter.setNewData(list);       // 设置及刷新数据
-                mRecyclerView.refreshComplete(); // 刷新完成
-            }
-        });
-        
-        mRecyclerView.setRefreshing(); // 手动启动刷新
+mRecyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+    @Override
+    public void onRefresh() {
+        mAdapter.setNewData(list);       // 设置及刷新数据
+        mRecyclerView.refreshComplete(); // 刷新完成
+    }
+});
+    
+mRecyclerView.setRefreshing(); // 手动启动刷新
 ```
 
 ### 使用加载更多
 ```java
-        mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                 mAdapter.addData(list);            // 设置及刷新数据
-                 mRecyclerView.loadMoreComplete();  // 加载更多完成 
-                 mRecyclerView.loadMoreEnd();       // 没有更多内容了
-                 mRecyclerView.loadMoreFail();      // 加载更多失败
-            }
-        });
+mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
+    @Override
+    public void onLoadMore() {
+         mAdapter.addData(list);            // 设置及刷新数据
+         mRecyclerView.loadMoreComplete();  // 加载更多完成 
+         mRecyclerView.loadMoreEnd();       // 没有更多内容了
+         mRecyclerView.loadMoreFail();      // 加载更多失败
+    }
+});
 ```
 
 
 ### 添加item点击事件
 ```java
-        mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-	            DataItemBean itemData = mAdapter.getItemData(position);
-            }
-        });
+mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
+    @Override
+    public void onClick(View v, int position) {
+        DataItemBean itemData = mAdapter.getItemData(position);
+    }
+});
 ```
 
 
@@ -128,7 +130,7 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
 
 ## About me
  - **QQ：** 770413277
- - **简书：**[Jingbin_](http://www.jianshu.com/users/e43c6e979831/latest_articles)
+ - **简书：**[Jinbeen](http://www.jianshu.com/users/e43c6e979831/latest_articles)
  - **Blog：**[http://jingbin.me](http://jingbin.me)
  - **Email：** jingbin127@163.com
  - **QQ交流群：**[![](https://img.shields.io/badge/%E7%BE%A4%E5%8F%B7-727379132-orange.svg?style=flat-square)](https://shang.qq.com/wpa/qunwpa?idkey=5685061359b0a767674cd831d8261d36b347bde04cc23746cb6570e09ee5c8aa)
