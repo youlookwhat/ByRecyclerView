@@ -45,14 +45,6 @@ public  class BaseListHolder {
         return itemView;
     }
 
-    /**
-     * Called by RecyclerView to display the data at the specified position.
-     *
-     * @param bean     the data of bind
-     * @param position the item position of recyclerView
-     */
-//    protected abstract void onBindView(BaseByListHolder<T> holder, T bean, int position);
-
     @SuppressWarnings("unchecked")
     public <V extends View> V getView(@IdRes int viewId) {
         View view = views.get(viewId);

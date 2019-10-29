@@ -10,9 +10,8 @@ import me.jingbin.library.adapter.BaseByViewHolder;
 
 
 /**
- * @author jingbin
+ * https://github.com/youlookwhat/ByRecyclerView
  */
-
 public abstract class BaseBindingHolder<T, B extends ViewDataBinding> extends BaseByViewHolder<T> {
 
     public final B binding;
@@ -25,6 +24,7 @@ public abstract class BaseBindingHolder<T, B extends ViewDataBinding> extends Ba
     @Override
     protected void onBaseBindView(BaseByViewHolder<T> holder, T bean, int position) {
         onBindingView(binding, bean, position);
+        binding.executePendingBindings();
     }
 
     protected abstract void onBindingView(B binding, T bean, int position);

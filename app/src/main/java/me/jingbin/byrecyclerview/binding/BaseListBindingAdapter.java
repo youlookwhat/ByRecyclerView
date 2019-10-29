@@ -11,9 +11,8 @@ import java.util.List;
 import me.jingbin.library.adapter.BaseListAdapter;
 
 /**
- * @author jingbin
+ * https://github.com/youlookwhat/ByRecyclerView
  */
-
 public abstract class BaseListBindingAdapter<T, B extends ViewDataBinding> extends BaseListAdapter<T, BaseListBindingHolder<B>> {
 
     private int mLayoutId;
@@ -34,7 +33,8 @@ public abstract class BaseListBindingAdapter<T, B extends ViewDataBinding> exten
 
     @Override
     protected void onBindView(BaseListBindingHolder<B> holder, T bean, int position) {
-        bindView(bean, holder.binding, mLayoutId);
+        bindView(bean, holder.getBinding(), mLayoutId);
+        holder.getBinding().executePendingBindings();
     }
 
     protected abstract void bindView(T bean, B binding, int position);

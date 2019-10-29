@@ -13,10 +13,8 @@ import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 
 /**
  * 【databinding】单一 item 类型 adapter
- *
- * @author jingbin
+ * https://github.com/youlookwhat/ByRecyclerView
  */
-
 public abstract class BaseBindingAdapter<T, B extends ViewDataBinding> extends BaseByRecyclerViewAdapter<T, BaseBindingHolder<T, B>> {
 
     private int mLayoutId;
