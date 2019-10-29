@@ -1,6 +1,6 @@
 package me.jingbin.library.adapter;
 
-import android.databinding.ViewDataBinding;
+
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
+ * 单一 item 类型 adapter
+ *
  * @author jingbin
- * RecyclerView adapter适配器 适合单种item类型的情况
+ * link to https://github.com/youlookwhat/ByRecyclerView
  */
-public abstract class BaseRecyclerAdapter<T, V extends ViewDataBinding> extends BaseByRecyclerViewAdapter<T> {
+public abstract class BaseRecyclerAdapter<T> extends BaseByRecyclerViewAdapter<T, BaseByViewHolder<T>> {
 
     private int mLayoutId;
 
@@ -27,21 +29,20 @@ public abstract class BaseRecyclerAdapter<T, V extends ViewDataBinding> extends 
 
     @NonNull
     @Override
-    public BaseByRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseByViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(parent, mLayoutId);
     }
 
-    private class ViewHolder extends BaseByRecyclerViewHolder<T, V> {
+    private class ViewHolder extends BaseByViewHolder<T> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
         @Override
-        public void onBindView(T bean, int position) {
-            bindView(bean, binding, position);
+        protected void onBaseBindView(BaseByViewHolder<T> holder, T bean, int position) {
+            bindView(holder, bean, position);
         }
     }
 
-    protected abstract void bindView(T bean, V binding, int position);
-
+    protected abstract void bindView(BaseByViewHolder<T> holder, T bean, int position);
 }

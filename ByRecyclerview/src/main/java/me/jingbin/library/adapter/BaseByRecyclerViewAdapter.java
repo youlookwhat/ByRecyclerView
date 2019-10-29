@@ -1,10 +1,10 @@
 package me.jingbin.library.adapter;
 
 
-
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import me.jingbin.library.ByRecyclerView;
  * @author jingbin
  * link to https://github.com/youlookwhat/ByRecyclerView
  */
-public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseByRecyclerViewHolder> {
+public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> extends RecyclerView.Adapter<K> {
 
     private ByRecyclerView mRecyclerView;
     private List<T> mData = new ArrayList<>();
@@ -30,8 +30,8 @@ public abstract class BaseByRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseByRecyclerViewHolder holder, final int position) {
-        holder.onBaseBindView(mData.get(position), position);
+    public void onBindViewHolder(@NonNull K holder, final int position) {
+        holder.onBaseBindView(holder, mData.get(position), position);
     }
 
     @Override

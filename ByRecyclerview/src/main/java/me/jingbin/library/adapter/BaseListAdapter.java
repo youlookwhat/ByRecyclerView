@@ -1,47 +1,88 @@
 package me.jingbin.library.adapter;
 
-import android.databinding.ViewDataBinding;
-import android.support.annotation.LayoutRes;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * ListView adapter
+ *
  * @author jingbin
- * ListView adapter精简适配器
- * https://github.com/youlookwhat/ByRecyclerView
+ * link to https://github.com/youlookwhat/ByRecyclerView
  */
-public abstract class BaseListAdapter<T, V extends ViewDataBinding> extends BaseByListViewAdapter<T> {
+public abstract class BaseListAdapter<T, VH extends BaseListHolder> extends BaseAdapter {
 
-    private int mLayoutId;
+    private List<T> mData = new ArrayList<>();
 
-    public BaseListAdapter(@LayoutRes int layoutId) {
-        mLayoutId = layoutId;
+    protected BaseListAdapter() {
     }
 
-    public BaseListAdapter(@LayoutRes int layoutId, List<T> data) {
-        super(data);
-        mLayoutId = layoutId;
+    protected BaseListAdapter(List<T> data) {
+        this.mData = data == null ? new ArrayList<T>() : data;
     }
 
     @Override
-    protected BaseByListViewHolder createHolder(ViewGroup parent, int position) {
-        return new ViewHolder(parent, mLayoutId);
+    public int getCount() {
+        return mData.size();
     }
 
-    private class ViewHolder extends BaseByListViewHolder<T, V> {
-
-        ViewHolder(ViewGroup viewGroup, int layoutId) {
-            super(viewGroup, layoutId);
-        }
-
-        @Override
-        public void onBindView(T bean, int position) {
-            bindView(bean, binding, position);
-        }
+    @Override
+    public T getItem(int position) {
+        return mData.get(position);
     }
 
-    protected abstract void bindView(T bean, V binding, int position);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        VH holder;
+        if (convertView == null) {
+            holder = onCreateViewHolder(parent, position);
+            convertView = holder.getItemView();
+            convertView.setTag(holder);
+        } else {
+            holder = (VH) convertView.getTag();
+        }
+        if (holder != null) {
+            onBindView(holder, getItem(position), position);
+        }
+        return convertView;
+    }
+
+    protected abstract VH onCreateViewHolder(ViewGroup parent, int position);
+
+    protected abstract void onBindView(VH holder, T bean, int position);
+
+
+    public List<T> getData() {
+        return mData;
+    }
+
+    public void setData(List<T> data) {
+        this.mData = data;
+    }
+
+    public void addAll(List<T> data) {
+        this.mData.addAll(data);
+    }
+
+    public void removeAll(List<T> data) {
+        this.mData.removeAll(data);
+    }
+
+    public void add(T t) {
+        this.mData.add(t);
+    }
+
+    public void clear() {
+        this.mData.clear();
+    }
+
 
 }
