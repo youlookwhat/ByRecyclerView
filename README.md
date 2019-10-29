@@ -4,9 +4,7 @@
 [![Apache License 2.0][3]][4]
 [![API][5]][6]
 
-自定义RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击事件；
-
-BaseRecyclerAdapter、BaseListAdapter
+自定义RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击事件；BaseRecyclerAdapter、BaseListAdapter
 
 
 ## 功能特性
@@ -41,7 +39,7 @@ allprojects {
 ```
 dependencies {
 	implementation 'com.github.youlookwhat:ByRecyclerView:1.0'         // 默认AndroidX版本
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0-support" // support版本引入
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.3-support" // support版本引入
 }
 ```
 
@@ -76,8 +74,7 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
 mRecyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
     @Override
     public void onRefresh() {
-        mAdapter.setNewData(list);       // 设置及刷新数据
-        mRecyclerView.refreshComplete(); // 刷新完成
+        mAdapter.setNewData(list);  // 设置及刷新数据
     }
 });
     
