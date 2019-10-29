@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">library</string>
+    <string name="app_name">ByRecyclerView</string>
 
     <string name="header_hint_normal">Drop down refresh</string>
     <string name="header_hint_release">Release refresh</string>

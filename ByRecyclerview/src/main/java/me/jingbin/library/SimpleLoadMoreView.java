@@ -1,7 +1,6 @@
 package me.jingbin.library;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,7 @@ public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
     private LinearLayout llMoreLoading;
 
     public SimpleLoadMoreView(Context context) {
-        this(context, null);
-    }
-
-    public SimpleLoadMoreView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public SimpleLoadMoreView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, null);
         initView(context);
     }
 
