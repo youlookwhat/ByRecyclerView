@@ -22,7 +22,7 @@ import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.StatusBarUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.config.DividerItemDecoration;
+import me.jingbin.library.config.ByDividerItemDecoration;
 
 /**
  * @author jingbin
@@ -61,7 +61,7 @@ public class AppBarLayoutActivity extends BaseActivity<ActivityAppbarLayoutBindi
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(binding.recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL, false);
+        ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(binding.recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL, false);
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);

@@ -13,19 +13,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 可以取消底部分割线的ItemDecoration
- * copied from DividerItemDecoration
+ * copied from ByDividerItemDecoration
  * mIsShowBottomDivider  false 不显示底部分割线
  * mIsShowFirstDivider   false 不显示第一个item的分割线
  * mIsShowSecondDivider  false 不显示第二个item的分割线
  *
- * @author Ethan Lee
+ * @author jingbin
  */
-public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+public class ByDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     public static final int HORIZONTAL = LinearLayout.HORIZONTAL;
     public static final int VERTICAL = LinearLayout.VERTICAL;
@@ -42,11 +41,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private final Rect mBounds = new Rect();
 
 
-    public DividerItemDecoration(Context context, int orientation) {
+    public ByDividerItemDecoration(Context context, int orientation) {
         this(context, orientation, false, true, true);
     }
 
-    public DividerItemDecoration(Context context, int orientation, boolean isShowBottomDivider) {
+    public ByDividerItemDecoration(Context context, int orientation, boolean isShowBottomDivider) {
         this(context, orientation, isShowBottomDivider, true, true);
     }
 
@@ -59,8 +58,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
      *                            {@link #VERTICAL}.
      * @param isShowBottomDivider true show bottom divider false not show bottom divider
      */
-    public DividerItemDecoration(Context context, int orientation,
-                                 boolean isShowBottomDivider, boolean isShowFirstDivider, boolean isShowSecondDivider) {
+    public ByDividerItemDecoration(Context context, int orientation,
+                                   boolean isShowBottomDivider, boolean isShowFirstDivider, boolean isShowSecondDivider) {
         mIsShowBottomDivider = isShowBottomDivider;
         mIsShowFirstDivider = isShowFirstDivider;
         mIsShowSecondDivider = isShowSecondDivider;
@@ -69,7 +68,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         mDivider = a.getDrawable(0);
         if (mDivider == null) {
             Log.w(TAG, "@android:attr/listDivider was not set in the theme used for this "
-                    + "DividerItemDecoration. Please set that attribute all call setDrawable()");
+                    + "ByDividerItemDecoration. Please set that attribute all call setDrawable()");
         }
         a.recycle();
         setOrientation(orientation);

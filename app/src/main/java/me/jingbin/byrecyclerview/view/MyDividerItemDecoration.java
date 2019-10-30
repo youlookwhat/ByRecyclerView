@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 可以取消底部分割线的ItemDecoration
- * copied from DividerItemDecoration
+ * copied from ByDividerItemDecoration
  * mIsShowBottomDivider  false 不显示底部分割线
  * mIsShowFirstDivider   false 不显示第一个item的分割线
  * mIsShowSecondDivider  false 不显示第二个item的分割线
@@ -64,7 +64,7 @@ public class MyDividerItemDecoration extends RecyclerView.ItemDecoration {
         mDivider = a.getDrawable(0);
         if (mDivider == null) {
             Log.w(TAG, "@android:attr/listDivider was not set in the theme used for this "
-                    + "DividerItemDecoration. Please set that attribute all call setDrawable()");
+                    + "ByDividerItemDecoration. Please set that attribute all call setDrawable()");
         }
         a.recycle();
         setOrientation(orientation);
