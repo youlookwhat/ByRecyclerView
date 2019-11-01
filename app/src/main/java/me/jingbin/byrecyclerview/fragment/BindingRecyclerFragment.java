@@ -112,7 +112,7 @@ public class BindingRecyclerFragment extends BaseFragment<FragmentRefreshBinding
             public void onClick(View v, int position) {
                 DataItemBean itemData = mAdapter.getItemData(position);
                 ToastUtil.showToast(itemData.getTitle());
-                recyclerView.setRefreshing();
+                recyclerView.setRefreshing(true);
             }
         });
         recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {

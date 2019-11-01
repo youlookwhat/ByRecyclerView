@@ -41,6 +41,6 @@ dependencies {
     // 状态栏
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3'
 
-//    implementation project(':ByRecyclerview')
-    implementation "com.github.youlookwhat:ByRecyclerView:1.0.4"
+    implementation project(':ByRecyclerview')
+//    implementation "com.github.youlookwhat:ByRecyclerView:1.0.4"
 }

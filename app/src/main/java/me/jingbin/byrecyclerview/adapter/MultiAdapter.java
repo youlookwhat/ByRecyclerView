@@ -34,7 +34,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         }
 
         @Override
-        protected void onBindingView(LayoutEmptyBinding binding, DataItemBean bean, int position) {
+        protected void onBindingView(DataItemBean bean, LayoutEmptyBinding binding, int position) {
 
         }
     }
@@ -45,7 +45,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         }
 
         @Override
-        protected void onBindingView(LayoutEmptyBinding binding, DataItemBean bean, int position) {
+        protected void onBindingView(DataItemBean bean, LayoutEmptyBinding binding, int position) {
 
         }
     }

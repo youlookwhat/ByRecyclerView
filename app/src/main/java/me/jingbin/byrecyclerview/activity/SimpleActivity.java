@@ -14,7 +14,9 @@ import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
+import me.jingbin.byrecyclerview.view.NeteaseLoadMoreView;
 import me.jingbin.library.ByRecyclerView;
+import me.jingbin.library.SimpleRefreshHeaderView;
 import me.jingbin.library.config.ByDividerItemDecoration;
 
 /**
@@ -42,7 +44,20 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
         ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(binding.recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL);
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
+        binding.recyclerView.setLoadingMoreView(new NeteaseLoadMoreView(this));
+        binding.recyclerView.setRefreshHeaderView(new SimpleRefreshHeaderView(this));
         binding.recyclerView.setAdapter(mAdapter);
+        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.recyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.recyclerView.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

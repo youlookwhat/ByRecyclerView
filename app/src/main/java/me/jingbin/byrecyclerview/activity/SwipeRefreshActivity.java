@@ -94,7 +94,7 @@ public class SwipeRefreshActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 page = 1;
-                recyclerView.reset();
+                recyclerView.setRefreshing(false);
                 recyclerView.setEmptyViewEnabled(false);
                 homeAdapter.addAll(get());
                 homeAdapter.notifyDataSetChanged();
