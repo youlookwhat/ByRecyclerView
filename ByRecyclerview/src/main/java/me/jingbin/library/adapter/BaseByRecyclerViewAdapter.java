@@ -104,7 +104,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     public void setNewData(List<T> data) {
         this.mData = data == null ? new ArrayList<T>() : data;
         if (mRecyclerView != null) {
-            mRecyclerView.refreshComplete();
+            mRecyclerView.setRefreshing(false);
         }
         notifyDataSetChanged();
     }

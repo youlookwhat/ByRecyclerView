@@ -122,11 +122,7 @@ public class ByRecyclerView extends RecyclerView {
      * 判断是否是ByRecyclerView保留的itemViewType
      */
     private boolean isReservedItemViewType(int itemViewType) {
-        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOAD_MORE_VIEW || itemViewType == TYPE_EMPTY_VIEW || mHeaderTypes.contains(itemViewType)) {
-            return true;
-        } else {
-            return false;
-        }
+        return itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOAD_MORE_VIEW || itemViewType == TYPE_EMPTY_VIEW || mHeaderTypes.contains(itemViewType);
     }
 
     /**
@@ -141,16 +137,6 @@ public class ByRecyclerView extends RecyclerView {
      */
     public void setRefreshHeaderView(BaseRefreshHeader refreshHeader) {
         mRefreshHeader = refreshHeader;
-    }
-
-    /**
-     * 下拉刷新完成
-     */
-    public void refreshComplete() {
-        if (getPullHeaderSize() > 0) {
-            mRefreshHeader.refreshComplete();
-        }
-        loadMoreComplete();
     }
 
     /**
@@ -194,30 +180,32 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 手动设置头部刷新
+     * 设置刷新状态
+     *
+     * @param refreshing true 启动刷新 false 刷新完成
      */
-    public void setRefreshing() {
-        if (getPullHeaderSize() == 0) {
-            return;
-        }
-        LayoutManager layoutManager = getLayoutManager();
-        if (layoutManager != null) {
-            layoutManager.scrollToPosition(0);
-        }
-        mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshListener.onRefresh();
+    public void setRefreshing(boolean refreshing) {
+        if (refreshing) {
+            if (getPullHeaderSize() == 0 || mRefreshHeader.getState() == BaseRefreshHeader.STATE_REFRESHING) {
+                return;
             }
-        }, 300);
-    }
-
-    /**
-     * 重置所有状态
-     */
-    public void reset() {
-        refreshComplete();
+            LayoutManager layoutManager = getLayoutManager();
+            if (layoutManager != null) {
+                layoutManager.scrollToPosition(0);
+            }
+            mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRefreshListener.onRefresh();
+                }
+            }, 300);
+        } else {
+            if (getPullHeaderSize() > 0) {
+                mRefreshHeader.refreshComplete();
+            }
+            loadMoreComplete();
+        }
     }
 
     /**
@@ -258,7 +246,7 @@ public class ByRecyclerView extends RecyclerView {
         super.setAdapter(mWrapAdapter);
         adapter.registerAdapterDataObserver(mDataObserver);
         mDataObserver.onChanged();
-        reset();
+        setRefreshing(false);
     }
 
     /**
@@ -300,21 +288,24 @@ public class ByRecyclerView extends RecyclerView {
         super.onScrollStateChanged(state);
         if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadMoreListener != null && !mIsLoadingData && mLoadMoreEnabled) {
             LayoutManager layoutManager = getLayoutManager();
-            int lastVisibleItemPosition;
-            if (layoutManager instanceof GridLayoutManager) {
-                lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+            if (layoutManager == null) {
+                return;
+            }
+            int lastVisibleItemPosition = -1;
+            if (layoutManager instanceof LinearLayoutManager) {
+                lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
+
             } else if (layoutManager instanceof StaggeredGridLayoutManager) {
                 int[] into = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
-                ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(into);
+                ((StaggeredGridLayoutManager) layoutManager).findLastCompletelyVisibleItemPositions(into);
                 lastVisibleItemPosition = findMax(into);
-            } else {
-                lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+
             }
             if (layoutManager.getChildCount() > 0
-                    && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
-                    && isNoFullScreenLoad(layoutManager)
-                    && isScrollLoad(layoutManager)
                     && !mIsNoMore
+                    && lastVisibleItemPosition == mWrapAdapter.getItemCount() - 1 // 最后一个完全可视item是最后一个item
+                    && isNoFullScreenLoad()
+                    && isScrollLoad()
                     && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 mIsScrollUp = false;
                 mIsLoadingData = true;
@@ -888,12 +879,8 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 不满一屏时，根据上滑的距离判断是否加载
      */
-    private boolean isScrollLoad(LayoutManager layoutManager) {
-        if (isFullScreen(layoutManager)) {
-            return true;
-        } else {
-            return mIsScrollUp;
-        }
+    private boolean isScrollLoad() {
+        return isFullScreen() || mIsScrollUp;
     }
 
     /**
@@ -906,19 +893,59 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 不满一屏是否加载，默认加载
      */
-    private boolean isNoFullScreenLoad(LayoutManager layoutManager) {
+    private boolean isNoFullScreenLoad() {
         if (misNoLoadMoreIfNotFullScreen) {
-            return isFullScreen(layoutManager);
+            return isFullScreen();
         } else {
             return true;
         }
     }
 
     /**
+     * 最后一个item是否在当前屏幕内
+     */
+    private boolean isLastPosition() {
+        LayoutManager layoutManager = getLayoutManager();
+        if (layoutManager == null) {
+            return false;
+        }
+        if (layoutManager instanceof LinearLayoutManager) {
+            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+            return (linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1) == mWrapAdapter.getItemCount();
+
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            int[] into = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
+            ((StaggeredGridLayoutManager) layoutManager).findLastCompletelyVisibleItemPositions(into);
+            int lastVisibleItemPosition = findMax(into);
+
+            return lastVisibleItemPosition + 1 == mWrapAdapter.getItemCount();
+        }
+        return false;
+
+    }
+
+    /**
      * 是否是满屏
      */
-    private boolean isFullScreen(LayoutManager layoutManager) {
-        return layoutManager.getItemCount() > layoutManager.getChildCount();
+    private boolean isFullScreen() {
+        LayoutManager layoutManager = getLayoutManager();
+        if (layoutManager == null) {
+            return false;
+        }
+        if (layoutManager instanceof LinearLayoutManager) {
+            final LinearLayoutManager llm = (LinearLayoutManager) layoutManager;
+
+            return (llm.findLastCompletelyVisibleItemPosition() + 1) != mWrapAdapter.getItemCount() ||
+                    llm.findFirstCompletelyVisibleItemPosition() != 0;
+
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            int[] into = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
+            ((StaggeredGridLayoutManager) layoutManager).findLastCompletelyVisibleItemPositions(into);
+            int lastVisibleItemPosition = findMax(into);
+
+            return lastVisibleItemPosition + 1 != mWrapAdapter.getItemCount();
+        }
+        return false;
     }
 
     /**
