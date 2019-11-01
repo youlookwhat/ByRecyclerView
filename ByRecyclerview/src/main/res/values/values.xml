@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="refresh_simple_by_height">50dp</dimen>
+    <dimen name="refresh_simple_by_margin">12dp</dimen>
+    <dimen name="load_more_simple_by_height">48dp</dimen>
+    <dimen name="load_more_simple_by_margin">10dp</dimen>
+    <dimen name="progress_by_width_height">18dp</dimen>
+
+</resources>

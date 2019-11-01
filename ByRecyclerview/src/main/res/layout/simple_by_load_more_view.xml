@@ -8,30 +8,28 @@
     <LinearLayout
         android:id="@+id/ll_more_loading"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/load_more_simple_by_height"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ProgressBar
-            android:id="@+id/iv_progress"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:id="@+id/pb_progress"
+            android:layout_width="@dimen/progress_by_width_height"
+            android:layout_height="@dimen/progress_by_width_height"
             android:indeterminateDrawable="@drawable/progress_rotate" />
 
         <TextView
-            android:id="@+id/msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="@string/footer_loading"
-            android:textColor="#333333" />
+            android:layout_marginStart="@dimen/load_more_simple_by_margin"
+            android:layout_marginLeft="@dimen/load_more_simple_by_margin"
+            android:text="@string/footer_loading" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_no_more"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/load_more_simple_by_height"
         android:gravity="center"
         android:text="@string/footer_no_more"
         android:textColor="@android:color/darker_gray"
@@ -41,7 +39,7 @@
     <TextView
         android:id="@+id/tv_more_failed"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/load_more_simple_by_height"
         android:gravity="center"
         android:text="@string/footer_load_failed"
         android:visibility="gone"
@@ -51,6 +49,6 @@
     <View
         android:id="@+id/view_bottom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/refresh_simple_by_height"
         android:visibility="gone" />
 </LinearLayout>
