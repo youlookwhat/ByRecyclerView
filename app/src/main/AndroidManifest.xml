@@ -28,6 +28,7 @@
         <activity android:name=".activity.ListViewActivity" />
         <activity android:name=".activity.AppBarLayoutActivity" />
         <activity android:name=".activity.DataBindingActivity" />
+        <activity android:name=".activity.CustomLayoutActivity" />
     </application>
 
 </manifest>

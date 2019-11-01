@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/header_hint_normal"
+            android:text="@string/custom_header_hint_normal"
             android:textColor="#666666" />
 
         <ImageView

@@ -14,13 +14,15 @@ import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
+import me.jingbin.byrecyclerview.view.NeteaseLoadMoreView;
+import me.jingbin.byrecyclerview.view.NeteaseRefreshHeaderView;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.config.ByDividerItemDecoration;
 
 /**
  * @author jingbin
  */
-public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
+public class CustomLayoutActivity extends BaseActivity<ActivitySimpleBinding> {
 
     private int page = 1;
     private DataAdapter mAdapter;
@@ -29,7 +31,7 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        setTitle("基本使用");
+        setTitle("自定义下拉刷新布局 / 加载更多布局");
 
         initAdapter();
     }
@@ -42,7 +44,20 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
         ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(binding.recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL);
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
+        binding.recyclerView.setLoadingMoreView(new NeteaseLoadMoreView(this));
+        binding.recyclerView.setRefreshHeaderView(new NeteaseRefreshHeaderView(this));
         binding.recyclerView.setAdapter(mAdapter);
+        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.recyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.recyclerView.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -54,7 +69,7 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
                             return;
                         }
                         page++;
-                        mAdapter.addData(DataUtil.getMore(SimpleActivity.this, 20, page));
+                        mAdapter.addData(DataUtil.getMore(CustomLayoutActivity.this, 20, page));
                         binding.recyclerView.loadMoreComplete();
                     }
                 }, 500);

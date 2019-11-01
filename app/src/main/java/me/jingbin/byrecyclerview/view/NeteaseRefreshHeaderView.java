@@ -38,7 +38,7 @@ public class NeteaseRefreshHeaderView extends LinearLayout implements BaseRefres
     private AnimationDrawable mAnimationDrawable;
 
     public NeteaseRefreshHeaderView(Context context) {
-        super(context, null);
+        super(context);
         initView(context);
     }
 
@@ -116,21 +116,21 @@ public class NeteaseRefreshHeaderView extends LinearLayout implements BaseRefres
                 if (mState == STATE_REFRESHING) {
                     mIvArrow.clearAnimation();
                 }
-                tvRefreshTip.setText(R.string.header_hint_normal);
+                tvRefreshTip.setText(R.string.custom_header_hint_normal);
                 break;
             case STATE_RELEASE_TO_REFRESH:
                 mIvArrow.clearAnimation();
                 mIvArrow.startAnimation(mRotateUpAnim);
-                tvRefreshTip.setText(R.string.header_hint_release);
+                tvRefreshTip.setText(R.string.custom_header_hint_release);
                 break;
             case STATE_REFRESHING:
-                tvRefreshTip.setText(R.string.refreshing);
+                tvRefreshTip.setText(R.string.custom_refreshing);
                 if (!mAnimationDrawable.isRunning()) {
                     mAnimationDrawable.start();
                 }
                 break;
             case STATE_DONE:
-                tvRefreshTip.setText(R.string.refresh_done);
+                tvRefreshTip.setText(R.string.custom_refresh_done);
                 break;
             default:
         }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.jingbin.byrecyclerview.activity.AppBarLayoutActivity;
+import me.jingbin.byrecyclerview.activity.CustomLayoutActivity;
 import me.jingbin.byrecyclerview.activity.DataBindingActivity;
 import me.jingbin.byrecyclerview.activity.EmptyActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
@@ -35,7 +36,7 @@ public class DataUtil {
         list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class));
         list.add(new MainItemBean("BaseListAdapter的使用", ListViewActivity.class));
         list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class));
-        list.add(new MainItemBean("基本使用"));
+        list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class));
         list.add(new MainItemBean("基本使用"));
         list.add(new MainItemBean("基本使用"));
         list.add(new MainItemBean("基本使用"));

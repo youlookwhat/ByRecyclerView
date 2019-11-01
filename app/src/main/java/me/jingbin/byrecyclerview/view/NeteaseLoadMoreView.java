@@ -26,7 +26,7 @@ public class NeteaseLoadMoreView extends LinearLayout implements BaseLoadMore {
     private AnimationDrawable mAnimationDrawable;
 
     public NeteaseLoadMoreView(Context context) {
-        super(context, null);
+        super(context);
         initView(context);
     }
 
