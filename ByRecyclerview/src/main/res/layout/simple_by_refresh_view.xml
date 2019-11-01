@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,35 +10,35 @@
     <RelativeLayout
         android:id="@+id/header_content"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="@dimen/refresh_simple_by_height">
 
         <TextView
             android:id="@+id/tv_refresh_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/header_hint_normal"
-            android:textColor="#666666" />
+            android:text="@string/header_hint_normal" />
 
         <ProgressBar
-            android:id="@+id/iv_progress"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:id="@+id/pb_progress"
+            android:layout_width="@dimen/progress_by_width_height"
+            android:layout_height="@dimen/progress_by_width_height"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginEnd="@dimen/refresh_simple_by_margin"
+            android:layout_marginRight="@dimen/refresh_simple_by_margin"
             android:layout_toStartOf="@id/tv_refresh_tip"
             android:layout_toLeftOf="@id/tv_refresh_tip"
             android:indeterminateDrawable="@drawable/progress_rotate"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/iv_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginEnd="@dimen/refresh_simple_by_margin"
+            android:layout_marginRight="@dimen/refresh_simple_by_margin"
             android:layout_toStartOf="@id/tv_refresh_tip"
             android:layout_toLeftOf="@id/tv_refresh_tip"
             android:contentDescription="@null"

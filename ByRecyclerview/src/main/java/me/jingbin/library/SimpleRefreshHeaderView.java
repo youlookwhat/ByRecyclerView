@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,15 +34,7 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
     private int mMeasuredHeight;
 
     public SimpleRefreshHeaderView(Context context) {
-        this(context, null);
-    }
-
-    public SimpleRefreshHeaderView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public SimpleRefreshHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context);
         initView(context);
     }
 
@@ -54,7 +45,7 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
         setGravity(Gravity.BOTTOM);
 
         mIvArrow = (ImageView) findViewById(R.id.iv_arrow);
-        mProgress = (ProgressBar) findViewById(R.id.iv_progress);
+        mProgress = (ProgressBar) findViewById(R.id.pb_progress);
         tvRefreshTip = (TextView) findViewById(R.id.tv_refresh_tip);
 
         measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

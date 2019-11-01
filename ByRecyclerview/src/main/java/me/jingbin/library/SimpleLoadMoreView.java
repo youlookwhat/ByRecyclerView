@@ -19,7 +19,7 @@ public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
     private LinearLayout llMoreLoading;
 
     public SimpleLoadMoreView(Context context) {
-        super(context, null);
+        super(context);
         initView(context);
     }
 
