@@ -38,8 +38,8 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0'         // 默认AndroidX版本
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.3-support" // support版本引入
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.5'         // 默认AndroidX版本
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.5-support" // support版本引入
 }
 ```
 
@@ -78,7 +78,7 @@ mRecyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
     }
 });
     
-mRecyclerView.setRefreshing(); // 手动启动刷新
+mRecyclerView.setRefreshing(true); // 手动启动刷新
 ```
 
 ### 使用加载更多
