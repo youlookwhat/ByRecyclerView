@@ -5,7 +5,7 @@ package me.jingbin.library;
  *
  * @author jingbin
  */
-interface BaseRefreshHeader {
+public interface BaseRefreshHeader {
 
     int STATE_NORMAL = 0;             // 正常
     int STATE_RELEASE_TO_REFRESH = 1; // 释放刷新

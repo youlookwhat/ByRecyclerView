@@ -130,6 +130,7 @@ public class ByRecyclerView extends RecyclerView {
      */
     public void setLoadingMoreView(BaseLoadMore loadingMore) {
         mLoadMore = loadingMore;
+        mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
     }
 
     /**
