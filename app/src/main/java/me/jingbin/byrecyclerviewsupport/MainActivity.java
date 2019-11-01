@@ -65,13 +65,6 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
-        binding.recyclerView.setRefreshing(true);
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
