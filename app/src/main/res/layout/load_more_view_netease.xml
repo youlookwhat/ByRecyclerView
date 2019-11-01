@@ -12,49 +12,30 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ProgressBar
+        <ImageView
             android:id="@+id/iv_progress"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:indeterminateDrawable="@drawable/load_more_progress_rotate" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/yun_anim" />
 
         <TextView
             android:id="@+id/msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:text="@string/footer_loading"
             android:textColor="#333333" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_no_more"
+    <TextView
+        android:id="@+id/tv_no_more"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:text="@string/footer_no_more"
+        android:textColor="@android:color/darker_gray"
         android:visibility="gone"
-        tools:visibility="visible">
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="1dp"
-            android:background="#CCCCCC" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:text="END"
-            android:textColor="#CCCCCC" />
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="1dp"
-            android:background="#CCCCCC" />
-    </LinearLayout>
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_more_failed"
