@@ -7,7 +7,7 @@ import android.view.View;
  *
  * @author jingbin
  */
-interface BaseLoadMore {
+public interface BaseLoadMore {
 
     int STATE_LOADING = 0;  // 加载中...，显示布局
     int STATE_COMPLETE = 1; // 加载完成，隐藏布局
