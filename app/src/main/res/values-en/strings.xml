@@ -1,0 +1,6 @@
+<resources>
+    <string name="header_hint_normal">Drop down refresh</string>
+    <string name="header_hint_release">Release refresh</string>
+    <string name="refreshing">Refreshing</string>
+    <string name="refresh_done">Refresh done</string>
+</resources>

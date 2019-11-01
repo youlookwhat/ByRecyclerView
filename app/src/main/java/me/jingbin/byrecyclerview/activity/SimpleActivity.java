@@ -15,8 +15,8 @@ import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.byrecyclerview.view.NeteaseLoadMoreView;
+import me.jingbin.byrecyclerview.view.NeteaseRefreshHeaderView;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.SimpleRefreshHeaderView;
 import me.jingbin.library.config.ByDividerItemDecoration;
 
 /**
@@ -45,7 +45,7 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setLoadingMoreView(new NeteaseLoadMoreView(this));
-        binding.recyclerView.setRefreshHeaderView(new SimpleRefreshHeaderView(this));
+        binding.recyclerView.setRefreshHeaderView(new NeteaseRefreshHeaderView(this));
         binding.recyclerView.setAdapter(mAdapter);
         binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
             @Override
