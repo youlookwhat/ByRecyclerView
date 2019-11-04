@@ -95,7 +95,7 @@ public class ByDividerItemDecoration extends RecyclerView.ItemDecoration {
      */
     public void setDrawable(Drawable drawable) {
         if (drawable == null) {
-            throw new IllegalArgumentException("Drawable cannot be null.");
+            throw new IllegalArgumentException("drawable cannot be null.");
         }
         mDivider = drawable;
     }
@@ -182,7 +182,7 @@ public class ByDividerItemDecoration extends RecyclerView.ItemDecoration {
             }
             //mIsShowBottomDivider false的时候不绘制最后一个view的divider
             if (mIsShowBottomDivider || childRealPosition < lastPosition) {
-                parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
+                parent.getDecoratedBoundsWithMargins(child, mBounds);
                 final int right = mBounds.right + Math.round(child.getTranslationX());
                 final int left = right - mDivider.getIntrinsicWidth();
                 mDivider.setBounds(left, top, right, bottom);
