@@ -16,7 +16,7 @@ import me.jingbin.byrecyclerview.databinding.FragmentRefreshBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.config.ByDividerItemDecoration;
+import me.jingbin.library.divider.SpacesItemDecoration;
 
 /**
  * @author jingbin
@@ -81,7 +81,7 @@ public class BindingRecyclerFragment extends BaseFragment<FragmentRefreshBinding
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL, false);
+        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(recyclerView.getContext(), SpacesItemDecoration.VERTICAL, 1);
         itemDecoration.setDrawable(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.shape_line));
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setAdapter(mAdapter);

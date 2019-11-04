@@ -111,10 +111,10 @@ public class SwipeRefreshActivity extends AppCompatActivity {
         MyDividerItemDecoration itemDecoration = new MyDividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL, false, false, false);
         itemDecoration.setDrawable(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.shape_line));
         recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setEmptyView(R.layout.layout_empty, (ViewGroup) recyclerView.getParent());
+        recyclerView.setEmptyView(R.layout.layout_empty);
         recyclerView.setAdapter(homeAdapter);
 
-        recyclerView.setEmptyView(R.layout.layout_empty, (ViewGroup) recyclerView.getParent());
+        recyclerView.setEmptyView(R.layout.layout_empty);
 
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override

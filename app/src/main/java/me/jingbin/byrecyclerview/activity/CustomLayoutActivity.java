@@ -17,7 +17,7 @@ import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.byrecyclerview.view.NeteaseLoadMoreView;
 import me.jingbin.byrecyclerview.view.NeteaseRefreshHeaderView;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.config.ByDividerItemDecoration;
+import me.jingbin.library.divider.SpacesItemDecoration;
 
 /**
  * @author jingbin
@@ -41,7 +41,7 @@ public class CustomLayoutActivity extends BaseActivity<ActivitySimpleBinding> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
-        ByDividerItemDecoration itemDecoration = new ByDividerItemDecoration(binding.recyclerView.getContext(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL);
+        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL);
         itemDecoration.setDrawable(ContextCompat.getDrawable(binding.recyclerView.getContext(), R.drawable.shape_line));
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setLoadingMoreView(new NeteaseLoadMoreView(this));

@@ -2,14 +2,11 @@ package me.jingbin.byrecyclerview.activity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
 
 import androidx.databinding.DataBindingUtil;
 
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.adapter.ListView2Adapter;
-import me.jingbin.byrecyclerview.adapter.ListViewAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.databinding.ActivityListViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
