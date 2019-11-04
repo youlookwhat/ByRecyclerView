@@ -38,8 +38,8 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.5'         // 默认AndroidX版本
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.5-support" // support版本引入
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.7'         // 默认AndroidX版本
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.7-support" // support版本引入
 }
 ```
 
@@ -157,7 +157,7 @@ limitations under the License.
 
 [1]:https://jitpack.io/v/youlookwhat/ByRecyclerView.svg
 [2]:https://jitpack.io/#youlookwhat/ByRecyclerView
-[3]:https://img.shields.io/:License-Apache-blue.svg
+[3]:https://img.shields.io/:License-Apache%202.0-blue.svg
 [4]:https://www.apache.org/licenses/LICENSE-2.0.html
 [5]:https://img.shields.io/badge/API-14%2B-red.svg?style=flat
 [6]:https://android-arsenal.com/api?level=14
