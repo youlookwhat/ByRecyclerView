@@ -347,7 +347,7 @@ public class ByRecyclerView extends RecyclerView {
                 // ==0 原点向下惯性滑动会有效
                 // 按下的纵坐标 - 当前的纵坐标(为了更灵敏)
                 mIsScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10;
-                // LogHelper.e("mIsScrollUp:  ", mIsScrollUp + " --- mPullStartY:  " + mPullStartY + " --- " + "ev.getY(): " + ev.getY());
+                // Log.e("mIsScrollUp:  ", mIsScrollUp + " --- mPullStartY:  " + mPullStartY + " --- " + "ev.getY(): " + ev.getY());
 
                 mPullStartY = 0;
                 mLastY = -1;
