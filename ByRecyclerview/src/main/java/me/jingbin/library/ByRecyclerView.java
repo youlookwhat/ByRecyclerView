@@ -90,8 +90,12 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 添加HeaderView；不可重复添加相同的View
+     * 添加HeaderView
      */
+    public void addHeaderView(int layoutResId) {
+        addHeaderView(getLayoutView(layoutResId));
+    }
+
     public void addHeaderView(View headerView) {
         mHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(headerView);
@@ -793,11 +797,9 @@ public class ByRecyclerView extends RecyclerView {
 
     /**
      * @param layoutResId layoutResId
-     * @param viewGroup   recyclerView.getParent()
      */
-    public void setEmptyView(int layoutResId, ViewGroup viewGroup) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(layoutResId, viewGroup, false);
-        setEmptyView(view);
+    public void setEmptyView(int layoutResId) {
+        setEmptyView(getLayoutView(layoutResId));
     }
 
     /**
@@ -831,6 +833,19 @@ public class ByRecyclerView extends RecyclerView {
                 }
             }
         }
+    }
+
+    /**
+     * 通过 layoutResId 获取Vew
+     *
+     * @param layoutResId layoutResId
+     */
+    private View getLayoutView(int layoutResId) {
+        return LayoutInflater.from(getContext()).inflate(layoutResId, this, false);
+    }
+
+    public int addFooterView(int layoutResId) {
+        return addFooterView(getLayoutView(layoutResId), -1, LinearLayout.VERTICAL);
     }
 
     public int addFooterView(View footer) {
