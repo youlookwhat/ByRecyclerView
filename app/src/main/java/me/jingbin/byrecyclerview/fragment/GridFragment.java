@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -81,7 +82,10 @@ public class GridFragment extends BaseFragment<FragmentRefreshBinding> {
     private void initAdapter() {
         recyclerView = getView(R.id.recyclerView);
         mAdapter = new GridAdapter(DataUtil.get(activity, 6));
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(activity, 3);
+//        recyclerView.setLayoutManager(gridLayoutManager);
+        final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(3, DensityUtil.dip2px(activity, 10));
         itemDecoration.setNoShowSpace(1, 1);
         recyclerView.addItemDecoration(itemDecoration);
@@ -111,9 +115,17 @@ public class GridFragment extends BaseFragment<FragmentRefreshBinding> {
         recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                DataItemBean itemData = mAdapter.getItemData(position);
-                ToastUtil.showToast(itemData.getTitle());
-                recyclerView.setRefreshing(true);
+                if (position == 0) {
+                    recyclerView.removeItemDecorationAt(0);
+                    GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(5, DensityUtil.dip2px(activity, 10));
+                    itemDecoration.setNoShowSpace(1, 1);
+                    recyclerView.addItemDecoration(itemDecoration);
+                    staggeredGridLayoutManager.setSpanCount(5);
+                } else {
+                    DataItemBean itemData = mAdapter.getItemData(position);
+                    ToastUtil.showToast(itemData.getTitle());
+                    recyclerView.setRefreshing(true);
+                }
             }
         });
         recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
@@ -123,7 +135,7 @@ public class GridFragment extends BaseFragment<FragmentRefreshBinding> {
                     @Override
                     public void run() {
                         page = 1;
-                        mAdapter.setNewData(DataUtil.getMore(activity, 10, page));
+                        mAdapter.setNewData(DataUtil.getMore(activity, 9, page));
                     }
                 }, 1000);
             }
