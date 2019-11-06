@@ -93,25 +93,20 @@ public class GridFragment extends BaseFragment<FragmentRefreshBinding> {
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                recyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (page == 4) {
-                            recyclerView.loadMoreEnd();
-                            return;
-                        }
-                        if (page == 2) {
-                            page++;
-                            recyclerView.loadMoreFail();
-                            return;
-                        }
-                        page++;
-                        mAdapter.addData(DataUtil.getMore(activity, 6, page));
-                        recyclerView.loadMoreComplete();
-                    }
-                }, 1000);
+                if (page == 4) {
+                    recyclerView.loadMoreEnd();
+                    return;
+                }
+                if (page == 2) {
+                    page++;
+                    recyclerView.loadMoreFail();
+                    return;
+                }
+                page++;
+                mAdapter.addData(DataUtil.getMore(activity, 6, page));
+                recyclerView.loadMoreComplete();
             }
-        });
+        }, 1000);
         recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
