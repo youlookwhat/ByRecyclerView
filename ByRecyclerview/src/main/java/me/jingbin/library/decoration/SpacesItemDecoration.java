@@ -40,9 +40,9 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
     public static final int HORIZONTAL = LinearLayout.HORIZONTAL;
     public static final int VERTICAL = LinearLayout.VERTICAL;
     private static final String TAG = "itemDivider";
-    private Drawable mDivider;
-    private final Rect mBounds = new Rect();
     private Context mContext;
+    private Drawable mDivider;
+    private Rect mBounds = new Rect();
     /**
      * 在AppTheme里配置 android:listDivider
      */
@@ -52,7 +52,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
      */
     private int mHeaderNoShowSize = 0;
     /**
-     * 尾部 不显示分割线的item格式 默认不显示最后一个item的分割线
+     * 尾部 不显示分割线的item个数 默认不显示最后一个item的分割线
      */
     private int mFooterNoShowSize = 1;
     /**
