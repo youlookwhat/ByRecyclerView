@@ -343,10 +343,8 @@ public class ByRecyclerView extends RecyclerView {
                 }
                 break;
             default:
-                // ==0 原点向下惯性滑动会有效
-                // 按下的纵坐标 - 当前的纵坐标(为了更灵敏)
+                // 按下的纵坐标 - 当前的纵坐标(为了更灵敏,原点向下惯性滑动时==0)
                 mIsScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10;
-                // Log.e("mIsScrollUp:  ", mIsScrollUp + " --- mPullStartY:  " + mPullStartY + " --- " + "ev.getY(): " + ev.getY());
 
                 mPullStartY = 0;
                 mLastY = -1;
@@ -519,7 +517,7 @@ public class ByRecyclerView extends RecyclerView {
                 return;
             }
             if (adapter != null) {
-                // 如果可以下拉刷新，就需要+1
+                // 得到去掉头部type的position
                 int adjPosition = position - getCustomTopItemViewCount();
                 int adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
@@ -917,29 +915,6 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 最后一个item是否在当前屏幕内
-     */
-    private boolean isLastPosition() {
-        LayoutManager layoutManager = getLayoutManager();
-        if (layoutManager == null) {
-            return false;
-        }
-        if (layoutManager instanceof LinearLayoutManager) {
-            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
-            return (linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1) == mWrapAdapter.getItemCount();
-
-        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            int[] into = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
-            ((StaggeredGridLayoutManager) layoutManager).findLastCompletelyVisibleItemPositions(into);
-            int lastVisibleItemPosition = findMax(into);
-
-            return lastVisibleItemPosition + 1 == mWrapAdapter.getItemCount();
-        }
-        return false;
-
-    }
-
-    /**
      * 是否是满屏
      */
     private boolean isFullScreen() {
@@ -954,11 +929,15 @@ public class ByRecyclerView extends RecyclerView {
                     llm.findFirstCompletelyVisibleItemPosition() != 0;
 
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            int[] into = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
-            ((StaggeredGridLayoutManager) layoutManager).findLastCompletelyVisibleItemPositions(into);
-            int lastVisibleItemPosition = findMax(into);
+            StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) layoutManager;
 
-            return lastVisibleItemPosition + 1 != mWrapAdapter.getItemCount();
+            int[] last = new int[sglm.getSpanCount()];
+            sglm.findLastCompletelyVisibleItemPositions(last);
+
+            int[] first = new int[sglm.getSpanCount()];
+            sglm.findFirstCompletelyVisibleItemPositions(first);
+
+            return findMax(last) + 1 != mWrapAdapter.getItemCount() || first[0] != 0;
         }
         return false;
     }
