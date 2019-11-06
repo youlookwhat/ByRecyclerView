@@ -57,6 +57,7 @@ public class ByRecyclerView extends RecyclerView {
     private float mLastY = -1;                     // 手指按下的Y坐标值，用于处理下拉刷新View的高度
     private float mPullStartY = 0;                 // 手指按下的Y坐标值，用于处理不满全屏时是否可进行上拉加载
     private float mDragRate = 2.5f;                // 下拉时候的偏移计量因子，越小拉动距离越短
+    private long mLoadMoreDelayMillis = 0;         // 延迟多少毫秒后再调用加载更多接口
 
     private OnRefreshListener mRefreshListener;    // 下拉刷新监听
     private BaseRefreshHeader mRefreshHeader;      // 下拉刷新接口
@@ -178,7 +179,16 @@ public class ByRecyclerView extends RecyclerView {
             public void onClick(View v) {
                 mIsLoadingData = true;
                 mLoadMore.setState(BaseLoadMore.STATE_LOADING);
-                mLoadMoreListener.onLoadMore();
+                if (mLoadMoreDelayMillis <= 0) {
+                    mLoadMoreListener.onLoadMore();
+                } else {
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLoadMoreListener.onLoadMore();
+                        }
+                    }, mLoadMoreDelayMillis);
+                }
             }
         });
     }
@@ -314,7 +324,16 @@ public class ByRecyclerView extends RecyclerView {
                 mIsScrollUp = false;
                 mIsLoadingData = true;
                 mLoadMore.setState(BaseLoadMore.STATE_LOADING);
-                mLoadMoreListener.onLoadMore();
+                if (mLoadMoreDelayMillis <= 0) {
+                    mLoadMoreListener.onLoadMore();
+                } else {
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLoadMoreListener.onLoadMore();
+                        }
+                    }, mLoadMoreDelayMillis);
+                }
             }
         }
     }
@@ -723,6 +742,15 @@ public class ByRecyclerView extends RecyclerView {
     public interface OnRefreshListener {
 
         void onRefresh();
+    }
+
+    /**
+     * @param delayMillis 延迟delayMillis毫秒后再调用加载更多接口
+     */
+    public void setOnLoadMoreListener(OnLoadMoreListener listener, long delayMillis) {
+        setLoadMoreEnabled(true);
+        mLoadMoreListener = listener;
+        mLoadMoreDelayMillis = delayMillis;
     }
 
     public void setOnLoadMoreListener(OnLoadMoreListener listener) {
