@@ -47,16 +47,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                recyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dataAdapter.addData(getData());
-                        recyclerView.loadMoreComplete();
-//                        recyclerView.loadMoreEnd();
-                    }
-                }, 1000);
+                dataAdapter.addData(getData());
+                recyclerView.loadMoreComplete();
             }
-        });
+        }, 1000);
 //        recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
 //            @Override
 //            public void onClick(View v, int position) {
