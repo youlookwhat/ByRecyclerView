@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="@string/footer_loading"
+            android:text="@string/by_footer_loading"
             android:textColor="#333333" />
     </LinearLayout>
 
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center"
-        android:text="@string/footer_no_more"
+        android:text="@string/by_footer_no_more"
         android:textColor="@android:color/darker_gray"
         android:visibility="gone"
         tools:visibility="visible" />
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center"
-        android:text="@string/footer_load_failed"
+        android:text="@string/by_footer_load_failed"
         android:visibility="gone"
         tools:visibility="visible" />
 

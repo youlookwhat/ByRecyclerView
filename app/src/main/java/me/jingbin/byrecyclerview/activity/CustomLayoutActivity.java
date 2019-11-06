@@ -17,7 +17,7 @@ import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.byrecyclerview.view.NeteaseLoadMoreView;
 import me.jingbin.byrecyclerview.view.NeteaseRefreshHeaderView;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.divider.SpacesItemDecoration;
+import me.jingbin.library.decoration.SpacesItemDecoration;
 
 /**
  * @author jingbin

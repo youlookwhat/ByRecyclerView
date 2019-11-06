@@ -21,7 +21,7 @@ import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.StatusBarUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.divider.SpacesItemDecoration;
+import me.jingbin.library.decoration.SpacesItemDecoration;
 
 /**
  * @author jingbin

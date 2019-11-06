@@ -10,22 +10,22 @@
     <RelativeLayout
         android:id="@+id/header_content"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/refresh_simple_by_height">
+        android:layout_height="@dimen/by_refresh_simple_height">
 
         <TextView
             android:id="@+id/tv_refresh_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/header_hint_normal" />
+            android:text="@string/by_header_hint_normal" />
 
         <ProgressBar
             android:id="@+id/pb_progress"
-            android:layout_width="@dimen/progress_by_width_height"
-            android:layout_height="@dimen/progress_by_width_height"
+            android:layout_width="@dimen/by_progress_width_height"
+            android:layout_height="@dimen/by_progress_width_height"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/refresh_simple_by_margin"
-            android:layout_marginRight="@dimen/refresh_simple_by_margin"
+            android:layout_marginEnd="@dimen/by_refresh_simple_margin"
+            android:layout_marginRight="@dimen/by_refresh_simple_margin"
             android:layout_toStartOf="@id/tv_refresh_tip"
             android:layout_toLeftOf="@id/tv_refresh_tip"
             android:indeterminateDrawable="@drawable/progress_rotate"
@@ -37,8 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/refresh_simple_by_margin"
-            android:layout_marginRight="@dimen/refresh_simple_by_margin"
+            android:layout_marginEnd="@dimen/by_refresh_simple_margin"
+            android:layout_marginRight="@dimen/by_refresh_simple_margin"
             android:layout_toStartOf="@id/tv_refresh_tip"
             android:layout_toLeftOf="@id/tv_refresh_tip"
             android:contentDescription="@null"
