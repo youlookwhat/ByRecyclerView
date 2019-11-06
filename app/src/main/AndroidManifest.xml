@@ -29,6 +29,7 @@
         <activity android:name=".activity.AppBarLayoutActivity" />
         <activity android:name=".activity.DataBindingActivity" />
         <activity android:name=".activity.CustomLayoutActivity" />
+        <activity android:name=".activity.DividerActivity" />
     </application>
 
 </manifest>

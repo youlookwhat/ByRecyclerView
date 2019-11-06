@@ -8,6 +8,7 @@ import java.util.List;
 import me.jingbin.byrecyclerview.activity.AppBarLayoutActivity;
 import me.jingbin.byrecyclerview.activity.CustomLayoutActivity;
 import me.jingbin.byrecyclerview.activity.DataBindingActivity;
+import me.jingbin.byrecyclerview.activity.DividerActivity;
 import me.jingbin.byrecyclerview.activity.EmptyActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ListViewActivity;
@@ -37,7 +38,7 @@ public class DataUtil {
         list.add(new MainItemBean("BaseListAdapter的使用", ListViewActivity.class));
         list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class));
         list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class));
-        list.add(new MainItemBean("基本使用"));
+        list.add(new MainItemBean("自定义行列间距", DividerActivity.class));
         list.add(new MainItemBean("基本使用"));
         list.add(new MainItemBean("基本使用"));
         return list;
