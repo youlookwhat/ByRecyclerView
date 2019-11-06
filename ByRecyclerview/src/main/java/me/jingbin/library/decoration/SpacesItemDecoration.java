@@ -1,4 +1,4 @@
-package me.jingbin.library.divider;
+package me.jingbin.library.decoration;
 
 /*
  * Copyright 2019. Bin Jing (https://github.com/youlookwhat)
@@ -30,7 +30,7 @@ import android.widget.LinearLayout;
 
 
 /**
- * 可以去除头部尾部divider的ItemDecoration
+ * 给 LinearLayoutManager 增加分割线，可设置去除首尾分割线个数
  *
  * @author jingbin
  * https://github.com/youlookwhat/ByRecyclerView
@@ -233,7 +233,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
-     * 设置不显示分割线的item位置
+     * 设置不显示分割线的item位置与个数
      *
      * @param headerNoShowSize 头部 不显示分割线的item个数
      * @param footerNoShowSize 尾部 不显示分割线的item个数，默认1，不显示最后一个,最后一个一般为加载更多view
@@ -243,6 +243,11 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         this.mFooterNoShowSize = footerNoShowSize;
     }
 
+    /**
+     * 设置不显示头部分割线的item个数
+     *
+     * @param headerNoShowSize 头部 不显示分割线的item个数
+     */
     public void setHeaderNoShowDivider(int headerNoShowSize) {
         this.mHeaderNoShowSize = headerNoShowSize;
     }

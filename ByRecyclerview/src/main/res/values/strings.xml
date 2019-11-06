@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">library</string>
 
-    <string name="header_hint_normal">下拉刷新</string>
-    <string name="header_hint_release">松开刷新</string>
-    <string name="refreshing">刷新中…</string>
-    <string name="refresh_done">刷新完成</string>
-    <string name="footer_loading">努力加载中…</string>
-    <string name="footer_no_more">没有更多数据了</string>
-    <string name="footer_load_failed">加载失败，请点我重试</string>
+    <string name="by_header_hint_normal">下拉刷新</string>
+    <string name="by_header_hint_release">松开刷新</string>
+    <string name="by_refreshing">刷新中…</string>
+    <string name="by_refresh_done">刷新完成</string>
+    <string name="by_footer_loading">努力加载中…</string>
+    <string name="by_footer_no_more">没有更多数据了</string>
+    <string name="by_footer_load_failed">加载失败，请点我重试</string>
 </resources>
