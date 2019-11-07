@@ -1062,6 +1062,13 @@ public class ByRecyclerView extends RecyclerView {
         mDragRate = rate;
     }
 
+    /**
+     * 是否正在加载更多
+     */
+    public boolean isLoadingMore() {
+        return mIsLoadingData;
+    }
+
     public interface OnItemClickListener {
 
         void onClick(View v, int position);
