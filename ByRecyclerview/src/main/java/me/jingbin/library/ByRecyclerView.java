@@ -56,6 +56,7 @@ public class ByRecyclerView extends RecyclerView {
     private boolean mIsScrollUp = false;           // 手指是否上滑
     private float mLastY = -1;                     // 手指按下的Y坐标值，用于处理下拉刷新View的高度
     private float mPullStartY = 0;                 // 手指按下的Y坐标值，用于处理不满全屏时是否可进行上拉加载
+    private float mPullMaxY;                       // 手指上滑最高点的值，值越小位置越高
     private float mDragRate = 2.5f;                // 下拉时候的偏移计量因子，越小拉动距离越短
     private long mLoadMoreDelayMillis = 0;         // 延迟多少毫秒后再调用加载更多接口
 
@@ -345,6 +346,7 @@ public class ByRecyclerView extends RecyclerView {
         }
         if (mPullStartY == 0) {
             mPullStartY = ev.getY();
+            mPullMaxY = mPullStartY;
         }
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -352,6 +354,9 @@ public class ByRecyclerView extends RecyclerView {
                 mLastY = ev.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (ev.getY() < mPullMaxY) {
+                    mPullMaxY = ev.getY();
+                }
                 final float deltaY = ev.getRawY() - mLastY;
                 mLastY = ev.getRawY();
                 if (mRefreshEnabled && mRefreshListener != null && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
@@ -362,8 +367,13 @@ public class ByRecyclerView extends RecyclerView {
                 }
                 break;
             default:
-                // 按下的纵坐标 - 当前的纵坐标(为了更灵敏,原点向下惯性滑动时==0)
-                mIsScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10;
+                /*
+                 * 判断是否上拉了逻辑：
+                 *  开启了加载更多
+                 *  按下的纵坐标 - 最后的纵坐标>=-10(为了更灵敏,原点向下惯性滑动时==0)
+                 *  最高点的纵坐标 - 松开时的纵坐标<=150(为了防止上滑后然后再下拉)
+                 */
+                mIsScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10 && ev.getY() - mPullMaxY <= 150;
 
                 mPullStartY = 0;
                 mLastY = -1;
