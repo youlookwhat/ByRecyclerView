@@ -112,14 +112,18 @@ public class SwipeRefreshFragment extends BaseFragment<FragmentSwipeRefreshBindi
         bindingView.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        bindingView.swipeRefreshLayout.setRefreshing(false);
-                        page = 1;
-                        mAdapter.setNewData(DataUtil.getMore(activity, 10, page));
-                    }
-                }, 500);
+                if (!recyclerView.isLoadingMore()) {
+                    recyclerView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            bindingView.swipeRefreshLayout.setRefreshing(false);
+                            page = 1;
+                            mAdapter.setNewData(DataUtil.getMore(activity, 10, page));
+                        }
+                    }, 500);
+                } else {
+                    bindingView.swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
         mIsFirst = false;

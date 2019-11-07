@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
@@ -1061,6 +1060,20 @@ public class ByRecyclerView extends RecyclerView {
             return;
         }
         mDragRate = rate;
+    }
+
+    /**
+     * 是否在加载更多数据中
+     */
+    public boolean isLoadingMore() {
+        return mIsLoadingData;
+    }
+
+    /**
+     * 是否在下拉刷新加载数据中
+     */
+    public boolean isRefreshing() {
+        return mRefreshHeader != null && mRefreshHeader.getState() == BaseRefreshHeader.STATE_REFRESHING;
     }
 
     public interface OnItemClickListener {
