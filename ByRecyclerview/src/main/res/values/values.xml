@@ -7,4 +7,5 @@
     <dimen name="by_load_more_simple_margin">10dp</dimen>
     <dimen name="by_progress_width_height">18dp</dimen>
 
+    <color name="by_footer_text_loading">#333333</color>
 </resources>

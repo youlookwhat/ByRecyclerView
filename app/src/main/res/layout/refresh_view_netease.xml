@@ -43,7 +43,7 @@
             android:layout_toStartOf="@id/tv_refresh_tip"
             android:layout_toLeftOf="@id/tv_refresh_tip"
             android:contentDescription="@null"
-            android:src="@drawable/header_refresh_arrow" />
+            android:src="@drawable/by_refresh_arrow" />
 
     </RelativeLayout>
 
