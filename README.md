@@ -109,6 +109,9 @@ mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
 <!--## Demo-->
 
 
+## 混淆
+此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，如果你在项目的使用中混淆之后出现问题，请及时通过Isssues或其他方式联系我。
+
 ## 与BRVAH、XRecyclerView对比
 
 <!--ByRecyclerView 借鉴了XRecyclerView和BRVAH的很多地方。
