@@ -1063,10 +1063,17 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 是否正在加载更多
+     * 是否在加载更多数据中
      */
     public boolean isLoadingMore() {
         return mIsLoadingData;
+    }
+
+    /**
+     * 是否在下拉刷新加载数据中
+     */
+    public boolean isRefreshing() {
+        return mRefreshHeader != null && mRefreshHeader.getState() == BaseRefreshHeader.STATE_REFRESHING;
     }
 
     public interface OnItemClickListener {
