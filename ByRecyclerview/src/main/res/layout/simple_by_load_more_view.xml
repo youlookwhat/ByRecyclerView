@@ -16,14 +16,15 @@
             android:id="@+id/pb_progress"
             android:layout_width="@dimen/by_progress_width_height"
             android:layout_height="@dimen/by_progress_width_height"
-            android:indeterminateDrawable="@drawable/progress_rotate" />
+            android:indeterminateDrawable="@drawable/by_progress_rotate" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/by_load_more_simple_margin"
             android:layout_marginLeft="@dimen/by_load_more_simple_margin"
-            android:text="@string/by_footer_loading" />
+            android:text="@string/by_footer_loading"
+            android:textColor="@color/by_footer_text_loading" />
     </LinearLayout>
 
     <TextView
