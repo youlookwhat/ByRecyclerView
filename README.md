@@ -39,7 +39,7 @@ allprojects {
 ```
 dependencies {
 	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.7'         // 默认AndroidX版本
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.7-support" // support版本引入
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.8-support" // support版本引入
 }
 ```
 
@@ -78,7 +78,8 @@ mRecyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
     }
 });
     
-mRecyclerView.setRefreshing(true); // 手动启动刷新
+mRecyclerView.setRefreshing(true);  // 手动启动刷新
+mRecyclerView.setRefreshing(false); // 取消刷新重置参数
 ```
 
 ### 使用加载更多
@@ -110,7 +111,7 @@ mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
 
 
 ## 混淆
-此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，如果你在项目的使用中混淆之后出现问题，请及时通过Isssues或其他方式联系我。
+此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，如果你在项目混淆之后出现问题，请及时通过Issues或其他方式联系我。
 
 ## 与BRVAH、XRecyclerView对比
 
