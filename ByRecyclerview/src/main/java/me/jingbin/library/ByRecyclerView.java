@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
@@ -1110,6 +1111,10 @@ public class ByRecyclerView extends RecyclerView {
         if (mHeaderTypes != null) {
             mHeaderTypes.clear();
             mHeaderTypes = null;
+        }
+        if (mFooterLayout != null) {
+            mFooterLayout.removeAllViews();
+            mFooterLayout = null;
         }
         if (mEmptyLayout != null) {
             mEmptyLayout.removeAllViews();

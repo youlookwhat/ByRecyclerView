@@ -34,13 +34,13 @@ public class DataUtil {
         list.add(new MainItemBean("添加HeaderView，FooterView", HeaderFooterActivity.class));
         list.add(new MainItemBean("设置EmptyView", EmptyActivity.class));
 //        list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + ViewPager + RecyclerView 中使用"));
-        list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class));
+        list.add(new MainItemBean("在 AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class));
         list.add(new MainItemBean("BaseListAdapter的使用", ListViewActivity.class));
         list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class));
         list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class));
         list.add(new MainItemBean("自定义行列间距", DividerActivity.class));
-        list.add(new MainItemBean("基本使用"));
-        list.add(new MainItemBean("基本使用"));
+//        list.add(new MainItemBean("基本使用"));
+//        list.add(new MainItemBean("基本使用"));
         return list;
     }
 
