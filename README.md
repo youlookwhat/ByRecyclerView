@@ -14,13 +14,17 @@
  - 4.设置空布局 EmptyView
  - 5.添加item的点击/长按事件
  - 6.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
- - 7.优化过的BaseRecyclerAdapter
- - 8.优化过的BaseListAdapter
- - 9.结合DataBinding (RecyclerView / ListView)
+ - 7.优化过的BaseAdapter (RecyclerView / ListView)，减少大量代码
+ - 8.Adapter结合DataBinding (RecyclerView / ListView)
+ - 9.添加分隔线与间距（LinearLayout / GridLayout / StaggeredGridLayout）
  - 10.默认使用AndoridX，且支持Support
 
 
-## 接入文档
+## 文档
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/md_project_introduction.md)
+<!-- - [详情使用]()-->
+
+## 简单接入
 ### 引入
 
 1.先在 build.gradle 的 repositories 添加
