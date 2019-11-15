@@ -86,9 +86,9 @@ public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
         emptyBinding.tvText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapter.setNewData(DataUtil.get(EmptyActivity.this, 6));
-                binding.recyclerView.setLoadMoreEnabled(true);
                 binding.recyclerView.setEmptyViewEnabled(false);
+                binding.recyclerView.setLoadMoreEnabled(true);
+                mAdapter.setNewData(DataUtil.get(EmptyActivity.this, 6));
             }
         });
 

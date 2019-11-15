@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="app_name">ByRecyclerView</string>
+
     <string name="custom_header_hint_normal">Drop down refresh</string>
     <string name="custom_header_hint_release">Release refresh</string>
     <string name="custom_refreshing">Refreshing</string>
