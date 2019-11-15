@@ -4,25 +4,27 @@
 [![Apache License 2.0][3]][4]
 [![API][5]][6]
 
-自定义RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击事件；BaseRecyclerAdapter、BaseListAdapter
+自定义RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击/长按事件；
+优化过的Adapter，极简，减少大量代码，可结合DataBinding使用
 
 
 ## 功能特性
  - 1.支持 下拉刷新、加载更多
- - 2.可设置自定义 下拉刷新布局 和 加载更多布局
- - 3.添加/移除 HeaderView、FooterView
- - 4.设置空布局 EmptyView
- - 5.添加item的点击/长按事件
- - 6.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
- - 7.优化过的BaseAdapter (RecyclerView / ListView)，减少大量代码
- - 8.Adapter结合DataBinding (RecyclerView / ListView)
- - 9.添加分隔线与间距（LinearLayout / GridLayout / StaggeredGridLayout）
- - 10.默认使用AndoridX，且支持Support
+ - 2.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
+ - 3.加载更多机制：**手动上拉才执行加载更多**
+ - 4.可设置自定义 下拉刷新布局 和 加载更多布局
+ - 5.添加/移除 HeaderView、FooterView
+ - 6.设置空布局 EmptyView
+ - 7.添加item的点击/长按事件
+ - 8.优化过的BaseAdapter (RecyclerView / ListView)，减少大量代码
+ - 9.Adapter结合DataBinding使用 (RecyclerView / ListView)
+ - 10.可添加万能分隔线（LinearLayout / GridLayout / StaggeredGridLayout）
+ - 11.默认使用AndoridX，且支持Support
 
 
 ## 文档
  - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/md_project_introduction.md)
-<!-- - [详情使用]()-->
+ - [详情使用](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/md_use_detail.md)
 
 ## 简单接入
 ### 引入
