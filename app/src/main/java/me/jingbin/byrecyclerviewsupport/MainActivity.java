@@ -29,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         HeaderViewBinding bindingHeader = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_view, (ViewGroup) binding.recyclerView.getParent(), false);
-        HeaderViewBinding bindingHeader2 = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_view, (ViewGroup) binding.recyclerView.getParent(), false);
-        HeaderViewBinding bindingHeader3 = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_view, (ViewGroup) binding.recyclerView.getParent(), false);
-        HeaderViewBinding bindingHeader4 = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_view, (ViewGroup) binding.recyclerView.getParent(), false);
 
         final DataAdapter dataAdapter = new DataAdapter(getData());
         final ByRecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -39,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addHeaderView(bindingHeader.getRoot());
-        recyclerView.addHeaderView(bindingHeader2.getRoot());
-//        recyclerView.addHeaderView(bindingHeader3.getRoot());
-//        recyclerView.addHeaderView(bindingHeader4.getRoot());
         recyclerView.setAdapter(dataAdapter);
 
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
@@ -51,13 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.loadMoreComplete();
             }
         }, 1000);
-//        recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
-//            @Override
-//            public void onClick(View v, int position) {
-//                dataAdapter.setNewData(getData());
-//            }
-//        });
-
 
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
