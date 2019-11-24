@@ -44,8 +44,8 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.7'         // 默认AndroidX版本
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.8-support" // support版本引入
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.9'         // 默认AndroidX版本
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.9-support" // support版本引入
 }
 ```
 
