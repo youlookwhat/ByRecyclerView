@@ -23,8 +23,8 @@
 
 
 ## 文档
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/md_project_introduction.md)
- - [详情使用](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/md_use_detail.md)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)
+ - [详情使用见Wiki](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
 ## 简单接入
 ### 引入
@@ -49,7 +49,9 @@ dependencies {
 }
 ```
 
-### 加入布局
+### 开始使用
+1.加入布局
+
 ```xml
 <me.jingbin.library.ByRecyclerView
     android:id="@+id/recyclerView"
@@ -59,36 +61,26 @@ dependencies {
     tools:listitem="@layout/item_home" />
 ```
 
-### 使用BaseRecyclerAdapter
-```java
-public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
+2.使用BaseRecyclerAdapter
 
-    public OneTypeAdapter(List<DataItemBean> data) {
+```java
+public class OneTypeAdapter extends BaseRecyclerAdapter<String> {
+
+    public OneTypeAdapter(List<String> data) {
         super(R.layout.item_main, data);
     }
 
     @Override
-    protected void bindView(BaseByViewHolder<DataItemBean> holder, DataItemBean bean, int position) {
-        holder.setText(R.id.view_bottom, bean.getTitle());
+    protected void bindView(BaseByViewHolder<String> holder, String bean, int position) {
+        holder.setText(R.id.view_bottom, bean);
     }
-
 }
+
+mAdapter.setNewData(list);   // 设置第一页数据
 ```
 
-### 使用下拉刷新
-```java
-mRecyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
-    @Override
-    public void onRefresh() {
-        mAdapter.setNewData(list);  // 设置及刷新数据
-    }
-});
-    
-mRecyclerView.setRefreshing(true);  // 手动启动刷新
-mRecyclerView.setRefreshing(false); // 取消刷新重置参数
-```
+3.加载更多监听
 
-### 使用加载更多
 ```java
 mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
     @Override
@@ -100,20 +92,6 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
     }
 });
 ```
-
-
-### 添加item点击事件
-```java
-mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
-    @Override
-    public void onClick(View v, int position) {
-        DataItemBean itemData = mAdapter.getItemData(position);
-    }
-});
-```
-
-
-<!--## Demo-->
 
 
 ## 混淆
