@@ -61,6 +61,10 @@ dependencies {
 #### 2.使用BaseRecyclerAdapter
 
 ```java
+mAdapter = new OneTypeAdapter(list);
+mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+mRecyclerView.setAdapter(mAdapter);
+        
 public class OneTypeAdapter extends BaseRecyclerAdapter<String> {
 
     public OneTypeAdapter(List<String> data) {
