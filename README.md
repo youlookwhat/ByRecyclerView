@@ -4,14 +4,15 @@
 [![Apache License 2.0][3]][4]
 [![API][5]][6]
 
-自定义RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击/长按事件；
-优化过的Adapter，极简，减少大量代码，可结合DataBinding使用
+RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击/长按事件；
+
+优化过的Adapter：极简，减少大量代码，结合DataBinding使用
 
 
 ## 功能特性
  - 1.支持 下拉刷新、加载更多
  - 2.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
- - 3.加载更多机制：**手动上拉才执行加载更多**
+ - 3.加载更多机制：**不足一屏上拉加载，超过后触底加载(所见即所得)**
  - 4.可设置自定义 下拉刷新布局 和 加载更多布局
  - 5.添加/移除 HeaderView、FooterView
  - 6.设置空布局 EmptyView
@@ -23,12 +24,11 @@
 
 
 ## 文档
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)
- - [详情使用见Wiki](https://github.com/youlookwhat/ByRecyclerView/wiki)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [**详细使用见Wiki**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
 ## 简单接入
 ### 引入
-1.先在 build.gradle 的 repositories 添加
+#### 1.先在 build.gradle 的 repositories 添加
 ```
 allprojects {
 	repositories {
@@ -38,8 +38,7 @@ allprojects {
 }
 ```
 
-2.然后在dependencies添加
-
+#### 2.然后在dependencies添加
 ```
 dependencies {
 	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.9'         // AndroidX版本引入
@@ -92,20 +91,20 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
 
 ## 答疑
 ### QQ讨论群 - 831860628
-大家可以加群讨论使用本库时出现的问题，也可以直接提issues，我会第一时间帮助大家解决。如果此库帮助到了你，还请给个Star、Fork一下，我将更有动力持续迭代优化，非常感谢^_^
+大家可以加群讨论使用本库时出现的问题，也可以直接提[Issues](https://github.com/youlookwhat/ByRecyclerView/issues)，我会第一时间帮助大家解决。如果此库帮助到了你，还请给个Star、Fork一下，我将更有动力持续迭代优化，非常感谢^_^。
 
 ## 混淆
-此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，如果你在项目混淆之后出现问题，请及时通过Issues或其他方式联系我。
+此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，在公司项目中使用，如果你在项目混淆之后出现问题，请及时联系我。
 
 ## 与BRVAH、XRecyclerView对比
-ByRecyclerView 在XRecyclerView基础上进行了深度优化，使其可以设置自定义的下拉刷新布局 和 加载更多布局。优化了BRVAH的加载更多逻辑，使其首屏上拉才加载而不是不足一屏才加载。
+ByRecyclerView 在XRecyclerView基础上进行了深度优化，使其可以设置自定义的下拉刷新布局 和 加载更多布局等。优化了BRVAH的加载更多逻辑，使其首屏上拉才加载而不是不足一屏就加载。
 
 
 ||ByRecyclerView| BaseRecyclerViewAdapterHelper | XRecyclerView |
 |:--:|:--:|:--:|:--:|
 |下拉刷新布局|继承基类自定义布局|无|只能简单设置样式|
 |加载更多布局|继承基类自定义布局|继承基类设置简单布局|继承基类自定义类|
-|加载更多机制|不足满屏上拉加载，超过后触底加载|不足满屏即加载|触底加载|
+|加载更多机制|不足一屏上拉加载，超过后触底加载|不足一屏即加载|触底加载|
 |HeaderView|多ViewType区别|同一个item|多ViewType区别|
 |FooterView|同一个item|同一个item|不能添加|
 |EmptyView|可设置|可设置|不能设置|
