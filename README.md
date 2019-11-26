@@ -28,9 +28,7 @@
 
 ## 简单接入
 ### 引入
-
 1.先在 build.gradle 的 repositories 添加
-
 ```
 allprojects {
 	repositories {
@@ -44,13 +42,13 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.9'         // 默认AndroidX版本
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.9'         // AndroidX版本引入
 	implementation "com.github.youlookwhat:ByRecyclerView:1.0.9-support" // support版本引入
 }
 ```
 
 ### 开始使用
-1.加入布局
+#### 1.在XML布局中引用 ByRecyclerView
 
 ```xml
 <me.jingbin.library.ByRecyclerView
@@ -61,7 +59,7 @@ dependencies {
     tools:listitem="@layout/item_home" />
 ```
 
-2.使用BaseRecyclerAdapter
+#### 2.使用BaseRecyclerAdapter
 
 ```java
 public class OneTypeAdapter extends BaseRecyclerAdapter<String> {
@@ -78,8 +76,7 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<String> {
 
 mAdapter.setNewData(list);   // 设置第一页数据
 ```
-
-3.加载更多监听
+#### 3.加载更多监听
 
 ```java
 mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
@@ -93,16 +90,16 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
 });
 ```
 
+## 答疑
+### QQ讨论群 - 831860628
+大家可以加群讨论使用本库时出现的问题，也可以直接提issues，我会第一时间帮助大家解决。如果此库帮助到了你，还请给个Star、Fork一下，我将更有动力持续迭代优化，非常感谢^_^
 
 ## 混淆
 此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，如果你在项目混淆之后出现问题，请及时通过Issues或其他方式联系我。
 
 ## 与BRVAH、XRecyclerView对比
+ByRecyclerView 在XRecyclerView基础上进行了深度优化，使其可以设置自定义的下拉刷新布局 和 加载更多布局。优化了BRVAH的加载更多逻辑，使其首屏上拉才加载而不是不足一屏才加载。
 
-<!--ByRecyclerView 借鉴了XRecyclerView和BRVAH的很多地方。
-
- - 其中上拉刷新、加载更多、添加HeaderView参考于XRecyclerView，且在其基础上进行了深度优化，使其可以设置自定义的下拉刷新布局 和 加载更多布局。
- - FooterView、EmptyView、item点击/长按事件 参考于BRVAH，优化了BRVAH的加载更多逻辑，使其首屏上拉才加载而不是不足一屏才加载。-->
 
 ||ByRecyclerView| BaseRecyclerViewAdapterHelper | XRecyclerView |
 |:--:|:--:|:--:|:--:|
@@ -118,13 +115,6 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
 ## 感谢与参考
  - [XRecyclerView](https://github.com/XRecyclerView/XRecyclerView)
  - [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
-
-## About me
- - **QQ：** 770413277
- - **简书：**[Jinbeen](http://www.jianshu.com/users/e43c6e979831/latest_articles)
- - **Blog：**[http://jingbin.me](http://jingbin.me)
- - **Email：** jingbin127@163.com
- - **QQ交流群：**[![](https://img.shields.io/badge/%E7%BE%A4%E5%8F%B7-727379132-orange.svg?style=flat-square)](https://shang.qq.com/wpa/qunwpa?idkey=5685061359b0a767674cd831d8261d36b347bde04cc23746cb6570e09ee5c8aa)
 
 ## License
 ```
