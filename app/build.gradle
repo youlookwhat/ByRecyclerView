@@ -28,12 +28,6 @@ android {
         enabled = true
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
     // 其他 ByRecyclerview
     signingConfigs {
         release {
@@ -49,6 +43,30 @@ android {
             keyPassword "ByRecyclerView"
         }
     }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            // apk重命名
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "ByRecyclerView_${defaultConfig.versionName}_${variant.buildType.name}_${releaseTime()}.apk"
+                }
+            }
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+// 获取时间
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {
