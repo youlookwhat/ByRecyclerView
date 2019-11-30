@@ -26,6 +26,14 @@ RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterVie
 ## 文档
  - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [**详细使用见Wiki**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
+## Demo
+![ByRecyclerView.gif](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_demo.gif?raw=true)
+
+### 下载试用
+[下载Apk-Demo](https://fir.im/byrecyclerview)
+![ByRecyclerView](https://fir.im/byrecyclerview)
+
+
 ## 简单接入
 ### 引入
 #### 1.先在 build.gradle 的 repositories 添加
