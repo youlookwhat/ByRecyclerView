@@ -48,7 +48,7 @@
                     app:titleMarginStart="0dp"
                     app:titleTextAppearance="@style/ToolBar.Title"
                     app:titleTextColor="@color/colorWhite"
-                    tools:title=""/>
+                    tools:title="" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -60,12 +60,11 @@
                 android:background="@color/colorWhite"
                 android:visibility="visible"
                 app:tabIndicatorColor="@color/colorPrimary"
-                app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="2dp"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/colorPrimary"
                 app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-                app:tabTextColor="@color/colorLine" />
+                />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

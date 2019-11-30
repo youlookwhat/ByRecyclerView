@@ -8,9 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,7 +22,6 @@ import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
-import me.jingbin.byrecyclerview.view.MyDividerItemDecoration;
 import me.jingbin.library.ByRecyclerView;
 
 public class SwipeRefreshActivity extends AppCompatActivity {
@@ -108,9 +105,6 @@ public class SwipeRefreshActivity extends AppCompatActivity {
         recyclerView.addHeaderView(headerBinding.getRoot());
         recyclerView.addHeaderView(headerBinding2.getRoot());
         recyclerView.addFooterView(footerViewBinding.getRoot());
-        MyDividerItemDecoration itemDecoration = new MyDividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL, false, false, false);
-        itemDecoration.setDrawable(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.shape_line));
-        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setEmptyView(R.layout.layout_empty);
         recyclerView.setAdapter(homeAdapter);
 

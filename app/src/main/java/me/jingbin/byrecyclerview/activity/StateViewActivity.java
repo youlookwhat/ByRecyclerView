@@ -102,7 +102,7 @@ public class StateViewActivity extends BaseActivity<ActivitySimpleBinding> {
                     statue = 2;
                 }
             }
-        }, 1500);
+        }, 1000);
 
     }
 
@@ -124,7 +124,7 @@ public class StateViewActivity extends BaseActivity<ActivitySimpleBinding> {
                         mAdapter.setNewData(DataUtil.get(StateViewActivity.this, 6));
                     }
                 }
-            }, 1500);
+            }, 1000);
         }
     };
 
