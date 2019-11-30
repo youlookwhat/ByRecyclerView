@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="me.jingbin.byrecyclerview.MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/NoTitleTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +25,7 @@
         <activity android:name=".activity.SwipeRefreshActivity" />
         <activity android:name=".activity.SimpleActivity" />
         <activity android:name=".activity.RefreshActivity" />
-        <activity android:name=".activity.EmptyActivity" />
+        <activity android:name=".activity.StateViewActivity" />
         <activity android:name=".activity.HeaderFooterActivity" />
         <activity android:name=".activity.ListViewActivity" />
         <activity android:name=".activity.AppBarLayoutActivity" />

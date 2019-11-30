@@ -15,8 +15,10 @@ import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutEmptyBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutErrorBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutLoadingBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
@@ -25,16 +27,20 @@ import me.jingbin.library.decoration.SpacesItemDecoration;
 /**
  * @author jingbin
  */
-public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
+public class StateViewActivity extends BaseActivity<ActivitySimpleBinding> {
 
+    private int statue = 1;
     private int page = 1;
     private DataAdapter mAdapter;
+    private LayoutLoadingBinding loadingBinding;
+    private LayoutEmptyBinding emptyBinding;
+    private LayoutErrorBinding errorBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        setTitle("设置EmptyView");
+        setTitle("设置StateView");
 
         initAdapter();
     }
@@ -42,7 +48,9 @@ public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
     private void initAdapter() {
         final LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
         LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, (ViewGroup) binding.recyclerView.getParent(), false);
-        final LayoutEmptyBinding emptyBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_empty, (ViewGroup) binding.recyclerView.getParent(), false);
+        loadingBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_loading, (ViewGroup) binding.recyclerView.getParent(), false);
+        emptyBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_empty, (ViewGroup) binding.recyclerView.getParent(), false);
+        errorBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_error, (ViewGroup) binding.recyclerView.getParent(), false);
 
         mAdapter = new DataAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -63,7 +71,7 @@ public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
                             return;
                         }
                         page++;
-                        mAdapter.addData(DataUtil.getMore(EmptyActivity.this, 6, page));
+                        mAdapter.addData(DataUtil.getMore(StateViewActivity.this, 6, page));
                         binding.recyclerView.loadMoreComplete();
                     }
                 }, 500);
@@ -79,19 +87,45 @@ public class EmptyActivity extends BaseActivity<ActivitySimpleBinding> {
 
         binding.recyclerView.addFooterView(footerBinding.getRoot());
         binding.recyclerView.addHeaderView(headerBinding.getRoot());
-        binding.recyclerView.setEmptyView(emptyBinding.getRoot());
+        binding.recyclerView.setStateView(loadingBinding.getRoot());
         binding.recyclerView.setLoadMoreEnabled(false);
 
-        emptyBinding.tvText.setText("空布局\n(点我展示列表数据)");
-        emptyBinding.tvText.setOnClickListener(new View.OnClickListener() {
+        emptyBinding.getRoot().setOnClickListener(listener);
+        errorBinding.getRoot().setOnClickListener(listener);
+        loadingBinding.tvText.setOnClickListener(listener);
+
+        loadingBinding.tvText.postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-                binding.recyclerView.setEmptyViewEnabled(false);
-                binding.recyclerView.setLoadMoreEnabled(true);
-                mAdapter.setNewData(DataUtil.get(EmptyActivity.this, 6));
+            public void run() {
+                if (statue == 1) {
+                    binding.recyclerView.setStateView(errorBinding.getRoot());
+                    statue = 2;
+                }
             }
-        });
+        }, 1500);
 
     }
+
+    private View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            binding.recyclerView.setStateView(loadingBinding.getRoot());
+            binding.recyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (statue == 2) {
+                        binding.recyclerView.setStateView(emptyBinding.getRoot());
+                        statue = 3;
+                        return;
+                    }
+                    if (statue == 3) {
+                        binding.recyclerView.setStateViewEnabled(false);
+                        binding.recyclerView.setLoadMoreEnabled(true);
+                        mAdapter.setNewData(DataUtil.get(StateViewActivity.this, 6));
+                    }
+                }
+            }, 1500);
+        }
+    };
 
 }

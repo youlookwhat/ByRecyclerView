@@ -9,7 +9,7 @@ import me.jingbin.byrecyclerview.activity.AppBarLayoutActivity;
 import me.jingbin.byrecyclerview.activity.CustomLayoutActivity;
 import me.jingbin.byrecyclerview.activity.DataBindingActivity;
 import me.jingbin.byrecyclerview.activity.DividerActivity;
-import me.jingbin.byrecyclerview.activity.EmptyActivity;
+import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ListViewActivity;
 import me.jingbin.byrecyclerview.activity.RefreshActivity;
@@ -32,15 +32,12 @@ public class DataUtil {
         list.add(new MainItemBean("基本使用", SimpleActivity.class));
         list.add(new MainItemBean("使用 自带刷新 / SwipeRefreshLayout", RefreshActivity.class));
         list.add(new MainItemBean("添加HeaderView，FooterView", HeaderFooterActivity.class));
-        list.add(new MainItemBean("设置EmptyView", EmptyActivity.class));
-//        list.add(new MainItemBean("在CoordinatorLayout + AppBarLayout + ViewPager + RecyclerView 中使用"));
+        list.add(new MainItemBean("设置StateView(加载中布局/空布局/错误布局)", StateViewActivity.class));
         list.add(new MainItemBean("在 AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class));
         list.add(new MainItemBean("BaseListAdapter的使用", ListViewActivity.class));
         list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class));
         list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class));
         list.add(new MainItemBean("自定义行列间距", DividerActivity.class));
-//        list.add(new MainItemBean("基本使用"));
-//        list.add(new MainItemBean("基本使用"));
         return list;
     }
 
