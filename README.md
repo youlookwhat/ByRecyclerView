@@ -31,7 +31,8 @@ RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterVie
 
 ### 下载试用
 [下载Apk-Demo](https://fir.im/byrecyclerview)
-![ByRecyclerView](https://fir.im/byrecyclerview)
+
+<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>
 
 
 ## 简单接入
