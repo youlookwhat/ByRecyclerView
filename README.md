@@ -30,7 +30,7 @@ RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterVie
 ![ByRecyclerView.gif](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_demo.gif?raw=true)
 
 ### 下载试用
-|[下载Apk-Demo(AndroidX)](https://fir.im/byrecyclerview)|[下载CloudReader(Support)](https://fir.im/byrecyclerview)|
+|[AndroidX版本(Apk-Demo)](https://fir.im/byrecyclerview)|[Support版本(CloudReader)](https://fir.im/cloudreader)|
 |:--:|:--:|
 |<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>|<img width="200" height=“200” src="https://github.com/youlookwhat/CloudReader/blob/master/file/download.png?raw=true"></img>|
 
