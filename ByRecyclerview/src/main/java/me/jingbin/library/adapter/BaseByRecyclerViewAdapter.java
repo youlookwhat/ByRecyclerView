@@ -150,7 +150,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
 
 
     /**
-     * compatible getPullHeaderSize、getHeaderViewCount and getEmptyViewSize may change
+     * compatible getPullHeaderSize、getHeaderViewCount and getStateViewSize may change
      *
      * @param size Need compatible data size
      */
