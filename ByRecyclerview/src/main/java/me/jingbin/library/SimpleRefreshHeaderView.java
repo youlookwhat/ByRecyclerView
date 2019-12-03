@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.util.DebugUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,12 +69,15 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
     @Override
     public void onMove(float delta) {
         if (getVisibleHeight() > 0 || delta > 0) {
-            setVisibleHeight((int) delta + getVisibleHeight());
-            if (mState <= STATE_RELEASE_TO_REFRESH) {
-                if (getVisibleHeight() > mMeasuredHeight) {
-                    setState(STATE_RELEASE_TO_REFRESH);
-                } else {
-                    setState(STATE_NORMAL);
+            int visibleHeight = (int) delta + getVisibleHeight();
+            if (visibleHeight > 0) {
+                setVisibleHeight(visibleHeight);
+                if (mState <= STATE_RELEASE_TO_REFRESH) {
+                    if (getVisibleHeight() > mMeasuredHeight) {
+                        setState(STATE_RELEASE_TO_REFRESH);
+                    } else {
+                        setState(STATE_NORMAL);
+                    }
                 }
             }
         }
