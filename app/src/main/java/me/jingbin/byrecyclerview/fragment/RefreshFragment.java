@@ -76,7 +76,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private void initAdapter() {
         recyclerView = getView(R.id.recyclerView);
-        mAdapter = new DataAdapter(DataUtil.get(activity, 6));
+        mAdapter = new DataAdapter(DataUtil.get(activity, 30));
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -110,7 +110,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
             public void onClick(View v, int position) {
                 DataItemBean itemData = mAdapter.getItemData(position);
                 ToastUtil.showToast(itemData.getTitle());
-                recyclerView.setRefreshing(true);
+//                recyclerView.setRefreshing(true);
             }
         });
         recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
@@ -120,7 +120,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
                     @Override
                     public void run() {
                         page = 1;
-                        mAdapter.setNewData(DataUtil.getMore(activity, 6, page));
+                        mAdapter.setNewData(DataUtil.getMore(activity, 30, page));
                     }
                 }, 1000);
             }
