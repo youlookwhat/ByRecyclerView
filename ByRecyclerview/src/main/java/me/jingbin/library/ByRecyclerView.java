@@ -895,7 +895,7 @@ public class ByRecyclerView extends RecyclerView {
      * @param layoutResId layoutResId
      */
     private View getLayoutView(int layoutResId) {
-        return LayoutInflater.from(getContext()).inflate(layoutResId, this, false);
+        return LayoutInflater.from(getContext()).inflate(layoutResId, (ViewGroup) this.getParent(), false);
     }
 
     public int addFooterView(int layoutResId) {
