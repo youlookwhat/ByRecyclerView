@@ -6,12 +6,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
 import me.jingbin.byrecyclerviewsupport.databinding.ActivityMainBinding;
-import me.jingbin.byrecyclerviewsupport.databinding.HeaderViewBinding;
 import me.jingbin.library.ByRecyclerView;
 
 /**
@@ -26,14 +24,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        HeaderViewBinding bindingHeader = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_view, (ViewGroup) binding.recyclerView.getParent(), false);
-
         final DataAdapter dataAdapter = new DataAdapter();
         final ByRecyclerView recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addHeaderView(bindingHeader.getRoot());
+        recyclerView.addHeaderView(R.layout.header_view);
         recyclerView.setAdapter(dataAdapter);
 
         recyclerView.setStateView(R.layout.layout_state);
