@@ -82,6 +82,8 @@ public class HeaderFooterActivity extends BaseActivity<ActivitySimpleBinding> {
         });
 
         binding.recyclerView.addFooterView(footerBinding.getRoot());
+        binding.recyclerView.addHeaderView(R.layout.layout_header_view);
+        binding.recyclerView.addHeaderView(R.layout.layout_header_view);
         binding.recyclerView.addHeaderView(headerBinding.getRoot());
 
         headerBinding.tvText.setText("头布局1\n(点我添加Header2)");
