@@ -12,7 +12,7 @@ import java.util.List;
 import me.jingbin.library.ByRecyclerView;
 
 /**
- * 可用于基本的RecyclerViewAdapter，也可绑定ByRecyclerView后进行刷新
+ * Can be used for basic RecyclerViewAdapter or binding ByRecyclerView use.
  *
  * @author jingbin
  * link to https://github.com/youlookwhat/ByRecyclerView
@@ -56,7 +56,9 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     }
 
     /**
-     * 绑定ByRecyclerView使用，自己不必调用，已自动匹配
+     * adapter bind ByRecyclerView
+     * You don't have to call it, it's automatically matched.
+     * 自己不必调用，已自动匹配
      */
     public void setRecyclerView(ByRecyclerView recyclerView) {
         mRecyclerView = recyclerView;
@@ -162,4 +164,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
         }
     }
 
+    public ByRecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
 }

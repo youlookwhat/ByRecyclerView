@@ -3,6 +3,7 @@ package me.jingbin.library;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,25 +32,24 @@ import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 public class ByRecyclerView extends RecyclerView {
 
     /**
-     * 请设置多类型adapter的 ItemViewType 时，将其值设置为小于10000。
-     * 如果用户的adapter中的 ItemViewType 值与它们重复将会强制抛出异常。
+     * Set the ItemViewType of the multiType adapter to a value less than 10000!!
      */
     private static final int TYPE_REFRESH_HEADER = 10000;     // RefreshHeader type
     private static final int TYPE_LOAD_MORE_VIEW = 10001;     // LoadingMore type
     private static final int TYPE_STATE_VIEW = 10002;         // StateView type
     private static final int TYPE_FOOTER_VIEW = 10003;        // FooterView type
-    private static final int HEADER_INIT_INDEX = 10004;       // HeaderView 起始type
-    private List<Integer> mHeaderTypes = new ArrayList<>();   // HeaderView type集合
-    private ArrayList<View> mHeaderViews = new ArrayList<>(); // HeaderView view集合
-    private LinearLayout mFooterLayout;                       // FooterView 布局
-    private FrameLayout mStateLayout;                         // StateView  布局
+    private static final int HEADER_INIT_INDEX = 10004;       // HeaderView starting type
+    private List<Integer> mHeaderTypes = new ArrayList<>();   // HeaderView type list
+    private ArrayList<View> mHeaderViews = new ArrayList<>(); // HeaderView view list
+    private LinearLayout mFooterLayout;                       // FooterView layout
+    private FrameLayout mStateLayout;                         // StateView  layout
 
-    private boolean mRefreshEnabled = false;              // 设置是否 使用下拉刷新
-    private boolean mLoadMoreEnabled = false;             // 设置是否 使用加载更多
-    private boolean mHeaderViewEnabled = false;           // 设置是否 显示HeaderView布局
-    private boolean mFootViewEnabled = false;             // 设置是否 显示FooterView布局
-    private boolean mStateViewEnabled = true;             // 设置是否 显示StateView布局
-    private boolean misNoLoadMoreIfNotFullScreen = false; // 设置是否 数据不满一屏时进行加载
+    private boolean mRefreshEnabled = false;              // set  refresh
+    private boolean mLoadMoreEnabled = false;             // set  load more
+    private boolean mHeaderViewEnabled = false;           // set  show HeaderView
+    private boolean mFootViewEnabled = false;             // set  show FooterView
+    private boolean mStateViewEnabled = true;             // set  show StateView
+    private boolean misNoLoadMoreIfNotFullScreen = false; // set  not fullscreen no load more
 
     private boolean mIsLoadingData = false;        // 是否正在加载更多
     private boolean mIsNoMore = false;             // 是否没有更多数据了
@@ -60,10 +60,16 @@ public class ByRecyclerView extends RecyclerView {
     private float mDragRate = 2.5f;                // 下拉时候的偏移计量因子，越小拉动距离越短
     private long mLoadMoreDelayMillis = 0;         // 延迟多少毫秒后再调用加载更多接口
 
-    private OnRefreshListener mRefreshListener;    // 下拉刷新监听
-    private BaseRefreshHeader mRefreshHeader;      // 下拉刷新接口
-    private OnLoadMoreListener mLoadMoreListener;  // 加载更多监听
-    private BaseLoadMore mLoadMore;                // 加载更多接口
+    private OnRefreshListener mRefreshListener;    // listener drop-down refresh
+    private BaseRefreshHeader mRefreshHeader;      // interface RefreshView
+    private OnLoadMoreListener mLoadMoreListener;  // listener load more
+    private BaseLoadMore mLoadMore;                // interface LoadMoreView
+
+    private OnItemClickListener onItemClickListener;                      // item click
+    private OnItemLongClickListener onItemLongClickListener;              // item longClick
+    private OnItemChildClickListener mOnItemChildClickListener;           // child click
+    private OnItemChildLongClickListener mOnItemChildLongClickListener;   // child longClick
+
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
 
@@ -91,12 +97,19 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 添加HeaderView
+     * Add the header layout using the layout id.
+     *
+     * @param layoutResId
      */
     public void addHeaderView(int layoutResId) {
         addHeaderView(getLayoutView(layoutResId));
     }
 
+    /**
+     * Add a header layout before the content list or empty layout.
+     *
+     * @param headerView
+     */
     public void addHeaderView(View headerView) {
         mHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(headerView);
@@ -107,7 +120,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 根据header的ViewType判断是哪个header
+     * Determine which HeaderView it is based on itemType
      */
     private View getHeaderViewByType(int itemType) {
         if (!isHeaderType(itemType)) {
@@ -117,21 +130,21 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 判断一个type是否为HeaderType
+     * Determines whether a type is HeaderType
      */
     private boolean isHeaderType(int itemViewType) {
         return mHeaderViewEnabled && getHeaderViewCount() > 0 && mHeaderTypes.contains(itemViewType);
     }
 
     /**
-     * 判断是否是ByRecyclerView保留的itemViewType
+     * Determine if it is the itemViewType reserved by ByRecyclerView
      */
     private boolean isReservedItemViewType(int itemViewType) {
         return itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_LOAD_MORE_VIEW || itemViewType == TYPE_STATE_VIEW || mHeaderTypes.contains(itemViewType);
     }
 
     /**
-     * 设置 自定义加载更多View
+     * Set custom to LoadingMoreView
      */
     public void setLoadingMoreView(BaseLoadMore loadingMore) {
         mLoadMore = loadingMore;
@@ -139,14 +152,14 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 设置 自定义下拉刷新View
+     * Set custom to RefreshHeaderView
      */
     public void setRefreshHeaderView(BaseRefreshHeader refreshHeader) {
         mRefreshHeader = refreshHeader;
     }
 
     /**
-     * 加载更多完成
+     * Load more complete. You can also continue the pull up.
      */
     public void loadMoreComplete() {
         if (getLoadMoreSize() == 0) {
@@ -158,7 +171,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 没有更多内容
+     * The end. Cannot be loaded with pull up.
      */
     public void loadMoreEnd() {
         mIsLoadingData = false;
@@ -167,7 +180,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 加载更多失败
+     * Load more failures. Continue to pull up or click load.
      */
     public void loadMoreFail() {
         if (getLoadMoreSize() == 0 || mLoadMore.getFailureView() == null || mLoadMoreListener == null) {
@@ -195,9 +208,9 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 设置刷新状态
+     * Set refresh status. false: Reset to load more states
      *
-     * @param refreshing true 启动刷新 false 刷新完成
+     * @param refreshing true: Start fresh； false: fresh complete
      */
     public void setRefreshing(boolean refreshing) {
         if (refreshing) {
@@ -224,7 +237,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 设置是否开启下拉刷新
+     * Set whether to enable drop-down refresh.
      */
     public void setRefreshEnabled(boolean enabled) {
         mRefreshEnabled = enabled;
@@ -234,7 +247,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 设置是否开启加载更多
+     * Set whether to start loading more.
      */
     public void setLoadMoreEnabled(boolean enabled) {
         mLoadMoreEnabled = enabled;
@@ -244,9 +257,9 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 给加载更多布局一个底部的高度，用于部分页面需要透明显示
+     * Give load more layout a bottom height for parts of the page that need to be displayed transparently.
      *
-     * @param heightDp 单位dp
+     * @param heightDp Unit of dp
      */
     public void setLoadingMoreBottomHeight(float heightDp) {
         mLoadMore.setLoadingMoreBottomHeight(heightDp);
@@ -265,7 +278,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 避免用户自己调用getAdapter() 引起的ClassCastException
+     * Avoid the ClassCastException caused by the user's own call to getAdapter().
      */
     @Override
     public Adapter getAdapter() {
@@ -350,7 +363,7 @@ public class ByRecyclerView extends RecyclerView {
         }
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                // 如果item设置点击事件，则这里获取不到值  一直为0
+                // If the item sets the click event, it doesn't get a value here and it stays at 0
                 mLastY = ev.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -457,21 +470,21 @@ public class ByRecyclerView extends RecyclerView {
         }
 
         /**
-         * 是否是 StateView 布局
+         * Is it a StateView layout
          */
         boolean isStateView(int position) {
             return mStateViewEnabled && mStateLayout != null && position == getHeaderViewCount() + getPullHeaderSize();
         }
 
         /**
-         * 是否是 HeaderView 布局
+         * Is it a HeaderView layout
          */
         boolean isHeaderView(int position) {
             return mHeaderViewEnabled && position >= getPullHeaderSize() && position < getHeaderViewCount() + getPullHeaderSize();
         }
 
         /**
-         * 是否是 FooterView 布局
+         * Is it a FootView layout
          */
         boolean isFootView(int position) {
             if (mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0) {
@@ -482,7 +495,7 @@ public class ByRecyclerView extends RecyclerView {
         }
 
         /**
-         * 是否是 上拉加载 footer 布局
+         * Is it a LoadMoreView layout
          */
         boolean isLoadMore(int position) {
             if (mLoadMoreEnabled) {
@@ -493,7 +506,7 @@ public class ByRecyclerView extends RecyclerView {
         }
 
         /**
-         * 是否是 头部刷新布局
+         * Is it a RefreshHeaderView layout
          */
         boolean isRefreshHeader(int position) {
             if (mRefreshEnabled && mRefreshListener != null) {
@@ -546,7 +559,7 @@ public class ByRecyclerView extends RecyclerView {
                 return;
             }
             if (adapter != null) {
-                // 得到去掉头部type的position
+                // Get the position with the type of the header removed
                 int adjPosition = position - getCustomTopItemViewCount();
                 int adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
@@ -568,9 +581,6 @@ public class ByRecyclerView extends RecyclerView {
             }
         }
 
-        /**
-         * 获取 item 类型
-         */
         @Override
         public int getItemViewType(int position) {
             if (isRefreshHeader(position)) {
@@ -691,28 +701,28 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 获取 FooterView 的个数
+     * Get the number of FooterView
      */
     int getFooterViewSize() {
         return mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0 ? 1 : 0;
     }
 
     /**
-     * 获取空布局的个数
+     * Get the number of StateView
      */
     public int getStateViewSize() {
         return mStateViewEnabled && mStateLayout != null && mStateLayout.getChildCount() != 0 ? 1 : 0;
     }
 
     /**
-     * 获取 HeaderView的个数
+     * Get the number of HeaderView
      */
     public int getHeaderViewCount() {
         return mHeaderViewEnabled ? mHeaderViews.size() : 0;
     }
 
     /**
-     * 给itemView设置点击事件和长按事件
+     * Set the click event and the long press event to the itemView
      */
     private void bindViewClickListener(final ViewHolder viewHolder) {
         if (viewHolder == null) {
@@ -738,7 +748,8 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 自定义类型头部布局的个数 = RefreshView + HeaderView  + StateView
+     * Number of custom type header layouts = RefreshView + HeaderView + StateView
+     * 自定义类型头部布局的个数：用于取到正确的position
      */
     public int getCustomTopItemViewCount() {
         return getHeaderViewCount() + getPullHeaderSize() + getStateViewSize();
@@ -755,7 +766,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * @param delayMillis 延迟delayMillis毫秒后再调用加载更多接口
+     * @param delayMillis How many milliseconds is the delay before the call OnLoadMoreListener
      */
     public void setOnLoadMoreListener(OnLoadMoreListener listener, long delayMillis) {
         setLoadMoreEnabled(true);
@@ -777,7 +788,7 @@ public class ByRecyclerView extends RecyclerView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        // 解决和CollapsingToolbarLayout冲突的问题
+        // solve CollapsingToolbarLayout conflict
         AppBarLayout appBarLayout = null;
         ViewParent p = getParent();
         while (p != null) {
@@ -808,8 +819,8 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 区别是否需要算上刷新布局
-     * 如果使用控件自带的下拉刷新，则计算position时需要算上
+     * Distinguish whether the refresh layout needs to be counted
+     * If you use the drop-down refresh that comes with the control, you need to count position
      */
     public int getPullHeaderSize() {
         if (mRefreshEnabled && mRefreshListener != null) {
@@ -820,7 +831,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 如果使用上拉刷新，则计算position时需要算上
+     * If a pull-up refresh is used, position needs to be counted
      */
     private int getLoadMoreSize() {
         if (mLoadMoreEnabled) {
@@ -839,7 +850,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 设置是否显示 EmptyView
+     * Sets whether the EmptyView is displayed
      */
     public void setEmptyViewEnabled(boolean stateViewEnabled) {
         setStateViewEnabled(stateViewEnabled);
@@ -853,15 +864,16 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 设置是否显示 StateView
+     * Sets whether the StateView is displayed
      */
     public void setStateViewEnabled(boolean stateViewEnabled) {
         this.mStateViewEnabled = stateViewEnabled;
     }
 
     /**
-     * 设置状态布局，可包括：空布局、加载中布局、错误布局等
-     * 位置依次是 刷新头布局 -> 头布局 -> 状态布局 -> list内容布局 -> 尾布局 -> 加载更多布局
+     * Set the status layout, which can include: EmptyView, LoadingView, ErrorView, etc
+     * The positions are:
+     * RefreshView -> HeaderViews -> StateView -> [list ContentView] -> FooterView -> LoadMoreView
      */
     public void setStateView(View stateView) {
         boolean insert = false;
@@ -890,7 +902,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 通过 layoutResId 获取Vew
+     * Obtain View through layoutResId
      *
      * @param layoutResId layoutResId
      */
@@ -947,21 +959,21 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 不满一屏时，根据上滑的距离判断是否加载
+     * Less than a screen, according to the distance up to determine whether to load
      */
     private boolean isScrollLoad() {
         return isFullScreen() || mIsScrollUp;
     }
 
     /**
-     * 设置不满一屏不加载
+     * Set less than one screen not to load
      */
     public void setNotFullScreenNoLoadMore() {
         misNoLoadMoreIfNotFullScreen = true;
     }
 
     /**
-     * 不满一屏是否加载，默认加载
+     * If a screen is not loaded. default load
      */
     private boolean isNoFullScreenLoad() {
         if (misNoLoadMoreIfNotFullScreen) {
@@ -972,7 +984,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 是否是满屏
+     * Is it full screen
      */
     private boolean isFullScreen() {
         LayoutManager layoutManager = getLayoutManager();
@@ -1000,8 +1012,10 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 移除单个HeaderView
-     * tip: 移除后不能再次添加HeaderView,可能type重复导致添加失败
+     * remove HeaderView
+     * tip:
+     * You cannot add the HeaderView again after removing it,
+     * because the type may repeat, causing the add to fail
      */
     public void removeHeaderView(@NonNull View header) {
         if (getHeaderViewCount() == 0) {
@@ -1024,7 +1038,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 移除所有HeaderView
+     * remove all HeaderView
      */
     public void removeAllHeaderView() {
         if (getHeaderViewCount() == 0) {
@@ -1039,8 +1053,11 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 移除FooterView
-     * 因为都是在一个item中处理布局，所以不必刷新布局，除非删除掉全部的FooterView
+     * remove FooterView
+     * Because you're dealing with the layout in one item,
+     * you don't have to refresh the layout unless you delete all the FooterView
+     *
+     * @param footer
      */
     public void removeFooterView(View footer) {
         if (mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0) {
@@ -1071,8 +1088,11 @@ public class ByRecyclerView extends RecyclerView {
 
     /**
      * 设置下拉时候的偏移计量因子。y = deltaY/mDragRate，默认值 3
+     * The larger, the longer the user has to scroll down to trigger the pull-down refresh.
+     * The smaller the opposite, the shorter the distance
      *
-     * @param rate 越大，意味着，用户要下拉滑动更久来触发下拉刷新。相反越小，就越短距离
+     * @param rate The larger, the longer the user has to scroll down to trigger the pull-down refresh. The smaller the opposite, the shorter the distance
+     *             越大，意味着，用户要下拉滑动更久来触发下拉刷新。相反越小，就越短距离
      */
     public void setDragRate(float rate) {
         if (rate <= 0.5) {
@@ -1082,14 +1102,14 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
-     * 是否在加载更多数据中
+     * Whether load more ongoing
      */
     public boolean isLoadingMore() {
         return mIsLoadingData;
     }
 
     /**
-     * 是否在下拉刷新加载数据中
+     * Whether refreshing
      */
     public boolean isRefreshing() {
         return mRefreshHeader != null && mRefreshHeader.getState() == BaseRefreshHeader.STATE_REFRESHING;
@@ -1105,8 +1125,37 @@ public class ByRecyclerView extends RecyclerView {
         boolean onLongClick(View v, int position);
     }
 
-    private OnItemClickListener onItemClickListener;
-    private OnItemLongClickListener onItemLongClickListener;
+    public interface OnItemChildClickListener {
+
+        void onItemChildClick(View view, int position);
+    }
+
+    public interface OnItemChildLongClickListener {
+
+        boolean onItemChildLongClick(View view, int position);
+    }
+
+    /**
+     * holder.setByRecyclerView(getRecyclerView()).addOnClickListener(R.id.tv_text);
+     *
+     * @return The callback to be invoked with an itemchild in this RecyclerView has
+     * been clicked, or null id no callback has been set.
+     */
+    @Nullable
+    public final OnItemChildClickListener getOnItemChildClickListener() {
+        return mOnItemChildClickListener;
+    }
+
+    /**
+     * holder.setByRecyclerView(getRecyclerView()).addOnLongClickListener(R.id.tv_text);
+     *
+     * @return The callback to be invoked with an itemChild in this RecyclerView has
+     * been long clicked, or null id no callback has been set.
+     */
+    @Nullable
+    public final OnItemChildLongClickListener getOnItemChildLongClickListener() {
+        return mOnItemChildLongClickListener;
+    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
@@ -1114,6 +1163,14 @@ public class ByRecyclerView extends RecyclerView {
 
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         this.onItemLongClickListener = listener;
+    }
+
+    public void setOnItemChildClickListener(OnItemChildClickListener listener) {
+        mOnItemChildClickListener = listener;
+    }
+
+    public void setOnItemChildLongClickListener(OnItemChildLongClickListener listener) {
+        mOnItemChildLongClickListener = listener;
     }
 
     /**

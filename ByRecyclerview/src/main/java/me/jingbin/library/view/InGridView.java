@@ -1,4 +1,4 @@
-package me.jingbin.library.listview;
+package me.jingbin.library.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

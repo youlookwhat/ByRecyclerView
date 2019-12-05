@@ -24,13 +24,16 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import me.jingbin.library.ByRecyclerView;
 
 /**
  * @author jingbin
+ * link to https://github.com/youlookwhat/ByRecyclerView
  */
 public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
 
     private final SparseArray<View> views;
+    private ByRecyclerView byRecyclerView;
 
     public BaseByViewHolder(ViewGroup viewGroup, int layoutId) {
         this(LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false));
@@ -341,14 +344,15 @@ public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
         }
         return this;
     }
+
     /**
      * Set the enabled state of this view.
      *
-     * @param viewId  The view id.
+     * @param viewId The view id.
      * @param enable The checked status;
      * @return The BaseByViewHolder for chaining.
      */
-    public BaseByViewHolder setEnabled(@IdRes int viewId,boolean enable) {
+    public BaseByViewHolder setEnabled(@IdRes int viewId, boolean enable) {
         View view = getView(viewId);
         view.setEnabled(enable);
         return this;
@@ -364,6 +368,86 @@ public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
     public BaseByViewHolder setOnCheckedChangeListener(@IdRes int viewId, CompoundButton.OnCheckedChangeListener listener) {
         CompoundButton view = getView(viewId);
         view.setOnCheckedChangeListener(listener);
+        return this;
+    }
+
+    /**
+     * Sets the on click listener of the view.
+     *
+     * @param viewId   The view id.
+     * @param listener The on click listener;
+     * @return The BaseViewHolder for chaining.
+     */
+    @Deprecated
+    public BaseByViewHolder setOnClickListener(@IdRes int viewId, View.OnClickListener listener) {
+        View view = getView(viewId);
+        view.setOnClickListener(listener);
+        return this;
+    }
+
+    /**
+     * add childView id, need setByRecyclerView()
+     *
+     * @param viewId add the child view id   can support childview click
+     * @return if you use adapter bind listener
+     * @link {(adapter.setOnItemChildClickListener(listener))}
+     */
+    @SuppressWarnings("unchecked")
+    public BaseByViewHolder addOnClickListener(@IdRes final int viewId) {
+        final View view = getView(viewId);
+        if (view != null) {
+            if (!view.isClickable()) {
+                view.setClickable(true);
+            }
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (byRecyclerView.getOnItemChildClickListener() != null) {
+                        byRecyclerView.getOnItemChildClickListener().onItemChildClick(v, getClickPosition());
+                    }
+                }
+            });
+        }
+        return this;
+    }
+
+    /**
+     * add long click view id
+     *
+     * @param viewId
+     * @return if you use adapter bind listener
+     * @link {(adapter.setOnItemChildLongClickListener(listener))}
+     */
+    @SuppressWarnings("unchecked")
+    public BaseByViewHolder addOnLongClickListener(@IdRes final int viewId) {
+        final View view = getView(viewId);
+        if (view != null) {
+            if (!view.isLongClickable()) {
+                view.setLongClickable(true);
+            }
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return byRecyclerView.getOnItemChildLongClickListener() != null &&
+                            byRecyclerView.getOnItemChildLongClickListener().onItemChildLongClick(v, getClickPosition());
+                }
+            });
+        }
+        return this;
+    }
+
+    private int getClickPosition() {
+        if (getLayoutPosition() >= byRecyclerView.getCustomTopItemViewCount()) {
+            return getLayoutPosition() - byRecyclerView.getCustomTopItemViewCount();
+        }
+        return 0;
+    }
+
+    /**
+     * need bind. in use addOnClickListener or addOnLongClickListener
+     */
+    public BaseByViewHolder setByRecyclerView(ByRecyclerView byRecyclerView) {
+        this.byRecyclerView = byRecyclerView;
         return this;
     }
 }
