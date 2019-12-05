@@ -33,6 +33,7 @@ public class ByRecyclerView extends RecyclerView {
 
     /**
      * Set the ItemViewType of the multiType adapter to a value less than 10000!!
+     * 多类型适配器的ItemViewType需要设置为小于10000的值!!
      */
     private static final int TYPE_REFRESH_HEADER = 10000;     // RefreshHeader type
     private static final int TYPE_LOAD_MORE_VIEW = 10001;     // LoadingMore type
@@ -44,12 +45,12 @@ public class ByRecyclerView extends RecyclerView {
     private LinearLayout mFooterLayout;                       // FooterView layout
     private FrameLayout mStateLayout;                         // StateView  layout
 
-    private boolean mRefreshEnabled = false;              // set  refresh
-    private boolean mLoadMoreEnabled = false;             // set  load more
-    private boolean mHeaderViewEnabled = false;           // set  show HeaderView
-    private boolean mFootViewEnabled = false;             // set  show FooterView
-    private boolean mStateViewEnabled = true;             // set  show StateView
-    private boolean misNoLoadMoreIfNotFullScreen = false; // set  not fullscreen no load more
+    private boolean mRefreshEnabled = false;              // 是否 启动下拉刷新
+    private boolean mLoadMoreEnabled = false;             // 是否 启动加载更多
+    private boolean mHeaderViewEnabled = false;           // 是否 显示 HeaderView
+    private boolean mFootViewEnabled = false;             // 是否 显示 FooterView
+    private boolean mStateViewEnabled = true;             // 是否 显示 StateView
+    private boolean misNoLoadMoreIfNotFullScreen = false; // 是否 不满一屏不加载更多
 
     private boolean mIsLoadingData = false;        // 是否正在加载更多
     private boolean mIsNoMore = false;             // 是否没有更多数据了
@@ -60,15 +61,15 @@ public class ByRecyclerView extends RecyclerView {
     private float mDragRate = 2.5f;                // 下拉时候的偏移计量因子，越小拉动距离越短
     private long mLoadMoreDelayMillis = 0;         // 延迟多少毫秒后再调用加载更多接口
 
-    private OnRefreshListener mRefreshListener;    // listener drop-down refresh
-    private BaseRefreshHeader mRefreshHeader;      // interface RefreshView
-    private OnLoadMoreListener mLoadMoreListener;  // listener load more
-    private BaseLoadMore mLoadMore;                // interface LoadMoreView
+    private OnRefreshListener mRefreshListener;    // 下拉刷新监听
+    private BaseRefreshHeader mRefreshHeader;      // 自定义下拉刷新布局需要实现的接口
+    private OnLoadMoreListener mLoadMoreListener;  // 加载更多监听
+    private BaseLoadMore mLoadMore;                // 自定义加载更多布局需要实现的接口
 
-    private OnItemClickListener onItemClickListener;                      // item click
-    private OnItemLongClickListener onItemLongClickListener;              // item longClick
-    private OnItemChildClickListener mOnItemChildClickListener;           // child click
-    private OnItemChildLongClickListener mOnItemChildLongClickListener;   // child longClick
+    private OnItemClickListener onItemClickListener;                      // item  点击事件
+    private OnItemLongClickListener onItemLongClickListener;              // item  长按事件
+    private OnItemChildClickListener mOnItemChildClickListener;           // 子View 点击事件
+    private OnItemChildLongClickListener mOnItemChildLongClickListener;   // 子View 长按事件
 
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
