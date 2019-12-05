@@ -23,9 +23,9 @@ public abstract class BaseBindingHolder<T, B extends ViewDataBinding> extends Ba
 
     @Override
     protected void onBaseBindView(BaseByViewHolder<T> holder, T bean, int position) {
-        onBindingView(bean, binding, position);
+        onBindingView(this, bean, position);
         binding.executePendingBindings();
     }
 
-    protected abstract void onBindingView(T bean, B binding, int position);
+    protected abstract void onBindingView(BaseBindingHolder holder, T bean, int position);
 }
