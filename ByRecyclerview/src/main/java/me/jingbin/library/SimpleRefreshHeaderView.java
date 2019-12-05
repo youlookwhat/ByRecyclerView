@@ -4,8 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.util.DebugUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +17,7 @@ import android.widget.TextView;
 
 /**
  * @author jingbin
+ * link to https://github.com/youlookwhat/ByRecyclerView
  */
 public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefreshHeader {
 

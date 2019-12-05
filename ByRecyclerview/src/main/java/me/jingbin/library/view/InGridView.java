@@ -1,11 +1,11 @@
-package me.jingbin.library.listview;
+package me.jingbin.library.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * item布局 不可使用ConstraintLayout，会有适配问题
+ * 嵌套使用：item布局不可使用ConstraintLayout，会有适配问题
  *
  * @author jingbin
  */

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 /**
  * @author jingbin
+ * link to https://github.com/youlookwhat/ByRecyclerView
  */
 public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
 
