@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
+import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
 import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
 import me.jingbin.byrecyclerview.binding.BaseBindingAdapter;
 
@@ -21,8 +22,9 @@ public class DataAdapter extends BaseBindingAdapter<DataItemBean, ItemHomeBindin
     }
 
     @Override
-    protected void bindView(DataItemBean bean, ItemHomeBinding binding, int position) {
+    protected void bindView(BaseBindingHolder holder, ItemHomeBinding binding, DataItemBean bean, int position) {
         binding.tvText.setText(bean.getTitle() + ": " + position);
+        holder.setByRecyclerView(getRecyclerView()).addOnClickListener(R.id.tv_text);
     }
 
 }

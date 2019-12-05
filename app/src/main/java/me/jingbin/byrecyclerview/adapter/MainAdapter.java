@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.bean.MainItemBean;
+import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
 import me.jingbin.byrecyclerview.databinding.ItemMainBinding;
 import me.jingbin.byrecyclerview.binding.BaseBindingAdapter;
 
@@ -17,7 +18,7 @@ public class MainAdapter extends BaseBindingAdapter<MainItemBean, ItemMainBindin
     }
 
     @Override
-    protected void bindView(MainItemBean bean, ItemMainBinding binding, int position) {
+    protected void bindView(BaseBindingHolder holder, ItemMainBinding binding, MainItemBean bean, int position) {
         binding.tvSort.setText(position + 1 + "、 ");
         binding.tvText.setText(bean.getTitle());
     }

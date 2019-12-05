@@ -8,6 +8,7 @@ import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.databinding.LayoutEmptyBinding;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
+import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseByViewHolder;
 
@@ -28,14 +29,13 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         }
     }
 
-    private class View2Holder extends BaseBindingHolder<DataItemBean, LayoutEmptyBinding> {
+    private class View2Holder extends BaseBindingHolder<DataItemBean, LayoutFooterViewBinding> {
         View2Holder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
         @Override
-        protected void onBindingView(DataItemBean bean, LayoutEmptyBinding binding, int position) {
-
+        protected void onBindingView(BaseBindingHolder holder, DataItemBean bean, int position) {
         }
     }
 
@@ -45,8 +45,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         }
 
         @Override
-        protected void onBindingView(DataItemBean bean, LayoutEmptyBinding binding, int position) {
-
+        protected void onBindingView(BaseBindingHolder holder, DataItemBean bean, int position) {
         }
     }
 }
