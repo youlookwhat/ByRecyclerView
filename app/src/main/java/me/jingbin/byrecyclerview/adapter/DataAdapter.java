@@ -24,7 +24,7 @@ public class DataAdapter extends BaseBindingAdapter<DataItemBean, ItemHomeBindin
     @Override
     protected void bindView(BaseBindingHolder holder, ItemHomeBinding binding, DataItemBean bean, int position) {
         binding.tvText.setText(bean.getTitle() + ": " + position);
-        holder.setByRecyclerView(getRecyclerView()).addOnClickListener(R.id.tv_text);
+//        holder.setByRecyclerView(getRecyclerView()).addOnClickListener(R.id.tv_text);
     }
 
 }
