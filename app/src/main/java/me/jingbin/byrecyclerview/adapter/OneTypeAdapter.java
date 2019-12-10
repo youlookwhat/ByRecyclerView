@@ -12,7 +12,6 @@ import me.jingbin.library.adapter.BaseRecyclerAdapter;
  */
 public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
 
-
     public OneTypeAdapter(List<DataItemBean> data) {
         super(R.layout.item_main, data);
     }

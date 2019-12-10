@@ -23,14 +23,14 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
     @Override
     public BaseByViewHolder<DataItemBean> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (11 == viewType) {
-            return new View2Holder(parent, R.layout.layout_footer_view);
+            return new ViewHolder2(parent, R.layout.layout_footer_view);
         } else {
             return new ViewHolder(parent, R.layout.layout_empty);
         }
     }
 
-    private class View2Holder extends BaseBindingHolder<DataItemBean, LayoutFooterViewBinding> {
-        View2Holder(ViewGroup viewGroup, int layoutId) {
+    private class ViewHolder2 extends BaseBindingHolder<DataItemBean, LayoutFooterViewBinding> {
+        ViewHolder2(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
