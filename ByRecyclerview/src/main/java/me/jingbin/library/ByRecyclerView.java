@@ -224,12 +224,14 @@ public class ByRecyclerView extends RecyclerView {
                 layoutManager.scrollToPosition(0);
             }
             mRefreshHeader.setState(BaseRefreshHeader.STATE_REFRESHING);
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mRefreshListener.onRefresh();
-                }
-            }, 300);
+            if (mRefreshListener != null) {
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRefreshListener.onRefresh();
+                    }
+                }, 300);
+            }
         } else {
             if (getPullHeaderSize() > 0) {
                 mRefreshHeader.refreshComplete();
@@ -393,11 +395,12 @@ public class ByRecyclerView extends RecyclerView {
                 mPullStartY = 0;
                 mLastY = -1;
                 if (mRefreshEnabled
-                        && mRefreshListener != null
                         && isOnTop()
                         && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (mRefreshHeader.releaseAction()) {
-                        mRefreshListener.onRefresh();
+                        if (mRefreshListener != null) {
+                            mRefreshListener.onRefresh();
+                        }
                     }
                 }
                 break;
@@ -511,7 +514,7 @@ public class ByRecyclerView extends RecyclerView {
          * Is it a RefreshHeaderView layout
          */
         boolean isRefreshHeader(int position) {
-            if (mRefreshEnabled && mRefreshListener != null) {
+            if (mRefreshEnabled) {
                 return position == 0;
             } else {
                 return false;
@@ -825,7 +828,7 @@ public class ByRecyclerView extends RecyclerView {
      * If you use the drop-down refresh that comes with the control, you need to count position
      */
     public int getPullHeaderSize() {
-        if (mRefreshEnabled && mRefreshListener != null) {
+        if (mRefreshEnabled) {
             return 1;
         } else {
             return 0;
