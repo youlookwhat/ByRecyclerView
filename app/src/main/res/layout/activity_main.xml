@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/swipeRefreshLayout"
@@ -16,5 +16,5 @@
             tools:itemCount="5"
             tools:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/item_data" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </FrameLayout>
 </layout>

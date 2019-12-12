@@ -2,7 +2,6 @@ package me.jingbin.byrecyclerviewsupport;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,11 +48,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 1000);
 
-        binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                dataAdapter.setNewData(getData());
-                binding.swipeRefreshLayout.setRefreshing(false);
+                binding.recyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dataAdapter.setNewData(getData());
+                    }
+                }, 1000);
             }
         });
     }
