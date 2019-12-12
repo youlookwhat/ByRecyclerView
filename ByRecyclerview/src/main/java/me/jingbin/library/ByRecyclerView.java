@@ -377,6 +377,8 @@ public class ByRecyclerView extends RecyclerView {
                 if (mRefreshEnabled && mRefreshListener != null && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     mRefreshHeader.onMove(deltaY / mDragRate);
                     if (mRefreshHeader.getVisibleHeight() > 0 && mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING) {
+                        ev.setAction(MotionEvent.ACTION_DOWN);
+                        super.onTouchEvent(ev);
                         return false;
                     }
                 }
