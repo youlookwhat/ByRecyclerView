@@ -22,7 +22,7 @@ public class GridAdapter extends BaseBindingAdapter<DataItemBean, ItemGridBindin
     }
 
     @Override
-    protected void bindView(BaseBindingHolder holder, ItemGridBinding binding, DataItemBean bean, int position) {
+    protected void bindView(BaseBindingHolder holder, DataItemBean bean, ItemGridBinding binding, int position) {
 
     }
 }

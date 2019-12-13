@@ -18,7 +18,7 @@ public class MainAdapter extends BaseBindingAdapter<MainItemBean, ItemMainBindin
     }
 
     @Override
-    protected void bindView(BaseBindingHolder holder, ItemMainBinding binding, MainItemBean bean, int position) {
+    protected void bindView(BaseBindingHolder holder, MainItemBean bean, ItemMainBinding binding, int position) {
         binding.tvSort.setText(position + 1 + "、 ");
         binding.tvText.setText(bean.getTitle());
     }
