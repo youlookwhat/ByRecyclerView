@@ -30,6 +30,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
 
     @Override
     public void onBindViewHolder(@NonNull K holder, final int position) {
+        holder.setByRecyclerView(mRecyclerView);
         holder.onBaseBindView(holder, mData.get(position), position);
     }
 
