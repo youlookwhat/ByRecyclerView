@@ -402,6 +402,7 @@ public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    checkByRecyclerView();
                     if (byRecyclerView.getOnItemChildClickListener() != null) {
                         byRecyclerView.getOnItemChildClickListener().onItemChildClick(v, getClickPosition());
                     }
@@ -428,6 +429,7 @@ public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    checkByRecyclerView();
                     return byRecyclerView.getOnItemChildLongClickListener() != null &&
                             byRecyclerView.getOnItemChildLongClickListener().onItemChildLongClick(v, getClickPosition());
                 }
@@ -449,5 +451,11 @@ public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
     public BaseByViewHolder setByRecyclerView(ByRecyclerView byRecyclerView) {
         this.byRecyclerView = byRecyclerView;
         return this;
+    }
+
+    private void checkByRecyclerView() {
+        if (byRecyclerView == null) {
+            throw new IllegalStateException("byRecyclerView is null! Please use setByRecyclerView() bind!");
+        }
     }
 }
