@@ -18,8 +18,7 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<DataItemBean> {
 
     @Override
     protected void bindView(BaseByViewHolder<DataItemBean> holder, DataItemBean bean, int position) {
-        holder.setByRecyclerView(getRecyclerView())
-                .setText(R.id.tv_text, bean.getTitle())
+        holder.setText(R.id.tv_text, bean.getTitle())
                 .addOnClickListener(R.id.tv_text)
                 .addOnLongClickListener(R.id.tv_text);
     }

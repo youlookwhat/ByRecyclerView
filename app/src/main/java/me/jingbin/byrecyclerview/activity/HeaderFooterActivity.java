@@ -36,7 +36,7 @@ public class HeaderFooterActivity extends BaseActivity<ActivitySimpleBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        setTitle("添加HeaderView,FooterView");
+        setTitle("设置HeaderView,FooterView");
 
         initAdapter();
     }
