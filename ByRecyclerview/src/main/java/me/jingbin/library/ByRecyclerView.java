@@ -61,6 +61,7 @@ public class ByRecyclerView extends RecyclerView {
     private float mPullMaxY;                       // 手指上滑最高点的值，值越小位置越高
     private float mDragRate = 2.5f;                // 下拉时候的偏移计量因子，越小拉动距离越短
     private long mLoadMoreDelayMillis = 0;         // 延迟多少毫秒后再调用加载更多接口
+    private long mRefreshDelayMillis = 0;          // 延迟多少毫秒后再调用下拉刷新接口
 
     private OnRefreshListener mRefreshListener;    // 下拉刷新监听
     private BaseRefreshHeader mRefreshHeader;      // 自定义下拉刷新布局需要实现的接口
@@ -230,7 +231,7 @@ public class ByRecyclerView extends RecyclerView {
                     public void run() {
                         mRefreshListener.onRefresh();
                     }
-                }, 300);
+                }, 300 + mRefreshDelayMillis);
             }
         } else {
             if (getPullHeaderSize() > 0) {
@@ -401,7 +402,12 @@ public class ByRecyclerView extends RecyclerView {
                         && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (mRefreshHeader.releaseAction()) {
                         if (mRefreshListener != null) {
-                            mRefreshListener.onRefresh();
+                            postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mRefreshListener.onRefresh();
+                                }
+                            }, 300 + mRefreshDelayMillis);
                         }
                     }
                 }
@@ -784,6 +790,16 @@ public class ByRecyclerView extends RecyclerView {
     public void setOnLoadMoreListener(OnLoadMoreListener listener) {
         setLoadMoreEnabled(true);
         mLoadMoreListener = listener;
+    }
+
+    /**
+     * @param delayMillis How many milliseconds is the delay before the call OnRefreshListener.
+     *                    delayMillis + 300，Based on 300.
+     */
+    public void setOnRefreshListener(OnRefreshListener listener, long delayMillis) {
+        setRefreshEnabled(true);
+        mRefreshListener = listener;
+        mRefreshDelayMillis = delayMillis;
     }
 
     public void setOnRefreshListener(OnRefreshListener listener) {
