@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.adapter.DataAdapter;
+import me.jingbin.byrecyclerview.adapter.MultiAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
@@ -19,22 +19,22 @@ import me.jingbin.library.decoration.SpacesItemDecoration;
 /**
  * @author jingbin
  */
-public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
+public class MultiItemActivity extends BaseActivity<ActivitySimpleBinding> {
 
     private int page = 1;
-    private DataAdapter mAdapter;
+    private MultiAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        setTitle("基本使用");
+        setTitle("多类型列表");
 
         initAdapter();
     }
 
     private void initAdapter() {
-        mAdapter = new DataAdapter(DataUtil.get(this, 6));
+        mAdapter = new MultiAdapter(DataUtil.getMultiData(this, 20));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -42,6 +42,13 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
         itemDecoration.setDrawable(R.drawable.shape_line);
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
+        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                mAdapter.setNewData(DataUtil.getMultiData(MultiItemActivity.this, 20));
+            }
+        });
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -50,22 +57,15 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
                     return;
                 }
                 page++;
-                mAdapter.addData(DataUtil.getMore(SimpleActivity.this, 20, page));
+                mAdapter.addData(DataUtil.getMultiData(MultiItemActivity.this, 20));
                 binding.recyclerView.loadMoreComplete();
-            }
-        }, 500);
-        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                page = 1;
-                mAdapter.setNewData(DataUtil.get(SimpleActivity.this, 6));
             }
         }, 500);
         binding.recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
                 DataItemBean itemData = mAdapter.getItemData(position);
-                ToastUtil.showToast(itemData.getTitle());
+                ToastUtil.showToast(itemData.getDes() + "-" + position);
             }
         });
     }

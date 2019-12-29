@@ -10,6 +10,7 @@ import me.jingbin.byrecyclerview.activity.CustomLayoutActivity;
 import me.jingbin.byrecyclerview.activity.DataBindingActivity;
 import me.jingbin.byrecyclerview.activity.DividerActivity;
 import me.jingbin.byrecyclerview.activity.ItemClickActivity;
+import me.jingbin.byrecyclerview.activity.MultiItemActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ListViewActivity;
@@ -31,6 +32,7 @@ public class DataUtil {
     public static List<MainItemBean> getMainActivityList(Context context) {
         ArrayList<MainItemBean> list = new ArrayList<>();
         list.add(new MainItemBean("基本使用", SimpleActivity.class));
+        list.add(new MainItemBean("多类型列表", MultiItemActivity.class));
         list.add(new MainItemBean("使用 自带刷新 / SwipeRefreshLayout", RefreshActivity.class));
         list.add(new MainItemBean("设置HeaderView，FooterView", HeaderFooterActivity.class));
         list.add(new MainItemBean("设置StateView (加载中布局/空布局/错误布局)", StateViewActivity.class));
@@ -40,6 +42,25 @@ public class DataUtil {
         list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class));
         list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class));
         list.add(new MainItemBean("自定义行列间距", DividerActivity.class));
+        return list;
+    }
+
+    /**
+     * 一般item的数据
+     */
+    public static ArrayList<DataItemBean> getMultiData(Context context, int num) {
+        ArrayList<DataItemBean> list = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            DataItemBean bean = new DataItemBean();
+            if (i == 0 || i == 5 || i == 10) {
+                bean.setType("title");
+                bean.setDes("我是标题");
+            } else {
+                bean.setType("content");
+                bean.setDes("我是内容");
+            }
+            list.add(bean);
+        }
         return list;
     }
 

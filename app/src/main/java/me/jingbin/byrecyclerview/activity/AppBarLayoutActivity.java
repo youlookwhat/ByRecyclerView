@@ -22,7 +22,7 @@ import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivityAppbarLayoutBinding;
-import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewAppbarBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.StatusBarUtil;
 import me.jingbin.byrecyclerview.utils.TabLayoutUtil;
@@ -59,9 +59,9 @@ public class AppBarLayoutActivity extends BaseActivity<ActivityAppbarLayoutBindi
     }
 
     private void initAdapter() {
-        final LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
-        final LayoutHeaderViewBinding headerBinding2 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
-        final LayoutHeaderViewBinding headerBinding3 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
+        final LayoutHeaderViewAppbarBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view_appbar, (ViewGroup) binding.recyclerView.getParent(), false);
+        final LayoutHeaderViewAppbarBinding headerBinding2 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view_appbar, (ViewGroup) binding.recyclerView.getParent(), false);
+        final LayoutHeaderViewAppbarBinding headerBinding3 = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view_appbar, (ViewGroup) binding.recyclerView.getParent(), false);
         List<String> asList = Arrays.asList("Header1", "Header2", "Header3", "Content");
         headerBinding.tvText.setText("Header1");
         headerBinding2.tvText.setText("Header2");
@@ -86,20 +86,15 @@ public class AppBarLayoutActivity extends BaseActivity<ActivityAppbarLayoutBindi
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                binding.recyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (page == 3) {
-                            binding.recyclerView.loadMoreEnd();
-                            return;
-                        }
-                        page++;
-                        mAdapter.addData(DataUtil.getMore(AppBarLayoutActivity.this, 6, page));
-                        binding.recyclerView.loadMoreComplete();
-                    }
-                }, 500);
+                if (page == 3) {
+                    binding.recyclerView.loadMoreEnd();
+                    return;
+                }
+                page++;
+                mAdapter.addData(DataUtil.getMore(AppBarLayoutActivity.this, 6, page));
+                binding.recyclerView.loadMoreComplete();
             }
-        });
+        }, 500);
         binding.recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
@@ -136,12 +131,6 @@ public class AppBarLayoutActivity extends BaseActivity<ActivityAppbarLayoutBindi
                 binding.swipeRefreshLayout.setRefreshing(false);
             }
         });
-//        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                binding.recyclerView.refreshComplete();
-//            }
-//        });
     }
 
 }

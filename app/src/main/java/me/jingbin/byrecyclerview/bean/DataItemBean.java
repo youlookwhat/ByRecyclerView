@@ -3,7 +3,35 @@ package me.jingbin.byrecyclerview.bean;
 public class DataItemBean {
 
     private String title;
+    private String content;
+    private String des;
+
+    private String type;
     private Class<?> cls;
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Class<?> getCls() {
         return cls;

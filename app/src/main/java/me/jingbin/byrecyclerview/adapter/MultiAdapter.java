@@ -4,11 +4,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.databinding.LayoutEmptyBinding;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
-import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
+import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseByViewHolder;
 
@@ -19,33 +20,49 @@ import me.jingbin.library.adapter.BaseByViewHolder;
  */
 public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseByViewHolder<DataItemBean>> {
 
-    @NonNull
+    public MultiAdapter(List<DataItemBean> data) {
+        super(data);
+    }
+
     @Override
-    public BaseByViewHolder<DataItemBean> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (11 == viewType) {
-            return new ViewHolder2(parent, R.layout.layout_footer_view);
+    public int getItemViewType(int position) {
+        DataItemBean itemData = getItemData(position);
+        if ("title".equals(itemData.getType())) {
+            return 1;
         } else {
-            return new ViewHolder(parent, R.layout.layout_empty);
+            return 2;
         }
     }
 
-    private class ViewHolder2 extends BaseBindingHolder<DataItemBean, LayoutFooterViewBinding> {
-        ViewHolder2(ViewGroup viewGroup, int layoutId) {
+    @NonNull
+    @Override
+    public BaseByViewHolder<DataItemBean> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (1 == viewType) {
+            return new TitleHolder(parent, R.layout.item_multi_title);
+        } else {
+            return new ViewHolder(parent, R.layout.item_home);
+        }
+    }
+
+    private class TitleHolder extends BaseByViewHolder<DataItemBean> {
+        TitleHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
         @Override
-        protected void onBindingView(BaseBindingHolder holder, DataItemBean bean, int position) {
+        protected void onBaseBindView(BaseByViewHolder<DataItemBean> holder, DataItemBean bean, int position) {
+            holder.setText(R.id.tv_title, bean.getDes());
         }
     }
 
-    private class ViewHolder extends BaseBindingHolder<DataItemBean, LayoutEmptyBinding> {
+    private class ViewHolder extends BaseBindingHolder<DataItemBean, ItemHomeBinding> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
         @Override
         protected void onBindingView(BaseBindingHolder holder, DataItemBean bean, int position) {
+            binding.tvText.setText(bean.getDes());
         }
     }
 }
