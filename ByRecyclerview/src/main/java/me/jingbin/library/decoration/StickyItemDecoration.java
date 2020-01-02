@@ -204,9 +204,9 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
      */
     private void cacheStickyViewPosition(int m) {
         int position = getStickyViewPositionOfRecyclerView(m);
-//        if (!mStickyPositionList.contains(position)) {
-//            mStickyPositionList.add(position);
-//        }
+        if (!mStickyPositionList.contains(position)) {
+            mStickyPositionList.add(position);
+        }
     }
 
     /**
