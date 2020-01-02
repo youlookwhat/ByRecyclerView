@@ -16,6 +16,7 @@ import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ListViewActivity;
 import me.jingbin.byrecyclerview.activity.RefreshActivity;
 import me.jingbin.byrecyclerview.activity.SimpleActivity;
+import me.jingbin.byrecyclerview.activity.StickyItemActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.bean.MainItemBean;
 
@@ -42,6 +43,7 @@ public class DataUtil {
         list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class));
         list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class));
         list.add(new MainItemBean("自定义行列间距", DividerActivity.class));
+        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class));
         return list;
     }
 
@@ -52,7 +54,14 @@ public class DataUtil {
         ArrayList<DataItemBean> list = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             DataItemBean bean = new DataItemBean();
-            if (i == 0 || i == 5 || i == 10) {
+            if (i == 0
+                    || i == 2 || i == 4
+                    || i == 6 || i == 8
+                    || i == 10 || i == 12
+                    || i == 22 || i == 19
+                    || i == 13 || i == 15
+                    || i == 34 || i == 40
+                    || i == 17 || i == 30) {
                 bean.setType("title");
                 bean.setDes("我是标题");
             } else {

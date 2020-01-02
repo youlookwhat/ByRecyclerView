@@ -3,7 +3,7 @@ package me.jingbin.byrecyclerview.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.jingbin.byrecyclerview.R;
@@ -34,10 +34,13 @@ public class MultiItemActivity extends BaseActivity<ActivitySimpleBinding> {
     }
 
     private void initAdapter() {
-        mAdapter = new MultiAdapter(DataUtil.getMultiData(this, 20));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        binding.recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new MultiAdapter(DataUtil.getMultiData(this, 50));
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(RecyclerView.VERTICAL);
+//        binding.recyclerView.setLayoutManager(layoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 6, RecyclerView.VERTICAL, false);
+        binding.recyclerView.setLayoutManager(gridLayoutManager);
+
         SpacesItemDecoration itemDecoration = new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL);
         itemDecoration.setDrawable(R.drawable.shape_line);
         binding.recyclerView.addItemDecoration(itemDecoration);
@@ -57,7 +60,7 @@ public class MultiItemActivity extends BaseActivity<ActivitySimpleBinding> {
                     return;
                 }
                 page++;
-                mAdapter.addData(DataUtil.getMultiData(MultiItemActivity.this, 20));
+                mAdapter.addData(DataUtil.getMultiData(MultiItemActivity.this, 50));
                 binding.recyclerView.loadMoreComplete();
             }
         }, 500);

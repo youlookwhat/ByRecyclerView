@@ -109,20 +109,20 @@ public class SwipeRefreshFragment extends BaseFragment<FragmentSwipeRefreshBindi
                 ToastUtil.showToast(itemData.getTitle());
             }
         });
-        bindingView.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (!recyclerView.isLoadingMore()) {
                     recyclerView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            bindingView.swipeRefreshLayout.setRefreshing(false);
+                            binding.swipeRefreshLayout.setRefreshing(false);
                             page = 1;
                             mAdapter.setNewData(DataUtil.getMore(activity, 10, page));
                         }
                     }, 500);
                 } else {
-                    bindingView.swipeRefreshLayout.setRefreshing(false);
+                    binding.swipeRefreshLayout.setRefreshing(false);
                 }
             }
         });

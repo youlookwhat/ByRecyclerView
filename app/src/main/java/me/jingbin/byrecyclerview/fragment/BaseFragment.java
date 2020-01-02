@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
 
     // 布局view
-    protected V bindingView;
+    protected V binding;
     // fragment是否显示了
     protected boolean mIsVisible = false;
 
@@ -37,10 +37,10 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        bindingView = DataBindingUtil.inflate(activity.getLayoutInflater(), setContent(), null, false);
+        binding = DataBindingUtil.inflate(activity.getLayoutInflater(), setContent(), null, false);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        bindingView.getRoot().setLayoutParams(params);
-        return bindingView.getRoot();
+        binding.getRoot().setLayoutParams(params);
+        return binding.getRoot();
     }
 
     /**

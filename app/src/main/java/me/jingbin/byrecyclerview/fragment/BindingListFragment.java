@@ -68,16 +68,16 @@ public class BindingListFragment extends BaseFragment<FragmentListviewBinding> {
     }
 
     private void initAdapter() {
-        LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.layout_header_view, bindingView.listView, false);
-        LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.layout_footer_view, bindingView.listView, false);
+        LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.layout_header_view, binding.listView, false);
+        LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.layout_footer_view, binding.listView, false);
 
         ListView2Adapter mAdapter = new ListView2Adapter(DataUtil.get(activity, 30));
-        bindingView.listView.setAdapter(mAdapter);
-        bindingView.listView.addFooterView(footerBinding.getRoot());
-        bindingView.listView.addHeaderView(headerBinding.getRoot());
+        binding.listView.setAdapter(mAdapter);
+        binding.listView.addFooterView(footerBinding.getRoot());
+        binding.listView.addHeaderView(headerBinding.getRoot());
 
-        bindingView.listView.setHeaderDividersEnabled(false);
-        bindingView.listView.setFooterDividersEnabled(false);
+        binding.listView.setHeaderDividersEnabled(false);
+        binding.listView.setFooterDividersEnabled(false);
         mIsFirst = false;
     }
 }

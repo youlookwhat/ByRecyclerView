@@ -3,6 +3,8 @@ package me.jingbin.byrecyclerview.adapter;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -10,8 +12,10 @@ import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
 import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
+import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseByViewHolder;
+import me.jingbin.library.decoration.StickyView;
 
 /**
  * 多种类型 示例
@@ -26,18 +30,49 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
 
     @Override
     public int getItemViewType(int position) {
-        DataItemBean itemData = getItemData(position);
-        if ("title".equals(itemData.getType())) {
-            return 1;
-        } else {
-            return 2;
+        if (position < getData().size()) {
+            DataItemBean itemData = getItemData(position);
+            if ("title".equals(itemData.getType())) {
+                return StickyView.TYPE_STICKY_VIEW;
+            } else {
+                return 2;
+            }
+        }
+        return 2;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull final RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager) {
+            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
+            final ByRecyclerView byRecyclerView = (ByRecyclerView) recyclerView;
+
+            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    int type = getItemViewType(position);
+                    if (byRecyclerView.isLoadMoreView(position)) {
+                        return gridManager.getSpanCount();
+                    }
+                    switch (type) {
+                        case StickyView.TYPE_STICKY_VIEW:
+                            // title栏显示一列
+                            return gridManager.getSpanCount();
+                        default:
+                            //默认显示2列
+                            return 3;
+                    }
+                }
+            });
         }
     }
 
     @NonNull
     @Override
     public BaseByViewHolder<DataItemBean> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (1 == viewType) {
+        if (StickyView.TYPE_STICKY_VIEW == viewType) {
             return new TitleHolder(parent, R.layout.item_multi_title);
         } else {
             return new ViewHolder(parent, R.layout.item_home);
@@ -51,7 +86,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
 
         @Override
         protected void onBaseBindView(BaseByViewHolder<DataItemBean> holder, DataItemBean bean, int position) {
-            holder.setText(R.id.tv_title, bean.getDes());
+            holder.setText(R.id.tv_title, bean.getDes() + "-" + position);
         }
     }
 
@@ -62,7 +97,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
 
         @Override
         protected void onBindingView(BaseBindingHolder holder, DataItemBean bean, int position) {
-            binding.tvText.setText(bean.getDes());
+            binding.tvText.setText(bean.getDes() + "-" + position);
         }
     }
 }
