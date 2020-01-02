@@ -101,12 +101,6 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
 });
 ```
 
-## 答疑
-### QQ讨论群 - 831860628
-大家可以加群讨论使用本库时出现的问题，也可以直接提[Issues](https://github.com/youlookwhat/ByRecyclerView/issues)，我会第一时间帮助大家解决。如果此库帮助到了你，还请给个Star、Fork一下，我将更有动力持续迭代优化，非常感谢^_^。
-
-## 混淆
-此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，在公司项目中使用，如果你在项目混淆之后出现问题，请及时联系我。
 
 ## 与BRVAH、XRecyclerView对比
 ByRecyclerView 在XRecyclerView基础上进行了深度优化，使其可以设置自定义的下拉刷新布局 和 加载更多布局等。优化了BRVAH的加载更多逻辑，使其首屏上拉才加载而不是不足一屏就加载。
@@ -122,6 +116,12 @@ ByRecyclerView 在XRecyclerView基础上进行了深度优化，使其可以设�
 |EmptyView|可设置|可设置|不能设置|
 |item点击/长按事件|有|有| 无 |
 
+## 混淆
+此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，在公司项目中使用，如果你在项目混淆之后出现问题，请及时联系我。
+
+## 答疑
+### QQ讨论群 - 831860628
+大家可以加群讨论使用本库时出现的问题，也可以直接提[Issues](https://github.com/youlookwhat/ByRecyclerView/issues)，我会第一时间帮助大家解决。如果此库帮助到了你，还请给个Star、Fork一下，我将更有动力持续迭代优化，非常感谢^_^。
 
 ## 感谢与参考
  - [XRecyclerView](https://github.com/XRecyclerView/XRecyclerView)
