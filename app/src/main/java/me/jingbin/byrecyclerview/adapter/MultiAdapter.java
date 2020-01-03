@@ -30,7 +30,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
 
     @Override
     public int getItemViewType(int position) {
-        if (position < getData().size()) {
+        if (0 <= position && position < getData().size()) {
             DataItemBean itemData = getItemData(position);
             if ("title".equals(itemData.getType())) {
                 return StickyView.TYPE_STICKY_VIEW;
@@ -52,10 +52,12 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    int type = getItemViewType(position);
-                    if (byRecyclerView.isLoadMoreView(position)) {
+                    if (byRecyclerView.isLoadMoreView(position)
+                            || byRecyclerView.isRefreshHeader(position)
+                            || byRecyclerView.isHeaderView(position)) {
                         return gridManager.getSpanCount();
                     }
+                    int type = getItemViewType(position - byRecyclerView.getCustomTopItemViewCount());
                     switch (type) {
                         case StickyView.TYPE_STICKY_VIEW:
                             // title栏显示一列

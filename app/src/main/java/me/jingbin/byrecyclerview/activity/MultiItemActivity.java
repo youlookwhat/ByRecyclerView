@@ -41,10 +41,11 @@ public class MultiItemActivity extends BaseActivity<ActivitySimpleBinding> {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 6, RecyclerView.VERTICAL, false);
         binding.recyclerView.setLayoutManager(gridLayoutManager);
 
-        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL);
+        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL, 1);
         itemDecoration.setDrawable(R.drawable.shape_line);
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
+        binding.recyclerView.addHeaderView(R.layout.layout_header_view);
         binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -38,9 +38,8 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
-        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL);
-        itemDecoration.setDrawable(R.drawable.shape_line);
-        binding.recyclerView.addItemDecoration(itemDecoration);
+        binding.recyclerView.setRefreshEnabled(true);
+        binding.recyclerView.addItemDecoration(new SpacesItemDecoration(this).setHeaderNoShowDivider(1).setDrawable(R.drawable.shape_line));
         binding.recyclerView.setAdapter(mAdapter);
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override

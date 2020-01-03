@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +51,7 @@ public class HeaderFooterActivity extends BaseActivity<ActivitySimpleBinding> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
-        binding.recyclerView.addItemDecoration(new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL).setDrawable(R.drawable.shape_line));
+        binding.recyclerView.addItemDecoration(new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL,4).setDrawable(R.drawable.shape_line));
         binding.recyclerView.setAdapter(mAdapter);
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
@@ -60,7 +59,7 @@ public class HeaderFooterActivity extends BaseActivity<ActivitySimpleBinding> {
                 binding.recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (page == 1) {
+                        if (page == 2) {
                             binding.recyclerView.loadMoreEnd();
                             return;
                         }
@@ -84,6 +83,12 @@ public class HeaderFooterActivity extends BaseActivity<ActivitySimpleBinding> {
         binding.recyclerView.addHeaderView(R.layout.layout_header_view);
         binding.recyclerView.addHeaderView(headerBinding.getRoot());
 
+        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.recyclerView.setRefreshing(false);
+            }
+        });
         headerBinding.tvText.setText("头布局1\n(点我添加Header2)");
         footerBinding.tvText.setText("尾布局1\n(点我添加Footer2)");
         header2Binding.tvText.setText("头布局2");
