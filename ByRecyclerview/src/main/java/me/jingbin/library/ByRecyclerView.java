@@ -1202,6 +1202,10 @@ public class ByRecyclerView extends RecyclerView {
         mOnItemChildLongClickListener = listener;
     }
 
+    public boolean isRefreshEnabled() {
+        return mRefreshEnabled;
+    }
+
     /**
      * call it when you finish the activity,
      */

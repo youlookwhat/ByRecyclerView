@@ -29,6 +29,8 @@ import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import me.jingbin.library.ByRecyclerView;
+
 /**
  * 给 LinearLayoutManager 增加分割线，可设置去除首尾分割线个数
  *
@@ -48,7 +50,8 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
      */
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     /**
-     * 头部 不显示分割线的item个数
+     * 头部 不显示分割线的item个数 这里应该包含刷新头，
+     * 比如有一个headerView和有下拉刷新，则这里传 2
      */
     private int mHeaderNoShowSize = 0;
     /**
@@ -75,6 +78,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
      * 如果是纵向 - 下边距
      */
     private int mRightBottomPadding;
+    private ByRecyclerView byRecyclerView;
 
     public SpacesItemDecoration(Context context) {
         this(context, VERTICAL, 0, 1);
@@ -92,10 +96,9 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
      * Creates a divider {@link RecyclerView.ItemDecoration}
      *
      * @param context          Current context, it will be used to access resources.
-     * @param orientation      Divider orientation. Should be {@link #HORIZONTAL} or
-     *                         {@link #VERTICAL}.
-     * @param headerNoShowSize not show header divider size
-     * @param footerNoShowSize not show footer divider size
+     * @param orientation      Divider orientation. Should be {@link #HORIZONTAL} or {@link #VERTICAL}.
+     * @param headerNoShowSize headerViewSize + RefreshViewSize
+     * @param footerNoShowSize footerViewSize
      */
     public SpacesItemDecoration(Context context, int orientation, int headerNoShowSize, int footerNoShowSize) {
         mContext = context;
@@ -252,19 +255,34 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
             outRect.set(0, 0, 0, 0);
             return;
         }
+        //parent.getChildCount() 不能拿到item的总数
+        int lastPosition = state.getItemCount() - 1;
+        int position = parent.getChildAdapterPosition(view);
+
+        boolean mScrollTopFix = false;
+        if (byRecyclerView == null && parent instanceof ByRecyclerView) {
+            byRecyclerView = (ByRecyclerView) parent;
+        }
+        if (byRecyclerView != null && byRecyclerView.isRefreshEnabled()) {
+            mScrollTopFix = true;
+        }
+
+        // 滚动条置顶
+        boolean isFixScrollTop = mScrollTopFix && position == 0;
+        boolean isShowDivider = mHeaderNoShowSize <= position && position <= lastPosition - mFooterNoShowSize;
+
         if (mOrientation == VERTICAL) {
-            //parent.getChildCount() 不能拿到item的总数
-            int lastPosition = state.getItemCount() - 1;
-            int position = parent.getChildAdapterPosition(view);
-            if (position <= lastPosition - mFooterNoShowSize) {
+            if (isFixScrollTop) {
+                outRect.set(0, 0, 0, 1);
+            } else if (isShowDivider) {
                 outRect.set(0, 0, 0, mDivider != null ? mDivider.getIntrinsicHeight() : mDividerSpacing);
             } else {
                 outRect.set(0, 0, 0, 0);
             }
         } else {
-            int lastPosition = state.getItemCount() - 1;
-            int position = parent.getChildAdapterPosition(view);
-            if (position <= lastPosition - mFooterNoShowSize) {
+            if (isFixScrollTop) {
+                outRect.set(0, 0, 1, 0);
+            } else if (isShowDivider) {
                 outRect.set(0, 0, mDivider != null ? mDivider.getIntrinsicWidth() : mDividerSpacing, 0);
             } else {
                 outRect.set(0, 0, 0, 0);
