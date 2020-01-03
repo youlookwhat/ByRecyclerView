@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
+import me.jingbin.library.adapter.BaseByViewHolder;
 
 /**
  * @author jingbin
@@ -302,11 +303,11 @@ public class ByRecyclerView extends RecyclerView {
                 gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return (mWrapAdapter.isHeaderView(position)
-                                || mWrapAdapter.isFootView(position)
-                                || mWrapAdapter.isLoadMore(position)
-                                || mWrapAdapter.isStateView(position)
-                                || mWrapAdapter.isRefreshHeader(position))
+                        return (isHeaderView(position)
+                                || isFootView(position)
+                                || isLoadMoreView(position)
+                                || isStateView(position)
+                                || isRefreshHeader(position))
                                 ? gridManager.getSpanCount() : 1;
                     }
                 });
@@ -481,53 +482,6 @@ public class ByRecyclerView extends RecyclerView {
             return this.adapter;
         }
 
-        /**
-         * Is it a StateView layout
-         */
-        boolean isStateView(int position) {
-            return mStateViewEnabled && mStateLayout != null && position == getHeaderViewCount() + getPullHeaderSize();
-        }
-
-        /**
-         * Is it a HeaderView layout
-         */
-        boolean isHeaderView(int position) {
-            return mHeaderViewEnabled && position >= getPullHeaderSize() && position < getHeaderViewCount() + getPullHeaderSize();
-        }
-
-        /**
-         * Is it a FootView layout
-         */
-        boolean isFootView(int position) {
-            if (mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0) {
-                return position == getItemCount() - 1 - getLoadMoreSize();
-            } else {
-                return false;
-            }
-        }
-
-        /**
-         * Is it a LoadMoreView layout
-         */
-        boolean isLoadMore(int position) {
-            if (mLoadMoreEnabled) {
-                return position == getItemCount() - 1;
-            } else {
-                return false;
-            }
-        }
-
-        /**
-         * Is it a RefreshHeaderView layout
-         */
-        boolean isRefreshHeader(int position) {
-            if (mRefreshEnabled) {
-                return position == 0;
-            } else {
-                return false;
-            }
-        }
-
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -608,7 +562,7 @@ public class ByRecyclerView extends RecyclerView {
             if (isStateView(position)) {
                 return TYPE_STATE_VIEW;
             }
-            if (isLoadMore(position)) {
+            if (isLoadMoreView(position)) {
                 return TYPE_LOAD_MORE_VIEW;
             }
             int adapterCount;
@@ -649,7 +603,7 @@ public class ByRecyclerView extends RecyclerView {
                         // 占一行
                         return (isHeaderView(position)
                                 || isFootView(position)
-                                || isLoadMore(position)
+                                || isLoadMoreView(position)
                                 || isStateView(position)
                                 || isRefreshHeader(position))
                                 ? gridManager.getSpanCount() : 1;
@@ -673,7 +627,7 @@ public class ByRecyclerView extends RecyclerView {
                     && (isHeaderView(holder.getLayoutPosition())
                     || isFootView(holder.getLayoutPosition())
                     || isRefreshHeader(holder.getLayoutPosition())
-                    || isLoadMore(holder.getLayoutPosition())
+                    || isLoadMoreView(holder.getLayoutPosition())
                     || isStateView(holder.getLayoutPosition()))) {
                 StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
                 p.setFullSpan(true);
@@ -705,17 +659,69 @@ public class ByRecyclerView extends RecyclerView {
             adapter.registerAdapterDataObserver(observer);
         }
 
-        private class SimpleViewHolder extends RecyclerView.ViewHolder {
+        private class SimpleViewHolder extends BaseByViewHolder {
             SimpleViewHolder(View itemView) {
                 super(itemView);
             }
+
+            @Override
+            protected void onBaseBindView(BaseByViewHolder holder, Object bean, int position) {
+
+            }
+        }
+    }
+
+    /**
+     * Is it a StateView layout
+     */
+    public boolean isStateView(int position) {
+        return mStateViewEnabled && mStateLayout != null && position == getHeaderViewCount() + getPullHeaderSize();
+    }
+
+    /**
+     * Is it a HeaderView layout
+     */
+    public boolean isHeaderView(int position) {
+        return mHeaderViewEnabled && position >= getPullHeaderSize() && position < getHeaderViewCount() + getPullHeaderSize();
+    }
+
+    /**
+     * Is it a FootView layout
+     */
+    public boolean isFootView(int position) {
+        if (mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0) {
+            return position == mWrapAdapter.getItemCount() - 1 - getLoadMoreSize();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Is it a RefreshHeaderView layout
+     */
+    public boolean isRefreshHeader(int position) {
+        if (mRefreshEnabled) {
+            return position == 0;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Is it a LoadMoreView layout
+     */
+    public boolean isLoadMoreView(int position) {
+        if (mLoadMoreEnabled) {
+            return position == mWrapAdapter.getItemCount() - 1;
+        } else {
+            return false;
         }
     }
 
     /**
      * Get the number of FooterView
      */
-    int getFooterViewSize() {
+    public int getFooterViewSize() {
         return mFootViewEnabled && mFooterLayout != null && mFooterLayout.getChildCount() != 0 ? 1 : 0;
     }
 
@@ -855,7 +861,7 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * If a pull-up refresh is used, position needs to be counted
      */
-    private int getLoadMoreSize() {
+    public int getLoadMoreSize() {
         if (mLoadMoreEnabled) {
             return 1;
         } else {
@@ -1193,6 +1199,10 @@ public class ByRecyclerView extends RecyclerView {
 
     public void setOnItemChildLongClickListener(OnItemChildLongClickListener listener) {
         mOnItemChildLongClickListener = listener;
+    }
+
+    public boolean isRefreshEnabled() {
+        return mRefreshEnabled;
     }
 
     /**

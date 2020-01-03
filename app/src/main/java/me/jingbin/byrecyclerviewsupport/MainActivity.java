@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import me.jingbin.byrecyclerviewsupport.databinding.ActivityMainBinding;
 import me.jingbin.library.ByRecyclerView;
+import me.jingbin.library.decoration.SpacesItemDecoration;
 
 /**
  * @author jingbin
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(this,SpacesItemDecoration.VERTICAL,2).setParam(R.color.colorAccent,1));
         recyclerView.addHeaderView(R.layout.header_view);
         recyclerView.setAdapter(dataAdapter);
 
