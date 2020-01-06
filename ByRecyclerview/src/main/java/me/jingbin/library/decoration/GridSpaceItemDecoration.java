@@ -119,8 +119,9 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
      *
      * @param startFromSize 一般为HeaderView的个数 + 刷新布局(不一定设置)
      */
-    public void setStartFrom(int startFromSize) {
+    public GridSpaceItemDecoration setStartFrom(int startFromSize) {
         this.mStartFromSize = startFromSize;
+        return this;
     }
 
     /**
@@ -128,8 +129,9 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
      *
      * @param endFromSize 一般为FooterView的个数 + 加载更多布局(不一定设置)
      */
-    public void setEndFromSize(int endFromSize) {
+    public GridSpaceItemDecoration setEndFromSize(int endFromSize) {
         this.mEndFromSize = endFromSize;
+        return this;
     }
 
     /**
@@ -138,8 +140,9 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
      * @param startFromSize 一般为HeaderView的个数 + 刷新布局(不一定设置)
      * @param endFromSize   默认为1，一般为FooterView的个数 + 加载更多布局(不一定设置)
      */
-    public void setNoShowSpace(int startFromSize, int endFromSize) {
+    public GridSpaceItemDecoration setNoShowSpace(int startFromSize, int endFromSize) {
         this.mStartFromSize = startFromSize;
         this.mEndFromSize = endFromSize;
+        return this;
     }
 }
