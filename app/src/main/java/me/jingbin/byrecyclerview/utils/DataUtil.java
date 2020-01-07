@@ -11,6 +11,7 @@ import me.jingbin.byrecyclerview.activity.DataBindingActivity;
 import me.jingbin.byrecyclerview.activity.DividerActivity;
 import me.jingbin.byrecyclerview.activity.ItemClickActivity;
 import me.jingbin.byrecyclerview.activity.MultiItemActivity;
+import me.jingbin.byrecyclerview.activity.MultiTypeItemActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ListViewActivity;
@@ -33,7 +34,7 @@ public class DataUtil {
     public static List<MainItemBean> getMainActivityList(Context context) {
         ArrayList<MainItemBean> list = new ArrayList<>();
         list.add(new MainItemBean("基本使用", SimpleActivity.class));
-        list.add(new MainItemBean("多类型列表", MultiItemActivity.class));
+        list.add(new MainItemBean("多类型列表", MultiTypeItemActivity.class));
         list.add(new MainItemBean("使用 自带刷新 / SwipeRefreshLayout", RefreshActivity.class));
         list.add(new MainItemBean("设置HeaderView，FooterView", HeaderFooterActivity.class));
         list.add(new MainItemBean("设置StateView (加载中布局/空布局/错误布局)", StateViewActivity.class));
@@ -56,10 +57,10 @@ public class DataUtil {
             DataItemBean bean = new DataItemBean();
             if (i == 0
                     || i == 2 || i == 4
-                    || i == 6 || i == 8
+//                    || i == 6 || i == 8
                     || i == 10 || i == 12
-                    || i == 22 || i == 19
-                    || i == 13 || i == 15
+//                    || i == 22 || i == 19
+//                    || i == 13 || i == 15
                     || i == 34 || i == 40
                     || i == 17 || i == 30) {
                 bean.setType("title");

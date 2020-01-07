@@ -459,4 +459,8 @@ public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
             throw new IllegalStateException("byRecyclerView is null! Please use setByRecyclerView() bind!");
         }
     }
+
+    public ByRecyclerView getByRecyclerView() {
+        return byRecyclerView;
+    }
 }
