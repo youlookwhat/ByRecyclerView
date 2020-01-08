@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.adapter.MultiAdapter;
+import me.jingbin.byrecyclerview.adapter.MultiStaggeredAdapter;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.FragmentRefreshBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
@@ -29,7 +30,7 @@ public class MultiStaggeredFragment extends BaseFragment<FragmentRefreshBinding>
     private String mType = "Android";
     private boolean mIsPrepared;
     private boolean mIsFirst = true;
-    private MultiAdapter mAdapter;
+    private MultiStaggeredAdapter mAdapter;
     private ByRecyclerView recyclerView;
     private int page = 1;
 
@@ -78,13 +79,9 @@ public class MultiStaggeredFragment extends BaseFragment<FragmentRefreshBinding>
     }
 
     private void initAdapter() {
-        mAdapter = new MultiAdapter(DataUtil.getMultiData(getActivity(), 50));
+        mAdapter = new MultiStaggeredAdapter(DataUtil.getMultiData(getActivity(), 50));
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(manager);
-
-//        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(getActivity(), SpacesItemDecoration.VERTICAL, 1);
-//        itemDecoration.setDrawable(R.drawable.shape_line);
-//        binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
         binding.recyclerView.addHeaderView(R.layout.layout_header_view);
         binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {

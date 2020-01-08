@@ -76,7 +76,7 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private void initAdapter() {
         recyclerView = getView(R.id.recyclerView);
-        mAdapter = new DataAdapter(DataUtil.get(activity, 30));
+        mAdapter = new DataAdapter(DataUtil.get(activity, 10));
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -89,11 +89,11 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
                 recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (page == 4) {
+                        if (page == 3) {
                             recyclerView.loadMoreEnd();
                             return;
                         }
-                        if (page == 2) {
+                        if (page == 1) {
                             page++;
                             recyclerView.loadMoreFail();
                             return;
@@ -116,15 +116,10 @@ public class RefreshFragment extends BaseFragment<FragmentRefreshBinding> {
         recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page = 1;
-                        mAdapter.setNewData(DataUtil.getMore(activity, 30, page));
-                    }
-                }, 1000);
+                page = 1;
+                mAdapter.setNewData(DataUtil.getMore(activity, 10, page));
             }
-        });
+        }, 500);
         mIsFirst = false;
     }
 }

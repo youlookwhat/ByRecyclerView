@@ -3,8 +3,7 @@ package me.jingbin.byrecyclerview.adapter;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import java.util.List;
 
@@ -12,6 +11,9 @@ import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
 import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
+import me.jingbin.byrecyclerview.databinding.ItemMultiGridBinding;
+import me.jingbin.byrecyclerview.utils.DensityUtil;
+import me.jingbin.byrecyclerview.utils.ViewUtil;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseByViewHolder;
@@ -22,9 +24,9 @@ import me.jingbin.library.decoration.StickyView;
  *
  * @author jingbin
  */
-public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseByViewHolder<DataItemBean>> {
+public class MultiStaggeredAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseByViewHolder<DataItemBean>> {
 
-    public MultiAdapter(List<DataItemBean> data) {
+    public MultiStaggeredAdapter(List<DataItemBean> data) {
         super(data);
     }
 
@@ -42,34 +44,21 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
     }
 
     @Override
-    public void onAttachedToRecyclerView(@NonNull final RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-        if (manager instanceof GridLayoutManager) {
-            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
-            final ByRecyclerView byRecyclerView = (ByRecyclerView) recyclerView;
-
-            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    if (byRecyclerView.isLoadMoreView(position)
-                            || byRecyclerView.isFootView(position)
-                            || byRecyclerView.isStateView(position)
-                            || byRecyclerView.isRefreshHeader(position)
-                            || byRecyclerView.isHeaderView(position)) {
-                        return gridManager.getSpanCount();
-                    }
-                    int type = getItemViewType(position - byRecyclerView.getCustomTopItemViewCount());
-                    switch (type) {
-                        case StickyView.TYPE_STICKY_VIEW:
-                            // title栏显示一列
-                            return gridManager.getSpanCount();
-                        default:
-                            //默认显示2列
-                            return 3;
-                    }
-                }
-            });
+    public void onViewAttachedToWindow(@NonNull BaseByViewHolder<DataItemBean> holder) {
+        super.onViewAttachedToWindow(holder);
+        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+        ByRecyclerView byRecyclerView = holder.getByRecyclerView();
+        if (lp != null
+                && byRecyclerView != null
+                && lp instanceof StaggeredGridLayoutManager.LayoutParams
+                && (byRecyclerView.isHeaderView(holder.getLayoutPosition())
+                || byRecyclerView.isFootView(holder.getLayoutPosition())
+                || byRecyclerView.isRefreshHeader(holder.getLayoutPosition())
+                || byRecyclerView.isLoadMoreView(holder.getLayoutPosition())
+                || byRecyclerView.isStateView(holder.getLayoutPosition())
+                || holder.getItemViewType() == StickyView.TYPE_STICKY_VIEW)) {
+            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+            p.setFullSpan(true);
         }
     }
 
@@ -79,10 +68,13 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         if (StickyView.TYPE_STICKY_VIEW == viewType) {
             return new TitleHolder(parent, R.layout.item_multi_title);
         } else {
-            return new ViewHolder(parent, R.layout.item_home);
+            return new ViewHolder(parent, R.layout.item_multi_grid);
         }
     }
 
+    /**
+     * 使用 BaseByViewHolder
+     */
     private class TitleHolder extends BaseByViewHolder<DataItemBean> {
         TitleHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
@@ -94,7 +86,10 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         }
     }
 
-    private class ViewHolder extends BaseBindingHolder<DataItemBean, ItemHomeBinding> {
+    /**
+     * 使用 BaseBindingHolder
+     */
+    private class ViewHolder extends BaseBindingHolder<DataItemBean, ItemMultiGridBinding> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
@@ -102,6 +97,11 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         @Override
         protected void onBindingView(BaseBindingHolder holder, DataItemBean bean, int position) {
             binding.tvText.setText(bean.getDes() + "-" + position);
+            if (position % 2 == 0) {
+                ViewUtil.setHeight(binding.cvItemGrid, DensityUtil.dip2px(binding.tvText.getContext(), 94));
+            } else {
+                ViewUtil.setHeight(binding.cvItemGrid, DensityUtil.dip2px(binding.tvText.getContext(), 200));
+            }
         }
     }
 }

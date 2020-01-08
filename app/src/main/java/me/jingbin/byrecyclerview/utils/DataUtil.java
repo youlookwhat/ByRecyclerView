@@ -33,18 +33,24 @@ public class DataUtil {
      */
     public static List<MainItemBean> getMainActivityList(Context context) {
         ArrayList<MainItemBean> list = new ArrayList<>();
-        list.add(new MainItemBean("基本使用", SimpleActivity.class));
-        list.add(new MainItemBean("多类型列表", MultiTypeItemActivity.class));
-        list.add(new MainItemBean("使用 自带刷新 / SwipeRefreshLayout", RefreshActivity.class));
-        list.add(new MainItemBean("设置HeaderView，FooterView", HeaderFooterActivity.class));
-        list.add(new MainItemBean("设置StateView (加载中布局/空布局/错误布局)", StateViewActivity.class));
-        list.add(new MainItemBean("设置点击/长按事件 (item或item里的子View)", ItemClickActivity.class));
-        list.add(new MainItemBean("在 AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class));
-        list.add(new MainItemBean("BaseListAdapter的使用", ListViewActivity.class));
-        list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class));
-        list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class));
-        list.add(new MainItemBean("自定义行列间距", DividerActivity.class));
-        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class));
+
+        list.add(new MainItemBean("ByRecyclerView", null).setCategoryName());
+        list.add(new MainItemBean("基本使用", SimpleActivity.class, "1"));
+        list.add(new MainItemBean("使用 自带刷新 / SwipeRefreshLayout", RefreshActivity.class, "2"));
+        list.add(new MainItemBean("设置HeaderView，FooterView", HeaderFooterActivity.class, "3"));
+        list.add(new MainItemBean("设置StateView (加载中布局/空布局/错误布局)", StateViewActivity.class, "4"));
+        list.add(new MainItemBean("设置点击/长按事件 (item或item里的子View)", ItemClickActivity.class, "5"));
+        list.add(new MainItemBean("在 AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class, "6"));
+        list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class, "7"));
+
+        list.add(new MainItemBean("Adapter", null).setCategoryName());
+        list.add(new MainItemBean("多类型列表 (线性/宫格/瀑布流)", MultiTypeItemActivity.class, "1"));
+        list.add(new MainItemBean("BaseListAdapter的使用 (ListView)", ListViewActivity.class, "2"));
+        list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class, "3"));
+
+        list.add(new MainItemBean("ItemDecoration", null).setCategoryName());
+        list.add(new MainItemBean("自定义行列间距", DividerActivity.class, "1"));
+        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class, "2"));
         return list;
     }
 
@@ -56,9 +62,9 @@ public class DataUtil {
         for (int i = 0; i < num; i++) {
             DataItemBean bean = new DataItemBean();
             if (i == 0
-                    || i == 2 || i == 4
+//                    || i == 2 || i == 4
 //                    || i == 6 || i == 8
-                    || i == 10 || i == 12
+                    || i == 10 || i == 20
 //                    || i == 22 || i == 19
 //                    || i == 13 || i == 15
                     || i == 34 || i == 40

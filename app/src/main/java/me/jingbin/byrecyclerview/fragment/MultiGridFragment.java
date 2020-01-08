@@ -79,15 +79,9 @@ public class MultiGridFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private void initAdapter() {
         mAdapter = new MultiAdapter(DataUtil.getMultiData(getActivity(), 50));
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        layoutManager.setOrientation(RecyclerView.VERTICAL);
-//        binding.recyclerView.setLayoutManager(layoutManager);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 6, RecyclerView.VERTICAL, false);
         binding.recyclerView.setLayoutManager(gridLayoutManager);
 
-        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(getActivity(), SpacesItemDecoration.VERTICAL, 1);
-        itemDecoration.setDrawable(R.drawable.shape_line);
-        binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
         binding.recyclerView.addHeaderView(R.layout.layout_header_view);
         binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {

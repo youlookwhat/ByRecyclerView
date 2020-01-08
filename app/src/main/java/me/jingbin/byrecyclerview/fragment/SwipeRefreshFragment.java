@@ -95,6 +95,11 @@ public class SwipeRefreshFragment extends BaseFragment<FragmentSwipeRefreshBindi
                             recyclerView.loadMoreEnd();
                             return;
                         }
+                        if (page == 1) {
+                            page++;
+                            recyclerView.loadMoreFail();
+                            return;
+                        }
                         page++;
                         mAdapter.addData(DataUtil.getMore(activity, 10, page));
                         recyclerView.loadMoreComplete();

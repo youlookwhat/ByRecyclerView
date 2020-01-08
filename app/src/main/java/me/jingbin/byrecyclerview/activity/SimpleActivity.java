@@ -64,7 +64,8 @@ public class SimpleActivity extends BaseActivity<ActivitySimpleBinding> {
             @Override
             public void onClick(View v, int position) {
                 DataItemBean itemData = mAdapter.getItemData(position);
-                ToastUtil.showToast(itemData.getTitle());
+                ToastUtil.showToast(itemData.getTitle() + ": " + position);
+                binding.recyclerView.setRefreshing(true);
             }
         });
     }
