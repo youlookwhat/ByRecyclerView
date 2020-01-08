@@ -53,7 +53,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     }
 
     public T getItemData(int position) {
-        return mData.get(position);
+        return mData == null ? null : mData.get(position);
     }
 
     /**
