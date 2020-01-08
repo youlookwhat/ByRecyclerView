@@ -633,6 +633,7 @@ public class ByRecyclerView extends RecyclerView {
                 StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
                 p.setFullSpan(true);
             }
+            adapter.onViewAttachedToWindow(holder);
         }
 
         @Override
