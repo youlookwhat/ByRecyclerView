@@ -44,7 +44,7 @@ public class AppBarLayoutActivity extends BaseActivity<ActivityAppbarLayoutBindi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appbar_layout);
         StatusBarUtil.showTransparentStatusBarPadding(this, binding.toolbar);
-        binding.collapsing.setTitle("在CoordinatorLayout里使用");
+        binding.collapsing.setTitle("CoordinatorLayout 使用示例");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();

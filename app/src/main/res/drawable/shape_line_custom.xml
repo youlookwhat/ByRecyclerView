@@ -4,15 +4,16 @@
 
     <item
         android:gravity="center"
-        android:left="20dp">
+        android:left="94dp">
         <shape>
 
             <size android:height="1dp" />
 
             <corners android:radius="1dp" />
 
-            <solid android:color="@color/colorPrimary" />
-
+            <gradient
+                android:endColor="@color/colorPrimary"
+                android:startColor="@color/colorAccent" />
         </shape>
     </item>
 

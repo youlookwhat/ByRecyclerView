@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import me.jingbin.byrecyclerview.R;
@@ -76,14 +77,28 @@ public class GridFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private void initAdapter() {
         recyclerView = getView(R.id.recyclerView);
-        mAdapter = new GridAdapter(DataUtil.get(activity, 6));
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(activity, 3);
-//        recyclerView.setLayoutManager(gridLayoutManager);
-        final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(3, DensityUtil.dip2px(activity, 10));
-        itemDecoration.setNoShowSpace(1, 1);
-        recyclerView.addItemDecoration(itemDecoration);
+        mAdapter = new GridAdapter(DataUtil.get(activity, 20));
+
+        if ("grid".equals(mType)) {
+            // 宫格
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(activity, 3);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            // 四周也有间距
+            GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(3,
+                    DensityUtil.dip2px(activity, 10));
+            // 去掉首尾的分割线 (刷新头部和加载更多尾部)
+            recyclerView.addItemDecoration(itemDecoration.setNoShowSpace(1, 1));
+
+        } else {
+            // 瀑布流
+            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(staggeredGridLayoutManager);
+            // 四周没有间距
+            GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(3,
+                    DensityUtil.dip2px(activity, 10), false);
+            recyclerView.addItemDecoration(itemDecoration.setNoShowSpace(1, 1));
+            mAdapter.setStaggered(true);
+        }
         recyclerView.setAdapter(mAdapter);
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
@@ -92,30 +107,17 @@ public class GridFragment extends BaseFragment<FragmentRefreshBinding> {
                     recyclerView.loadMoreEnd();
                     return;
                 }
-                if (page == 2) {
-                    page++;
-                    recyclerView.loadMoreFail();
-                    return;
-                }
                 page++;
-                mAdapter.addData(DataUtil.getMore(activity, 6, page));
+                mAdapter.addData(DataUtil.getMore(activity, 20, page));
                 recyclerView.loadMoreComplete();
             }
         }, 1000);
         recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                if (position == 0) {
-                    recyclerView.removeItemDecorationAt(0);
-                    GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(5, DensityUtil.dip2px(activity, 10));
-                    itemDecoration.setNoShowSpace(1, 1);
-                    recyclerView.addItemDecoration(itemDecoration);
-                    staggeredGridLayoutManager.setSpanCount(5);
-                } else {
-                    DataItemBean itemData = mAdapter.getItemData(position);
-                    ToastUtil.showToast(itemData.getTitle());
-                    recyclerView.setRefreshing(true);
-                }
+                DataItemBean itemData = mAdapter.getItemData(position);
+//                ToastUtil.showToast(itemData.getTitle());
+//                recyclerView.setRefreshing(true);
             }
         });
         recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
@@ -125,7 +127,7 @@ public class GridFragment extends BaseFragment<FragmentRefreshBinding> {
                     @Override
                     public void run() {
                         page = 1;
-                        mAdapter.setNewData(DataUtil.getMore(activity, 9, page));
+                        mAdapter.setNewData(DataUtil.getMore(activity, 20, page));
                     }
                 }, 1000);
             }

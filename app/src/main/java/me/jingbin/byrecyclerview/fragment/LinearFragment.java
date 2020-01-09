@@ -82,7 +82,11 @@ public class LinearFragment extends BaseFragment<FragmentRefreshBinding> {
         recyclerView.setLayoutManager(layoutManager);
         // 加了分割线，滚动条才会置顶
         SpacesItemDecoration itemDecoration = new SpacesItemDecoration(recyclerView.getContext(), SpacesItemDecoration.VERTICAL, 1);
-        recyclerView.addItemDecoration(itemDecoration.setParam(R.color.colorBlue, 10, 10, 10));
+        if ("drawable".equals(mType)) {
+            recyclerView.addItemDecoration(itemDecoration.setDrawable(R.drawable.shape_line_custom));
+        } else {
+            recyclerView.addItemDecoration(itemDecoration.setParam(R.color.colorBlue, 10, 10, 10));
+        }
         recyclerView.setAdapter(mAdapter);
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override

@@ -8,16 +8,15 @@ import java.util.List;
 import me.jingbin.byrecyclerview.activity.AppBarLayoutActivity;
 import me.jingbin.byrecyclerview.activity.CustomLayoutActivity;
 import me.jingbin.byrecyclerview.activity.DataBindingActivity;
-import me.jingbin.byrecyclerview.activity.DividerActivity;
+import me.jingbin.byrecyclerview.activity.DividerGridActivity;
+import me.jingbin.byrecyclerview.activity.DividerLinearActivity;
 import me.jingbin.byrecyclerview.activity.ItemClickActivity;
-import me.jingbin.byrecyclerview.activity.MultiItemActivity;
 import me.jingbin.byrecyclerview.activity.MultiTypeItemActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ListViewActivity;
 import me.jingbin.byrecyclerview.activity.RefreshActivity;
 import me.jingbin.byrecyclerview.activity.SimpleActivity;
-import me.jingbin.byrecyclerview.activity.StickyItemActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.bean.MainItemBean;
 
@@ -40,7 +39,7 @@ public class DataUtil {
         list.add(new MainItemBean("设置HeaderView，FooterView", HeaderFooterActivity.class, "3"));
         list.add(new MainItemBean("设置StateView (加载中布局/空布局/错误布局)", StateViewActivity.class, "4"));
         list.add(new MainItemBean("设置点击/长按事件 (item或item里的子View)", ItemClickActivity.class, "5"));
-        list.add(new MainItemBean("在 AppBarLayout + RecyclerView 中使用", AppBarLayoutActivity.class, "6"));
+        list.add(new MainItemBean("CoordinatorLayout + RecyclerView 使用示例", AppBarLayoutActivity.class, "6"));
         list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class, "7"));
 
         list.add(new MainItemBean("Adapter", null).setCategoryName());
@@ -49,8 +48,9 @@ public class DataUtil {
         list.add(new MainItemBean("使用DataBinding (RecyclerView / ListView)", DataBindingActivity.class, "3"));
 
         list.add(new MainItemBean("ItemDecoration", null).setCategoryName());
-        list.add(new MainItemBean("自定义行列间距", DividerActivity.class, "1"));
-        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class, "2"));
+        list.add(new MainItemBean("设置分割线 (线性布局)", DividerLinearActivity.class, "1"));
+        list.add(new MainItemBean("设置分割线 (宫格/瀑布流)", DividerGridActivity.class, "2"));
+//        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class, "3"));
         return list;
     }
 
