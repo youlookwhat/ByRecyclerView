@@ -18,8 +18,10 @@ package me.jingbin.library.decoration;
 
 import android.graphics.Rect;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * 给 GridLayoutManager or StaggeredGridLayoutManager 设置间距，可设置去除首尾间距个数
@@ -76,6 +78,12 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
             // 减掉不设置间距的position
             position = position - mStartFromSize;
             int column = position % mSpanCount;
+
+            // 瀑布流获取列方式不一样
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            if (layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+                column = ((StaggeredGridLayoutManager.LayoutParams) layoutParams).getSpanIndex();
+            }
 
             if (mIncludeEdge) {
                 /*
