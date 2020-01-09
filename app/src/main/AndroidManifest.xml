@@ -32,7 +32,6 @@
         <activity android:name=".activity.CustomLayoutActivity" />
         <activity android:name=".activity.DividerGridActivity" />
         <activity android:name=".activity.ItemClickActivity" />
-        <activity android:name=".activity.MultiItemActivity" />
         <activity android:name=".activity.StickyItemActivity" />
         <activity android:name=".activity.MultiTypeItemActivity" />
         <activity android:name=".activity.DividerLinearActivity" />
