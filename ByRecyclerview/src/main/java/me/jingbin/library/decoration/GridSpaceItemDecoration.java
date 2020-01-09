@@ -18,7 +18,9 @@ package me.jingbin.library.decoration;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 
 
 /**
@@ -76,6 +78,12 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
             // 减掉不设置间距的position
             position = position - mStartFromSize;
             int column = position % mSpanCount;
+
+            // 瀑布流获取列方式不一样
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            if (layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+                column = ((StaggeredGridLayoutManager.LayoutParams) layoutParams).getSpanIndex();
+            }
 
             if (mIncludeEdge) {
                 /*
