@@ -65,6 +65,9 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
         mRecyclerView = recyclerView;
     }
 
+    /**
+     * 在指定位置添加一条数据
+     */
     public void addData(int position, T data) {
         mData.add(position, data);
         notifyItemRangeInserted(position + getCustomTopItemViewCount(), 1);
@@ -93,6 +96,9 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
         compatibilityDataSizeChanged(data.size());
     }
 
+    /**
+     * 在指定位置添加一组数据
+     */
     public void addData(int position, List<T> data) {
         this.mData.addAll(position, data);
         notifyItemRangeInserted(position + getCustomTopItemViewCount(), data.size());
