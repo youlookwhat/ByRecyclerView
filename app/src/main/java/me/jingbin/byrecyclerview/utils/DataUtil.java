@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.jingbin.byrecyclerview.activity.AppBarLayoutActivity;
+import me.jingbin.byrecyclerview.activity.CustomHorizontalLayoutActivity;
 import me.jingbin.byrecyclerview.activity.CustomLayoutActivity;
 import me.jingbin.byrecyclerview.activity.DataBindingActivity;
 import me.jingbin.byrecyclerview.activity.DividerGridActivity;
@@ -41,6 +42,7 @@ public class DataUtil {
         list.add(new MainItemBean("设置点击/长按事件 (item或item里的子View)", ItemClickActivity.class, "5"));
         list.add(new MainItemBean("CoordinatorLayout + RecyclerView 使用示例", AppBarLayoutActivity.class, "6"));
         list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class, "7"));
+        list.add(new MainItemBean("自定义加载更多布局 (横向)", CustomHorizontalLayoutActivity.class, "8"));
 
         list.add(new MainItemBean("Adapter", null).setCategoryName());
         list.add(new MainItemBean("多类型列表 (线性/宫格/瀑布流)", MultiTypeItemActivity.class, "1"));
