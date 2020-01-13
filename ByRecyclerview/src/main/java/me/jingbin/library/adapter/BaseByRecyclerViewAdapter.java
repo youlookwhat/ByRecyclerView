@@ -67,8 +67,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
 
     public void addData(int position, T data) {
         mData.add(position, data);
-        position = position + getCustomTopItemViewCount();
-        notifyItemRangeInserted(position, 1);
+        notifyItemRangeInserted(position + getCustomTopItemViewCount(), 1);
         compatibilityDataSizeChanged(1);
     }
 
@@ -95,10 +94,8 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     }
 
     public void addData(int position, List<T> data) {
-        int startPosition = mData.size();
-        this.mData.addAll(data);
-        startPosition = startPosition + getCustomTopItemViewCount();
-        notifyItemRangeInserted(startPosition, data.size());
+        this.mData.addAll(position, data);
+        notifyItemRangeInserted(position + getCustomTopItemViewCount(), data.size());
         compatibilityDataSizeChanged(data.size());
     }
 
