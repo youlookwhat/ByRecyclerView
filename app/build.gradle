@@ -6,8 +6,8 @@ android {
         applicationId "me.jingbin.byrecyclerview"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0.9"
+        versionCode 2
+        versionName "1.0.15"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -82,5 +82,5 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3'
 
     implementation project(':ByRecyclerview')
-//    implementation "com.github.youlookwhat:ByRecyclerView:1.0.4"
+//    implementation "com.github.youlookwhat:ByRecyclerView:1.0.14"
 }
