@@ -4,9 +4,12 @@
 
     <item
         android:id="@+id/actionbar_info"
-        android:icon="@drawable/icon_action_info"
         android:orderInCategory="100"
-        android:title="关于"
-        app:showAsAction="always" />
+        android:title="关于开源库" />
+
+    <item
+        android:id="@+id/actionbar_update"
+        android:orderInCategory="100"
+        android:title="版本" />
 
 </menu>

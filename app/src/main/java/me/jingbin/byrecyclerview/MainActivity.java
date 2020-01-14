@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        binding.toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.icon_action_info));
         setSupportActionBar(binding.toolbar);
 
         final MainAdapter homeAdapter = new MainAdapter(DataUtil.getMainActivityList(this));
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.actionbar_update);
+        item.setTitle("当前版本:" + BuildConfig.VERSION_NAME);
         return true;
     }
 
@@ -64,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.actionbar_info:
                 WebUtil.openLink(MainActivity.this, "https://github.com/youlookwhat/ByRecyclerView");
+                break;
+            case R.id.actionbar_update:
+                WebUtil.openLink(MainActivity.this, "https://fir.im/byrecyclerview");
                 break;
             default:
                 break;
