@@ -28,10 +28,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         super.onCreate(savedInstanceState);
 
         initActionBar();
-        ByRecyclerView view = getView(R.id.recyclerView);
-        if (view != null) {
-            view.destroy();
-        }
     }
 
     private void initActionBar() {
@@ -76,5 +72,9 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     protected void onDestroy() {
         super.onDestroy();
         ImmersionBar.with(this).destroy();
+        ByRecyclerView view = getView(R.id.recyclerView);
+        if (view != null) {
+            view.destroy();
+        }
     }
 }

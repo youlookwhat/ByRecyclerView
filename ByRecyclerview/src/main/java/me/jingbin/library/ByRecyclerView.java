@@ -1211,23 +1211,22 @@ public class ByRecyclerView extends RecyclerView {
      * call it when you finish the activity,
      */
     public void destroy() {
+        mHeaderViewEnabled = false;
+        mFootViewEnabled = false;
+        mStateViewEnabled = false;
         mRefreshEnabled = false;
         mLoadMoreEnabled = false;
         if (mHeaderViews != null) {
             mHeaderViews.clear();
-            mHeaderViews = null;
         }
         if (mHeaderTypes != null) {
             mHeaderTypes.clear();
-            mHeaderTypes = null;
         }
         if (mFooterLayout != null) {
             mFooterLayout.removeAllViews();
-            mFooterLayout = null;
         }
         if (mStateLayout != null) {
             mStateLayout.removeAllViews();
-            mStateLayout = null;
         }
     }
 }
