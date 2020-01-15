@@ -26,11 +26,11 @@ ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产�
 ## Demo
 |刷新操作|设置状态布局|
 |:--:|:--:|
-|![刷新操作](https://user-gold-cdn.xitu.io/2020/1/15/16fa859156dbe738?w=292&h=517&f=gif&s=352940)|![设置状态布局](https://user-gold-cdn.xitu.io/2020/1/15/16fa85999f001be4?w=292&h=517&f=gif&s=193418)|
+|![刷新操作](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_refresh.gif?raw=true)|![设置状态布局](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_statue.gif?raw=true)|
 
 |多类型列表(线性/宫格/瀑布流)|分割线(线性/宫格/瀑布流)|
 |:--:|:--:|
-|![多类型列表](https://user-gold-cdn.xitu.io/2020/1/15/16fa85c13ed8bf4d?w=292&h=517&f=gif&s=986442)|![分割线](https://user-gold-cdn.xitu.io/2020/1/15/16fa85c7f6beece7?w=292&h=517&f=gif&s=450256)|
+|![多类型列表](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_adapter_type.gif?raw=true")|![分割线](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_divider.gif?raw=true")|
 
 <!--![ByRecyclerView.gif](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_demo.gif?raw=true)-->
 
