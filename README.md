@@ -4,10 +4,7 @@
 [![Apache License 2.0][3]][4]
 [![API][5]][6]
 
-RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterView / EmptyView、item点击/长按事件；
-
-优化过的Adapter：极简，减少大量代码，结合DataBinding使用
-
+ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产生的RecyclerView开源库。它其中的功能有：自带下拉刷新或结合SwipeRefreshLayout、触底加载更多、添加/移除多个HeaderView/FooterView、状态布局StateView、点击/长按事件、万能分割线、优化过的极简Adapter(databinding)等。
 
 ## 功能特性
  - 1.支持 下拉刷新、加载更多
@@ -24,10 +21,18 @@ RecyclerView实现：下拉刷新、加载更多、设置 HeaderView / FooterVie
 
 
 ## 文档
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [**详细使用见Wiki**](https://github.com/youlookwhat/ByRecyclerView/wiki)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log) | [**详细使用见Wiki**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
 ## Demo
-![ByRecyclerView.gif](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_demo.gif?raw=true)
+|刷新操作|设置状态布局|
+|:--:|:--:|
+|![刷新操作](https://user-gold-cdn.xitu.io/2020/1/15/16fa859156dbe738?w=292&h=517&f=gif&s=352940)|![设置状态布局](https://user-gold-cdn.xitu.io/2020/1/15/16fa85999f001be4?w=292&h=517&f=gif&s=193418)|
+
+|多类型列表(线性/宫格/瀑布流)|分割线(线性/宫格/瀑布流)|
+|:--:|:--:|
+|![多类型列表](https://user-gold-cdn.xitu.io/2020/1/15/16fa85c13ed8bf4d?w=292&h=517&f=gif&s=986442)|![分割线](https://user-gold-cdn.xitu.io/2020/1/15/16fa85c7f6beece7?w=292&h=517&f=gif&s=450256)|
+
+<!--![ByRecyclerView.gif](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_demo.gif?raw=true)-->
 
 ### 下载试用
 |[AndroidX版本(Apk-Demo)](https://fir.im/byrecyclerview)|[Support版本(CloudReader)](https://fir.im/cloudreader)|
@@ -49,8 +54,8 @@ allprojects {
 #### 2.然后在dependencies添加
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.9'         // AndroidX版本引入
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.9-support" // support版本引入
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.15'         // AndroidX版本引入
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.15-support" // support版本引入
 }
 ```
 
@@ -87,9 +92,18 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<String> {
 
 mAdapter.setNewData(list);   // 设置第一页数据
 ```
-#### 3.加载更多监听
+#### 3.设置监听
 
 ```java
+// 下拉刷新监听
+mRecyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 刷新完成
+                mRecyclerView.setRefreshing(false);
+            }
+        });
+// 加载更多监听
 mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
     @Override
     public void onLoadMore() {
@@ -103,18 +117,25 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
 
 
 ## 与BRVAH、XRecyclerView对比
-ByRecyclerView 在XRecyclerView基础上进行了深度优化，使其可以设置自定义的下拉刷新布局 和 加载更多布局等。优化了BRVAH的加载更多逻辑，使其首屏上拉才加载而不是不足一屏就加载。
-
-
-||ByRecyclerView| BaseRecyclerViewAdapterHelper | XRecyclerView |
+||ByRecyclerView| BRVAH | XRecyclerView |
 |:--:|:--:|:--:|:--:|
 |下拉刷新布局|继承基类自定义布局|无|只能简单设置样式|
+|SwipeRefreshLayout|可配合使用|可配合使用|不能使用|
 |加载更多布局|继承基类自定义布局|继承基类设置简单布局|继承基类自定义类|
 |加载更多机制|不足一屏上拉加载，超过后触底加载|不足一屏即加载|触底加载|
 |HeaderView|多ViewType区别|同一个item|多ViewType区别|
 |FooterView|同一个item|同一个item|不能添加|
 |EmptyView|可设置|可设置|不能设置|
-|item点击/长按事件|有|有| 无 |
+|点击/长按事件|有|有| 无 |
+
+ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的优势在于四点：
+
+ - 1.headerView使用的是多type的形式，即一个header就是一个position
+ - 2.不足一屏上拉加载，超过后触底加载
+ - 3.自带下拉加载布局，也可使用三方刷新框架，比如SwipeRefreshLayout
+ - 4.万能分割线(LinearLayout / GridLayout / StaggeredGridLayout)
+
+缺点是还没有BRVAH里的部分功能，比如分组adapter、DiffUtils、item扩展动画...后期会逐步完善。
 
 ## 混淆
 此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，在公司项目中使用，如果你在项目混淆之后出现问题，请及时联系我。
