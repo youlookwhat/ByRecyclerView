@@ -32,15 +32,14 @@ ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产�
 |:--:|:--:|
 |![多类型列表](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_adapter_type.gif?raw=true")|![分割线](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_divider.gif?raw=true")|
 
-<!--![ByRecyclerView.gif](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_demo.gif?raw=true)-->
 
 ### 下载试用
 |[AndroidX版本(Apk-Demo)](https://fir.im/byrecyclerview)|[Support版本(CloudReader)](https://fir.im/cloudreader)|
 |:--:|:--:|
 |<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>|<img width="200" height=“200” src="https://github.com/youlookwhat/CloudReader/blob/master/file/download.png?raw=true"></img>|
 
-## 简单接入
-### 1.先在 build.gradle 的 repositories 添加
+## 简单使用
+1.先在 build.gradle 的 repositories 添加
 ```
 allprojects {
 	repositories {
@@ -50,7 +49,7 @@ allprojects {
 }
 ```
 
-### 2.然后在dependencies添加
+2.然后在dependencies添加
 ```
 dependencies {
 	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.15'         // AndroidX版本引入
@@ -58,7 +57,7 @@ dependencies {
 }
 ```
 
-### 3.在XML布局中引用 ByRecyclerView
+3.在XML布局中引用 ByRecyclerView
 
 ```xml
 <me.jingbin.library.ByRecyclerView
@@ -69,7 +68,7 @@ dependencies {
     tools:listitem="@layout/item_home" />
 ```
 
-### 4.使用BaseRecyclerAdapter
+4.使用BaseRecyclerAdapter
 
 ```java
 mAdapter = new OneTypeAdapter(list);
@@ -90,7 +89,7 @@ public class OneTypeAdapter extends BaseRecyclerAdapter<String> {
 
 mAdapter.setNewData(list);   // 设置第一页数据
 ```
-### 5.设置监听
+5.设置监听
 
 ```java
 // 下拉刷新监听
