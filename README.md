@@ -20,8 +20,11 @@ ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产�
  - 11.默认使用AndoridX，且支持Support
 
 
-## 文档
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log) | [**详细使用见Wiki**](https://github.com/youlookwhat/ByRecyclerView/wiki)
+## Documents
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log) | [**详细使用见Wiki！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
+
+ - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
+
 
 ## Demo
 |刷新操作|设置状态布局|
