@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.jingbin.byrecyclerview.R;
@@ -16,7 +15,7 @@ import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.decoration.SpacesItemDecoration;
-import me.jingbin.library.decoration.StickyItemDecoration;
+import me.jingbin.library.stickyview.StickyLinearLayoutManager;
 
 /**
  * @author jingbin
@@ -76,20 +75,19 @@ public class StickyLinearFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private void initAdapter() {
         mAdapter = new MultiAdapter(DataUtil.getMultiData(getContext(), 50));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        StickyLinearLayoutManager layoutManager = new StickyLinearLayoutManager(getContext(), mAdapter);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
 
         SpacesItemDecoration itemDecoration = new SpacesItemDecoration(getActivity(), SpacesItemDecoration.VERTICAL);
         itemDecoration.setDrawable(R.drawable.shape_line);
         binding.recyclerView.addItemDecoration(itemDecoration);
-        binding.recyclerView.addItemDecoration(new StickyItemDecoration());
         binding.recyclerView.setAdapter(mAdapter);
 //        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
 //                page = 1;
-//                mAdapter.setNewData(DataUtil.getMultiData(MultiItemActivity.this, 20));
+//                mAdapter.setNewData(DataUtil.getMultiData(getActivity(), 20));
 //            }
 //        });
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {

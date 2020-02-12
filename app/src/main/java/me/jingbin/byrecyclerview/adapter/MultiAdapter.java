@@ -15,7 +15,7 @@ import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseByViewHolder;
-import me.jingbin.library.decoration.StickyView;
+import me.jingbin.library.stickyview.StickyHeaderHandler;
 
 /**
  * 多种类型 示例
@@ -33,7 +33,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         if (0 <= position && position < getData().size()) {
             DataItemBean itemData = getItemData(position);
             if ("title".equals(itemData.getType())) {
-                return StickyView.TYPE_STICKY_VIEW;
+                return StickyHeaderHandler.TYPE_STICKY_VIEW;
             } else {
                 return 2;
             }
@@ -61,7 +61,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
                     }
                     int type = getItemViewType(position - byRecyclerView.getCustomTopItemViewCount());
                     switch (type) {
-                        case StickyView.TYPE_STICKY_VIEW:
+                        case StickyHeaderHandler.TYPE_STICKY_VIEW:
                             // title栏显示一列
                             return gridManager.getSpanCount();
                         default:
@@ -76,7 +76,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
     @NonNull
     @Override
     public BaseByViewHolder<DataItemBean> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (StickyView.TYPE_STICKY_VIEW == viewType) {
+        if (StickyHeaderHandler.TYPE_STICKY_VIEW == viewType) {
             return new TitleHolder(parent, R.layout.item_multi_title);
         } else {
             return new ViewHolder(parent, R.layout.item_home);

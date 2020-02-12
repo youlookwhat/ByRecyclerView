@@ -1,4 +1,4 @@
-package me.jingbin.library.stick.handle;
+package me.jingbin.library.stickyview;
 
 import android.content.Context;
 import android.os.Build;
@@ -19,6 +19,11 @@ import java.util.Map;
  */
 public class StickyHeaderHandler {
 
+    /**
+     * StickyView的 ItemViewType
+     */
+    public static final int TYPE_STICKY_VIEW = 0x001;
+
     private static final int INVALID_POSITION = -1;
     public static final int NO_ELEVATION = -1;
     public static final int DEFAULT_ELEVATION = 5;
@@ -26,14 +31,10 @@ public class StickyHeaderHandler {
     private final RecyclerView mRecyclerView;
     private RecyclerView.ViewHolder currentViewHolder;
     private View currentHeader;
-
     private final boolean checkMargins;
-
     private List<Integer> mHeaderPositions;
-
     private int orientation;
     private boolean dirty;
-
     private int lastBoundPosition = INVALID_POSITION;
     private float headerElevation = NO_ELEVATION;
     private int cachedElevation = NO_ELEVATION;
@@ -380,10 +381,6 @@ public class StickyHeaderHandler {
         if (cachedElevation != NO_ELEVATION && headerElevation == NO_ELEVATION) {
             headerElevation = dp2px(context, cachedElevation);
         }
-    }
-
-    public View getCurrentHeader() {
-        return currentHeader;
     }
 
     private float dp2px(Context context, int dp) {

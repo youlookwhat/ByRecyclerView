@@ -10,14 +10,13 @@ import java.util.List;
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
-import me.jingbin.byrecyclerview.databinding.ItemHomeBinding;
 import me.jingbin.byrecyclerview.databinding.ItemMultiGridBinding;
 import me.jingbin.byrecyclerview.utils.DensityUtil;
 import me.jingbin.byrecyclerview.utils.ViewUtil;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseByViewHolder;
-import me.jingbin.library.decoration.StickyView;
+import me.jingbin.library.stickyview.StickyHeaderHandler;
 
 /**
  * 多种类型 示例
@@ -35,7 +34,7 @@ public class MultiStaggeredAdapter extends BaseByRecyclerViewAdapter<DataItemBea
         if (0 <= position && position < getData().size()) {
             DataItemBean itemData = getItemData(position);
             if ("title".equals(itemData.getType())) {
-                return StickyView.TYPE_STICKY_VIEW;
+                return StickyHeaderHandler.TYPE_STICKY_VIEW;
             } else {
                 return 2;
             }
@@ -56,7 +55,7 @@ public class MultiStaggeredAdapter extends BaseByRecyclerViewAdapter<DataItemBea
                 || byRecyclerView.isRefreshHeader(holder.getLayoutPosition())
                 || byRecyclerView.isLoadMoreView(holder.getLayoutPosition())
                 || byRecyclerView.isStateView(holder.getLayoutPosition())
-                || holder.getItemViewType() == StickyView.TYPE_STICKY_VIEW)) {
+                || holder.getItemViewType() == StickyHeaderHandler.TYPE_STICKY_VIEW)) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
             p.setFullSpan(true);
         }
@@ -65,7 +64,7 @@ public class MultiStaggeredAdapter extends BaseByRecyclerViewAdapter<DataItemBea
     @NonNull
     @Override
     public BaseByViewHolder<DataItemBean> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (StickyView.TYPE_STICKY_VIEW == viewType) {
+        if (StickyHeaderHandler.TYPE_STICKY_VIEW == viewType) {
             return new TitleHolder(parent, R.layout.item_multi_title);
         } else {
             return new ViewHolder(parent, R.layout.item_multi_grid);

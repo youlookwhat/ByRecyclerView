@@ -12,7 +12,7 @@ import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
 import me.jingbin.byrecyclerview.databinding.ItemMainBinding;
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
 import me.jingbin.library.adapter.BaseByViewHolder;
-import me.jingbin.library.decoration.StickyView;
+import me.jingbin.library.stickyview.StickyHeaderHandler;
 
 /**
  * @author jingbin
@@ -28,7 +28,7 @@ public class MainAdapter extends BaseByRecyclerViewAdapter<MainItemBean, BaseByV
         if (0 <= position && position < getData().size()) {
             MainItemBean itemData = getItemData(position);
             if (itemData.isCategoryName()) {
-                return StickyView.TYPE_STICKY_VIEW;
+                return StickyHeaderHandler.TYPE_STICKY_VIEW;
             } else {
                 return 2;
             }
@@ -39,7 +39,7 @@ public class MainAdapter extends BaseByRecyclerViewAdapter<MainItemBean, BaseByV
     @NonNull
     @Override
     public BaseByViewHolder<MainItemBean> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (StickyView.TYPE_STICKY_VIEW == viewType) {
+        if (StickyHeaderHandler.TYPE_STICKY_VIEW == viewType) {
             return new TitleHolder(parent, R.layout.item_multi_title);
         } else {
             return new ViewHolder(parent, R.layout.item_main);

@@ -11,13 +11,14 @@ import me.jingbin.byrecyclerview.activity.CustomLayoutActivity;
 import me.jingbin.byrecyclerview.activity.DataBindingActivity;
 import me.jingbin.byrecyclerview.activity.DividerGridActivity;
 import me.jingbin.byrecyclerview.activity.DividerLinearActivity;
-import me.jingbin.byrecyclerview.activity.ItemClickActivity;
-import me.jingbin.byrecyclerview.activity.MultiTypeItemActivity;
-import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
+import me.jingbin.byrecyclerview.activity.ItemClickActivity;
 import me.jingbin.byrecyclerview.activity.ListViewActivity;
+import me.jingbin.byrecyclerview.activity.MultiTypeItemActivity;
 import me.jingbin.byrecyclerview.activity.RefreshActivity;
 import me.jingbin.byrecyclerview.activity.SimpleActivity;
+import me.jingbin.byrecyclerview.activity.StateViewActivity;
+import me.jingbin.byrecyclerview.activity.StickyItemActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.bean.MainItemBean;
 
@@ -52,7 +53,7 @@ public class DataUtil {
         list.add(new MainItemBean("ItemDecoration", null).setCategoryName());
         list.add(new MainItemBean("设置分割线 (线性布局)", DividerLinearActivity.class, "1"));
         list.add(new MainItemBean("设置分割线 (宫格/瀑布流)", DividerGridActivity.class, "2"));
-//        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class, "3"));
+        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class, "3"));
         return list;
     }
 
@@ -63,14 +64,15 @@ public class DataUtil {
         ArrayList<DataItemBean> list = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             DataItemBean bean = new DataItemBean();
-            if (i == 0
-//                    || i == 2 || i == 4
-//                    || i == 6 || i == 8
-                    || i == 10 || i == 20
-//                    || i == 22 || i == 19
-//                    || i == 13 || i == 15
-                    || i == 34 || i == 40
-                    || i == 17 || i == 30) {
+            if (
+//                    i == 0||
+                    i == 2 || i == 4
+                            || i == 6 || i == 8
+                            || i == 10 || i == 20
+                            || i == 22 || i == 19
+                            || i == 13 || i == 15
+                            || i == 34 || i == 40
+                            || i == 17 || i == 30) {
                 bean.setType("title");
                 bean.setDes("我是标题");
             } else {

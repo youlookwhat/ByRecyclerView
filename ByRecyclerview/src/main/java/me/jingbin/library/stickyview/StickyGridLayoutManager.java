@@ -1,9 +1,9 @@
-package me.jingbin.library.stick;
+package me.jingbin.library.stickyview;
 
 import android.content.Context;
 import android.view.View;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -12,32 +12,21 @@ import java.util.List;
 import java.util.Map;
 
 import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
-import me.jingbin.library.decoration.StickyView;
-import me.jingbin.library.stick.handle.StickyHeaderHandler;
-import me.jingbin.library.stick.handle.ViewHolderFactory;
 
 /**
  * @author jingbin
  */
-public class StickyLinearLayoutManager extends LinearLayoutManager {
+public class StickyGridLayoutManager extends GridLayoutManager {
 
-    private BaseByRecyclerViewAdapter mHeaderProvider;
+    private BaseByRecyclerViewAdapter mBaseAdapter;
     private StickyHeaderHandler mHeaderHandler;
-
     private List<Integer> mHeaderPositions = new ArrayList<>();
-
     private ViewHolderFactory viewHolderFactory;
-
     private int headerElevation = StickyHeaderHandler.NO_ELEVATION;
 
-    public StickyLinearLayoutManager(Context context, BaseByRecyclerViewAdapter headerProvider) {
-        this(context, VERTICAL, false, headerProvider);
-    }
-
-    public StickyLinearLayoutManager(Context context, int orientation, boolean reverseLayout, BaseByRecyclerViewAdapter headerProvider) {
-        super(context, orientation, reverseLayout);
-
-        this.mHeaderProvider = headerProvider;
+    public StickyGridLayoutManager(Context context, int spanSize, @RecyclerView.Orientation int orientation, BaseByRecyclerViewAdapter baseAdapter) {
+        super(context, spanSize, orientation, false);
+        this.mBaseAdapter = baseAdapter;
     }
 
     public void elevateHeaders(boolean elevateHeaders) {
@@ -122,7 +111,6 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
 
     private Map<Integer, View> getVisibleHeaders() {
         Map<Integer, View> visibleHeaders = new LinkedHashMap<>();
-
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
             int dataPosition = getPosition(view);
@@ -135,16 +123,15 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
 
     private void cacheHeaderPositions() {
         mHeaderPositions.clear();
-        List adapterData = mHeaderProvider.getData();
+        List adapterData = mBaseAdapter.getData();
         if (adapterData == null) {
             if (mHeaderHandler != null) {
                 mHeaderHandler.setHeaderPositions(mHeaderPositions);
             }
             return;
         }
-
         for (int i = 0; i < adapterData.size(); i++) {
-            if (StickyView.TYPE_STICKY_VIEW == mHeaderProvider.getItemViewType(i)) {
+            if (StickyHeaderHandler.TYPE_STICKY_VIEW == mBaseAdapter.getItemViewType(i)) {
                 mHeaderPositions.add(i);
             }
         }

@@ -1,4 +1,4 @@
-package me.jingbin.library.stick.handle;
+package me.jingbin.library.stickyview;
 
 import android.view.ViewGroup;
 
