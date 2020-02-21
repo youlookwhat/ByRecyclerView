@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(this,SpacesItemDecoration.VERTICAL,2).setParam(R.color.colorAccent,1));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL, 2).setParam(R.color.colorAccent, 1));
         recyclerView.addHeaderView(R.layout.header_view);
         recyclerView.setAdapter(dataAdapter);
 
@@ -71,5 +71,11 @@ public class MainActivity extends AppCompatActivity {
             dataBeans.add(dataBean);
         }
         return dataBeans;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding.recyclerView.destroy();
     }
 }
