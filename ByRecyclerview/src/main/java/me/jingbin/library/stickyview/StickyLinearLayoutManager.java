@@ -34,7 +34,6 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
 
     public StickyLinearLayoutManager(Context context, int orientation, boolean reverseLayout, BaseByRecyclerViewAdapter headerProvider) {
         super(context, orientation, reverseLayout);
-
         this.mHeaderProvider = headerProvider;
     }
 

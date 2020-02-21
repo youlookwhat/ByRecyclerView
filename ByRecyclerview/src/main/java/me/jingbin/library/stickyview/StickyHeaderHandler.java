@@ -25,8 +25,8 @@ public class StickyHeaderHandler {
     public static final int TYPE_STICKY_VIEW = 0x001;
 
     private static final int INVALID_POSITION = -1;
-    public static final int NO_ELEVATION = -1;
-    public static final int DEFAULT_ELEVATION = 5;
+    static final int NO_ELEVATION = -1;
+    static final int DEFAULT_ELEVATION = 5;
 
     private final RecyclerView mRecyclerView;
     private RecyclerView.ViewHolder currentViewHolder;
