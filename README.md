@@ -4,7 +4,7 @@
 [![Apache License 2.0][3]][4]
 [![API][5]][6]
 
-ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产生的RecyclerView开源库。它其中的功能有：自带下拉刷新或结合SwipeRefreshLayout、触底加载更多、添加/移除多个HeaderView/FooterView、状态布局StateView、点击/长按事件、万能分割线、优化过的极简Adapter(databinding)等。
+ByRecyclerView 是基于RecyclerView的扩展，提供了提供了上拉刷新、加载更多、 addHeaderView/addFooterView/setStateView、item点击/长按监听、万能分割线、粘性header、极简Adapter(databinding)等功能，有效的解决了XRecyclerView和BRVAH其中的问题。
 
 ## 功能特性
  - 1.支持 下拉刷新、加载更多
@@ -21,13 +21,14 @@ ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产�
  - 12.默认使用AndoridX，且支持Support
 
 
-## Screenshots
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log) | [**详细使用见Wiki！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
+## Document
+ -  👉 [**详细使用见Wiki！！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
 
 
-## Demo
+## Screenshots
 |刷新操作|设置状态布局|多类型列表|万能分割线|
 |:--:|:--:|:--:|:--:|
 |![刷新操作](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_refresh.gif?raw=true)|![设置状态布局](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_statue.gif?raw=true)|![多类型列表](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_adapter_type.gif?raw=true")|![分割线](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_divider.gif?raw=true")|
@@ -38,7 +39,7 @@ ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产�
 |:--:|:--:|
 |<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>|<img width="200" height=“200” src="https://github.com/youlookwhat/CloudReader/blob/master/file/download.png?raw=true"></img>|
 
-## 简单使用
+## 简单使用  👉 [**Wiki文档**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 1.先在 build.gradle 的 repositories 添加
 
 ```
