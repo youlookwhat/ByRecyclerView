@@ -4,7 +4,7 @@
 [![Apache License 2.0][3]][4]
 [![API][5]][6]
 
-ByRecyclerView 是基于RecyclerView的扩展，提供了提供了上拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按监听、万能分割线、粘性header、极简Adapter(databinding)等功能，有效的解决了XRecyclerView和BRVAH其中的问题。
+ByRecyclerView 是基于RecyclerView的扩展，提供了上拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按监听、万能分割线、粘性header、极简Adapter(databinding)等功能，有效的解决了XRecyclerView和BRVAH其中的问题。
 
 ## 功能特性
  - 1.支持 下拉刷新、加载更多
@@ -13,7 +13,7 @@ ByRecyclerView 是基于RecyclerView的扩展，提供了提供了上拉刷新�
  - 4.可设置自定义 下拉刷新布局 和 加载更多布局
  - 5.添加/移除 HeaderView、FooterView
  - 6.设置空布局 EmptyView
- - 7.添加item的点击/长按事件
+ - 7.添加item及子view的点击/长按事件
  - 8.优化过的BaseAdapter (RecyclerView / ListView)，减少大量代码
  - 9.Adapter结合DataBinding使用 (RecyclerView / ListView)
  - 10.可添加万能分隔线（LinearLayout / GridLayout / StaggeredGridLayout）
