@@ -17,23 +17,20 @@ ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产�
  - 8.优化过的BaseAdapter (RecyclerView / ListView)，减少大量代码
  - 9.Adapter结合DataBinding使用 (RecyclerView / ListView)
  - 10.可添加万能分隔线（LinearLayout / GridLayout / StaggeredGridLayout）
- - 11.默认使用AndoridX，且支持Support
+ - 11.可配置粘性header，StickyView
+ - 12.默认使用AndoridX，且支持Support
 
 
-## Documents
+## Screenshots
  - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log) | [**详细使用见Wiki！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
  - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
 
 
 ## Demo
-|刷新操作|设置状态布局|
-|:--:|:--:|
-|![刷新操作](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_refresh.gif?raw=true)|![设置状态布局](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_statue.gif?raw=true)|
-
-|多类型列表(线性/宫格/瀑布流)|分割线(线性/宫格/瀑布流)|
-|:--:|:--:|
-|![多类型列表](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_adapter_type.gif?raw=true")|![分割线](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_divider.gif?raw=true")|
+|刷新操作|设置状态布局|多类型列表|万能分割线|
+|:--:|:--:|:--:|:--:|
+|![刷新操作](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_refresh.gif?raw=true)|![设置状态布局](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_statue.gif?raw=true)|![多类型列表](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_adapter_type.gif?raw=true")|![分割线](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_divider.gif?raw=true")|
 
 
 ### 下载试用
@@ -43,6 +40,7 @@ ByRecyclerView 主要是为了解决XRecyclerView和BRVAH其中的问题而产�
 
 ## 简单使用
 1.先在 build.gradle 的 repositories 添加
+
 ```
 allprojects {
 	repositories {
@@ -53,10 +51,11 @@ allprojects {
 ```
 
 2.然后在dependencies添加
+
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.15'         // AndroidX版本引入
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.15-support" // support版本引入
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.16'         // AndroidX版本引入
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.16-support" // support版本引入
 }
 ```
 
@@ -140,13 +139,19 @@ ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于
 ## 混淆
 此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，在公司项目中使用，如果你在项目混淆之后出现问题，请及时联系我。
 
-## 答疑
+## Issues
 ### QQ讨论群 - 831860628
 大家可以加群讨论使用本库时出现的问题，也可以直接提[Issues](https://github.com/youlookwhat/ByRecyclerView/issues)，我会第一时间帮助大家解决。如果此库帮助到了你，还请给个Star、Fork一下，我将更有动力持续迭代优化，非常感谢^_^。
 
-## 感谢与参考
+## Thanks
  - [XRecyclerView](https://github.com/XRecyclerView/XRecyclerView)
  - [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
+
+## About me
+ - **QQ**： 770413277
+ - **掘金**：[Jinbeen](https://juejin.im/user/56eec46d1ea49300555a176b/posts)
+ - **CSDN**：[Jinbeen](https://blog.csdn.net/jingbin_)
+ - **Email**： jingbin127@163.com
 
 ## License
 ```
