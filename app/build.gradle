@@ -33,5 +33,5 @@ dependencies {
     implementation "com.android.support:appcompat-v7:28.0.0"
 
     implementation project(':ByRecyclerview')
-//    implementation "com.github.youlookwhat:ByRecyclerView:1.0-support"
+//    implementation "com.github.youlookwhat:ByRecyclerView:1.0.16-support"
 }

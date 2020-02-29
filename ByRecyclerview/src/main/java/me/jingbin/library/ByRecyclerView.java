@@ -1206,6 +1206,22 @@ public class ByRecyclerView extends RecyclerView {
         return mRefreshEnabled;
     }
 
+    public boolean isLoadMoreEnabled() {
+        return mLoadMoreEnabled;
+    }
+
+    public boolean isHeaderViewEnabled() {
+        return mHeaderViewEnabled;
+    }
+
+    public boolean isFootViewEnabled() {
+        return mFootViewEnabled;
+    }
+
+    public boolean isStateViewEnabled() {
+        return mStateViewEnabled;
+    }
+
     /**
      * call it when you finish the activity,
      */
