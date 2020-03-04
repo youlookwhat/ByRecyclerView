@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 WebUtil.openLink(MainActivity.this, "https://github.com/youlookwhat/ByRecyclerView");
                 break;
             case R.id.actionbar_update:
-                WebUtil.openLink(MainActivity.this, "https://fir.im/byrecyclerview");
+                WebUtil.openLink(MainActivity.this, "http://d.6short.com/byrecyclerview");
                 break;
             default:
                 break;
