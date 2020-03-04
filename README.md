@@ -26,6 +26,7 @@ ByRecyclerView 是基于RecyclerView的扩展，提供了上拉刷新、加载�
 
  - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
+ - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
 
 
 ## Screenshots
@@ -35,9 +36,9 @@ ByRecyclerView 是基于RecyclerView的扩展，提供了上拉刷新、加载�
 
 
 ### 下载试用
-|[AndroidX版本(Apk-Demo)](https://fir.im/byrecyclerview)|[Support版本(CloudReader)](https://fir.im/cloudreader)|
+|[AndroidX版本(Apk-Demo)](http://d.6short.com/byrecyclerview)|[Support版本(CloudReader)](https://www.coolapk.com/apk/127875)|
 |:--:|:--:|
-|<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>|<img width="200" height=“200” src="https://github.com/youlookwhat/CloudReader/blob/master/file/download.png?raw=true"></img>|
+|<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>|<img width="200" height=“200” src="https://raw.githubusercontent.com/youlookwhat/CloudReader/master/file/download_200.png"></img>|
 
 ## 简单使用  👉 [**Wiki文档**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 1.先在 build.gradle 的 repositories 添加
