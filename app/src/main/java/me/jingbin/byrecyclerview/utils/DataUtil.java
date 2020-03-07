@@ -17,6 +17,7 @@ import me.jingbin.byrecyclerview.activity.ListViewActivity;
 import me.jingbin.byrecyclerview.activity.MultiTypeItemActivity;
 import me.jingbin.byrecyclerview.activity.RefreshActivity;
 import me.jingbin.byrecyclerview.activity.SimpleActivity;
+import me.jingbin.byrecyclerview.activity.SkeletonActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.StickyItemActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
@@ -44,6 +45,8 @@ public class DataUtil {
         list.add(new MainItemBean("CoordinatorLayout + RecyclerView 使用示例", AppBarLayoutActivity.class, "6"));
         list.add(new MainItemBean("自定义下拉刷新布局 / 加载更多布局", CustomLayoutActivity.class, "7"));
         list.add(new MainItemBean("自定义加载更多布局 (横向)", CustomHorizontalLayoutActivity.class, "8"));
+        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class, "9"));
+        list.add(new MainItemBean("设置骨架图", SkeletonActivity.class, "10"));
 
         list.add(new MainItemBean("Adapter", null).setCategoryName());
         list.add(new MainItemBean("多类型列表 (线性/宫格/瀑布流)", MultiTypeItemActivity.class, "1"));
@@ -53,7 +56,7 @@ public class DataUtil {
         list.add(new MainItemBean("ItemDecoration", null).setCategoryName());
         list.add(new MainItemBean("设置分割线 (线性布局)", DividerLinearActivity.class, "1"));
         list.add(new MainItemBean("设置分割线 (宫格/瀑布流)", DividerGridActivity.class, "2"));
-        list.add(new MainItemBean("Item 悬浮置顶", StickyItemActivity.class, "3"));
+
         return list;
     }
 

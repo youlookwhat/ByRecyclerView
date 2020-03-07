@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.databinding.ActivityRefreshBinding;
-import me.jingbin.byrecyclerview.fragment.GridFragment;
+import me.jingbin.byrecyclerview.fragment.SkeletonGridFragment;
+import me.jingbin.byrecyclerview.fragment.SkeletonViewFragment;
 import me.jingbin.byrecyclerview.view.MyFragmentPagerAdapter;
 
 /**
  * @author jingbin
  */
-public class DividerGridActivity extends BaseActivity<ActivityRefreshBinding> {
+public class SkeletonActivity extends BaseActivity<ActivityRefreshBinding> {
 
     private ArrayList<String> mTitleList = new ArrayList<>(2);
     private ArrayList<Fragment> mFragments = new ArrayList<>(2);
@@ -24,7 +25,7 @@ public class DividerGridActivity extends BaseActivity<ActivityRefreshBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refresh);
-        setTitle("设置分割线 (宫格/瀑布流)");
+        setTitle("设置骨架图");
 
         initView();
     }
@@ -39,10 +40,10 @@ public class DividerGridActivity extends BaseActivity<ActivityRefreshBinding> {
 
     private void initFragmentList() {
         mTitleList.clear();
-        mTitleList.add("宫格");
-        mTitleList.add("瀑布流");
-        mFragments.add(GridFragment.newInstance("grid"));
-        mFragments.add(GridFragment.newInstance("StaggeredGrid"));
+        mTitleList.add("item");
+        mTitleList.add("View");
+        mFragments.add(SkeletonGridFragment.newInstance("grid"));
+        mFragments.add(SkeletonViewFragment.newInstance("StaggeredGrid"));
     }
 
 }

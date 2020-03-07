@@ -36,6 +36,7 @@
         <activity android:name=".activity.MultiTypeItemActivity" />
         <activity android:name=".activity.DividerLinearActivity" />
         <activity android:name=".activity.CustomHorizontalLayoutActivity" />
+        <activity android:name=".activity.SkeletonActivity" />
     </application>
 
 </manifest>
