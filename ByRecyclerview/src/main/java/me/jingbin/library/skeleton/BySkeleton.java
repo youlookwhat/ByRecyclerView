@@ -6,7 +6,7 @@ import me.jingbin.library.ByRecyclerView;
 
 /**
  * Created by jingbin on 2020-03-06.
- * 骨架图处理,在设置完 RV的一切配置后执行
+ * 骨架图处理,在设置完 RV 的一切配置后执行
  */
 public class BySkeleton {
 

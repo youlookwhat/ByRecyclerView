@@ -16,8 +16,8 @@ import me.jingbin.library.R;
 
 /**
  * Created by jingbin on 2020/03/07.
+ * view 骨架图显示，通过StateView处理
  */
-
 public class ByStateViewSkeletonScreen implements SkeletonScreen {
 
     private static final String TAG = ByStateViewSkeletonScreen.class.getName();
@@ -29,6 +29,7 @@ public class ByStateViewSkeletonScreen implements SkeletonScreen {
     private final int mShimmerAngle;
     private boolean loadMoreEnabled;
     private boolean refreshEnabled;
+    private boolean isShow = false;
 
     private ByStateViewSkeletonScreen(Builder builder) {
         mByRecyclerView = builder.mByRecyclerView;
@@ -86,13 +87,17 @@ public class ByStateViewSkeletonScreen implements SkeletonScreen {
         mByRecyclerView.setRefreshEnabled(false);
         mByRecyclerView.setLoadMoreEnabled(false);
         mByRecyclerView.setStateView(generateSkeletonLoadingView());
+        isShow = true;
     }
 
     @Override
     public void hide() {
-        mByRecyclerView.setStateViewEnabled(false);
-        mByRecyclerView.setLoadMoreEnabled(loadMoreEnabled);
-        mByRecyclerView.setRefreshEnabled(refreshEnabled);
+        if (isShow) {
+            mByRecyclerView.setStateViewEnabled(false);
+            mByRecyclerView.setLoadMoreEnabled(loadMoreEnabled);
+            mByRecyclerView.setRefreshEnabled(refreshEnabled);
+            isShow = false;
+        }
     }
 
 

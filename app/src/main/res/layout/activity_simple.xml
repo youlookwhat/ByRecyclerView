@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
+            android:background="@color/colorWhite"
             tools:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/item_home" />
 

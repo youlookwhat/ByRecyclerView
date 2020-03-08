@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/img_banner"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+
+    <View
+        android:id="@+id/img_knowledge"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toLeftOf="@+id/img_banner"
+        app:layout_constraintRight_toLeftOf="@+id/img_story"
+        app:layout_constraintTop_toBottomOf="@+id/img_banner" />
+
+    <View
+        android:id="@+id/tv_knowledge"
+        android:layout_width="56dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toLeftOf="@+id/img_knowledge"
+        app:layout_constraintRight_toRightOf="@+id/img_knowledge"
+        app:layout_constraintTop_toBottomOf="@+id/img_knowledge" />
+
+    <View
+        android:id="@+id/img_story"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toRightOf="@+id/img_knowledge"
+        app:layout_constraintRight_toLeftOf="@+id/img_service"
+        app:layout_constraintTop_toBottomOf="@+id/img_banner" />
+
+    <View
+        android:id="@+id/tv_story"
+        android:layout_width="56dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toLeftOf="@+id/img_story"
+        app:layout_constraintRight_toRightOf="@+id/img_story"
+        app:layout_constraintTop_toBottomOf="@+id/img_story" />
+
+    <View
+        android:id="@+id/img_service"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toRightOf="@+id/img_story"
+        app:layout_constraintRight_toLeftOf="@+id/img_topic"
+        app:layout_constraintTop_toBottomOf="@+id/img_banner" />
+
+    <View
+        android:id="@+id/tv_service"
+        android:layout_width="56dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toLeftOf="@+id/img_service"
+        app:layout_constraintRight_toRightOf="@+id/img_service"
+        app:layout_constraintTop_toBottomOf="@+id/img_service" />
+
+    <View
+        android:id="@+id/img_topic"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toRightOf="@+id/img_service"
+        app:layout_constraintRight_toRightOf="@+id/img_banner"
+        app:layout_constraintTop_toBottomOf="@+id/img_banner" />
+
+    <View
+        android:id="@+id/tv_topic"
+        android:layout_width="56dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/by_skeleton_light_transparent"
+        app:layout_constraintLeft_toLeftOf="@+id/img_topic"
+        app:layout_constraintRight_toRightOf="@+id/img_topic"
+        app:layout_constraintTop_toBottomOf="@+id/img_topic" />
+
+
+    <View
+        android:id="@+id/divider_1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorLine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_topic"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_item1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/divider_1">
+
+        <View
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/by_skeleton_light_transparent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/by_skeleton_light_transparent" />
+
+            <View
+                android:layout_width="120dp"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:background="@color/by_skeleton_light_transparent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/by_skeleton_light_transparent" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorLine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_item1"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/divider_2">
+
+        <View
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/by_skeleton_light_transparent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/by_skeleton_light_transparent" />
+
+            <View
+                android:layout_width="120dp"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:background="@color/by_skeleton_light_transparent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/by_skeleton_light_transparent" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,15 +25,11 @@ public class MainAdapter extends BaseByRecyclerViewAdapter<MainItemBean, BaseByV
 
     @Override
     public int getItemViewType(int position) {
-        if (0 <= position && position < getData().size()) {
-            MainItemBean itemData = getItemData(position);
-            if (itemData.isCategoryName()) {
-                return StickyHeaderHandler.TYPE_STICKY_VIEW;
-            } else {
-                return 2;
-            }
+        if (getItemData(position).isCategoryName()) {
+            return StickyHeaderHandler.TYPE_STICKY_VIEW;
+        } else {
+            return 2;
         }
-        return 2;
     }
 
     @NonNull

@@ -36,7 +36,10 @@
         <activity android:name=".activity.MultiTypeItemActivity" />
         <activity android:name=".activity.DividerLinearActivity" />
         <activity android:name=".activity.CustomHorizontalLayoutActivity" />
-        <activity android:name=".activity.SkeletonActivity" />
+        <activity android:name=".activity.SkeletonListActivity" />
+        <activity android:name=".activity.SkeletonGridActivity" />
+        <activity android:name=".activity.SkeletonHeaderViewActivity" />
+        <activity android:name=".activity.SkeletonViewActivity" />
     </application>
 
 </manifest>

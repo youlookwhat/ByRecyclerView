@@ -15,4 +15,6 @@
 
     <!--分割线-->
     <color name="colorLine">#EBEBEB</color>
+    <color name="color_d">#aaaaaa</color>
+    <color name="color_4">#444444</color>
 </resources>

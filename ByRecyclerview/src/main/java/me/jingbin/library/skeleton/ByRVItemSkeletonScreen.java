@@ -14,6 +14,7 @@ import me.jingbin.library.R;
 
 /**
  * @author jingbin
+ * item 骨架图显示
  */
 public class ByRVItemSkeletonScreen implements SkeletonScreen {
 
@@ -21,7 +22,7 @@ public class ByRVItemSkeletonScreen implements SkeletonScreen {
     private final RecyclerView.Adapter mActualAdapter;
     private final SkeletonAdapter mSkeletonAdapter;
     private final boolean mRecyclerViewFrozen;
-    private boolean isShowOne = true;
+    private boolean isShow = false;
     private boolean loadMoreEnabled = false;
     private boolean refreshEnabled = false;
 
@@ -56,6 +57,7 @@ public class ByRVItemSkeletonScreen implements SkeletonScreen {
             byRecyclerView.setLoadMoreEnabled(false);
             byRecyclerView.setRefreshEnabled(false);
         }
+        isShow = true;
     }
 
     /**
@@ -63,14 +65,14 @@ public class ByRVItemSkeletonScreen implements SkeletonScreen {
      */
     @Override
     public void hide() {
-        if (isShowOne) {
+        if (isShow) {
             mRecyclerView.setAdapter(mActualAdapter);
             if (!mRecyclerViewFrozen && mRecyclerView instanceof ByRecyclerView) {
                 ByRecyclerView byRecyclerView = (ByRecyclerView) this.mRecyclerView;
                 byRecyclerView.setRefreshEnabled(refreshEnabled);
                 byRecyclerView.setLoadMoreEnabled(loadMoreEnabled);
             }
-            isShowOne = false;
+            isShow = false;
         }
     }
 
