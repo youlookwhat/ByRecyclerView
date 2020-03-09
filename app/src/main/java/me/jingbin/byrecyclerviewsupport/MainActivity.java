@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import me.jingbin.byrecyclerviewsupport.databinding.ActivityMainBinding;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.decoration.SpacesItemDecoration;
+import me.jingbin.library.skeleton.ByRVItemSkeletonScreen;
+import me.jingbin.library.skeleton.BySkeleton;
 
 /**
  * @author jingbin
@@ -31,16 +33,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL, 2).setParam(R.color.colorAccent, 1));
         recyclerView.addHeaderView(R.layout.header_view);
-        recyclerView.setAdapter(dataAdapter);
-
-        recyclerView.setStateView(R.layout.layout_state);
-        recyclerView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.setStateViewEnabled(false);
-                dataAdapter.setNewData(getData());
-            }
-        }, 1500);
+//        recyclerView.setAdapter(dataAdapter);
 
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
@@ -61,6 +54,16 @@ public class MainActivity extends AppCompatActivity {
                 }, 1000);
             }
         });
+
+        // 骨架图
+        final ByRVItemSkeletonScreen skeletonScreen = BySkeleton.bindItem(binding.recyclerView).adapter(dataAdapter).show();
+        binding.recyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                skeletonScreen.hide();
+                dataAdapter.setNewData(getData());
+            }
+        }, 3000);
     }
 
 

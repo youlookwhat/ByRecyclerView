@@ -8,4 +8,7 @@
     <dimen name="by_progress_width_height">18dp</dimen>
 
     <color name="by_footer_text_loading">#333333</color>
+
+    <color name="by_skeleton_shimmer_color">#a2878787</color>
+    <color name="by_skeleton_light_transparent">#16000000</color>
 </resources>

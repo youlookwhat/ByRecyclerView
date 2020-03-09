@@ -1,3 +1,4 @@
 <resources>
+    <string name="app_launcher">ByRV</string>
     <string name="app_name">ByRecyclerView</string>
 </resources>
