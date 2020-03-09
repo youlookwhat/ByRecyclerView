@@ -42,7 +42,6 @@ public class ByRVItemSkeletonScreen implements SkeletonScreen {
 
     /**
      * 只能显示一次
-     * 且显示的时候
      */
     @Override
     public void show() {
