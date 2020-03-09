@@ -19,7 +19,7 @@ ByRecyclerView 是基于RecyclerView的扩展，提供了上拉刷新、加载�
  - 10.可添加 万能分隔线（LinearLayout / GridLayout / StaggeredGridLayout）
  - 11.可配置 粘性header，StickyView
  - 12.可配置 Skeleton骨架图
- - 12.默认使用AndoridX，且支持Support
+ - 13.默认使用AndoridX，且支持Support
 
 
 ## Document
@@ -154,7 +154,7 @@ recyclerView.addHeaderView(headerBinding.getRoot());
 recyclerView.addFooterView(getView() / layoutId));
 recyclerView.setStateView(getView() / layoutId);
 
-// headerView、footerView、setStateView支持一键隐藏显示，设置需要notify
+// headerView、footerView、setStateView 支持一键隐藏，设置后需要notify
 recyclerView.setHeaderViewEnabled(false);
 recyclerView.setFootViewEnabled(false);
 recyclerView.setStateViewEnabled(false);
@@ -258,12 +258,14 @@ skeletonScreen.hide();
 |EmptyView|可设置|可设置|不能设置|
 |点击/长按事件|有|有| 无 |
 
-ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的优势在于四点：
+ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的优势在于：
 
- - 1.headerView使用的是多type的形式，即一个header就是一个position
- - 2.不足一屏上拉加载，超过后触底加载
- - 3.自带下拉加载布局，也可使用三方刷新框架，比如SwipeRefreshLayout
- - 4.万能分割线(LinearLayout / GridLayout / StaggeredGridLayout)
+ - headerView使用的是多type的形式，即一个header就是一个position
+ - 不足一屏上拉加载，超过后触底加载
+ - 自带下拉加载布局，也可使用三方刷新框架，比如SwipeRefreshLayout
+ - 万能分割线(LinearLayout / GridLayout / StaggeredGridLayout)
+ - 可设置悬浮置顶item StickyView
+ - 可设置Skeleton 骨架图
 
 缺点是还没有BRVAH里的部分功能，比如分组adapter、DiffUtils、item扩展动画...后期会逐步完善。
 
