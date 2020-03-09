@@ -192,7 +192,7 @@ recyclerView.setOnItemChildLongClickListener(new ByRecyclerView.OnItemChildLongC
 });
 ```
 
-#### 设置 Item悬浮置顶
+### 设置 Item悬浮置顶
 ```java
 // 1、使用StickyLinearLayoutManager，传入adapter
 StickyLinearLayoutManager layoutManager = new StickyLinearLayoutManager(getContext(), mAdapter);
@@ -208,7 +208,7 @@ public int getItemViewType(int position) {
 }
 ```
 
-#### 设置Skeleton骨架图
+### 设置Skeleton骨架图
 1.设置item骨架图
 
 ```
