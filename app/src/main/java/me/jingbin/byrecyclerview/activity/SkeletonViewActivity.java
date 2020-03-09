@@ -55,14 +55,18 @@ public class SkeletonViewActivity extends BaseActivity<ActivitySimpleBinding> {
         }, 500);
 
         binding.recyclerView.setHeaderViewEnabled(false);
-        // 这是一组
+
+        /**
+         * 这是通过setStateView设置的：需要放在配置recyclerView之后设置！！
+         * 之前需要 setAdapter
+         * */
         skeletonScreen = BySkeleton
                 .bindView(binding.recyclerView)
-                .load(R.layout.layout_skeleton_view)
+                .load(R.layout.layout_skeleton_view)// view骨架图
+                .shimmer(true)// 是否有动画
                 .angle(20)// 微光角度
                 .color(R.color.colorWhite)// 动画的颜色
-                .duration(1500)
-                .shimmer(true)// 是否有动画
+                .duration(1500)// 微光一次显示时间
                 .show();
         refresh(false);
     }

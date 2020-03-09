@@ -1,5 +1,8 @@
 package me.jingbin.byrecyclerview.bean;
 
+/**
+ * @author jingbin
+ */
 public class DataItemBean {
 
     private String title;
@@ -8,6 +11,14 @@ public class DataItemBean {
 
     private String type;
     private Class<?> cls;
+
+    public DataItemBean() {
+    }
+
+    public DataItemBean(String title, Class<?> cls) {
+        this.title = title;
+        this.cls = cls;
+    }
 
     public String getDes() {
         return des;

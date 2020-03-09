@@ -72,12 +72,12 @@ public class SkeletonGridActivity extends BaseActivity<ActivitySimpleBinding> {
                 .bindItem(binding.recyclerView)
                 .adapter(mAdapter)
                 .load(R.layout.item_skeleton_grid_image)
+                .shimmer(true)// 是否有动画
                 .angle(30)// 微光角度
                 .frozen(true) // 是否不可滑动
                 .color(R.color.colorWhite)// 动画的颜色
                 .duration(1500)
                 .count(10)
-                .shimmer(true)// 是否有动画
                 .show();
         refresh(false);
     }

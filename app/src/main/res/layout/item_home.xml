@@ -6,7 +6,7 @@
         android:id="@+id/cl_item_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+        android:background="@color/colorWhite"
         tools:context=".MainActivity">
 
         <ImageView

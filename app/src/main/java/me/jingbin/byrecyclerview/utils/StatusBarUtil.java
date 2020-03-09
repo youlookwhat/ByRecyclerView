@@ -95,10 +95,8 @@ public class StatusBarUtil {
     public static void showTransparentStatusBar(Activity activity, boolean isDarkFont) {
         ImmersionBar.with(activity)
                 .transparentStatusBar()
-                .navigationBarEnable(true)
-                .navigationBarDarkIcon(true)
+                .navigationBarEnable(false)
                 .keyboardEnable(true)// 键盘弹起
-                .navigationBarColor(R.color.colorWhite)
                 .statusBarDarkFont(isDarkFont, 0.2f)
                 .init();
     }
@@ -106,10 +104,8 @@ public class StatusBarUtil {
     public static void showMainColorStatusBar(Activity activity, boolean isDarkFont) {
         ImmersionBar.with(activity)
                 .statusBarColor(R.color.colorPrimary)
-                .navigationBarEnable(true)
-                .navigationBarDarkIcon(true)
+                .navigationBarEnable(false)
                 .keyboardEnable(true)// 键盘弹起
-                .navigationBarColor(R.color.colorWhite)
                 .statusBarDarkFont(isDarkFont, 0.2f)
                 .init();
     }

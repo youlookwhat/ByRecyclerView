@@ -16,19 +16,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="itemClick / itemLongClick" />
+            tools:text="itemClick/itemLongClick" />
 
         <TextView
             android:id="@+id/tv_item_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/colorLine"
             android:gravity="center"
-            android:paddingLeft="20dp"
+            android:paddingLeft="15dp"
             android:paddingTop="10dp"
-            android:paddingRight="20dp"
+            android:paddingRight="15dp"
             android:paddingBottom="10dp"
             android:text="请点击或长按我"
             android:textColor="@color/colorPrimary"

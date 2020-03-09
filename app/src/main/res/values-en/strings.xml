@@ -1,5 +1,6 @@
 <resources>
 
+    <string name="app_launcher">ByRV</string>
     <string name="app_name">ByRecyclerView</string>
 
     <string name="custom_header_hint_normal">Drop down refresh</string>

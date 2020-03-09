@@ -15,7 +15,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
             android:gravity="center_vertical"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/color_4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1、" />
@@ -30,7 +30,7 @@
             android:paddingEnd="5dp"
             android:paddingRight="5dp"
             android:text="@string/app_name"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/color_4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_sort"
             app:layout_constraintTop_toTopOf="parent" />

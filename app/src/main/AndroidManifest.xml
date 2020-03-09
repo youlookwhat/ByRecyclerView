@@ -7,7 +7,7 @@
         android:name=".App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/app_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -40,6 +40,7 @@
         <activity android:name=".activity.SkeletonGridActivity" />
         <activity android:name=".activity.SkeletonHeaderViewActivity" />
         <activity android:name=".activity.SkeletonViewActivity" />
+        <activity android:name=".activity.SecondTypeActivity" />
     </application>
 
 </manifest>
