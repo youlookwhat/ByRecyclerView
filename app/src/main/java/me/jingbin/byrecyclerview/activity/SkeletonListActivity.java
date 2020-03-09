@@ -52,7 +52,7 @@ public class SkeletonListActivity extends BaseActivity<ActivitySimpleBinding> {
             }
         }, 500);
 
-        // 设置item骨架图：需要放在配置recyclerView之后色设置！！
+        // 设置item骨架图：需要放在配置recyclerView之后设置！！
         skeletonScreen = BySkeleton
                 .bindItem(binding.recyclerView)
                 .adapter(mAdapter)// 必须设置adapter，且在此之前不要设置adapter

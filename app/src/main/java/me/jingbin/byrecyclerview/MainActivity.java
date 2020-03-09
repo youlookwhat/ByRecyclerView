@@ -21,12 +21,11 @@ import me.jingbin.byrecyclerview.activity.ItemClickActivity;
 import me.jingbin.byrecyclerview.activity.SecondTypeActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.StickyItemActivity;
-import me.jingbin.byrecyclerview.binding.BaseBindingAdapter;
-import me.jingbin.byrecyclerview.binding.BaseBindingHolder;
 import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
-import me.jingbin.byrecyclerview.databinding.ItemMainBinding;
 import me.jingbin.byrecyclerview.utils.WebUtil;
 import me.jingbin.library.ByRecyclerView;
+import me.jingbin.library.adapter.BaseByViewHolder;
+import me.jingbin.library.adapter.BaseRecyclerAdapter;
 import me.jingbin.library.decoration.SpacesItemDecoration;
 
 /**
@@ -58,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
-        binding.recyclerView.setAdapter(new BaseBindingAdapter<String, ItemMainBinding>(R.layout.item_main, list) {
+        binding.recyclerView.setAdapter(new BaseRecyclerAdapter<String>(R.layout.item_main, list) {
             @Override
-            protected void bindView(BaseBindingHolder holder, String bean, ItemMainBinding binding, int position) {
-                binding.tvSort.setText((position + 1) + "、");
-                binding.tvText.setText(bean);
+            protected void bindView(BaseByViewHolder<String> holder, String bean, int position) {
+                holder.setText(R.id.tv_sort, (position + 1) + "、");
+                holder.setText(R.id.tv_text, bean);
             }
         });
         binding.recyclerView.addItemDecoration(new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL).setNoShowDivider(0, 0));

@@ -10,21 +10,22 @@ ByRecyclerView 是基于RecyclerView的扩展，提供了上拉刷新、加载�
  - 1.支持 下拉刷新、加载更多
  - 2.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
  - 3.加载更多机制：**不足一屏上拉加载，超过后触底加载(所见即所得)**
- - 4.可设置自定义 下拉刷新布局 和 加载更多布局
- - 5.添加/移除 HeaderView、FooterView
- - 6.设置空布局 EmptyView
- - 7.添加item及子view的点击/长按事件
+ - 4.可设置 自定义 下拉刷新布局 和 加载更多布局
+ - 5.可Add HeaderView、FooterView
+ - 6.可设置 StateView状态布局
+ - 7.可添加 item及子view的点击/长按事件
  - 8.优化过的BaseAdapter (RecyclerView / ListView)，减少大量代码
  - 9.Adapter结合DataBinding使用 (RecyclerView / ListView)
- - 10.可添加万能分隔线（LinearLayout / GridLayout / StaggeredGridLayout）
- - 11.可配置粘性header，StickyView
+ - 10.可添加 万能分隔线（LinearLayout / GridLayout / StaggeredGridLayout）
+ - 11.可配置 粘性header，StickyView
+ - 12.可配置 Skeleton骨架图
  - 12.默认使用AndoridX，且支持Support
 
 
 ## Document
  -  👉 [**详细使用见Wiki！！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.0.16)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.0.17)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
 
@@ -36,11 +37,17 @@ ByRecyclerView 是基于RecyclerView的扩展，提供了上拉刷新、加载�
 
 
 ### 下载试用
-|[AndroidX版本(Apk-Demo)](http://d.6short.com/byrecyclerview)|[Support版本(CloudReader)](https://www.coolapk.com/apk/127875)|
-|:--:|:--:|
-|<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>|<img width="200" height=“200” src="https://raw.githubusercontent.com/youlookwhat/CloudReader/master/file/download_200.png"></img>|
+[AndroidX版本(Apk-Demo)](http://d.6short.com/byrecyclerview)
 
-## 简单使用  👉 [**Wiki文档**](https://github.com/youlookwhat/ByRecyclerView/wiki)
+<img width="250" height=“250” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>
+
+<!--|[AndroidX版本(Apk-Demo)](http://d.6short.com/byrecyclerview)|[Support版本(CloudReader)](https://www.coolapk.com/apk/127875)|
+|:--:|:--:|
+|<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>|<img width="200" height=“200” src="https://raw.githubusercontent.com/youlookwhat/CloudReader/master/file/download_200.png"></img>|-->
+
+## 如何使用  👉 [**Wiki文档**](https://github.com/youlookwhat/ByRecyclerView/wiki)
+
+### 快速开始
 1.先在 build.gradle 的 repositories 添加
 
 ```
@@ -56,8 +63,8 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.16'         // AndroidX版本引入
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.16-support" // support版本引入
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.17'         // AndroidX版本引入
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.17-support" // support版本引入
 }
 ```
 
@@ -69,27 +76,19 @@ dependencies {
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layoutManager="LinearLayoutManager"
-    tools:listitem="@layout/item_home" />
+    tools:listitem="@layout/item_main" />
 ```
 
 4.使用BaseRecyclerAdapter
 
 ```java
-mAdapter = new OneTypeAdapter(list);
 mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-mRecyclerView.setAdapter(mAdapter);
-        
-public class OneTypeAdapter extends BaseRecyclerAdapter<String> {
-
-    public OneTypeAdapter(List<String> data) {
-        super(R.layout.item_main, data);
-    }
-
+mRecyclerView.setAdapter(new BaseRecyclerAdapter<String>(R.layout.item_main, list) {
     @Override
     protected void bindView(BaseByViewHolder<String> holder, String bean, int position) {
-        holder.setText(R.id.view_bottom, bean);
+        holder.setText(R.id.tv_text, bean);
     }
-}
+});
 
 mAdapter.setNewData(list);   // 设置第一页数据
 ```
@@ -111,9 +110,139 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
          mAdapter.addData(list);            // 设置及刷新数据
          mRecyclerView.loadMoreComplete();  // 加载更多完成 
          mRecyclerView.loadMoreEnd();       // 没有更多内容了
-         mRecyclerView.loadMoreFail();      // 加载更多失败
+         mRecyclerView.loadMoreFail();      // 加载更多失败,点击重试
     }
 });
+```
+
+### ItemDecoration
+万能分割线，可给Linear/Grid/StaggeredGrid设置，并可配置去除不显示分割线的头部和尾部个数
+
+1.给LinearLayout设置分割线
+
+```java
+// 选择1：设置drawable
+SpacesItemDecoration itemDecoration = new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL)
+        .setNoShowDivider(1, 1)  // 第一个参数：头部不显示分割线的个数，第二个参数：尾部不显示分割线的个数，默认为1
+        .setDrawable(R.drawable.shape_line);// 设置drawable文件
+
+// 选择2：设置颜色、高度、间距等
+SpacesItemDecoration itemDecoration = new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL)
+        .setNoShowDivider(1, 1)
+        // 颜色，分割线间距，左边距(单位dp)，右边距(单位dp)
+        .setParam(R.color.colorBlue, 10, 70, 70);
+
+recyclerView.addItemDecoration(itemDecoration);
+```
+
+2.给宫格/瀑布流设置分割线
+
+```java
+// 3：每行个数； 10：间距； true：距屏幕周围是否也有间距
+GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(3, 10, true)
+        .setNoShowSpace(1, 1);// 第一个参数：头部不显示分割线的个数，第二个参数：尾部不显示分割线的个数，默认为1
+
+recyclerView.addItemDecoration(itemDecoration);
+```
+
+### add HeaderView/FooterView、setStateView
+```java
+// 获取view对应databinding，注意：recyclerView.getParent()
+LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
+recyclerView.addHeaderView(headerBinding.getRoot());
+
+recyclerView.addFooterView(getView() / layoutId));
+recyclerView.setStateView(getView() / layoutId);
+
+// headerView、footerView、setStateView支持一键隐藏显示，设置需要notify
+recyclerView.setHeaderViewEnabled(false);
+recyclerView.setFootViewEnabled(false);
+recyclerView.setStateViewEnabled(false);
+
+```
+
+### Item 点击/长按监听
+```java
+mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
+    @Override
+    public void onClick(View v, int position) {
+        // 通过adapter获取对应position的数据
+        DataItemBean itemData = mAdapter.getItemData(position);
+    }
+});
+mRecyclerView.setOnItemLongClickListener(new ByRecyclerView.OnItemLongClickListener() {
+    @Override
+    public boolean onLongClick(View v, int position) {
+        return false;
+    }
+});
+
+// 添加 子View的点击/长按事件
+holder.addOnClickListener(R.id.tv_text);
+holder.addOnLongClickListener(R.id.tv_text);
+recyclerView.setOnItemChildClickListener(new ByRecyclerView.OnItemChildClickListener() {
+    @Override
+    public void onItemChildClick(View view, int position) {
+    }
+});
+recyclerView.setOnItemChildLongClickListener(new ByRecyclerView.OnItemChildLongClickListener() {
+    @Override
+    public void onItemChildLongClick(View view, int position) {
+    }
+});
+```
+
+#### 设置 Item悬浮置顶
+```java
+// 1、使用StickyLinearLayoutManager，传入adapter
+StickyLinearLayoutManager layoutManager = new StickyLinearLayoutManager(getContext(), mAdapter);
+
+// 2、在adapter里，将悬浮的item的ItemViewType设置为StickyHeaderHandler.TYPE_STICKY_VIEW
+@Override
+public int getItemViewType(int position) {
+    if ("title".equals(getItemData(position).getType())) {
+        return StickyHeaderHandler.TYPE_STICKY_VIEW;
+    } else {
+        return 2;
+    }
+}
+```
+
+#### 设置Skeleton骨架图
+1.设置item骨架图
+
+```
+// 显示
+skeletonScreen = BySkeleton
+        .bindItem(binding.recyclerView)
+        .adapter(mAdapter)// 必须设置adapter，且在此之前不要设置adapter
+        .shimmer(false)// 是否有动画
+        .load(R.layout.layout_by_default_item_skeleton)// item骨架图
+        .angle(30)// 微光角度
+        .frozen(false) // 是否不可滑动
+        .color(R.color.colorWhite)// 动画的颜色
+        .duration(1500)// 微光一次显示时间
+        .count(10)// item个数
+        .show();
+
+// 隐藏
+skeletonScreen.hide();
+```
+2.设置view骨架图
+
+```java
+// 显示
+skeletonScreen = BySkeleton
+        .bindView(binding.recyclerView)
+        .load(R.layout.layout_skeleton_view)// view骨架图
+        .shimmer(true)// 是否有动画
+        .angle(20)// 微光角度
+        .color(R.color.colorWhite)// 动画的颜色
+        .duration(1500)// 微光一次显示时间
+        .show();
+
+// 隐藏
+skeletonScreen.hide();
 ```
 
 

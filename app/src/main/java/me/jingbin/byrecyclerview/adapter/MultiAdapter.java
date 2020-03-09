@@ -30,15 +30,11 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
 
     @Override
     public int getItemViewType(int position) {
-        if (0 <= position && position < getData().size()) {
-            DataItemBean itemData = getItemData(position);
-            if ("title".equals(itemData.getType())) {
-                return StickyHeaderHandler.TYPE_STICKY_VIEW;
-            } else {
-                return 2;
-            }
+        if ("title".equals(getItemData(position).getType())) {
+            return StickyHeaderHandler.TYPE_STICKY_VIEW;
+        } else {
+            return 2;
         }
-        return 2;
     }
 
     @Override
