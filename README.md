@@ -25,7 +25,7 @@ ByRecyclerView 是基于RecyclerView的扩展，提供了上拉刷新、加载�
 ## Document
  -  👉 [**详细使用见Wiki！！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.0.17)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.0.18)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
 
@@ -63,8 +63,8 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.17'         // AndroidX版本引入
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.17-support" // support版本引入
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.18'         // AndroidX版本引入
+	implementation "com.github.youlookwhat:ByRecyclerView:1.0.18-support" // support版本引入
 }
 ```
 
@@ -138,8 +138,8 @@ recyclerView.addItemDecoration(itemDecoration);
 2.给宫格/瀑布流设置分割线
 
 ```java
-// 3：每行个数； 10：间距； true：距屏幕周围是否也有间距
-GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(3, 10, true)
+// 10：间距； true：距屏幕周围是否也有间距
+GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(10, true)
         .setNoShowSpace(1, 1);// 第一个参数：头部不显示分割线的个数，第二个参数：尾部不显示分割线的个数，默认为1
 
 recyclerView.addItemDecoration(itemDecoration);
