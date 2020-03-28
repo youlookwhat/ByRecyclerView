@@ -80,24 +80,25 @@ public class GridFragment extends BaseFragment<FragmentRefreshBinding> {
 
         if ("grid".equals(mType)) {
             // 宫格
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(activity, 3);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(activity, 6);
             recyclerView.setLayoutManager(gridLayoutManager);
             // 四周也有间距
-            GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(3,
-                    DensityUtil.dip2px(activity, 10));
+            GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(
+                    DensityUtil.dip2px(activity, 10), true);
             // 去掉首尾的分割线 (刷新头部和加载更多尾部)
-            recyclerView.addItemDecoration(itemDecoration.setNoShowSpace(1, 1));
+            recyclerView.addItemDecoration(itemDecoration.setNoShowSpace(2, 1));
 
         } else {
             // 瀑布流
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(staggeredGridLayoutManager);
             // 四周没有间距
-            GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(3,
-                    DensityUtil.dip2px(activity, 10), false);
-            recyclerView.addItemDecoration(itemDecoration.setNoShowSpace(1, 1));
+            GridSpaceItemDecoration itemDecoration = new GridSpaceItemDecoration(
+                    DensityUtil.dip2px(activity, 10), true);
+            recyclerView.addItemDecoration(itemDecoration.setNoShowSpace(2, 1));
             mAdapter.setStaggered(true);
         }
+        recyclerView.addHeaderView(R.layout.layout_header_view);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override

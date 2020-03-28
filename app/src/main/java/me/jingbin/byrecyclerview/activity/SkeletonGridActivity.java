@@ -46,7 +46,7 @@ public class SkeletonGridActivity extends BaseActivity<ActivitySimpleBinding> {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setRefreshEnabled(true);
-        binding.recyclerView.addItemDecoration(new GridSpaceItemDecoration(2, 2, false).setStartFrom(1));
+        binding.recyclerView.addItemDecoration(new GridSpaceItemDecoration(2, false).setStartFrom(1));
 //        binding.recyclerView.setAdapter(mAdapter);
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
