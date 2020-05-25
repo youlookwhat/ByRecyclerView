@@ -327,11 +327,12 @@ public class ByRecyclerView extends RecyclerView {
             }
             int lastVisibleItemPosition = -1;
             if (layoutManager instanceof LinearLayoutManager) {
-                lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
+                // 最后一条可见即刷新
+                lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
 
             } else if (layoutManager instanceof StaggeredGridLayoutManager) {
                 int[] into = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
-                ((StaggeredGridLayoutManager) layoutManager).findLastCompletelyVisibleItemPositions(into);
+                ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(into);
                 lastVisibleItemPosition = findMax(into);
 
             }
