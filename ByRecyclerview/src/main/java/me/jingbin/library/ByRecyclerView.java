@@ -277,7 +277,9 @@ public class ByRecyclerView extends RecyclerView {
         }
         mWrapAdapter = new WrapAdapter(adapter);
         super.setAdapter(mWrapAdapter);
-        adapter.registerAdapterDataObserver(mDataObserver);
+        if (!adapter.hasObservers()) {
+            adapter.registerAdapterDataObserver(mDataObserver);
+        }
         mDataObserver.onChanged();
         setRefreshing(false);
     }
