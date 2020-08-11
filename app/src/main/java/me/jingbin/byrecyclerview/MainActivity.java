@@ -23,10 +23,10 @@ import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.StickyItemActivity;
 import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
 import me.jingbin.byrecyclerview.utils.WebUtil;
-import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.adapter.BaseByViewHolder;
 import me.jingbin.library.adapter.BaseRecyclerAdapter;
 import me.jingbin.library.decoration.SpacesItemDecoration;
+import me.jingbin.library.view.OnItemFilterClickListener;
 
 /**
  * @author jingbin
@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         binding.recyclerView.addItemDecoration(new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL).setNoShowDivider(0, 0));
-        binding.recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
+        binding.recyclerView.setOnItemClickListener(new OnItemFilterClickListener() {
             @Override
-            public void onClick(View v, int position) {
+            public void onSingleClick(View v, int position) {
                 switch (position) {
                     case 0:// 下拉刷新、加载更多
                         SecondTypeActivity.start(v.getContext(), "refreshLoadMore");

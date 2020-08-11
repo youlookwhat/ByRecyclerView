@@ -1,29 +1,22 @@
 package me.jingbin.byrecyclerview.activity;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.ActivitySimpleBinding;
-import me.jingbin.byrecyclerview.databinding.LayoutEmptyBinding;
-import me.jingbin.byrecyclerview.databinding.LayoutErrorBinding;
-import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
-import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.adapter.BaseByViewHolder;
 import me.jingbin.library.adapter.BaseRecyclerAdapter;
 import me.jingbin.library.decoration.SpacesItemDecoration;
+import me.jingbin.library.view.OnItemChildFilterClickListener;
 
 /**
  * @author jingbin
@@ -79,9 +72,9 @@ public class ItemClickActivity extends BaseActivity<ActivitySimpleBinding> {
                 return true;
             }
         });
-        binding.recyclerView.setOnItemChildClickListener(new ByRecyclerView.OnItemChildClickListener() {
+        binding.recyclerView.setOnItemChildClickListener(new OnItemChildFilterClickListener() {
             @Override
-            public void onItemChildClick(View view, int position) {
+            public void onSingleClick(View view, int position) {
                 ToastUtil.showToast("itemChildClick:" + position);
             }
         });
