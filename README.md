@@ -4,7 +4,7 @@
 [![Apache License 2.0][3]][4]
 [![API][5]][6]
 
-ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、万能分割线、粘性header、极简Adapter(databinding)等功能，有效的解决了XRecyclerView和BRVAH其中的问题。
+ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、万能分割线、粘性header、极简Adapter(databinding)等功能。
 
 ## 功能特性
  - 1.支持 下拉刷新、加载更多
@@ -25,7 +25,7 @@ ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterVi
 ## Document
  -  👉 [**详细使用见Wiki！！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.1.0)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.1.2)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
 
@@ -37,7 +37,7 @@ ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterVi
 
 
 ### 下载试用
-[AndroidX版本(Apk-Demo)](http://d.6short.com/byrecyclerview)
+[AndroidX版本(Apk-Demo)](http://d.firim.top/byrecyclerview)
 
 <img width="250" height=“250” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>
 
@@ -63,8 +63,8 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.0.18'         // AndroidX版本引入
-	implementation "com.github.youlookwhat:ByRecyclerView:1.0.18-support" // support版本引入
+	// AndroidX版本引入
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.1.2'
 }
 ```
 

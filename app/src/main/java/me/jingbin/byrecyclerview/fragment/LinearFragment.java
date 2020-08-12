@@ -76,6 +76,7 @@ public class LinearFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private void initAdapter() {
         recyclerView = getView(R.id.recyclerView);
+        recyclerView.setBackgroundResource(R.color.colorWhite);
         mAdapter = new DataAdapter(DataUtil.get(activity, 6));
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
