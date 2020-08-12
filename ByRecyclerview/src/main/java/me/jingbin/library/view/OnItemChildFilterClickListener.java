@@ -7,7 +7,7 @@ import java.util.Calendar;
 import me.jingbin.library.ByRecyclerView;
 
 /**
- * 子View的点击事件，避免在1秒内出发多次点击
+ * 子View的点击事件，避免在1秒内触发多次点击
  *
  * @author jingbin
  */
@@ -19,7 +19,7 @@ public abstract class OnItemChildFilterClickListener implements ByRecyclerView.O
 
     @Override
     public void onItemChildClick(View v, int position) {
-        long currentTime = Calendar.getInstance().getTimeInMillis();
+        long currentTime = System.currentTimeMillis();
         int viewId = v.getId();
         if (mViewId != viewId) {
             mViewId = viewId;
@@ -30,8 +30,6 @@ public abstract class OnItemChildFilterClickListener implements ByRecyclerView.O
         if (currentTime - mLastClickTime > BY_MIN_CLICK_DELAY_TIME) {
             mLastClickTime = currentTime;
             onSingleClick(v, position);
-        } else {
-            onFastClick(v, position);
         }
     }
 
@@ -40,9 +38,4 @@ public abstract class OnItemChildFilterClickListener implements ByRecyclerView.O
      */
     protected abstract void onSingleClick(View v, int position);
 
-    /**
-     * 快速点击事件
-     */
-    protected void onFastClick(View v, int position) {
-    }
 }

@@ -5,7 +5,7 @@ import android.view.View;
 import me.jingbin.library.ByRecyclerView;
 
 /**
- * item的点击事件，避免在1秒内出发多次点击
+ * item的点击事件，避免在1秒内触发多次点击
  *
  * @author jingbin
  */
@@ -26,12 +26,9 @@ public abstract class OnItemFilterClickListener implements ByRecyclerView.OnItem
     public void onClick(View v, int position) {
         long nowTime = System.currentTimeMillis();
         if (nowTime - mLastClickTime > mTimeInterval) {
+            mLastClickTime = nowTime;
             // 单次点击事件
             onSingleClick(v, position);
-            mLastClickTime = nowTime;
-        } else {
-            // 快速点击事件
-            onFastClick();
         }
     }
 
@@ -40,9 +37,4 @@ public abstract class OnItemFilterClickListener implements ByRecyclerView.OnItem
      */
     protected abstract void onSingleClick(View v, int position);
 
-    /**
-     * 快速点击事件
-     */
-    protected void onFastClick() {
-    }
 }
