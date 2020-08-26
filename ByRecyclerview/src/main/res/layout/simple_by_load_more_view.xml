@@ -15,8 +15,7 @@
         <ProgressBar
             android:id="@+id/pb_progress"
             android:layout_width="@dimen/by_progress_width_height"
-            android:layout_height="@dimen/by_progress_width_height"
-            android:indeterminateDrawable="@drawable/by_progress_rotate" />
+            android:layout_height="@dimen/by_progress_width_height" />
 
         <TextView
             android:layout_width="wrap_content"
