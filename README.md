@@ -13,19 +13,18 @@ ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterVi
  - 4.可设置 自定义 下拉刷新布局 和 加载更多布局
  - 5.可Add HeaderView、FooterView
  - 6.可设置 StateView状态布局
- - 7.可添加 item及子view的点击/长按事件
- - 8.优化过的BaseAdapter (RecyclerView / ListView)，减少大量代码
- - 9.Adapter结合DataBinding使用 (RecyclerView / ListView)
- - 10.可添加 万能分隔线（LinearLayout / GridLayout / StaggeredGridLayout）
+ - 7.可添加 item及子view的点击/长按事件(防止重复点击)
+ - 8.优化过的BaseAdapter (RV/LV)，减少大量代码
+ - 9.Adapter结合DataBinding使用 (RV/LV)
+ - 10.可添加 万能分隔线（线性/宫格/瀑布流）
  - 11.可配置 粘性header，StickyView
  - 12.可配置 Skeleton骨架图
- - 13.默认使用AndoridX，且支持Support
 
 
 ## Document
  -  👉 [**详细使用见Wiki！！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.1.2)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.1.3)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
 
@@ -64,7 +63,7 @@ allprojects {
 ```
 dependencies {
 	// AndroidX版本引入
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.1.2'
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.1.3'
 }
 ```
 
@@ -163,6 +162,7 @@ recyclerView.setStateViewEnabled(false);
 
 ### Item 点击/长按监听
 ```java
+// 防重复点击使用 OnItemFilterClickListener
 mRecyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
     @Override
     public void onClick(View v, int position) {
@@ -180,6 +180,8 @@ mRecyclerView.setOnItemLongClickListener(new ByRecyclerView.OnItemLongClickListe
 // 添加 子View的点击/长按事件
 holder.addOnClickListener(R.id.tv_text);
 holder.addOnLongClickListener(R.id.tv_text);
+
+// 防重复点击使用 OnItemChildFilterClickListener
 recyclerView.setOnItemChildClickListener(new ByRecyclerView.OnItemChildClickListener() {
     @Override
     public void onItemChildClick(View view, int position) {
