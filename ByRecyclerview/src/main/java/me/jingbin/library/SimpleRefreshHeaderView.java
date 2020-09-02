@@ -89,14 +89,8 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
         tvRefreshTip.setVisibility(VISIBLE);
         if (state == STATE_REFRESHING) {
             // show progress
-            mIvArrow.clearAnimation();
             mIvArrow.setVisibility(View.INVISIBLE);
             mProgress.setVisibility(View.VISIBLE);
-            smoothScrollTo(mMeasuredHeight);
-        } else if (state == STATE_DONE) {
-            mIvArrow.setVisibility(View.INVISIBLE);
-            mProgress.setVisibility(View.INVISIBLE);
-            tvRefreshTip.setVisibility(INVISIBLE);
         } else {
             // show arrow image
             mIvArrow.setVisibility(View.VISIBLE);
@@ -107,8 +101,7 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
             case STATE_NORMAL:
                 if (mState == STATE_RELEASE_TO_REFRESH) {
                     mIvArrow.startAnimation(mRotateDownAnim);
-                }
-                if (mState == STATE_REFRESHING) {
+                } else if (mState == STATE_REFRESHING) {
                     mIvArrow.clearAnimation();
                 }
                 tvRefreshTip.setText(R.string.by_header_hint_normal);
@@ -119,6 +112,8 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
                 tvRefreshTip.setText(R.string.by_header_hint_release);
                 break;
             case STATE_REFRESHING:
+                mIvArrow.clearAnimation();
+                smoothScrollTo(mMeasuredHeight);
                 tvRefreshTip.setText(R.string.by_refreshing);
                 break;
             case STATE_DONE:
@@ -150,8 +145,8 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
 
     @Override
     public void refreshComplete() {
+        // 刷新结束的状态: 显示刷新完成,如想显示下拉刷新改为 STATE_NORMAL
         setState(STATE_DONE);
-        setState(STATE_NORMAL);
         smoothScrollTo(0);
     }
 
