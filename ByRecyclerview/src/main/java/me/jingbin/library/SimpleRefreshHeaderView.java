@@ -145,8 +145,8 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
 
     @Override
     public void refreshComplete() {
-        // 刷新结束的状态: 显示刷新完成,如想显示下拉刷新改为 STATE_NORMAL
-        setState(STATE_DONE);
+        // 刷新结束的状态: 显示下拉刷新,如想显示刷新完成改为 STATE_DONE
+        setState(STATE_NORMAL);
         smoothScrollTo(0);
     }
 
