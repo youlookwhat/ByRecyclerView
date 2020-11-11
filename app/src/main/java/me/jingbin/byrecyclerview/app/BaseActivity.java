@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
-import com.gyf.barlibrary.ImmersionBar;
-
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.library.ByRecyclerView;
 
@@ -71,7 +69,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ImmersionBar.with(this).destroy();
         ByRecyclerView view = getView(R.id.recyclerView);
         if (view != null) {
             view.destroy();

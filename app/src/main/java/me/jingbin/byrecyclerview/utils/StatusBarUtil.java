@@ -3,7 +3,7 @@ package me.jingbin.byrecyclerview.utils;
 import android.app.Activity;
 import android.view.View;
 
-import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.immersionbar.ImmersionBar;
 
 import me.jingbin.byrecyclerview.R;
 
