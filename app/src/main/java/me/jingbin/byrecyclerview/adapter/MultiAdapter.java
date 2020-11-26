@@ -24,6 +24,9 @@ import me.jingbin.library.stickyview.StickyHeaderHandler;
  */
 public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseByViewHolder<DataItemBean>> {
 
+    public MultiAdapter() {
+    }
+
     public MultiAdapter(List<DataItemBean> data) {
         super(data);
     }

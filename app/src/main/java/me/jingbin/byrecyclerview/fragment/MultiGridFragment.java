@@ -2,6 +2,7 @@ package me.jingbin.byrecyclerview.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import me.jingbin.byrecyclerview.adapter.MultiAdapter;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.FragmentRefreshBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
+import me.jingbin.byrecyclerview.utils.LogHelper;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
 
@@ -23,10 +25,8 @@ public class MultiGridFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private static final String TYPE = "mType";
     private String mType = "Android";
-    private boolean mIsPrepared;
     private boolean mIsFirst = true;
     private MultiAdapter mAdapter;
-    private ByRecyclerView recyclerView;
     private int page = 1;
 
 
@@ -60,26 +60,29 @@ public class MultiGridFragment extends BaseFragment<FragmentRefreshBinding> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // 准备就绪
-        mIsPrepared = true;
         initAdapter();
     }
 
     @Override
-    protected void loadData() {
-        if (!mIsPrepared || !mIsVisible || !mIsFirst) {
-            return;
+    public void onResume() {
+        super.onResume();
+        if (mIsFirst) {
+            mAdapter.setNewData(DataUtil.getMultiData(getActivity(), 50));
+            binding.recyclerView.addHeaderView(R.layout.layout_header_view);
+            mIsFirst = false;
         }
-        initAdapter();
+    }
+
+    @Override
+    protected void loadData() {
     }
 
     private void initAdapter() {
-        mAdapter = new MultiAdapter(DataUtil.getMultiData(getActivity(), 50));
+        mAdapter = new MultiAdapter();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 6, RecyclerView.VERTICAL, false);
         binding.recyclerView.setLayoutManager(gridLayoutManager);
 
         binding.recyclerView.setAdapter(mAdapter);
-        binding.recyclerView.addHeaderView(R.layout.layout_header_view);
         binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -106,6 +109,5 @@ public class MultiGridFragment extends BaseFragment<FragmentRefreshBinding> {
                 ToastUtil.showToast(itemData.getDes() + "-" + position);
             }
         });
-        mIsFirst = false;
     }
 }

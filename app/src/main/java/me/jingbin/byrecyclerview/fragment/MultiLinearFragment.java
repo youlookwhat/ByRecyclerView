@@ -2,19 +2,22 @@ package me.jingbin.byrecyclerview.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.adapter.DataAdapter;
 import me.jingbin.byrecyclerview.adapter.MultiAdapter;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.FragmentRefreshBinding;
+import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
+import me.jingbin.byrecyclerview.utils.LogHelper;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.decoration.SpacesItemDecoration;
@@ -26,12 +29,9 @@ public class MultiLinearFragment extends BaseFragment<FragmentRefreshBinding> {
 
     private static final String TYPE = "mType";
     private String mType = "Android";
-    private boolean mIsPrepared;
     private boolean mIsFirst = true;
     private MultiAdapter mAdapter;
-    private ByRecyclerView recyclerView;
     private int page = 1;
-
 
     @Override
     public void onAttach(Context context) {
@@ -63,21 +63,24 @@ public class MultiLinearFragment extends BaseFragment<FragmentRefreshBinding> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // 准备就绪
-        mIsPrepared = true;
         initAdapter();
     }
 
     @Override
-    protected void loadData() {
-        if (!mIsPrepared || !mIsVisible || !mIsFirst) {
-            return;
+    public void onResume() {
+        super.onResume();
+        if (mIsFirst) {
+            mAdapter.setNewData(DataUtil.getMultiData(getActivity(), 50));
+            mIsFirst = false;
         }
-        initAdapter();
+    }
+
+    @Override
+    protected void loadData() {
     }
 
     private void initAdapter() {
-        mAdapter = new MultiAdapter(DataUtil.getMultiData(getActivity(), 50));
+        mAdapter = new MultiAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -113,6 +116,5 @@ public class MultiLinearFragment extends BaseFragment<FragmentRefreshBinding> {
                 ToastUtil.showToast(itemData.getDes() + "-" + position);
             }
         });
-        mIsFirst = false;
     }
 }
