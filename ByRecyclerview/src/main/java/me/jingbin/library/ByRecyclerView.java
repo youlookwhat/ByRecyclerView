@@ -54,7 +54,6 @@ public class ByRecyclerView extends RecyclerView {
     private boolean mFootViewEnabled = false;             // 是否 显示 FooterView
     private boolean mStateViewEnabled = true;             // 是否 显示 StateView
     private boolean misNoLoadMoreIfNotFullScreen = false; // 是否 不满一屏不加载更多
-    private boolean mIsDispatchTouch = true;              // 是否 处理ViewPager2滑动问题
 
     private boolean mIsLoadingData = false;        // 是否正在加载更多
     private boolean mIsNoMore = false;             // 是否没有更多数据了
@@ -67,6 +66,7 @@ public class ByRecyclerView extends RecyclerView {
     private long mRefreshDelayMillis = 0;          // 延迟多少毫秒后再调用下拉刷新接口
     private int mTouchSlop;                        // 大于这个值才处理
     private int mStartX, mStartY;                  // 处理ViewPager2滑动问题时按下的横纵坐标
+    private int mDispatchTouchStatus;              // 是否处理滑动事件
 
     private OnRefreshListener mRefreshListener;    // 下拉刷新监听
     private BaseRefreshHeader mRefreshHeader;      // 自定义下拉刷新布局需要实现的接口
@@ -369,7 +369,7 @@ public class ByRecyclerView extends RecyclerView {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (mIsDispatchTouch && mRefreshEnabled) {
+        if ((mRefreshEnabled && mDispatchTouchStatus == 0) || mDispatchTouchStatus == 1) {
             // 使用viewPage2和下拉刷新时处理下拉中可以左右滑动的问题
             switch (ev.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -855,10 +855,10 @@ public class ByRecyclerView extends RecyclerView {
     /**
      * 设置是否处理dispatchTouchEvent事件
      *
-     * @param dispatchTouch true处理 false不处理 默认true
+     * @param dispatchTouch true一定处理 false一定不处理 默认开启下拉刷新会处理
      */
     public void setDispatchTouch(boolean dispatchTouch) {
-        mIsDispatchTouch = dispatchTouch;
+        mDispatchTouchStatus = dispatchTouch ? 1 : 2;
     }
 
     @Override
