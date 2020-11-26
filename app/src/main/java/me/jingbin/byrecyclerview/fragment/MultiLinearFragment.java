@@ -79,6 +79,11 @@ public class MultiLinearFragment extends BaseFragment<FragmentRefreshBinding> {
     protected void loadData() {
     }
 
+    /**
+     * 有一个问题：
+     * 在有headerView 且 第一个headerView没有高度时(如包裹了一个view，但是设置了这个view为gone)，会出现滚动条到不了顶的情况。
+     * 解决：一直让第一个headerView有高度，如可以让其无论如何有一个1px的高度
+     */
     private void initAdapter() {
         mAdapter = new MultiAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

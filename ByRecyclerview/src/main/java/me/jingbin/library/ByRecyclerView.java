@@ -441,15 +441,13 @@ public class ByRecyclerView extends RecyclerView {
                 if (mRefreshEnabled
                         && isOnTop()
                         && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    if (mRefreshHeader.releaseAction()) {
-                        if (mRefreshListener != null) {
-                            postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mRefreshListener.onRefresh();
-                                }
-                            }, 300 + mRefreshDelayMillis);
-                        }
+                    if (mRefreshListener != null && mRefreshHeader.releaseAction()) {
+                        postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mRefreshListener.onRefresh();
+                            }
+                        }, 300 + mRefreshDelayMillis);
                     }
                 }
                 break;
@@ -742,7 +740,7 @@ public class ByRecyclerView extends RecyclerView {
      * Is it a RefreshHeaderView layout
      */
     public boolean isRefreshHeader(int position) {
-        if (mRefreshEnabled) {
+        if (mRefreshEnabled && mRefreshListener != null) {
             return position == 0;
         } else {
             return false;
@@ -901,7 +899,7 @@ public class ByRecyclerView extends RecyclerView {
      * If you use the drop-down refresh that comes with the control, you need to count position
      */
     public int getPullHeaderSize() {
-        if (mRefreshEnabled) {
+        if (mRefreshEnabled && mRefreshListener != null) {
             return 1;
         } else {
             return 0;
