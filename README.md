@@ -9,7 +9,7 @@ ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterVi
 ## 功能特性
  - 1.支持 下拉刷新、加载更多
  - 2.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
- - 3.加载更多机制：**不足一屏上拉加载，超过后触底加载(所见即所得)**
+ - 3.加载更多机制：**不足一屏上拉加载，超过后触底加载**
  - 4.可设置 自定义 下拉刷新布局 和 加载更多布局
  - 5.可Add HeaderView、FooterView
  - 6.可设置 StateView状态布局
@@ -24,7 +24,7 @@ ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterVi
 ## Document
  -  👉 [**详细使用见Wiki！！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.1.4)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [更新日志 (1.1.5)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
 
@@ -63,7 +63,7 @@ allprojects {
 ```
 dependencies {
 	// AndroidX版本引入
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.1.4'
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.1.5'
 }
 ```
 
