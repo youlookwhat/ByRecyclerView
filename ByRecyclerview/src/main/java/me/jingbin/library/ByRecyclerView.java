@@ -979,6 +979,9 @@ public class ByRecyclerView extends RecyclerView {
             insert = true;
         }
         mStateLayout.removeAllViews();
+        if (stateView.getParent() != null && stateView.getParent() instanceof ViewGroup) {
+            ((ViewGroup) stateView.getParent()).removeView(stateView);
+        }
         mStateLayout.addView(stateView);
         mStateViewEnabled = true;
         if (insert) {
