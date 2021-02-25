@@ -41,6 +41,7 @@
         <activity android:name=".activity.SkeletonHeaderViewActivity" />
         <activity android:name=".activity.SkeletonViewActivity" />
         <activity android:name=".activity.SecondTypeActivity" />
+        <activity android:name=".activity.FlexBoxActivity" />
     </application>
 
 </manifest>

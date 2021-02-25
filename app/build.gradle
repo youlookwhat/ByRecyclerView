@@ -82,7 +82,8 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // 状态栏
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
-
+    // 流式布局
+    implementation 'com.google.android:flexbox:2.0.1'
     implementation project(':ByRecyclerview')
-//    implementation "com.github.youlookwhat:ByRecyclerView:1.1.3"
+//    implementation "com.github.youlookwhat:ByRecyclerView:1.1.5"
 }

@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.jingbin.byrecyclerview.activity.AppBarLayoutActivity;
+import me.jingbin.byrecyclerview.activity.FlexBoxActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ItemClickActivity;
 import me.jingbin.byrecyclerview.activity.SecondTypeActivity;
@@ -34,7 +35,7 @@ import me.jingbin.library.view.OnItemFilterClickListener;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> list = Arrays.asList(
+    private final List<String> list = Arrays.asList(
             "下拉刷新、加载更多",
             "Add HeaderView/FooterView",
             "设置StateView",
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
             "万能分割线",
             "item 悬浮置顶",
             "Skeleton 骨架图",
-            "CoordinatorLayout + RecyclerView 使用示例"
+            "CoordinatorLayout + RecyclerView 使用示例",
+            "FlexboxLayoutManager 显示处理"
     );
     private ActivityMainBinding binding;
 
@@ -95,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 8:// CoordinatorLayout + RecyclerView 使用示例
                         startActivity(new Intent(MainActivity.this, AppBarLayoutActivity.class));
+                        break;
+                    case 9:// FlexboxLayoutManager
+                        startActivity(new Intent(MainActivity.this, FlexBoxActivity.class));
                         break;
                     default:
                         break;
