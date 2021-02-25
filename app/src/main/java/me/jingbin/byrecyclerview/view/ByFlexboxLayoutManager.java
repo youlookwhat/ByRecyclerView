@@ -12,21 +12,21 @@ import com.google.android.flexbox.FlexboxLayoutManager;
  * 处理 FlexboxLayoutManager 在RecyclerView中添加HeaderView或EmptyView
  * link to https://github.com/youlookwhat/ByRecyclerView
  */
-public class MyFlexboxLayoutManager extends FlexboxLayoutManager {
+public class ByFlexboxLayoutManager extends FlexboxLayoutManager {
 
-    public MyFlexboxLayoutManager(Context context) {
+    public ByFlexboxLayoutManager(Context context) {
         super(context);
     }
 
-    public MyFlexboxLayoutManager(Context context, int flexDirection) {
+    public ByFlexboxLayoutManager(Context context, int flexDirection) {
         super(context, flexDirection);
     }
 
-    public MyFlexboxLayoutManager(Context context, int flexDirection, int flexWrap) {
+    public ByFlexboxLayoutManager(Context context, int flexDirection, int flexWrap) {
         super(context, flexDirection, flexWrap);
     }
 
-    public MyFlexboxLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ByFlexboxLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

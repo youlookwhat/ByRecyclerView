@@ -17,14 +17,14 @@ import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
-import me.jingbin.byrecyclerview.view.MyFlexboxLayoutManager;
+import me.jingbin.byrecyclerview.view.ByFlexboxLayoutManager;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.decoration.SpacesItemDecoration;
 
 /**
  * @author jingbin
  * FlexboxLayoutManager处理
- * 1.使用自定义的 MyFlexboxLayoutManager
+ * 1.使用自定义的 ByFlexboxLayoutManager
  * 2.不能设置加载更多
  * 3.显示EmptyView后不能再加载数据
  */
@@ -48,7 +48,7 @@ public class FlexBoxActivity extends BaseActivity<ActivitySimpleBinding> {
         emptyBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_empty, (ViewGroup) binding.recyclerView.getParent(), false);
 
         mAdapter = new DataAdapter();
-        MyFlexboxLayoutManager layoutManager = new MyFlexboxLayoutManager(this);
+        ByFlexboxLayoutManager layoutManager = new ByFlexboxLayoutManager(this);
         binding.recyclerView.setLayoutManager(layoutManager);
         SpacesItemDecoration itemDecoration = new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL, 1);
         itemDecoration.setDrawable(R.drawable.shape_line);
