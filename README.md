@@ -7,10 +7,10 @@
 ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、万能分割线、粘性header、极简Adapter(databinding)等功能。
 
 ## 功能特性
- - 1.支持 下拉刷新、加载更多
+ - 1.支持 下拉刷新 / 加载更多
  - 2.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
  - 3.加载更多机制：**不足一屏上拉加载，超过后触底加载**
- - 4.可设置 自定义 下拉刷新布局 和 加载更多布局
+ - 4.可设置 自定义 下拉刷新布局 / 加载更多布局
  - 5.可Add HeaderView、FooterView
  - 6.可设置 StateView状态布局
  - 7.可添加 item及子view的点击/长按事件(防止重复点击)
@@ -260,7 +260,7 @@ skeletonScreen.hide();
 |EmptyView|可设置|可设置|不能设置|
 |点击/长按事件|有|有| 无 |
 
-ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的优势在于：
+ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的特点在于：
 
  - headerView使用的是多type的形式，即一个header就是一个position
  - 不足一屏上拉加载，超过后触底加载
@@ -275,8 +275,7 @@ ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于
 此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，在实际项目中使用，如果你在项目混淆之后出现问题，请及时联系我。
 
 ## Issues
-### QQ讨论群 - 831860628
-大家可以加群讨论使用本库时出现的问题，也可以直接提[Issues](https://github.com/youlookwhat/ByRecyclerView/issues)，我会第一时间帮助大家解决。如果此库帮助到了你，还请给个Star、Fork一下，我将更有动力持续迭代优化，非常感谢^_^。
+如果有任何问题，请到GitHub的[issue处](https://github.com/youlookwhat/ByRecyclerView/issues)写上你不明白的地方，也可以通过下面提供的方式联系我，我会及时给予帮助。如果此库帮助到了你，欢迎点个star，非常感谢!
 
 ## Thanks
  - [XRecyclerView](https://github.com/XRecyclerView/XRecyclerView)
