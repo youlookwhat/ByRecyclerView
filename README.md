@@ -30,9 +30,7 @@ ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterVi
 
 
 ## Screenshots
-|刷新操作|设置状态布局|多类型列表|万能分割线|
-|:--:|:--:|:--:|:--:|
-|![刷新操作](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_refresh.gif?raw=true)|![设置状态布局](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_statue.gif?raw=true)|![多类型列表](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_adapter_type.gif?raw=true")|![分割线](https://github.com/youlookwhat/ByRecyclerView/blob/master/art/gif_divider.gif?raw=true")|
+![](https://github.com/youlookwhat/ByRecyclerView/raw/master/art/byrv_shot.png?raw=true)
 
 
 ### 下载试用
