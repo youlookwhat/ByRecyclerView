@@ -14,6 +14,7 @@ import me.jingbin.byrecyclerview.bean.DataItemBean;
 import me.jingbin.byrecyclerview.databinding.FragmentRefreshBinding;
 import me.jingbin.byrecyclerview.utils.DataUtil;
 import me.jingbin.byrecyclerview.utils.ToastUtil;
+import me.jingbin.byrecyclerview.view.ByLinearLayoutManager;
 import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.decoration.SpacesItemDecoration;
 
@@ -78,7 +79,8 @@ public class LinearFragment extends BaseFragment<FragmentRefreshBinding> {
         recyclerView = getView(R.id.recyclerView);
         recyclerView.setBackgroundResource(R.color.colorWhite);
         mAdapter = new DataAdapter(DataUtil.get(activity, 6));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        // 修复addData() 后接着 setLoadMoreEnabled(false) 导致的崩溃问题
+        ByLinearLayoutManager layoutManager = new ByLinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         // 加了分割线，滚动条才会置顶
@@ -106,6 +108,7 @@ public class LinearFragment extends BaseFragment<FragmentRefreshBinding> {
                         }
                         page++;
                         mAdapter.addData(DataUtil.getMore(activity, 6, page));
+                        if ("drawable".equals(mType)) recyclerView.setLoadMoreEnabled(false);
                         recyclerView.loadMoreComplete();
                     }
                 }, 1000);
