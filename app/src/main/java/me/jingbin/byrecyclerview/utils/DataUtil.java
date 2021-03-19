@@ -121,4 +121,24 @@ public class DataUtil {
         return list;
     }
 
+    /**
+     * FlexboxLayout的数据
+     */
+    public static ArrayList<DataItemBean> getFlexData() {
+        ArrayList<DataItemBean> list = new ArrayList<>();
+        list.add(new DataItemBean().setTitle("《非暴力沟通》"));
+        list.add(new DataItemBean().setTitle("《如何培养孩子的社会能力》"));
+        list.add(new DataItemBean().setTitle("《叛逆不是孩子的错》"));
+        list.add(new DataItemBean().setTitle("《养育男孩》"));
+        list.add(new DataItemBean().setTitle("《养育女孩》"));
+        list.add(new DataItemBean().setTitle("《正念的奇迹》"));
+        list.add(new DataItemBean().setTitle("《好奇心》"));
+        list.add(new DataItemBean().setTitle("《幸福的方法》"));
+        list.add(new DataItemBean().setTitle("《活出生命的意义》"));
+        list.add(new DataItemBean().setTitle("《少即是多》"));
+        list.add(new DataItemBean().setTitle("《销售就是要玩转情商》"));
+        list.add(new DataItemBean().setTitle("《离经叛道》"));
+        return list;
+    }
+
 }
