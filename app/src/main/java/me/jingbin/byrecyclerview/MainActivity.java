@@ -22,6 +22,7 @@ import me.jingbin.byrecyclerview.activity.ItemClickActivity;
 import me.jingbin.byrecyclerview.activity.SecondTypeActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.StickyItemActivity;
+import me.jingbin.byrecyclerview.activity.StickyRvActivity;
 import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
 import me.jingbin.byrecyclerview.utils.WebUtil;
 import me.jingbin.library.adapter.BaseByViewHolder;
@@ -45,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
             "item 悬浮置顶",
             "Skeleton 骨架图",
             "CoordinatorLayout + RecyclerView 使用示例",
-            "FlexboxLayoutManager 显示处理"
+            "FlexboxLayoutManager 显示处理",
+            "RecyclerView 嵌套滑动置顶"
     );
     private ActivityMainBinding binding;
 
@@ -100,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 9:// FlexboxLayoutManager
                         startActivity(new Intent(MainActivity.this, FlexBoxActivity.class));
+                        break;
+                    case 10:// RecyclerView 嵌套滑动置顶
+                        startActivity(new Intent(MainActivity.this, StickyRvActivity.class));
                         break;
                     default:
                         break;
