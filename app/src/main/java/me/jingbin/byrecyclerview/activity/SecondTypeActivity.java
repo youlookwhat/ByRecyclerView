@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -74,7 +75,7 @@ public class SecondTypeActivity extends BaseActivity<ActivitySimpleBinding> {
         binding.recyclerView.addItemDecoration(new SpacesItemDecoration(this, SpacesItemDecoration.VERTICAL).setNoShowDivider(0, 0).setDrawable(R.drawable.shape_line));
         mAdapter = new BaseBindingAdapter<DataItemBean, ItemMainBinding>(R.layout.item_main, list) {
             @Override
-            protected void bindView(BaseBindingHolder holder, DataItemBean bean, ItemMainBinding binding, int position) {
+            protected void bindView(@NonNull BaseBindingHolder holder, @NonNull DataItemBean bean, @NonNull ItemMainBinding binding, int position) {
                 binding.tvText.setText(bean.getTitle());
             }
         };

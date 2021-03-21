@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.app.BaseActivity;
@@ -94,7 +94,7 @@ public class FlexBoxActivity extends BaseActivity<ActivitySimpleBinding> {
 
     private final BaseBindingAdapter<DataItemBean, ItemTagBinding> mAdapter = new BaseBindingAdapter<DataItemBean, ItemTagBinding>(R.layout.item_tag) {
         @Override
-        protected void bindView(BaseBindingHolder holder, DataItemBean bean, ItemTagBinding binding, int position) {
+        protected void bindView(@NonNull BaseBindingHolder holder, @NonNull DataItemBean bean, @NonNull ItemTagBinding binding, int position) {
             binding.tvText.setText(bean.getTitle());
         }
     };

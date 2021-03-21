@@ -141,4 +141,28 @@ public class DataUtil {
         return list;
     }
 
+    /**
+     * 嵌套滑动置顶的数据
+     */
+    public static ArrayList<DataItemBean> getStickyData() {
+        ArrayList<DataItemBean> list = new ArrayList<>();
+        list.add(new DataItemBean().setTitle("这辈子人潮汹涌，感谢遇见你。"));
+        list.add(new DataItemBean().setTitle("以前呢，感情大于一切，现在不想向物质低头，但也没有纯粹的感情。"));
+        list.add(new DataItemBean().setTitle("小孩子才分对错，成年人只看利弊"));
+        list.add(new DataItemBean().setTitle("带不走的留不下，留不下的莫牵挂。"));
+        list.add(new DataItemBean().setTitle("你不用对每个过客负责，也不用对每个路人说教。"));
+        list.add(new DataItemBean().setTitle("把寻常的人生过好，才是最不寻常的事。"));
+        list.add(new DataItemBean().setTitle("Hum a little soul, make life your goal."));
+        list.add(new DataItemBean().setTitle("我要珍惜当下。"));
+        list.add(new DataItemBean().setTitle("当你想要认真生活的时候，你的火花就已经找到了。"));
+        list.add(new DataItemBean().setTitle("只要我一直找下去，总有一天，我能找到。"));
+        list.add(new DataItemBean().setTitle("相信就能实现。"));
+        list.add(new DataItemBean().setTitle("只要我一直写下去，我活着，就有意义了。"));
+        list.add(new DataItemBean().setTitle("真正喜欢你的人，是不会给你打分的。"));
+        list.add(new DataItemBean().setTitle("懦怯囚禁人的灵魂，希望可以令你感受自由。强者自救，圣者渡人。"));
+        list.add(new DataItemBean().setTitle("心若是牢笼，处处为牢笼，自由不在外面，而在于内心"));
+        list.add(new DataItemBean().setTitle("点我回到顶部"));
+        return list;
+    }
+
 }

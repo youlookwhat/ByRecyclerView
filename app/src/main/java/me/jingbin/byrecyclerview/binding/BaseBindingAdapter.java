@@ -41,10 +41,12 @@ public abstract class BaseBindingAdapter<T, B extends ViewDataBinding> extends B
 
         @Override
         protected void onBindingView(BaseBindingHolder holder, T bean, int position) {
-            bindView(holder, bean, binding, position);
+            if (holder != null && bean != null && binding != null) {
+                bindView(holder, bean, binding, position);
+            }
         }
     }
 
-    protected abstract void bindView(BaseBindingHolder holder, T bean, B binding, int position);
+    protected abstract void bindView(@NonNull BaseBindingHolder holder, @NonNull T bean, @NonNull B binding, int position);
 }
 

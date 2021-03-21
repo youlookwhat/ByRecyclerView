@@ -1,5 +1,7 @@
 package me.jingbin.byrecyclerview.adapter;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 import me.jingbin.byrecyclerview.R;
@@ -22,7 +24,7 @@ public class DataAdapter extends BaseBindingAdapter<DataItemBean, ItemHomeBindin
     }
 
     @Override
-    protected void bindView(BaseBindingHolder holder, DataItemBean bean, ItemHomeBinding binding, int position) {
+    protected void bindView(@NonNull BaseBindingHolder holder, @NonNull DataItemBean bean, @NonNull ItemHomeBinding binding, int position) {
         binding.tvText.setText(bean.getTitle() + ": " + position);
     }
 

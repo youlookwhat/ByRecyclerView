@@ -21,8 +21,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="精选"
-                android:textColor="#f00"
+                android:text="关注"
+                android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
 
             <View
@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="年货节"
+                android:text="推荐"
                 android:textColor="#333"
                 android:textSize="15sp" />
 

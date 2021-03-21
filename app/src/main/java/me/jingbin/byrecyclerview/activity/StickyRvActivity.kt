@@ -1,17 +1,13 @@
 package me.jingbin.byrecyclerview.activity
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.jingbin.byrecyclerview.R
 import me.jingbin.byrecyclerview.app.BaseActivity
 import me.jingbin.byrecyclerview.databinding.ActivityStickyRvBinding
-import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding
 import me.jingbin.byrecyclerview.stickyrv.config.StickAdapter
+import me.jingbin.byrecyclerview.utils.DensityUtil
 
 /**
  * @author jingbin
@@ -34,14 +30,9 @@ class StickyRvActivity : BaseActivity<ActivityStickyRvBinding>() {
         binding.parentRecyclerView.adapter = stickAdapter
         binding.parentRecyclerView.setOnRefreshListener({ binding.parentRecyclerView.isRefreshing = false }, 1000)
 
-//        setHeaderView()
-
-        binding.parentRecyclerView.addHeaderView(R.layout.layout_header_view)
-        binding.parentRecyclerView.addHeaderView(R.layout.layout_header_view)
-        binding.parentRecyclerView.addHeaderView(R.layout.layout_header_view)
-        binding.parentRecyclerView.addHeaderView(R.layout.layout_header_view)
-        binding.parentRecyclerView.addHeaderView(R.layout.layout_header_view)
-        binding.parentRecyclerView.addHeaderView(R.layout.layout_header_view)
+        binding.parentRecyclerView.addHeaderView(R.layout.layout_skeleton_headerview)
+        binding.parentRecyclerView.addHeaderView(R.layout.layout_sticky_headerview)
+        binding.parentRecyclerView.addHeaderView(R.layout.layout_sticky_headerview2)
 
         stickAdapter!!.setLoadingTabsListener {
             // 800毫秒后加载信息流数据
@@ -60,7 +51,8 @@ class StickyRvActivity : BaseActivity<ActivityStickyRvBinding>() {
             }
         }
         if (!floatAdClosed) {
-            binding.parentRecyclerView.setStickyHeight(dp2px(50F).toInt())
+            // 设置悬浮布局的高度
+            binding.parentRecyclerView.setStickyHeight(DensityUtil.dip2px(this, 50f))
         }
         binding.tvText.setOnClickListener {
             binding.homeFloatLayout.visibility = View.GONE
@@ -69,16 +61,4 @@ class StickyRvActivity : BaseActivity<ActivityStickyRvBinding>() {
         }
     }
 
-    private fun setHeaderView() {
-        val headerBinding: LayoutHeaderViewBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, binding.parentRecyclerView.parent as ViewGroup?, false)
-        binding.parentRecyclerView.addHeaderView(headerBinding.root)
-    }
-
-    /**
-     * dp转换成px
-     */
-    fun Context.dp2px(dpValue: Float): Float {
-        var scale = resources.displayMetrics.density
-        return dpValue * scale + 0.5f
-    }
 }

@@ -20,7 +20,6 @@ class StickAdapter(private val activity: AppCompatActivity) : BaseByRecyclerView
     private var loadingTabsListener: (() -> Unit)? = null
 
     companion object {
-
         // 正在加载tabs
         private const val VIEW_TYPE_LOADING_TABS = 1
 
@@ -28,7 +27,7 @@ class StickAdapter(private val activity: AppCompatActivity) : BaseByRecyclerView
         private const val VIEW_TYPE_FEEDS = 2
 
         private val COLOR_TAB_NORMAL by lazy { Color.parseColor("#333333") }
-        private val COLOR_TAB_SELECTED by lazy { Color.parseColor("#ff0000") }
+        private val COLOR_TAB_SELECTED by lazy { Color.parseColor("#2483D9") }
     }
 
     override fun getItemViewType(position: Int): Int = when (position) {
