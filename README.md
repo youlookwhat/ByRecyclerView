@@ -7,19 +7,17 @@
 ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、万能分割线、粘性header、极简Adapter(databinding)等功能。
 
 ## 功能特性
- - 1.支持 下拉刷新 / 加载更多
- - 2.可随意切换 自带下拉刷新布局 / SwipeRefreshLayout
+ - 1.支持 下拉刷新 / 加载更多 / SwipeRefreshLayout
+ - 2.可自定义 下拉刷新布局 / 加载更多布局
  - 3.加载更多机制：**不足一屏上拉加载，超过后触底加载**
- - 4.可设置 自定义 下拉刷新布局 / 加载更多布局
- - 5.可Add HeaderView、FooterView
- - 6.可设置 StateView状态布局
- - 7.可添加 item及子view的点击/长按事件(防止重复点击)
- - 8.优化过的BaseAdapter (RV/LV)，减少大量代码
- - 9.Adapter结合DataBinding使用 (RV/LV)
- - 10.可添加 万能分隔线（线性/宫格/瀑布流）
- - 11.可配置 Skeleton骨架图
+ - 4.可Add HeaderView、FooterView、StateView
+ - 5.可添加 item及子view的点击/长按事件(防止重复点击)
+ - 6.优化过的BaseAdapter (RV/LV)，减少大量代码
+ - 7.Adapter结合DataBinding使用 (RV/LV)
+ - 8.可添加 万能分隔线（线性/宫格/瀑布流）
+ - 9.可配置 Skeleton骨架图
 
-> 最新：处理在ViewPager2中使用的问题
+> 最新：新增RecyclerView嵌套滑动置顶示例
 
 ## Document
  -  👉 [**详细使用见Wiki！！！**](https://github.com/youlookwhat/ByRecyclerView/wiki)
@@ -38,9 +36,6 @@ ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterVi
 
 <img width="250" height=“250” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>
 
-<!--|[AndroidX版本(Apk-Demo)](http://d.6short.com/byrecyclerview)|[Support版本(CloudReader)](https://www.coolapk.com/apk/127875)|
-|:--:|:--:|
-|<img width="200" height=“200” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>|<img width="200" height=“200” src="https://raw.githubusercontent.com/youlookwhat/CloudReader/master/file/download_200.png"></img>|-->
 
 ## 如何使用  👉 [**Wiki文档**](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
@@ -258,16 +253,13 @@ skeletonScreen.hide();
 |EmptyView|可设置|可设置|不能设置|
 |点击/长按事件|有|有| 无 |
 
-ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的特点在于：
+ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的区别在于：
 
  - headerView使用的是多type的形式，即一个header就是一个position
  - 不足一屏上拉加载，超过后触底加载
  - 自带下拉加载布局，也可使用三方刷新框架，比如SwipeRefreshLayout
  - 万能分割线(LinearLayout / GridLayout / StaggeredGridLayout)
- - 可设置悬浮置顶item StickyView
  - 可设置Skeleton 骨架图
-
-缺点是还没有BRVAH里的部分功能，比如分组adapter、DiffUtils、item扩展动画...后期会逐步完善。
 
 ## 混淆
 此资源库没有使用到任何序列化、反序列化、JNI、反射，无需进行额外的混淆操作，并且已经测试通过，在实际项目中使用，如果你在项目混淆之后出现问题，请及时联系我。
@@ -278,6 +270,7 @@ ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于
 ## Thanks
  - [XRecyclerView](https://github.com/XRecyclerView/XRecyclerView)
  - [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
+ - [PersistentRecyclerView](https://github.com/xmuSistone/PersistentRecyclerView)
 
 ## About me
  - **QQ**： 770413277
