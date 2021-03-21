@@ -7,12 +7,11 @@ import me.jingbin.library.ByRecyclerView
 
 /**
  * Created by jingbin on 3/21/21.
+ * 在 ViewPager - RecyclerView 中的item里有RecyclerView需要左右滑动时使用
  */
-class HorizontalSRecyclerView : ByRecyclerView {
-
-    constructor(context: Context)
-    constructor(context: Context?, attrs: AttributeSet?)
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int)
+class HorizontalSRecyclerView @JvmOverloads constructor(
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : ByRecyclerView(context, attrs, defStyleAttr) {
 
     //按下时 的X坐标
     private var downX = 0f
