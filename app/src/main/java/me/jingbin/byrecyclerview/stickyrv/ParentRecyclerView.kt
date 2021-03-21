@@ -266,4 +266,15 @@ class ParentRecyclerView @JvmOverloads constructor(
             stickyListener?.invoke(innerIsStickyTop)
         }
     }
+
+    override fun onNestedPreFling(target: View, velocityX: Float, velocityY: Float): Boolean {
+        try {
+            if (android.os.Build.VERSION.SDK_INT <= 19) {
+                return true
+            }
+            return super.onNestedPreFling(target, velocityX, velocityY)
+        } catch (e: Exception) {
+            return true
+        }
+    }
 }

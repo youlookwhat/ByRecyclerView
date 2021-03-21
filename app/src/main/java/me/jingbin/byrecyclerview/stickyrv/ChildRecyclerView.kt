@@ -13,7 +13,7 @@ import me.jingbin.byrecyclerview.R
  * 内层的RecyclerView
  */
 class ChildRecyclerView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BaseRecyclerView(context, attrs, defStyleAttr) {
 
     private var parentRecyclerView: ParentRecyclerView? = null
@@ -55,7 +55,7 @@ class ChildRecyclerView @JvmOverloads constructor(
             downX = ev.rawX
             downY = ev.rawY
             this.stopFling()
-        }else if (ev.action == MotionEvent.ACTION_MOVE) {
+        } else if (ev.action == MotionEvent.ACTION_MOVE) {
             // ACTION_MOVE 判定垂直还是水平滑动
             //获取到距离差
             val xDistance = Math.abs(ev.rawX - downX)
@@ -63,10 +63,10 @@ class ChildRecyclerView @JvmOverloads constructor(
             if (xDistance > yDistance && xDistance > mTouchSlop) {
                 // 水平滑动
                 return true
-            }else if(xDistance == 0f && yDistance == 0f){
+            } else if (xDistance == 0f && yDistance == 0f) {
                 // 点击
                 return super.onInterceptTouchEvent(ev)
-            }else if(yDistance >= xDistance && yDistance > 8f){
+            } else if (yDistance >= xDistance && yDistance > 8f) {
                 // 垂直滑动
                 return true
             }
@@ -120,7 +120,7 @@ class ChildRecyclerView @JvmOverloads constructor(
         var viewPager2: ViewPager2? = null
         var lastTraverseView: View = this
 
-        var parentView:View? = this.parent as View
+        var parentView: View? = this.parent as View
         while (parentView != null) {
             val parentClassName = parentView::class.java.canonicalName
             if ("androidx.viewpager2.widget.ViewPager2.RecyclerViewImpl" == parentClassName) {
@@ -167,48 +167,43 @@ class ChildRecyclerView @JvmOverloads constructor(
                 //将按下时的坐标存储
                 downX = x
                 downY = y
-                //                True if the child does not want the parent to
-//                intercept touch events.
+                // true 表示让ParentRecyclerView不要拦截
                 parent.requestDisallowInterceptTouchEvent(true)
             }
             MotionEvent.ACTION_MOVE -> {
                 //获取到距离差
                 val dx: Float = x - downX
                 val dy: Float = y - downY
-//                Log.d("aaa", "ACTION_MOVE")
                 //通过距离差判断方向
                 val orientation = getOrientation(dx, dy)
-//                DebugUtil.debug("jingbin","child-------------"+orientation);
                 val location = intArrayOf(0, 0)
                 getLocationOnScreen(location)
                 when (orientation) {
-                    "d" -> if (canScrollVertically(-1)) {
-//                        Log.e("ChildRecyclerView", "d   不要拦截")
-                        parent.requestDisallowInterceptTouchEvent(true)
-                    } else { //内层RecyclerView下拉到最顶部时候不再处理事件
-                        if(dy < 24f){
+                    "d" ->
+                        if (canScrollVertically(-1)) {
+                            // 可以向下滑动时让ParentRecyclerView不要拦截
                             parent.requestDisallowInterceptTouchEvent(true)
-                        }else{
-                            parent.requestDisallowInterceptTouchEvent(false)
+                        } else {
+                            // 内层RecyclerView下拉到最顶部时
+                            if (dy < 24f) {
+                                // 如果滑动的距离小于这个值依然让Parent不拦截
+                                parent.requestDisallowInterceptTouchEvent(true)
+                            } else {
+                                // 将滑动事件抛给Parent，这样可以随着Parent一起滑动
+                                parent.requestDisallowInterceptTouchEvent(false)
+                            }
                         }
-//                        Log.e("ChildRecyclerView", "d  拦截")
-                    }
                     "u" -> {
-//                        if (canScrollVertically(1)) {
-//                            Log.e("ChildRecyclerView", "u   不要拦截")
+                        // 向上滑动时，始终由ChildRecyclerView处理
                         parent.requestDisallowInterceptTouchEvent(true)
-//                        } else { //内层RecyclerView上拉到最底部时候不再处理事件
-//                            parent.requestDisallowInterceptTouchEvent(false)
-//                            Log.d("aaa", "u  拦截")
-//                        }
                     }
                     "r" -> {
 //                        Log.e("ChildRecyclerView", "r  不要拦截")
-//                        parent.requestDisallowInterceptTouchEvent(false)
+//                        parent.requestDisallowInterceptTouchEvent(true)
                     }
                     "l" -> {
 //                        Log.e("ChildRecyclerView", "l  不要拦截")
-//                        parent.requestDisallowInterceptTouchEvent(false)
+//                        parent.requestDisallowInterceptTouchEvent(true)
                     }
                 }
             }
@@ -217,7 +212,6 @@ class ChildRecyclerView @JvmOverloads constructor(
     }
 
     private fun getOrientation(dx: Float, dy: Float): String {
-//        DebugUtil.debug("jingbin","child----------------------------------dx:dy"+dx+":"+dy);
         return if (Math.abs(dx) > Math.abs(dy)) {
             //X轴移动
             if (dx > 0) "r" else "l" //右,左
