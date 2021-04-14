@@ -242,7 +242,7 @@ skeletonScreen.hide();
 
 
 ## 与BRVAH、XRecyclerView对比
-||ByRecyclerView| BRVAH | XRecyclerView |
+|ByRecyclerView| BRVAH | XRecyclerView |
 |:--:|:--:|:--:|:--:|
 |下拉刷新布局|继承基类自定义布局|无|只能简单设置样式|
 |SwipeRefreshLayout|可配合使用|可配合使用|不能使用|
