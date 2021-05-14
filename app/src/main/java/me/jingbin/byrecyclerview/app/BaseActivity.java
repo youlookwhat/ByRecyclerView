@@ -9,6 +9,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.RecyclerView;
 
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.library.ByRecyclerView;
@@ -69,9 +70,9 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ByRecyclerView view = getView(R.id.recyclerView);
-        if (view != null) {
-            view.destroy();
+        RecyclerView view = getView(R.id.recyclerView);
+        if (view instanceof ByRecyclerView) {
+            ((ByRecyclerView) view).destroy();
         }
     }
 }

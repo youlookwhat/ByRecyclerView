@@ -54,6 +54,7 @@ public class SecondTypeActivity extends BaseActivity<ActivitySimpleBinding> {
                 setTitle("万能分割线");
                 list.add(new DataItemBean("设置分割线 (线性布局)", DividerLinearActivity.class));
                 list.add(new DataItemBean("设置分割线 (宫格/瀑布流)", DividerGridActivity.class));
+                list.add(new DataItemBean("设置横向分割线 (宫格)", HorizontalGridDividerActivity.class));
                 break;
             case "Skeleton":
                 setTitle("Skeleton 骨架图");

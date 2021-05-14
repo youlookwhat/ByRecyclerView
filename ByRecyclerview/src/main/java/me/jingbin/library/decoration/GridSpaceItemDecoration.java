@@ -57,6 +57,10 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
      * 瀑布流 头部第一个整行的position
      */
     private int fullPosition = -1;
+    /**
+     * 横向还是纵向
+     */
+    private int mOrientation = RecyclerView.VERTICAL;
 
     public GridSpaceItemDecoration(int spacing) {
         this(spacing, true);
@@ -71,33 +75,15 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
         this.mIncludeEdge = includeEdge;
     }
 
-    /**
-     * 已不需要手动设置spanCount
-     */
-    @Deprecated
-    public GridSpaceItemDecoration(int spanCount, int spacing) {
-        this(spanCount, spacing, true);
-    }
-
-    /**
-     * 已不需要手动设置spanCount
-     */
-    @Deprecated
-    public GridSpaceItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-        this.mSpanCount = spanCount;
-        this.mSpacing = spacing;
-        this.mIncludeEdge = includeEdge;
-    }
-
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         int lastPosition = state.getItemCount() - 1;
         int position = parent.getChildAdapterPosition(view);
         if (mStartFromSize <= position && position <= lastPosition - mEndFromSize) {
 
-            // 行
+            // 行，如果是横向就是列
             int spanGroupIndex = -1;
-            // 列
+            // 列，如果是横向就是行
             int column = 0;
             // 瀑布流是否占满一行
             boolean fullSpan = false;
@@ -109,7 +95,9 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
                 int spanCount = gridLayoutManager.getSpanCount();
                 // 当前position的spanSize
                 int spanSize = spanSizeLookup.getSpanSize(position);
-                // 一行几个
+                // 横向还是纵向
+                mOrientation = gridLayoutManager.getOrientation();
+                // 一行几个，如果是横向就是一列几个
                 mSpanCount = spanCount / spanSize;
                 // =0 表示是最左边 0 2 4
                 int spanIndex = spanSizeLookup.getSpanIndex(position, spanCount);
@@ -120,7 +108,10 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
 
             } else if (layoutManager instanceof StaggeredGridLayoutManager) {
                 // 瀑布流获取列方式不一样
+                StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
                 StaggeredGridLayoutManager.LayoutParams params = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
+                // 横向还是纵向
+                mOrientation = staggeredGridLayoutManager.getOrientation();
                 // 列
                 column = params.getSpanIndex();
                 // 是否是全一行
@@ -144,15 +135,26 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
                     outRect.left = 0;
                     outRect.right = 0;
                 } else {
-                    outRect.left = mSpacing - column * mSpacing / mSpanCount;
-                    outRect.right = (column + 1) * mSpacing / mSpanCount;
+                    if (mOrientation == RecyclerView.VERTICAL) {
+                        outRect.left = mSpacing - column * mSpacing / mSpanCount;
+                        outRect.right = (column + 1) * mSpacing / mSpanCount;
+                    } else {
+                        // 如果是横向对应的是上下
+                        outRect.top = mSpacing - column * mSpacing / mSpanCount;
+                        outRect.bottom = (column + 1) * mSpacing / mSpanCount;
+                    }
                 }
 
                 if (spanGroupIndex > -1) {
                     // grid 显示规则
                     if (spanGroupIndex < 1 && position < mSpanCount) {
-                        // 第一行才有上间距
-                        outRect.top = mSpacing;
+                        if (mOrientation == RecyclerView.VERTICAL) {
+                            // 第一行才有上间距
+                            outRect.top = mSpacing;
+                        } else {
+                            // 第一列才有左间距
+                            outRect.left = mSpacing;
+                        }
                     }
                 } else {
                     if (fullPosition == -1 && position < mSpanCount && fullSpan) {
@@ -162,12 +164,19 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
                     // Stagger显示规则 头部没有整行或者头部体验整行但是在之前的position显示上间距
                     boolean isFirstLineStagger = (fullPosition == -1 || position < fullPosition) && (position < mSpanCount);
                     if (isFirstLineStagger) {
-                        // 第一行才有上间距
-                        outRect.top = mSpacing;
+                        if (mOrientation == RecyclerView.VERTICAL) {
+                            // 第一行才有上间距
+                            outRect.top = mSpacing;
+                        } else {
+                            outRect.left = mSpacing;
+                        }
                     }
                 }
-
-                outRect.bottom = mSpacing;
+                if (mOrientation == RecyclerView.VERTICAL) {
+                    outRect.bottom = mSpacing;
+                } else {
+                    outRect.right = mSpacing;
+                }
 
             } else {
                 /*
@@ -183,14 +192,24 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
                     outRect.left = 0;
                     outRect.right = 0;
                 } else {
-                    outRect.left = column * mSpacing / mSpanCount;
-                    outRect.right = mSpacing - (column + 1) * mSpacing / mSpanCount;
+                    if (mOrientation == RecyclerView.VERTICAL) {
+                        outRect.left = column * mSpacing / mSpanCount;
+                        outRect.right = mSpacing - (column + 1) * mSpacing / mSpanCount;
+                    } else {
+                        outRect.top = column * mSpacing / mSpanCount;
+                        outRect.bottom = mSpacing - (column + 1) * mSpacing / mSpanCount;
+                    }
                 }
 
                 if (spanGroupIndex > -1) {
                     if (spanGroupIndex >= 1) {
-                        // 超过第0行都显示上间距
-                        outRect.top = mSpacing;
+                        if (mOrientation == RecyclerView.VERTICAL) {
+                            // 超过第0行都显示上间距
+                            outRect.top = mSpacing;
+                        } else {
+                            // 超过第0列都显示左间距
+                            outRect.left = mSpacing;
+                        }
                     }
                 } else {
                     if (fullPosition == -1 && position < mSpanCount && fullSpan) {
@@ -201,8 +220,13 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
                     boolean isStaggerShowTop = position >= mSpanCount || (fullSpan && position != 0) || (fullPosition != -1 && position != 0);
 
                     if (isStaggerShowTop) {
-                        // 超过第0行都显示上间距
-                        outRect.top = mSpacing;
+                        if (mOrientation == RecyclerView.VERTICAL) {
+                            // 超过第0行都显示上间距
+                            outRect.top = mSpacing;
+                        } else {
+                            // 超过第0列都显示左间距
+                            outRect.left = mSpacing;
+                        }
                     }
                 }
             }

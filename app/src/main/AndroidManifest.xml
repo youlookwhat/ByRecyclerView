@@ -43,6 +43,7 @@
         <activity android:name=".activity.SecondTypeActivity" />
         <activity android:name=".activity.FlexBoxActivity" />
         <activity android:name=".activity.StickyRvActivity" />
+        <activity android:name=".activity.HorizontalGridDividerActivity" />
     </application>
 
 </manifest>
