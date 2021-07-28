@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.appbar.AppBarLayout;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class ByRecyclerView extends RecyclerView {
     private OnItemChildLongClickListener mOnItemChildLongClickListener;   // 子View 长按事件
 
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
-    private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
+    private final AdapterDataObserver mDataObserver = new DataObserver();
 
     private WrapAdapter mWrapAdapter;
 
@@ -475,7 +476,7 @@ public class ByRecyclerView extends RecyclerView {
         }
     }
 
-    private class DataObserver extends RecyclerView.AdapterDataObserver {
+    private class DataObserver extends AdapterDataObserver {
         @Override
         public void onChanged() {
             if (mWrapAdapter != null) {
@@ -509,21 +510,21 @@ public class ByRecyclerView extends RecyclerView {
         }
     }
 
-    private class WrapAdapter extends RecyclerView.Adapter<ViewHolder> {
+    private class WrapAdapter extends Adapter<ViewHolder> {
 
-        private RecyclerView.Adapter adapter;
+        private Adapter adapter;
 
-        WrapAdapter(RecyclerView.Adapter adapter) {
+        WrapAdapter(Adapter adapter) {
             this.adapter = adapter;
         }
 
-        RecyclerView.Adapter getOriginalAdapter() {
+        Adapter getOriginalAdapter() {
             return this.adapter;
         }
 
         @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (viewType == TYPE_REFRESH_HEADER) {
                 return new SimpleViewHolder((View) mRefreshHeader);
             } else if (isHeaderType(viewType)) {
@@ -541,7 +542,7 @@ public class ByRecyclerView extends RecyclerView {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             if (isRefreshHeader(position) || isHeaderView(position) || isStateView(position) || isFootView(position)) {
                 return;
             }
@@ -559,7 +560,7 @@ public class ByRecyclerView extends RecyclerView {
          * some times we need to override this
          */
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> objectList) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull List<Object> objectList) {
             if (isHeaderView(position) || isRefreshHeader(position) || isStateView(position) || isFootView(position)) {
                 return;
             }
@@ -633,7 +634,7 @@ public class ByRecyclerView extends RecyclerView {
         @Override
         public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
-            RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+            LayoutManager manager = recyclerView.getLayoutManager();
             if (manager instanceof GridLayoutManager) {
                 final GridLayoutManager gridManager = ((GridLayoutManager) manager);
                 gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -658,7 +659,7 @@ public class ByRecyclerView extends RecyclerView {
         }
 
         @Override
-        public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+        public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
             super.onViewAttachedToWindow(holder);
             ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
             if (lp != null
@@ -675,17 +676,17 @@ public class ByRecyclerView extends RecyclerView {
         }
 
         @Override
-        public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
+        public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
             adapter.onViewDetachedFromWindow(holder);
         }
 
         @Override
-        public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+        public void onViewRecycled(@NonNull ViewHolder holder) {
             adapter.onViewRecycled(holder);
         }
 
         @Override
-        public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
+        public boolean onFailedToRecycleView(@NonNull ViewHolder holder) {
             return adapter.onFailedToRecycleView(holder);
         }
 
@@ -788,7 +789,7 @@ public class ByRecyclerView extends RecyclerView {
         }
         final View view = viewHolder.itemView;
         if (onItemClickListener != null) {
-            view.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onItemClickListener.onClick(v, viewHolder.getLayoutPosition() - getCustomTopItemViewCount());
@@ -796,7 +797,7 @@ public class ByRecyclerView extends RecyclerView {
             });
         }
         if (onItemLongClickListener != null) {
-            view.setOnLongClickListener(new View.OnLongClickListener() {
+            view.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     return onItemLongClickListener.onLongClick(v, viewHolder.getLayoutPosition() - getCustomTopItemViewCount());
@@ -884,12 +885,7 @@ public class ByRecyclerView extends RecyclerView {
                 }
             }
             if (appBarLayout != null) {
-                appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-                    @Override
-                    public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                        appbarState = state;
-                    }
-                });
+                appBarLayout.addOnOffsetChangedListener(new ByAppBarStateChangeListener(this));
             }
         }
     }
@@ -1306,6 +1302,26 @@ public class ByRecyclerView extends RecyclerView {
         }
         if (mStateLayout != null) {
             mStateLayout.removeAllViews();
+        }
+    }
+
+    public void setAppbarState(AppBarStateChangeListener.State appbarState) {
+        this.appbarState = appbarState;
+    }
+
+    public static class ByAppBarStateChangeListener extends AppBarStateChangeListener {
+
+        WeakReference<ByRecyclerView> weakRecycleView;
+
+        public ByAppBarStateChangeListener(ByRecyclerView recyclerView){
+            this.weakRecycleView = new WeakReference<>(recyclerView);
+        }
+
+        @Override
+        public void onStateChanged(AppBarLayout appBarLayout, State state) {
+            if(weakRecycleView.get() != null){
+                weakRecycleView.get().setAppbarState(state);
+            }
         }
     }
 }
