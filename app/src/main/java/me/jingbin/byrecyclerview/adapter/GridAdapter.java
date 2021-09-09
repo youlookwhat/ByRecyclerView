@@ -73,7 +73,7 @@ public class GridAdapter extends BaseRecyclerAdapter<DataItemBean> {
                     int adapterPosition = position - byRecyclerView.getCustomTopItemViewCount();
                     switch (adapterPosition) {
                         case 0:
-                            // title栏显示一列
+                            // title栏显示一行
                             return gridManager.getSpanCount();
                         case 4:
                             return 3;
