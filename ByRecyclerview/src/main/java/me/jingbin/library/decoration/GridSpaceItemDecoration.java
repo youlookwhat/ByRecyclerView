@@ -25,7 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
- * 给 GridLayoutManager or StaggeredGridLayoutManager 设置间距，可设置去除首尾间距个数
+ * 给 GridLayoutManager or StaggeredGridLayoutManager 设置间距，可设置去除首尾间距个数，默认尾部1
+ * 注意：默认是去除尾部 mEndFromSize=1，如果没有加载更多请设置 setNoShowSpace(0,0)
  *
  * @author jingbin
  * https://github.com/youlookwhat/ByRecyclerView
