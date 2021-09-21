@@ -99,9 +99,9 @@ public class NeteaseRefreshHeaderView extends LinearLayout implements BaseRefres
             mProgress.setVisibility(View.VISIBLE);
             smoothScrollTo(mMeasuredHeight);
         } else if (state == STATE_DONE) {
-            mIvArrow.setVisibility(View.INVISIBLE);
+            mIvArrow.clearAnimation();
+            mIvArrow.setVisibility(View.VISIBLE);
             mProgress.setVisibility(View.INVISIBLE);
-            tvRefreshTip.setVisibility(INVISIBLE);
         } else {
             // show arrow image
             mIvArrow.setVisibility(View.VISIBLE);
@@ -130,7 +130,7 @@ public class NeteaseRefreshHeaderView extends LinearLayout implements BaseRefres
                 }
                 break;
             case STATE_DONE:
-                tvRefreshTip.setText(R.string.custom_refresh_done);
+                tvRefreshTip.setText(R.string.custom_header_hint_normal);
                 break;
             default:
         }
@@ -159,7 +159,6 @@ public class NeteaseRefreshHeaderView extends LinearLayout implements BaseRefres
     @Override
     public void refreshComplete() {
         setState(STATE_DONE);
-        setState(STATE_NORMAL);
         smoothScrollTo(0);
     }
 
