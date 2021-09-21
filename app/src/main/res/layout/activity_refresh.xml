@@ -22,7 +22,7 @@
             android:background="@color/colorLine"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
-        <androidx.viewpager.widget.ViewPager
+        <me.jingbin.byrecyclerview.view.ViewPagerFixed
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
