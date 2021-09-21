@@ -117,7 +117,10 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
                 tvRefreshTip.setText(R.string.by_refreshing);
                 break;
             case STATE_DONE:
-                tvRefreshTip.setText(R.string.by_refresh_done);
+                // 刷新完成时重置为下拉刷新，也可不重置
+                mIvArrow.clearAnimation();
+                tvRefreshTip.setText(R.string.by_header_hint_normal);
+//                tvRefreshTip.setText(R.string.by_refresh_done);
                 break;
             default:
         }
@@ -146,7 +149,7 @@ public class SimpleRefreshHeaderView extends LinearLayout implements BaseRefresh
     @Override
     public void refreshComplete() {
         // 刷新结束的状态: 显示下拉刷新,如想显示刷新完成改为 STATE_DONE
-        setState(STATE_NORMAL);
+        setState(STATE_DONE);
         smoothScrollTo(0);
     }
 
