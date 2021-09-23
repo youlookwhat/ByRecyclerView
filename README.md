@@ -31,12 +31,13 @@ ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterVi
 
 
 ### 下载试用
-[AndroidX版本(Apk-Demo)](http://d.firim.top/byrecyclerview)
+[AndroidX版本(Apk-Demo)](https://github.com/youlookwhat/download/raw/main/ByRecyclerView.apk)
 
-<img width="250" height=“250” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>
+<!--<img width="250" height=“250” src="https://github.com/youlookwhat/ByRecyclerView/blob/master/art/png_dowload.png?raw=true"></img>
+-->
 
-
-## 如何使用  👉 [**Wiki文档**](https://github.com/youlookwhat/ByRecyclerView/wiki)
+## 如何使用
+> 建议直接看 [示例代码](https://github.com/youlookwhat/ByRecyclerView/blob/master/app/src/main/java/me/jingbin/byrecyclerview/MainActivity.java) 或 [Wiki文档](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
 ### 快速开始
 1.先在 build.gradle 的 repositories 添加
