@@ -258,7 +258,7 @@ skeletonScreen.hide();
   </tr>
   <tr>
     <td style="text-align:center"> SwipeRefreshLayout </td>
-    <td>可配合使用局</td>
+    <td>可配合使用</td>
     <td>可配合使用</td>
     <td>不能使用</td>
   </tr>
