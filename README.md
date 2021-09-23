@@ -242,7 +242,65 @@ skeletonScreen.hide();
 
 
 ## 与BRVAH、XRecyclerView对比
-| |ByRecyclerView| BRVAH | XRecyclerView |
+
+<table>
+  <tr>
+    <th></th>
+    <th>ByRecyclerView </th>
+    <th> BRVAH </th>
+    <th> XRecyclerView </th>
+  </tr>
+  <tr>
+    <td style="text-align:center">下拉刷新布局</td>
+    <td>继承基类自定义布局</td>
+    <td>无</td>
+    <td>只能简单设置样式</td>
+  </tr>
+  <tr>
+    <td style="text-align:center"> SwipeRefreshLayout </td>
+    <td>可配合使用局</td>
+    <td>可配合使用</td>
+    <td>不能使用</td>
+  </tr>
+  <tr>
+    <td style="text-align:center">加载更多布局</td>
+    <td>继承基类自定义布局</td>
+    <td>继承基类设置简单布局</td>
+    <td>继承基类自定义类</td>
+  </tr>
+  <tr>
+    <td style="text-align:center">加载更多机制</td>
+    <td>不足一屏上拉加载，超过后触底加载</td>
+    <td>不足一屏即加载</td>
+    <td>触底加载</td>
+  </tr>
+  <tr>
+    <td style="text-align:center">HeaderView</td>
+    <td>多ViewType区别</td>
+    <td>同一个item</td>
+    <td>多ViewType区别</td>
+  </tr>
+  <tr>
+    <td style="text-align:center">FooterView</td>
+    <td>同一个item</td>
+    <td>同一个item</td>
+    <td>不能添加</td>
+  </tr>
+  <tr>
+    <td style="text-align:center">EmptyView</td>
+    <td>可设置</td>
+    <td>可设置</td>
+    <td>不可设置</td>
+  </tr>
+  <tr>
+    <td style="text-align:center">点击/长按事件</td>
+    <td>有</td>
+    <td>有</td>
+    <td>无</td>
+  </tr>
+</table>
+
+<!--| |ByRecyclerView| BRVAH | XRecyclerView |
 |:--:|:--:|:--:|:--:|
 |下拉刷新布局|继承基类自定义布局|无|只能简单设置样式|
 |SwipeRefreshLayout|可配合使用|可配合使用|不能使用|
@@ -251,7 +309,7 @@ skeletonScreen.hide();
 |HeaderView|多ViewType区别|同一个item|多ViewType区别|
 |FooterView|同一个item|同一个item|不能添加|
 |EmptyView|可设置|可设置|不能设置|
-|点击/长按事件|有|有| 无 |
+|点击/长按事件|有|有| 无 |-->
 
 ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的区别在于：
 
