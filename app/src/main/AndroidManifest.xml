@@ -44,6 +44,7 @@
         <activity android:name=".activity.FlexBoxActivity" />
         <activity android:name=".activity.StickyRvActivity" />
         <activity android:name=".activity.HorizontalGridDividerActivity" />
+        <activity android:name=".activity.ItemPayloadActivity" />
     </application>
 
 </manifest>

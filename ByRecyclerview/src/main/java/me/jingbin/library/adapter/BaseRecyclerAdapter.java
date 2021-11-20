@@ -42,7 +42,18 @@ public abstract class BaseRecyclerAdapter<T> extends BaseByRecyclerViewAdapter<T
         protected void onBaseBindView(BaseByViewHolder<T> holder, T bean, int position) {
             bindView(holder, bean, position);
         }
+
+        @Override
+        protected void onBaseBindViewPayloads(BaseByViewHolder<T> holder, T bean, int position, @NonNull List<Object> payloads) {
+            bindViewPayloads(holder, bean, position, payloads);
+        }
     }
 
     protected abstract void bindView(BaseByViewHolder<T> holder, T bean, int position);
+
+    /**
+     * 局部刷新，非必须
+     */
+    protected void bindViewPayloads(BaseByViewHolder<T> holder, T bean, int position, @NonNull List<Object> payloads) {
+    }
 }

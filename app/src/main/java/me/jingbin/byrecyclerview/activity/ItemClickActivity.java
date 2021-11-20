@@ -27,7 +27,7 @@ public class ItemClickActivity extends BaseActivity<ActivitySimpleBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        setTitle("设置点击/长按事件");
+        setTitle("item及子view 点击/长按");
 
         initAdapter();
     }
@@ -75,13 +75,17 @@ public class ItemClickActivity extends BaseActivity<ActivitySimpleBinding> {
         binding.recyclerView.setOnItemChildClickListener(new OnItemChildFilterClickListener() {
             @Override
             public void onSingleClick(View view, int position) {
-                ToastUtil.showToast("itemChildClick:" + position);
+                if (view.getId() == R.id.tv_item_click) {
+                    ToastUtil.showToast("itemChildClick:" + position);
+                }
             }
         });
         binding.recyclerView.setOnItemChildLongClickListener(new ByRecyclerView.OnItemChildLongClickListener() {
             @Override
             public boolean onItemChildLongClick(View view, int position) {
-                ToastUtil.showToast("itemChildLongClick:" + position);
+                if (view.getId() == R.id.tv_item_click) {
+                    ToastUtil.showToast("itemChildLongClick:" + position);
+                }
                 return true;
             }
         });

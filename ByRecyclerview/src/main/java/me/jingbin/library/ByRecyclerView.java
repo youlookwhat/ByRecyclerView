@@ -546,10 +546,9 @@ public class ByRecyclerView extends RecyclerView {
             if (isRefreshHeader(position) || isHeaderView(position) || isStateView(position) || isFootView(position)) {
                 return;
             }
-            int adjPosition = position - getCustomTopItemViewCount();
-            int adapterCount;
             if (adapter != null) {
-                adapterCount = adapter.getItemCount();
+                int adjPosition = position - getCustomTopItemViewCount();
+                int adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
                     adapter.onBindViewHolder(holder, adjPosition);
                 }
@@ -1313,13 +1312,13 @@ public class ByRecyclerView extends RecyclerView {
 
         WeakReference<ByRecyclerView> weakRecycleView;
 
-        public ByAppBarStateChangeListener(ByRecyclerView recyclerView){
+        public ByAppBarStateChangeListener(ByRecyclerView recyclerView) {
             this.weakRecycleView = new WeakReference<>(recyclerView);
         }
 
         @Override
         public void onStateChanged(AppBarLayout appBarLayout, State state) {
-            if(weakRecycleView.get() != null){
+            if (weakRecycleView.get() != null) {
                 weakRecycleView.get().setAppbarState(state);
             }
         }

@@ -12,12 +12,31 @@ public class DataItemBean {
     private String type;
     private Class<?> cls;
 
+    private int isZan;
+    private int isCollect;
+
     public DataItemBean() {
     }
 
     public DataItemBean(String title, Class<?> cls) {
         this.title = title;
         this.cls = cls;
+    }
+
+    public int getIsZan() {
+        return isZan;
+    }
+
+    public void setIsZan(int isZan) {
+        this.isZan = isZan;
+    }
+
+    public int getIsCollect() {
+        return isCollect;
+    }
+
+    public void setIsCollect(int isCollect) {
+        this.isCollect = isCollect;
     }
 
     public String getDes() {

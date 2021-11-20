@@ -3,6 +3,7 @@ package me.jingbin.library.adapter;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -32,6 +33,20 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     public void onBindViewHolder(@NonNull K holder, final int position) {
         holder.setByRecyclerView(mRecyclerView);
         holder.onBaseBindView(holder, mData.get(position), position);
+    }
+
+    /**
+     * Use payloads to refresh
+     * 局部刷新
+     */
+    @Override
+    public void onBindViewHolder(@NonNull K holder, int position, @NonNull List<Object> payloads) {
+        holder.setByRecyclerView(mRecyclerView);
+        if (payloads.isEmpty()) {
+            holder.onBaseBindView(holder, mData.get(position), position);
+        } else {
+            holder.onBaseBindViewPayloads(holder, mData.get(position), position, payloads);
+        }
     }
 
     @Override
@@ -144,6 +159,18 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
      */
     public final void refreshNotifyItemChanged(int position) {
         notifyItemChanged(position + getCustomTopItemViewCount());
+    }
+
+    public final void refreshNotifyItemChanged(int position, @Nullable Object payload) {
+        notifyItemChanged(position + getCustomTopItemViewCount(), payload);
+    }
+
+    public final void refreshNotifyItemRangeChanged(int position, int itemCount) {
+        notifyItemRangeChanged(position + getCustomTopItemViewCount(), itemCount);
+    }
+
+    public final void refreshNotifyItemRangeChanged(int position, int itemCount, @Nullable Object payload) {
+        notifyItemRangeChanged(position + getCustomTopItemViewCount(), itemCount, payload);
     }
 
     public final void refreshNotifyItemRemoved(int position) {

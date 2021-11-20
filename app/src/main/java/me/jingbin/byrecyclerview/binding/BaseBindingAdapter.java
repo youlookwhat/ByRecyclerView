@@ -45,8 +45,21 @@ public abstract class BaseBindingAdapter<T, B extends ViewDataBinding> extends B
                 bindView(holder, bean, binding, position);
             }
         }
+
+        @Override
+        protected void onBindingViewPayloads(BaseBindingHolder holder, T bean, int position, @NonNull List<Object> payloads) {
+            if (holder != null && bean != null && binding != null) {
+                bindViewPayloads(holder, bean, binding, position, payloads);
+            }
+        }
     }
 
     protected abstract void bindView(@NonNull BaseBindingHolder holder, @NonNull T bean, @NonNull B binding, int position);
+
+    /**
+     * 局部刷新，非必须
+     */
+    protected void bindViewPayloads(@NonNull BaseBindingHolder holder, @NonNull T bean, @NonNull B binding, int position, @NonNull List<Object> payloads) {
+    }
 }
 

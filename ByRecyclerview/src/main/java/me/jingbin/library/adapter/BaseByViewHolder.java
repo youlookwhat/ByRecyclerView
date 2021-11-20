@@ -25,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import me.jingbin.library.ByRecyclerView;
 
 /**
@@ -52,6 +54,13 @@ public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
      * @param position the item position of recyclerView
      */
     protected abstract void onBaseBindView(BaseByViewHolder<T> holder, T bean, int position);
+
+    /**
+     * Use payloads to refresh
+     * 局部刷新，非必须
+     */
+    protected void onBaseBindViewPayloads(BaseByViewHolder<T> holder, T bean, int position, @NonNull List<Object> payloads) {
+    }
 
     @SuppressWarnings("unchecked")
     public <V extends View> V getView(@IdRes int viewId) {
