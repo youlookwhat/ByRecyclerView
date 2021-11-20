@@ -8,8 +8,8 @@ android {
         applicationId "me.jingbin.byrecyclerview"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.1.6"
+        versionCode 9
+        versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -89,5 +89,5 @@ dependencies {
     // 流式布局
     implementation 'com.google.android:flexbox:2.0.1'
     implementation project(':ByRecyclerview')
-//    implementation "com.github.youlookwhat:ByRecyclerView:1.1.5"
+//    implementation "com.github.youlookwhat:ByRecyclerView:1.2.0"
 }
