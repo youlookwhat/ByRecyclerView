@@ -1,27 +1,29 @@
 # ByRecyclerView
 
 [![jitpack][1]][2] 
-[![Apache License 2.0][3]][4]
 [![API][5]][6]
+[![Apache License 2.0][3]][4]
+[![download][7]][8]
 
-ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、万能分割线、粘性header、极简Adapter(databinding)等功能。
+ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、item局部刷新、万能分割线、粘性header、极简Adapter(databinding)等功能。
 
 ## 功能特性
- - 1.支持 下拉刷新 / 加载更多 / SwipeRefreshLayout
- - 2.可自定义 下拉刷新布局 / 加载更多布局
- - 3.加载更多机制：**不足一屏上拉加载，超过后触底加载**
- - 4.可Add HeaderView、FooterView、StateView
- - 5.可添加 item及子view的点击/长按事件(防止重复点击)
+ - 1.下拉刷新 / 加载更多 / 支持SwipeRefreshLayout
+ - 2.自定义 下拉刷新布局 / 加载更多布局
+ - 3.加载更多机制：**不足一屏上拉加载，超过后松手加载**
+ - 4.Add HeaderView、FooterView、StateView
+ - 5.item及子view的点击/长按事件(防止重复点击)
  - 6.优化过的BaseAdapter (RV/LV)，减少大量代码
  - 7.Adapter结合DataBinding使用 (RV/LV)
  - 8.可添加 万能分隔线（线性/宫格/瀑布流）
  - 9.可配置 Skeleton骨架图
+ -  10.仿京东首页 RecyclerView嵌套滑动置顶示例
 
-> 最新：新增RecyclerView嵌套滑动置顶示例
+> 最新：item 局部刷新
 
 ## Document
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.1.6)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
- - [ByRecyclerView：只为改变BRVAH加载更多机制/addHeaderView的问题](https://juejin.im/post/5e0980fbe51d4558083345fc)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.1.7)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [ByRecyclerView：更方便的使用下拉刷新及加载更多](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
  - [RecyclerView嵌套滑动置顶 项目应用篇](https://juejin.cn/post/6941996743974191111)
 
@@ -56,7 +58,7 @@ allprojects {
 ```
 dependencies {
 	// AndroidX版本引入
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.1.6'
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.1.7'
 }
 ```
 
@@ -185,6 +187,32 @@ recyclerView.setOnItemChildLongClickListener(new ByRecyclerView.OnItemChildLongC
     public void onItemChildLongClick(View view, int position) {
     }
 });
+```
+
+### Item 局部刷新
+```java
+//  设置要局部刷新的position及payload
+adapter.refreshNotifyItemChanged(position, PayloadAdapter.PAYLOAD_COLLECT);
+
+// adapter里额外再继承 bindViewPayloads 方法
+@Override
+protected void bindViewPayloads(@NonNull BaseBindingHolder holder, @NonNull DataItemBean bean, @NonNull ItemPayloadBinding binding, int position, @NonNull List<Object> payloads) {
+    for (Object p : payloads) {
+        int code = (int) p;
+        switch (code) {
+            case PAYLOAD_ZAN:
+                binding.tvZan.setText(bean.getIsZan() == 1 ? "已赞" : "点赞");
+                break;
+            case PAYLOAD_COLLECT:
+                binding.tvCollect.setText(bean.getIsCollect() == 1 ? "已收藏" : "收藏");
+                break;
+            default:
+                break;
+
+        }
+    }
+}
+
 ```
 
 ### 设置 Item悬浮置顶
@@ -332,8 +360,8 @@ ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于
 
 ## About me
  - **QQ**： 770413277
- - **掘金**：[Jinbeen](https://juejin.im/user/56eec46d1ea49300555a176b/posts)
- - **CSDN**：[Jinbeen](https://blog.csdn.net/jingbin_)
+ - **掘金**：[Jinbeen](https://juejin.cn/user/201965867640862/posts)
+ - **CSDN**：[Jinbeen](https://blog.csdn.net/jingbin_?type=blog)
  - **Email**： jingbin127@163.com
 
 ## License
@@ -359,3 +387,5 @@ limitations under the License.
 [4]:https://www.apache.org/licenses/LICENSE-2.0.html
 [5]:https://img.shields.io/badge/API-14%2B-red.svg?style=flat
 [6]:https://android-arsenal.com/api?level=14
+[7]:https://img.shields.io/badge/download-apk-blue.svg?style=flat
+[8]:https://github.com/youlookwhat/download/raw/main/ByRecyclerView.apk
