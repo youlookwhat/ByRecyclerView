@@ -2,6 +2,8 @@ package me.jingbin.byrecyclerview.adapter;
 
 import androidx.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import me.jingbin.byrecyclerview.R;
@@ -44,6 +46,8 @@ public class PayloadAdapter extends BaseBindingAdapter<DataItemBean, ItemPayload
 
     @Override
     protected void bindViewPayloads(@NonNull BaseBindingHolder holder, @NonNull DataItemBean bean, @NonNull ItemPayloadBinding binding, int position, @NonNull List<Object> payloads) {
+        // 删除掉这一行，自己处理，不走bindView()
+        // super.bindViewPayloads(holder, bean, binding, position, payloads);
         LogHelper.e("---bindViewPayloads: " + position);
         for (Object p : payloads) {
             int code = (int) p;
@@ -56,7 +60,6 @@ public class PayloadAdapter extends BaseBindingAdapter<DataItemBean, ItemPayload
                     break;
                 default:
                     break;
-
             }
         }
     }

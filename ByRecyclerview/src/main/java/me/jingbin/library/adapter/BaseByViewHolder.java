@@ -60,6 +60,11 @@ public abstract class BaseByViewHolder<T> extends RecyclerView.ViewHolder {
      * 局部刷新，非必须
      */
     protected void onBaseBindViewPayloads(BaseByViewHolder<T> holder, T bean, int position, @NonNull List<Object> payloads) {
+        /*
+         * fallback to onBaseBindView(holder, bean,position) if app does not override this method.
+         * 如果不覆盖 onBaseBindViewPayloads() 方法，就走 onBaseBindView()
+         */
+        onBaseBindView(holder, bean, position);
     }
 
     @SuppressWarnings("unchecked")

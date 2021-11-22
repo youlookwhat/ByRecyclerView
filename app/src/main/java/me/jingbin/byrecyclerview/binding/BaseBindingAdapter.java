@@ -60,6 +60,11 @@ public abstract class BaseBindingAdapter<T, B extends ViewDataBinding> extends B
      * 局部刷新，非必须
      */
     protected void bindViewPayloads(@NonNull BaseBindingHolder holder, @NonNull T bean, @NonNull B binding, int position, @NonNull List<Object> payloads) {
+        /*
+         * fallback to onBaseBindView(holder, bean,position) if app does not override this method.
+         * 如果不覆盖 bindViewPayloads() 方法，就走 bindView()
+         */
+        bindView(holder, bean, binding, position);
     }
 }
 

@@ -55,5 +55,10 @@ public abstract class BaseRecyclerAdapter<T> extends BaseByRecyclerViewAdapter<T
      * 局部刷新，非必须
      */
     protected void bindViewPayloads(BaseByViewHolder<T> holder, T bean, int position, @NonNull List<Object> payloads) {
+        /*
+         * fallback to bindView(holder, bean,position) if app does not override this method.
+         * 如果不覆盖 bindViewPayloads() 方法，就走 bindView()
+         */
+        bindView(holder, bean, position);
     }
 }
