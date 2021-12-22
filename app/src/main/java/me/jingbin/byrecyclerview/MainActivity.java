@@ -20,6 +20,7 @@ import me.jingbin.byrecyclerview.activity.FlexBoxActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ItemClickActivity;
 import me.jingbin.byrecyclerview.activity.ItemPayloadActivity;
+import me.jingbin.byrecyclerview.activity.LoadMoreActivity;
 import me.jingbin.byrecyclerview.activity.SecondTypeActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.StickyItemActivity;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final List<String> list = Arrays.asList(
             "下拉刷新、加载更多",
+            "自动加载更多、松手加载更多",
             "Add HeaderView/FooterView",
             "设置StateView",
             "item 点击/长按",
@@ -78,37 +80,40 @@ public class MainActivity extends AppCompatActivity {
                     case 0:// 下拉刷新、加载更多
                         SecondTypeActivity.start(v.getContext(), "refreshLoadMore");
                         break;
-                    case 1:// Add HeaderView/FooterView
+                    case 1:// 自动加载更多、松手加载更多
+                        startActivity(new Intent(MainActivity.this, LoadMoreActivity.class));
+                        break;
+                    case 2:// Add HeaderView/FooterView
                         startActivity(new Intent(MainActivity.this, HeaderFooterActivity.class));
                         break;
-                    case 2:// 设置StateView
+                    case 3:// 设置StateView
                         startActivity(new Intent(MainActivity.this, StateViewActivity.class));
                         break;
-                    case 3:// item 点击/长按
+                    case 4:// item 点击/长按
                         startActivity(new Intent(MainActivity.this, ItemClickActivity.class));
                         break;
-                    case 4:// item 局部刷新
+                    case 5:// item 局部刷新
                         startActivity(new Intent(MainActivity.this, ItemPayloadActivity.class));
                         break;
-                    case 5:// adapter (多类型、databinding、ListView)
+                    case 6:// adapter (多类型、databinding、ListView)
                         SecondTypeActivity.start(v.getContext(), "adapter");
                         break;
-                    case 6:// 万能分割线
+                    case 7:// 万能分割线
                         SecondTypeActivity.start(v.getContext(), "Divider");
                         break;
-                    case 7:// item 悬浮置顶
+                    case 8:// item 悬浮置顶
                         startActivity(new Intent(MainActivity.this, StickyItemActivity.class));
                         break;
-                    case 8:// Skeleton 骨架图
+                    case 9:// Skeleton 骨架图
                         SecondTypeActivity.start(v.getContext(), "Skeleton");
                         break;
-                    case 9:// CoordinatorLayout + RecyclerView 使用示例
+                    case 10:// CoordinatorLayout + RecyclerView 使用示例
                         startActivity(new Intent(MainActivity.this, AppBarLayoutActivity.class));
                         break;
-                    case 10:// FlexboxLayoutManager
+                    case 11:// FlexboxLayoutManager
                         startActivity(new Intent(MainActivity.this, FlexBoxActivity.class));
                         break;
-                    case 11:// RecyclerView 嵌套滑动置顶
+                    case 12:// RecyclerView 嵌套滑动置顶
                         startActivity(new Intent(MainActivity.this, StickyRvActivity.class));
                         break;
                     default:
