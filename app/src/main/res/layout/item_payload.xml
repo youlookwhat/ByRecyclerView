@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
+        android:foreground="?attr/selectableItemBackground"
         tools:context=".MainActivity">
 
         <ImageView
@@ -36,6 +37,7 @@
             android:id="@+id/tv_zan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingTop="6dp"
@@ -50,6 +52,7 @@
             android:id="@+id/tv_collect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingTop="6dp"

@@ -24,6 +24,7 @@ public class HorizontalLoadMoreView extends RelativeLayout implements BaseLoadMo
     private TextView tvNoMore;
     private TextView tvMoreFailed;
     private LinearLayout llMoreLoading;
+    private int mState = BaseLoadMore.STATE_COMPLETE;
 
     public HorizontalLoadMoreView(Context context) {
         super(context);
@@ -73,6 +74,12 @@ public class HorizontalLoadMoreView extends RelativeLayout implements BaseLoadMo
         } else {
             viewBottom.setVisibility(View.GONE);
         }
+        mState = state;
+    }
+
+    @Override
+    public int getState() {
+        return mState;
     }
 
     /**

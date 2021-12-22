@@ -18,6 +18,7 @@ public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
     private TextView tvNoMore;
     private TextView tvMoreFailed;
     private LinearLayout llMoreLoading;
+    private int mState = BaseLoadMore.STATE_COMPLETE;
 
     public SimpleLoadMoreView(Context context) {
         super(context);
@@ -67,6 +68,12 @@ public class SimpleLoadMoreView extends LinearLayout implements BaseLoadMore {
         } else {
             viewBottom.setVisibility(View.GONE);
         }
+        mState = state;
+    }
+
+    @Override
+    public int getState() {
+        return mState;
     }
 
     /**

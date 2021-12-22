@@ -20,6 +20,11 @@ public interface BaseLoadMore {
     void setState(int state);
 
     /**
+     * 返回当前状态
+     */
+    int getState();
+
+    /**
      * 失败布局view，为了设置点击事件
      */
     View getFailureView();

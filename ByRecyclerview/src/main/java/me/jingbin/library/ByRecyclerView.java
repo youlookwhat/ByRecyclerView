@@ -39,28 +39,25 @@ public class ByRecyclerView extends RecyclerView {
      * Set the ItemViewType of the multiType adapter to a value less than 10000!!
      * 多类型适配器的ItemViewType需要设置为小于10000的值!!
      */
-    private static final int TYPE_REFRESH_HEADER = 10000;     // RefreshHeader type
-    private static final int TYPE_LOAD_MORE_VIEW = 10001;     // LoadingMore type
-    private static final int TYPE_STATE_VIEW = 10002;         // StateView type
-    private static final int TYPE_FOOTER_VIEW = 10003;        // FooterView type
-    private static final int HEADER_INIT_INDEX = 10004;       // HeaderView starting type
-    private List<Integer> mHeaderTypes = new ArrayList<>();   // HeaderView type list
-    private ArrayList<View> mHeaderViews = new ArrayList<>(); // HeaderView view list
-    private LinearLayout mFooterLayout;                       // FooterView layout
-    private FrameLayout mStateLayout;                         // StateView  layout
+    private static final int TYPE_REFRESH_HEADER = 10000;          // RefreshHeader type
+    private static final int TYPE_LOAD_MORE_VIEW = 10001;          // LoadingMore type
+    private static final int TYPE_STATE_VIEW = 10002;              // StateView type
+    private static final int TYPE_FOOTER_VIEW = 10003;             // FooterView type
+    private static final int HEADER_INIT_INDEX = 10004;            // HeaderView starting type
+    private ArrayList<Integer> mHeaderTypes = new ArrayList<>();   // HeaderView type list
+    private ArrayList<View> mHeaderViews = new ArrayList<>();      // HeaderView view list
+    private LinearLayout mFooterLayout;                            // FooterView layout
+    private FrameLayout mStateLayout;                              // StateView  layout
 
     private boolean mRefreshEnabled = false;              // 是否 启动下拉刷新
-    private boolean mLoadMoreEnabled = false;             // 是否 启动加载更多
     private boolean mHeaderViewEnabled = false;           // 是否 显示 HeaderView
     private boolean mFootViewEnabled = false;             // 是否 显示 FooterView
     private boolean mStateViewEnabled = true;             // 是否 显示 StateView
-    private boolean misNoLoadMoreIfNotFullScreen = false; // 是否 不满一屏不加载更多
+    private boolean misNoLoadMoreIfNotFullScreen = false; // 是否 不满一屏不加载更多，只对上拉松手加载(mLoadMoreEnabledStatus=1)有效
 
-    private boolean mIsLoadingData = false;        // 是否正在加载更多
-    private boolean mIsNoMore = false;             // 是否没有更多数据了
     private boolean mIsScrollUp = false;           // 手指是否上滑
     private float mLastY = -1;                     // 手指按下的Y坐标值，用于处理下拉刷新View的高度
-    private float mPullStartY = 0;                 // 手指按下的Y坐标值，用于处理不满全屏时是否可进行上拉加载
+    private float mPullStartY = 0;                 // 手指按下的Y坐标值，用于处理不满全屏时是否可进行上拉松手加载
     private float mPullMaxY;                       // 手指上滑最高点的值，值越小位置越高
     private float mDragRate = 2.5f;                // 下拉时候的偏移计量因子，越小拉动距离越短
     private long mLoadMoreDelayMillis = 0;         // 延迟多少毫秒后再调用加载更多接口
@@ -68,6 +65,8 @@ public class ByRecyclerView extends RecyclerView {
     private int mTouchSlop;                        // 大于这个值才处理
     private int mStartX, mStartY;                  // 处理ViewPager2滑动问题时按下的横纵坐标
     private int mDispatchTouchStatus;              // 是否处理滑动事件
+    private int mPreLoadNumber = 1;                // 默认滑动到倒数第[mPreLoadNumber]条数据加载，默认1
+    private int mLoadMoreEnabledStatus = 0;        // 启动加载状态：0不开启，1开启上拉松手加载，2开启自动加载，3开启上拉松手加载后取消了(用于还原)，4开启自动加载后取消了(用于还原)
 
     private OnRefreshListener mRefreshListener;    // 下拉刷新监听
     private BaseRefreshHeader mRefreshHeader;      // 自定义下拉刷新布局需要实现的接口
@@ -175,8 +174,6 @@ public class ByRecyclerView extends RecyclerView {
         if (getLoadMoreSize() == 0) {
             return;
         }
-        mIsNoMore = false;
-        mIsLoadingData = false;
         mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
     }
 
@@ -184,8 +181,6 @@ public class ByRecyclerView extends RecyclerView {
      * The end. Cannot be loaded with pull up.
      */
     public void loadMoreEnd() {
-        mIsLoadingData = false;
-        mIsNoMore = true;
         mLoadMore.setState(BaseLoadMore.STATE_NO_MORE);
     }
 
@@ -196,12 +191,10 @@ public class ByRecyclerView extends RecyclerView {
         if (getLoadMoreSize() == 0 || mLoadMore.getFailureView() == null || mLoadMoreListener == null) {
             return;
         }
-        mIsLoadingData = false;
         mLoadMore.setState(BaseLoadMore.STATE_FAILURE);
         mLoadMore.getFailureView().setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIsLoadingData = true;
                 mLoadMore.setState(BaseLoadMore.STATE_LOADING);
                 if (mLoadMoreDelayMillis <= 0) {
                     mLoadMoreListener.onLoadMore();
@@ -262,7 +255,25 @@ public class ByRecyclerView extends RecyclerView {
      * Set whether to start loading more.
      */
     public void setLoadMoreEnabled(boolean enabled) {
-        mLoadMoreEnabled = enabled;
+        if (enabled) {
+            // 开启
+            if (mLoadMoreEnabledStatus == 2 || mLoadMoreEnabledStatus == 4) {
+                // 之前是自动加载
+                mLoadMoreEnabledStatus = 2;
+            } else {
+                // 之前是上拉松手加载
+                mLoadMoreEnabledStatus = 1;
+            }
+        } else {
+            // 关闭
+            if (mLoadMoreEnabledStatus == 4 || mLoadMoreEnabledStatus == 2) {
+                // 之前是自动加载
+                mLoadMoreEnabledStatus = 4;
+            } else {
+                // 之前是上拉松手加载
+                mLoadMoreEnabledStatus = 3;
+            }
+        }
         if (!enabled) {
             mLoadMore.setState(BaseLoadMore.STATE_COMPLETE);
         }
@@ -328,7 +339,7 @@ public class ByRecyclerView extends RecyclerView {
     @Override
     public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
-        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadMoreListener != null && !mIsLoadingData && mLoadMoreEnabled) {
+        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadMoreListener != null && mLoadMoreEnabledStatus == 1 && mLoadMore != null && mLoadMore.getState() == BaseLoadMore.STATE_COMPLETE) {
             LayoutManager layoutManager = getLayoutManager();
             if (layoutManager == null) {
                 return;
@@ -345,13 +356,11 @@ public class ByRecyclerView extends RecyclerView {
 
             }
             if (layoutManager.getChildCount() > 0
-                    && !mIsNoMore
                     && lastVisibleItemPosition == mWrapAdapter.getItemCount() - 1 // 最后一个完全可视item是最后一个item
                     && isNoFullScreenLoad()
                     && isScrollLoad()
                     && (!mRefreshEnabled || mRefreshHeader.getState() < BaseRefreshHeader.STATE_REFRESHING)) {
                 mIsScrollUp = false;
-                mIsLoadingData = true;
                 mLoadMore.setState(BaseLoadMore.STATE_LOADING);
                 if (mLoadMoreDelayMillis <= 0) {
                     mLoadMoreListener.onLoadMore();
@@ -431,11 +440,11 @@ public class ByRecyclerView extends RecyclerView {
             default:
                 /*
                  * 判断是否上拉了逻辑：
-                 *  开启了加载更多
+                 *  开启了上拉松手加载更多
                  *  按下的纵坐标 - 最后的纵坐标>=-10(为了更灵敏,原点向下惯性滑动时==0)
                  *  最高点的纵坐标 - 松开时的纵坐标<=150(为了防止上滑后然后再下拉)
                  */
-                mIsScrollUp = mLoadMoreEnabled && mPullStartY - ev.getY() >= -10 && ev.getY() - mPullMaxY <= 150;
+                mIsScrollUp = (mLoadMoreEnabledStatus == 1) && mPullStartY - ev.getY() >= -10 && ev.getY() - mPullMaxY <= 150;
 
                 mPullStartY = 0;
                 mLastY = -1;
@@ -601,6 +610,7 @@ public class ByRecyclerView extends RecyclerView {
             if (isStateView(position)) {
                 return TYPE_STATE_VIEW;
             }
+            autoLoadMore(position);
             if (isLoadMoreView(position)) {
                 return TYPE_LOAD_MORE_VIEW;
             }
@@ -751,11 +761,73 @@ public class ByRecyclerView extends RecyclerView {
      * Is it a LoadMoreView layout
      */
     public boolean isLoadMoreView(int position) {
-        if (mLoadMoreEnabled) {
+        if (mLoadMoreEnabledStatus == 1 || mLoadMoreEnabledStatus == 2) {
             return position == mWrapAdapter.getItemCount() - 1;
         } else {
             return false;
         }
+    }
+
+    /**
+     * 自动加载更多以及预加载
+     */
+    private void autoLoadMore(int position) {
+        if (!hasAutoLoadMoreView()) {
+            return;
+        }
+        if (position < mWrapAdapter.getItemCount() - mPreLoadNumber) {
+            // 倒数第mPreLoadNumber个数据才加载
+            return;
+        }
+        if (mRefreshEnabled && mRefreshHeader.getState() != BaseRefreshHeader.STATE_NORMAL) {
+            // 开启了下拉刷新并且不处于默认中
+            return;
+        }
+        // 加载更多
+        mLoadMore.setState(BaseLoadMore.STATE_LOADING);
+        if (mLoadMoreDelayMillis <= 0) {
+            mLoadMoreListener.onLoadMore();
+        } else {
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mLoadMoreListener.onLoadMore();
+                }
+            }, mLoadMoreDelayMillis);
+        }
+    }
+
+    /**
+     * 预加载数量
+     */
+    public void setPreLoadNumber(int preLoadNumber) {
+        if (preLoadNumber > 0) {
+            this.mPreLoadNumber = preLoadNumber;
+        }
+    }
+
+    /**
+     * 是否可以执行自动加载更多
+     */
+    public boolean hasAutoLoadMoreView() {
+        if (mLoadMoreListener == null) {
+            return false;
+        }
+        if (mLoadMoreEnabledStatus != 2) {
+            return false;
+        }
+        if (mLoadMore.getState() != BaseLoadMore.STATE_COMPLETE) {
+            return false;
+        }
+        if (mWrapAdapter != null && mWrapAdapter.getOriginalAdapter() != null) {
+            if (mWrapAdapter.getOriginalAdapter() instanceof BaseByRecyclerViewAdapter) {
+                BaseByRecyclerViewAdapter originalAdapter = (BaseByRecyclerViewAdapter) (mWrapAdapter.getOriginalAdapter());
+                return originalAdapter.getData() != null && originalAdapter.getData().size() != 0;
+            } else {
+                return mWrapAdapter.getItemCount() - getPullHeaderSize() - getHeaderViewCount() - getFooterViewSize() - getLoadMoreSize() - getStateViewSize() != 0;
+            }
+        }
+        return true;
     }
 
     /**
@@ -824,17 +896,55 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     /**
+     * 设置上拉松手加载更多监听
+     *
      * @param delayMillis How many milliseconds is the delay before the call OnLoadMoreListener
      */
     public void setOnLoadMoreListener(OnLoadMoreListener listener, long delayMillis) {
-        setLoadMoreEnabled(true);
-        mLoadMoreListener = listener;
-        mLoadMoreDelayMillis = delayMillis;
+        setOnLoadMoreListener(false, mPreLoadNumber, listener, delayMillis);
     }
 
+    /**
+     * 设置上拉松手加载更多监听
+     */
     public void setOnLoadMoreListener(OnLoadMoreListener listener) {
+        setOnLoadMoreListener(false, mPreLoadNumber, listener, 0);
+    }
+
+    /**
+     * 设置加载更多监听
+     *
+     * @param isAutoLoadMore 是否自动加载
+     */
+    public void setOnLoadMoreListener(boolean isAutoLoadMore, OnLoadMoreListener listener) {
+        setOnLoadMoreListener(isAutoLoadMore, mPreLoadNumber, listener, 0);
+    }
+
+    /**
+     * 设置加载更多监听
+     *
+     * @param isAutoLoadMore 是否自动加载
+     * @param preLoadNumber  自动加载时，默认滑动到倒数第[preLoadNumber]条数据加载，默认1
+     * @param listener       监听器
+     */
+    public void setOnLoadMoreListener(boolean isAutoLoadMore, int preLoadNumber, OnLoadMoreListener listener) {
+        setOnLoadMoreListener(isAutoLoadMore, preLoadNumber, listener, 0);
+    }
+
+    /**
+     * 设置加载更多监听
+     *
+     * @param isAutoLoadMore 是否自动加载
+     * @param preLoadNumber  自动加载时，默认滑动到倒数第[preLoadNumber]条数据加载，默认1
+     * @param listener       监听器
+     * @param delayMillis    延迟多少毫秒执行加载更多
+     */
+    public void setOnLoadMoreListener(boolean isAutoLoadMore, int preLoadNumber, OnLoadMoreListener listener, long delayMillis) {
+        mLoadMoreEnabledStatus = isAutoLoadMore ? 2 : 1;
         setLoadMoreEnabled(true);
+        setPreLoadNumber(preLoadNumber);
         mLoadMoreListener = listener;
+        mLoadMoreDelayMillis = delayMillis;
     }
 
     /**
@@ -905,7 +1015,7 @@ public class ByRecyclerView extends RecyclerView {
      * If a pull-up refresh is used, position needs to be counted
      */
     public int getLoadMoreSize() {
-        if (mLoadMoreEnabled) {
+        if (mLoadMoreEnabledStatus == 1 || mLoadMoreEnabledStatus == 2) {
             return 1;
         } else {
             return 0;
@@ -1193,7 +1303,7 @@ public class ByRecyclerView extends RecyclerView {
      * Whether load more ongoing
      */
     public boolean isLoadingMore() {
-        return mIsLoadingData;
+        return mLoadMore != null && mLoadMore.getState() == BaseLoadMore.STATE_LOADING;
     }
 
     /**
@@ -1266,7 +1376,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     public boolean isLoadMoreEnabled() {
-        return mLoadMoreEnabled;
+        return mLoadMoreEnabledStatus == 1 || mLoadMoreEnabledStatus == 2;
     }
 
     public boolean isHeaderViewEnabled() {
@@ -1289,7 +1399,8 @@ public class ByRecyclerView extends RecyclerView {
         mFootViewEnabled = false;
         mStateViewEnabled = false;
         mRefreshEnabled = false;
-        mLoadMoreEnabled = false;
+        mPreLoadNumber = 1;
+        mLoadMoreEnabledStatus = 0;
         if (mHeaderViews != null) {
             mHeaderViews.clear();
         }
