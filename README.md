@@ -5,24 +5,25 @@
 [![Apache License 2.0][3]][4]
 [![download][7]][8]
 
-ByRecyclerView 提供了下拉刷新、加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、item局部刷新、万能分割线、粘性header、极简Adapter(databinding)等功能。
+ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、item局部刷新、万能分割线、粘性header、极简Adapter(databinding)等功能。
 
 ## 功能特性
- - 1.下拉刷新 / 加载更多 / 支持SwipeRefreshLayout
+ - 1.下拉刷新 / 支持SwipeRefreshLayout
  - 2.自定义 下拉刷新布局 / 加载更多布局
- - 3.加载更多机制：**不足一屏上拉加载，超过后松手加载**
+ - 3.加载更多机制：**上拉松手 / 自动加载更多**
  - 4.Add HeaderView、FooterView、StateView
  - 5.item及子view的点击/长按事件(防止重复点击)
- - 6.优化过的BaseAdapter (RV/LV)，减少大量代码
- - 7.Adapter结合DataBinding使用 (RV/LV)
- - 8.可添加 万能分隔线（线性/宫格/瀑布流）
- - 9.可配置 Skeleton骨架图
- -  10.仿京东首页 RecyclerView嵌套滑动置顶示例
+ - 6.item 局部刷新
+ - 7.优化过的BaseAdapter (RV/LV)，减少大量代码
+ - 8.Adapter结合DataBinding使用 (RV/LV)
+ - 9.可添加 万能分隔线（线性/宫格/瀑布流）
+ - 10.可配置 Skeleton骨架图
+ - 11.仿京东首页 RecyclerView嵌套滑动置顶示例
 
-> 最新：item 局部刷新
+> 最新：可配置自动加载更多机制 和 设置预加载条数
 
 ## Document
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.2.1)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.3.0)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：更方便的使用下拉刷新及加载更多](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
  - [RecyclerView嵌套滑动置顶 项目应用篇](https://juejin.cn/post/6941996743974191111)
@@ -58,7 +59,7 @@ allprojects {
 ```
 dependencies {
 	// AndroidX版本引入
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.2.1'
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.3.0'
 }
 ```
 
@@ -108,6 +109,28 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
     }
 });
 ```
+
+### 自动加载更多/预加载
+为了适配更多的加载场景，我们增加了自动加载更多的机制，也可以设置预加载的条数，即滑动到倒数第`preLoadNumber `条数据时执行加载更多，相比以前只用在设置监听时加上状态`true`即可，使用方式：
+
+```java
+void setOnLoadMoreListener(boolean isAutoLoadMore, OnLoadMoreListener listener)
+void setOnLoadMoreListener(boolean isAutoLoadMore, int preLoadNumber, OnLoadMoreListener listener)
+
+/**
+ * 设置加载更多监听
+ *
+ * @param isAutoLoadMore 是否自动加载
+ * @param preLoadNumber  自动加载时，默认滑动到倒数第[preLoadNumber]条数据加载，默认1
+ * @param listener       监听器
+ * @param delayMillis    延迟多少毫秒执行加载更多
+ */
+void setOnLoadMoreListener(boolean isAutoLoadMore, int preLoadNumber, OnLoadMoreListener listener, long delayMillis)
+```
+
+- 1. 如果不设置，默认还是使用上拉松手加载更多机制
+- 2. 设置后如果想取消自动加载还是使用`recyclerView.setLoadMoreEnabled(false);`
+- 3. 不满一屏不加载更多`setNotFullScreenNoLoadMore()`，只对上拉松手加载更多有效
 
 ### ItemDecoration
 万能分割线，可给Linear/Grid/StaggeredGrid设置，并可配置去除不显示分割线的头部和尾部个数
