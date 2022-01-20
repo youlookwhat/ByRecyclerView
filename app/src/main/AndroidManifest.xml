@@ -46,7 +46,7 @@
         <activity android:name=".activity.HorizontalGridDividerActivity" />
         <activity android:name=".activity.ItemPayloadActivity" />
         <activity android:name=".activity.LoadMoreActivity" />
-        <activity android:name=".activity.StickRvCoordinatorActivity" />
+        <activity android:name=".activity.StickyRvCoordinatorActivity" />
     </application>
 
 </manifest>

@@ -23,7 +23,7 @@ import me.jingbin.byrecyclerview.activity.ItemPayloadActivity;
 import me.jingbin.byrecyclerview.activity.LoadMoreActivity;
 import me.jingbin.byrecyclerview.activity.SecondTypeActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
-import me.jingbin.byrecyclerview.activity.StickRvCoordinatorActivity;
+import me.jingbin.byrecyclerview.activity.StickyRvCoordinatorActivity;
 import me.jingbin.byrecyclerview.activity.StickyItemActivity;
 import me.jingbin.byrecyclerview.activity.StickyRvActivity;
 import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, StickyRvActivity.class));
                         break;
                     case 13:// CoordinatorLayout 嵌套滑动置顶
-                        startActivity(new Intent(MainActivity.this, StickRvCoordinatorActivity.class));
+                        startActivity(new Intent(MainActivity.this, StickyRvCoordinatorActivity.class));
                         break;
                     default:
                         break;

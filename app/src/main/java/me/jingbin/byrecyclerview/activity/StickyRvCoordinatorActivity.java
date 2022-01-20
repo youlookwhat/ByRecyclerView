@@ -11,19 +11,19 @@ import org.jetbrains.annotations.NotNull;
 
 import me.jingbin.byrecyclerview.R;
 import me.jingbin.byrecyclerview.app.BaseActivity;
-import me.jingbin.byrecyclerview.databinding.ActivityStickRvCoordBinding;
+import me.jingbin.byrecyclerview.databinding.ActivityStickyRvCoordBinding;
 import me.jingbin.byrecyclerview.stickrvcool.config.FeedsPagerAdapter;
 import me.jingbin.byrecyclerview.stickrvcool.config.HomeIndicatorHelper;
 
 /**
  * @author jingbin
  */
-public class StickRvCoordinatorActivity extends BaseActivity<ActivityStickRvCoordBinding> {
+public class StickyRvCoordinatorActivity extends BaseActivity<ActivityStickyRvCoordBinding> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stick_rv_coord);
+        setContentView(R.layout.activity_sticky_rv_coord);
         setTitle("CoordinatorLayout 嵌套滑动置顶");
         initAdapter();
     }
@@ -46,7 +46,7 @@ public class StickRvCoordinatorActivity extends BaseActivity<ActivityStickRvCoor
         });
     }
 
-    public ActivityStickRvCoordBinding get() {
+    public ActivityStickyRvCoordBinding get() {
         return binding;
     }
 }

@@ -5,9 +5,9 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2
-import me.jingbin.byrecyclerview.activity.StickRvCoordinatorActivity
+import me.jingbin.byrecyclerview.activity.StickyRvCoordinatorActivity
 
-class HomeIndicatorHelper(mainActivity: StickRvCoordinatorActivity) {
+class HomeIndicatorHelper(mainActivity: StickyRvCoordinatorActivity) {
 
     private val tabList = ArrayList<TextView>()
     private var viewPager2: ViewPager2? = null
