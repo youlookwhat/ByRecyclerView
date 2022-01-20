@@ -1,5 +1,6 @@
 package me.jingbin.byrecyclerview.adapter
 
+import android.util.Log
 import me.jingbin.byrecyclerview.R
 import me.jingbin.byrecyclerview.bean.DataItemBean
 import me.jingbin.byrecyclerview.binding.BaseBindingAdapter
@@ -17,6 +18,7 @@ class FeedStaggerAdapter(list: ArrayList<DataItemBean>) : BaseBindingAdapter<Dat
     override fun bindView(holder: BaseBindingHolder<*, *>, bean: DataItemBean, binding: ItemFeedGridBinding, position: Int) {
         binding.tvText.text = bean.title
         ViewUtil.setHeight(binding.ivImage, DensityUtil.dip2px(binding.tvText.context, 190f))
+        Log.e("----position", position.toString()+"")
     }
 
 }

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/main_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_toolbar"
+        app:srlAccentColor="#fff"
+        app:srlEnableOverScrollBounce="false"
+        app:srlReboundDuration="600">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@color/color_4"
+            app:srlEnableLastTime="false" />
+
+        <!--coordinator部分-->
+        <me.jingbin.byrecyclerview.stickrvcool.PersistentCoordinatorLayout
+            android:id="@+id/main_coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/main_appbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fadingEdge="none"
+                app:elevation="0dp"
+                app:layout_behavior=".view.FlingBehavior"
+                tools:ignore="WebViewLayout">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <!--                    <include layout="@layout/layout_header_view_appbar" />-->
+                    <include layout="@layout/layout_skeleton_headerview" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--                <include layout="@layout/main_feeds_tabs" />-->
+                <!--                <com.google.android.material.tabs.TabLayout-->
+                <!--                    android:id="@+id/tabLayout"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="48dp"-->
+                <!--                    android:layout_below="@+id/tv_name_tool"-->
+                <!--                    android:background="@color/colorWhite"-->
+                <!--                    android:visibility="visible"-->
+                <!--                    app:tabIndicatorColor="@color/colorPrimary"-->
+                <!--                    app:tabIndicatorHeight="2dp"-->
+                <!--                    app:tabMode="scrollable"-->
+                <!--                    app:tabSelectedTextColor="@color/colorPrimary"-->
+                <!--                    app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"-->
+                <!--                    />-->
+
+                <LinearLayout
+                    android:id="@+id/main_feeds_tablayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#fff"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/feeds_tab1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="关注"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="13dp"
+                        android:background="#f0f0f0" />
+
+                    <TextView
+                        android:id="@+id/feeds_tab2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="推荐"
+                        android:textColor="#333"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="13dp"
+                        android:background="#f0f0f0" />
+
+                    <TextView
+                        android:id="@+id/feeds_tab3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="直播"
+                        android:textColor="#333"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="13dp"
+                        android:background="#f0f0f0" />
+
+                    <TextView
+                        android:id="@+id/feeds_tab4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="进口"
+                        android:textColor="#333"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="13dp"
+                        android:background="#f0f0f0" />
+
+                    <TextView
+                        android:id="@+id/feeds_tab5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="实惠"
+                        android:textColor="#333"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--商品流-->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/main_feeds_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f3f3f3"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </me.jingbin.byrecyclerview.stickrvcool.PersistentCoordinatorLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+</layout>

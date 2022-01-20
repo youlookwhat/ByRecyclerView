@@ -23,6 +23,7 @@ import me.jingbin.byrecyclerview.activity.ItemPayloadActivity;
 import me.jingbin.byrecyclerview.activity.LoadMoreActivity;
 import me.jingbin.byrecyclerview.activity.SecondTypeActivity;
 import me.jingbin.byrecyclerview.activity.StateViewActivity;
+import me.jingbin.byrecyclerview.activity.StickRvCoordinatorActivity;
 import me.jingbin.byrecyclerview.activity.StickyItemActivity;
 import me.jingbin.byrecyclerview.activity.StickyRvActivity;
 import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
             "Skeleton 骨架图",
             "CoordinatorLayout + RecyclerView 使用示例",
             "FlexboxLayoutManager 显示处理",
-            "RecyclerView 嵌套滑动置顶"
+            "RecyclerView 嵌套滑动置顶",
+            "CoordinatorLayout 嵌套滑动置顶"
     );
     private ActivityMainBinding binding;
 
@@ -115,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 12:// RecyclerView 嵌套滑动置顶
                         startActivity(new Intent(MainActivity.this, StickyRvActivity.class));
+                        break;
+                    case 13:// CoordinatorLayout 嵌套滑动置顶
+                        startActivity(new Intent(MainActivity.this, StickRvCoordinatorActivity.class));
                         break;
                     default:
                         break;
