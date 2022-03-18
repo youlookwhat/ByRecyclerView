@@ -51,15 +51,24 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        if (mData != null) {
+            return mData.size();
+        } else {
+            return 0;
+        }
     }
 
     public void addAll(List<T> data) {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
         this.mData.addAll(data);
     }
 
     public void clear() {
-        mData.clear();
+        if (mData != null) {
+            mData.clear();
+        }
     }
 
     public List<T> getData() {
@@ -67,7 +76,10 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     }
 
     public T getItemData(int position) {
-        return mData == null ? null : mData.get(position);
+        if (mData != null && mData.size() > 0) {
+            return mData.get(position);
+        }
+        return null;
     }
 
     /**
