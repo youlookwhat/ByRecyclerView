@@ -51,17 +51,12 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
 
     @Override
     public int getItemCount() {
-        if (mData != null) {
-            return mData.size();
-        } else {
-            return 0;
-        }
+        checkNoNull();
+        return mData.size();
     }
 
     public void addAll(List<T> data) {
-        if (mData == null) {
-            mData = new ArrayList<>();
-        }
+        checkNoNull();
         this.mData.addAll(data);
     }
 
@@ -76,7 +71,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     }
 
     public T getItemData(int position) {
-        if (mData != null && mData.size() > 0) {
+        if (mData != null && mData.size() > 0 && position < mData.size()) {
             return mData.get(position);
         }
         return null;
@@ -95,6 +90,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
      * 在指定位置添加一条数据
      */
     public void addData(int position, T data) {
+        checkNoNull();
         mData.add(position, data);
         notifyItemRangeInserted(position + getCustomTopItemViewCount(), 1);
         compatibilityDataSizeChanged(1);
@@ -104,6 +100,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
      * 添加一条数据
      */
     public void addData(T data) {
+        checkNoNull();
         int startPosition = mData.size();
         mData.add(data);
         startPosition = startPosition + getCustomTopItemViewCount();
@@ -115,6 +112,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
      * 添加一组数据
      */
     public void addData(List<T> data) {
+        checkNoNull();
         int startPosition = mData.size();
         this.mData.addAll(data);
         startPosition = startPosition + getCustomTopItemViewCount();
@@ -126,6 +124,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
      * 在指定位置添加一组数据
      */
     public void addData(int position, List<T> data) {
+        checkNoNull();
         this.mData.addAll(position, data);
         notifyItemRangeInserted(position + getCustomTopItemViewCount(), data.size());
         compatibilityDataSizeChanged(data.size());
@@ -146,12 +145,14 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
      * 移除一条数据
      */
     public void removeData(@IntRange(from = 0) int position) {
-        mData.remove(position);
-        int internalPosition = position + getCustomTopItemViewCount();
-        notifyItemRemoved(internalPosition);
-        // 如果移除的是最后一个，忽略
-        if (position != mData.size()) {
-            notifyItemRangeChanged(internalPosition, mData.size() - internalPosition);
+        if (mData != null && mData.size() > 0 && position < mData.size()) {
+            mData.remove(position);
+            int internalPosition = position + getCustomTopItemViewCount();
+            notifyItemRemoved(internalPosition);
+            // 如果移除的是最后一个，忽略
+            if (position != mData.size()) {
+                notifyItemRangeChanged(internalPosition, mData.size() - internalPosition);
+            }
         }
     }
 
@@ -208,5 +209,11 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
 
     public ByRecyclerView getRecyclerView() {
         return mRecyclerView;
+    }
+
+    private void checkNoNull() {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
     }
 }
