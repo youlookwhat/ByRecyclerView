@@ -23,7 +23,7 @@ ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加
 > 最新：可配置自动加载更多机制 和 设置预加载条数
 
 ## Document
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.3.0)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.3.1)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：更方便的使用下拉刷新及加载更多](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
  - [RecyclerView嵌套滑动置顶 项目应用篇](https://juejin.cn/post/6941996743974191111)
@@ -59,7 +59,7 @@ allprojects {
 ```
 dependencies {
 	// AndroidX版本引入
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.3.0'
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.3.1'
 }
 ```
 
@@ -321,9 +321,9 @@ skeletonScreen.hide();
   </tr>
   <tr>
     <td style="text-align:center">加载更多机制</td>
-    <td>不足一屏上拉加载，超过后触底加载</td>
-    <td>不足一屏即加载</td>
-    <td>触底加载</td>
+    <td>上拉松手/自动加载更多</td>
+    <td>自动加载更多</td>
+    <td>上拉松手加载</td>
   </tr>
   <tr>
     <td style="text-align:center">HeaderView</td>
@@ -365,7 +365,7 @@ skeletonScreen.hide();
 ByRecyclerView 是XRecyclerView的拓展，可完全替换XRecyclerView，对于BRVAH它的区别在于：
 
  - headerView使用的是多type的形式，即一个header就是一个position
- - 不足一屏上拉加载，超过后触底加载
+ - 可简单设置 上拉松手/自动加载更多 两种加载方式
  - 自带下拉加载布局，也可使用三方刷新框架，比如SwipeRefreshLayout
  - 万能分割线(LinearLayout / GridLayout / StaggeredGridLayout)
  - 可设置Skeleton 骨架图
