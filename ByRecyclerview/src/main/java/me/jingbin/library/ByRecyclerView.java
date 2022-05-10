@@ -536,14 +536,36 @@ public class ByRecyclerView extends RecyclerView {
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (viewType == TYPE_REFRESH_HEADER) {
                 return new SimpleViewHolder((View) mRefreshHeader);
-            } else if (isHeaderType(viewType)) {
-                return new SimpleViewHolder(getHeaderViewByType(viewType));
-            } else if (viewType == TYPE_STATE_VIEW) {
-                return new SimpleViewHolder(mStateLayout);
-            } else if (viewType == TYPE_FOOTER_VIEW) {
-                return new SimpleViewHolder(mFooterLayout);
             } else if (viewType == TYPE_LOAD_MORE_VIEW) {
                 return new SimpleViewHolder((View) mLoadMore);
+            } else if (isHeaderType(viewType)) {
+                // headerView
+                View headerView = getHeaderViewByType(viewType);
+                if (headerView != null && headerView.getParent() != null && headerView.getParent() instanceof ViewGroup) {
+                    ViewGroup ViewParent = (ViewGroup) headerView.getParent();
+                    if (ViewParent != null) {
+                        ViewParent.removeView(headerView);
+                    }
+                }
+                return new SimpleViewHolder(headerView);
+            } else if (viewType == TYPE_STATE_VIEW) {
+                // stateView
+                if (mStateLayout != null && mStateLayout.getParent() != null && mStateLayout.getParent() instanceof ViewGroup) {
+                    ViewGroup ViewParent = (ViewGroup) mStateLayout.getParent();
+                    if (ViewParent != null) {
+                        ViewParent.removeView(mStateLayout);
+                    }
+                }
+                return new SimpleViewHolder(mStateLayout);
+            } else if (viewType == TYPE_FOOTER_VIEW) {
+                // footerView
+                if (mFooterLayout != null && mFooterLayout.getParent() != null && mFooterLayout.getParent() instanceof ViewGroup) {
+                    ViewGroup ViewParent = (ViewGroup) mFooterLayout.getParent();
+                    if (ViewParent != null) {
+                        ViewParent.removeView(mFooterLayout);
+                    }
+                }
+                return new SimpleViewHolder(mFooterLayout);
             }
             ViewHolder viewHolder = adapter.onCreateViewHolder(parent, viewType);
             bindViewClickListener(viewHolder);
