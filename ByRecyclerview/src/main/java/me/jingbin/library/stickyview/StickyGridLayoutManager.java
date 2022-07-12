@@ -132,7 +132,8 @@ public class StickyGridLayoutManager extends GridLayoutManager {
         }
         for (int i = 0; i < adapterData.size(); i++) {
             if (StickyHeaderHandler.TYPE_STICKY_VIEW == mBaseAdapter.getItemViewType(i)) {
-                mHeaderPositions.add(i);
+                int customTopItemViewCount = mBaseAdapter.getCustomTopItemViewCount();
+                mHeaderPositions.add(i + customTopItemViewCount);
             }
         }
         if (mHeaderHandler != null) {

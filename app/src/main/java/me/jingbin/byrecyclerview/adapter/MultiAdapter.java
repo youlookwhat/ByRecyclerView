@@ -82,7 +82,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         }
     }
 
-    private class TitleHolder extends BaseByViewHolder<DataItemBean> {
+    private static class TitleHolder extends BaseByViewHolder<DataItemBean> {
         TitleHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
@@ -93,7 +93,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
         }
     }
 
-    private class ViewHolder extends BaseBindingHolder<DataItemBean, ItemHomeBinding> {
+    private static class ViewHolder extends BaseBindingHolder<DataItemBean, ItemHomeBinding> {
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }

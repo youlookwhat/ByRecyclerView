@@ -19,7 +19,7 @@ import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
  */
 public class StickyLinearLayoutManager extends LinearLayoutManager {
 
-    private BaseByRecyclerViewAdapter mHeaderProvider;
+    private BaseByRecyclerViewAdapter mBaseAdapter;
     private StickyHeaderHandler mHeaderHandler;
 
     private List<Integer> mHeaderPositions = new ArrayList<>();
@@ -34,7 +34,7 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
 
     public StickyLinearLayoutManager(Context context, int orientation, boolean reverseLayout, BaseByRecyclerViewAdapter headerProvider) {
         super(context, orientation, reverseLayout);
-        this.mHeaderProvider = headerProvider;
+        this.mBaseAdapter = headerProvider;
     }
 
     public void elevateHeaders(boolean elevateHeaders) {
@@ -132,7 +132,7 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
 
     private void cacheHeaderPositions() {
         mHeaderPositions.clear();
-        List adapterData = mHeaderProvider.getData();
+        List adapterData = mBaseAdapter.getData();
         if (adapterData == null) {
             if (mHeaderHandler != null) {
                 mHeaderHandler.setHeaderPositions(mHeaderPositions);
@@ -141,8 +141,9 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
         }
 
         for (int i = 0; i < adapterData.size(); i++) {
-            if (StickyHeaderHandler.TYPE_STICKY_VIEW == mHeaderProvider.getItemViewType(i)) {
-                mHeaderPositions.add(i);
+            if (StickyHeaderHandler.TYPE_STICKY_VIEW == mBaseAdapter.getItemViewType(i)) {
+                int customTopItemViewCount = mBaseAdapter.getCustomTopItemViewCount();
+                mHeaderPositions.add(i+customTopItemViewCount);
             }
         }
         if (mHeaderHandler != null) {

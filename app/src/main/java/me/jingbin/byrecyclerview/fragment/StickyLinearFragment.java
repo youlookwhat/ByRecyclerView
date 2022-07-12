@@ -83,13 +83,13 @@ public class StickyLinearFragment extends BaseFragment<FragmentRefreshBinding> {
         itemDecoration.setDrawable(R.drawable.shape_line);
         binding.recyclerView.addItemDecoration(itemDecoration);
         binding.recyclerView.setAdapter(mAdapter);
-//        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                page = 1;
-//                mAdapter.setNewData(DataUtil.getMultiData(getActivity(), 20));
-//            }
-//        });
+        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                mAdapter.setNewData(DataUtil.getMultiData(getActivity(), 20));
+            }
+        });
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import java.util.Map;
 
+import me.jingbin.library.adapter.BaseByRecyclerViewAdapter;
+
 /**
  * Created by jingbin on 2020-02-11.
  */
@@ -76,8 +78,8 @@ public class StickyHeaderHandler {
             } else {
                 // 否则就创建一个header视图
                 lastBoundPosition = headerPositionToShow;
-                RecyclerView.ViewHolder viewHolder = viewFactory.getViewHolderForPosition(headerPositionToShow);
-                attachHeader(viewHolder, headerPositionToShow);
+                RecyclerView.ViewHolder viewHolder = viewFactory.getViewHolderForPosition(headerPositionToShow - getRecyclerViewCustomTopItemViewCount());
+                attachHeader(viewHolder, headerPositionToShow - getRecyclerViewCustomTopItemViewCount());
             }
         } else if (checkMargins && headerAwayFromEdge(headerToCopy)) {
             detachHeader(lastBoundPosition);
@@ -90,6 +92,21 @@ public class StickyHeaderHandler {
                 checkElevation();
             }
         });
+    }
+
+    /**
+     * 处理RefreshView + HeaderView + EmptyView
+     * issues：https://github.com/youlookwhat/ByRecyclerView/issues/57
+     */
+    private int getRecyclerViewCustomTopItemViewCount() {
+        int customTopItemViewCount = 0;
+        try {
+            BaseByRecyclerViewAdapter adapter = (BaseByRecyclerViewAdapter) mRecyclerView.getAdapter();
+            customTopItemViewCount = adapter.getCustomTopItemViewCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customTopItemViewCount;
     }
 
     private void checkHeaderPositions(final Map<Integer, View> visibleHeaders) {
