@@ -26,6 +26,7 @@ import me.jingbin.byrecyclerview.activity.StateViewActivity;
 import me.jingbin.byrecyclerview.activity.StickyRvCoordinatorActivity;
 import me.jingbin.byrecyclerview.activity.StickyItemActivity;
 import me.jingbin.byrecyclerview.activity.StickyRvActivity;
+import me.jingbin.byrecyclerview.activity.StickyRvCoordinatorOriginalActivity;
 import me.jingbin.byrecyclerview.databinding.ActivityMainBinding;
 import me.jingbin.byrecyclerview.utils.WebUtil;
 import me.jingbin.library.adapter.BaseByViewHolder;
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
             "CoordinatorLayout + RecyclerView 使用示例",
             "FlexboxLayoutManager 显示处理",
             "RecyclerView 嵌套滑动置顶",
-            "CoordinatorLayout 嵌套滑动置顶"
+            "CoordinatorLayout 嵌套滑动置顶(惯性滑动方案)",
+            "CoordinatorLayout 嵌套滑动置顶(原始方案)"
     );
     private ActivityMainBinding binding;
 
@@ -120,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 13:// CoordinatorLayout 嵌套滑动置顶
                         startActivity(new Intent(MainActivity.this, StickyRvCoordinatorActivity.class));
+                        break;
+                    case 14:// CoordinatorLayout 嵌套滑动置顶
+                        startActivity(new Intent(MainActivity.this, StickyRvCoordinatorOriginalActivity.class));
                         break;
                     default:
                         break;

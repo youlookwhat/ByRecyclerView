@@ -47,6 +47,7 @@
         <activity android:name=".activity.ItemPayloadActivity" />
         <activity android:name=".activity.LoadMoreActivity" />
         <activity android:name=".activity.StickyRvCoordinatorActivity" />
+        <activity android:name=".activity.StickyRvCoordinatorOriginalActivity" />
     </application>
 
 </manifest>

@@ -17,6 +17,10 @@ import me.jingbin.byrecyclerview.stickrvcool.config.HomeIndicatorHelper;
 
 /**
  * @author jingbin
+ * CoordinatorLayout 嵌套滑动置顶(惯性滑动方案)
+ * 如要惯性滑动，即滑动头部布局不置顶，现要求其一：
+ * 1、targetSdkVersion 在30以下。因为HookedScroller反射失败
+ * 2、集成三方库：https://github.com/tiann/FreeReflection，需要minSdkVersion 21
  */
 public class StickyRvCoordinatorActivity extends BaseActivity<ActivityStickyRvCoordBinding> {
 
