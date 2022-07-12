@@ -28,19 +28,22 @@ class HookedScroller(context: Context, persistentProvider: () -> PersistentRecyc
     /**
      * SplineOverScroller 内部的 mDuration 字段
      */
-    private var durationField: Field
+    private var durationField: Field? = null
 
     init {
+        // 获取mScrollerY对象
         val scrollerYField = OverScroller::class.java.getDeclaredField("mScrollerY")
         scrollerYField.isAccessible = true
         scrollerYObj = scrollerYField.get(this)
-
-        // Android 9.0及以上，非公开Api接口被禁用，无法获取mDuration字段
-        // 此处伪装成系统身份，绕过 @hide 检查
-        val metaGetDeclaredField = Class::class.java.getDeclaredMethod("getDeclaredField", String::class.java)
-        durationField = metaGetDeclaredField.invoke(scrollerYObj.javaClass, "mDuration") as Field
-        durationField.isAccessible = true
-
+        try {
+            // Android 9.0及以上，非公开Api接口被禁用，无法获取mDuration字段
+            // 此处伪装成系统身份，绕过 @hide 检查
+            val metaGetDeclaredField = Class::class.java.getDeclaredMethod("getDeclaredField", String::class.java)
+            durationField = metaGetDeclaredField.invoke(scrollerYObj.javaClass, "mDuration") as Field
+            durationField?.isAccessible = true
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         uiHandler = Handler(Looper.getMainLooper()) {
             syncFling()
             false
@@ -75,9 +78,9 @@ class HookedScroller(context: Context, persistentProvider: () -> PersistentRecyc
     ) {
         super.fling(startX, startY, velocityX, velocityY, minX, maxX, minY, maxY, overX, overY)
 
-        if (velocityY < -200) {
+        if (velocityY < -200 && durationField != null) {
             // 获取fling动画时长
-            val duration = durationField.get(scrollerYObj) as Int
+            val duration = durationField?.get(scrollerYObj) as Int
 
             // 结束时用handler启动fling传导
             uiHandler.sendEmptyMessageDelayed(1, duration.toLong())
