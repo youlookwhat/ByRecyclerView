@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import androidx.databinding.DataBindingUtil;
 
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.adapter.ListView2Adapter;
+import me.jingbin.byrecyclerview.adapter.ListViewAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.databinding.ActivityListViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
@@ -31,7 +31,7 @@ public class ListViewActivity extends BaseActivity<ActivityListViewBinding> {
         LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, binding.listView, false);
         LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_footer_view, binding.listView, false);
 
-        ListView2Adapter mAdapter = new ListView2Adapter(DataUtil.get(this, 30));
+        ListViewAdapter mAdapter = new ListViewAdapter(DataUtil.get(this, 30));
         binding.listView.setAdapter(mAdapter);
         binding.listView.addFooterView(footerBinding.getRoot());
         binding.listView.addHeaderView(headerBinding.getRoot());

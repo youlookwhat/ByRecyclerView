@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.actionbar_update);
-        item.setTitle("当前版本:" + BuildConfig.VERSION_NAME);
+        item.setTitle("更新：当前版本为" + BuildConfig.VERSION_NAME);
         return true;
     }
 
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 WebUtil.openLink(MainActivity.this, "https://github.com/youlookwhat/ByRecyclerView");
                 break;
             case R.id.actionbar_update:
-                WebUtil.openLink(MainActivity.this, "https://github.com/youlookwhat/download/raw/main/ByRecyclerView.apk");
+                WebUtil.openLink(MainActivity.this, "https://github.com/youlookwhat/download/blob/main/ByRecyclerView.apk");
                 break;
             default:
                 break;

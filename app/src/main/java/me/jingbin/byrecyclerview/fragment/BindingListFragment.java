@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import me.jingbin.byrecyclerview.R;
-import me.jingbin.byrecyclerview.adapter.ListView2Adapter;
+import me.jingbin.byrecyclerview.adapter.ListViewBindingAdapter;
 import me.jingbin.byrecyclerview.databinding.FragmentListviewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutFooterViewBinding;
 import me.jingbin.byrecyclerview.databinding.LayoutHeaderViewBinding;
@@ -71,7 +71,7 @@ public class BindingListFragment extends BaseFragment<FragmentListviewBinding> {
         LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.layout_header_view, binding.listView, false);
         LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.layout_footer_view, binding.listView, false);
 
-        ListView2Adapter mAdapter = new ListView2Adapter(DataUtil.get(activity, 30));
+        ListViewBindingAdapter mAdapter = new ListViewBindingAdapter(DataUtil.get(activity, 30));
         binding.listView.setAdapter(mAdapter);
         binding.listView.addFooterView(footerBinding.getRoot());
         binding.listView.addHeaderView(headerBinding.getRoot());

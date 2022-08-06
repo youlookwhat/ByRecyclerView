@@ -48,7 +48,7 @@ public abstract class BaseListBindingAdapter<T, B extends ViewDataBinding> exten
 
     @Override
     protected void onBindView(BaseListBindingHolder<B> holder, T bean, int position) {
-        bindView(bean, holder.getBinding(), mLayoutId);
+        bindView(bean, holder.getBinding(), position);
         holder.getBinding().executePendingBindings();
     }
 

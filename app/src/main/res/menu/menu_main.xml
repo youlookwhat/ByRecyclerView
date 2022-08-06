@@ -4,6 +4,7 @@
 
     <item
         android:id="@+id/actionbar_info"
+        android:icon="@drawable/icon_action_info"
         android:orderInCategory="100"
         android:title="关于开源库" />
 
