@@ -202,7 +202,9 @@ public class ByRecyclerView extends RecyclerView {
                     postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mLoadMoreListener.onLoadMore();
+                            if (mLoadMoreListener != null) {
+                                mLoadMoreListener.onLoadMore();
+                            }
                         }
                     }, mLoadMoreDelayMillis);
                 }
@@ -229,7 +231,9 @@ public class ByRecyclerView extends RecyclerView {
                 postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mRefreshListener.onRefresh();
+                        if (mRefreshListener != null) {
+                            mRefreshListener.onRefresh();
+                        }
                     }
                 }, 300 + mRefreshDelayMillis);
             }
@@ -368,7 +372,9 @@ public class ByRecyclerView extends RecyclerView {
                     postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mLoadMoreListener.onLoadMore();
+                            if (mLoadMoreListener != null) {
+                                mLoadMoreListener.onLoadMore();
+                            }
                         }
                     }, mLoadMoreDelayMillis);
                 }
@@ -455,7 +461,9 @@ public class ByRecyclerView extends RecyclerView {
                         postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                mRefreshListener.onRefresh();
+                                if (mRefreshListener != null) {
+                                    mRefreshListener.onRefresh();
+                                }
                             }
                         }, 300 + mRefreshDelayMillis);
                     }
@@ -813,7 +821,9 @@ public class ByRecyclerView extends RecyclerView {
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mLoadMoreListener.onLoadMore();
+                    if (mLoadMoreListener != null) {
+                        mLoadMoreListener.onLoadMore();
+                    }
                 }
             }, mLoadMoreDelayMillis);
         }
@@ -1423,6 +1433,12 @@ public class ByRecyclerView extends RecyclerView {
         mRefreshEnabled = false;
         mPreLoadNumber = 1;
         mLoadMoreEnabledStatus = 0;
+        mRefreshListener = null;
+        mLoadMoreListener = null;
+        onItemClickListener = null;
+        onItemLongClickListener = null;
+        mOnItemChildClickListener = null;
+        mOnItemChildLongClickListener = null;
         if (mHeaderViews != null) {
             mHeaderViews.clear();
         }

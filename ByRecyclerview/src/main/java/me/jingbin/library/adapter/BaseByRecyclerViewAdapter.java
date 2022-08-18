@@ -71,7 +71,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     }
 
     public T getItemData(int position) {
-        if (mData != null && mData.size() > 0 && position < mData.size()) {
+        if (mData != null && mData.size() > 0 && position >= 0 && position < mData.size()) {
             return mData.get(position);
         }
         return null;
