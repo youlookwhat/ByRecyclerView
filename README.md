@@ -15,15 +15,16 @@ ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加
  - 5.item及子view的点击/长按事件(防止重复点击)
  - 6.item 局部刷新
  - 7.优化过的BaseAdapter (RV/LV)，减少大量代码
- - 8.Adapter结合DataBinding使用 (RV/LV)
+ - 8.Adapter结合DataBinding/ViewBinding使用 (RV/LV)
  - 9.可添加 万能分隔线（线性/宫格/瀑布流）
  - 10.可配置 Skeleton骨架图
  - 11.仿京东首页 RecyclerView嵌套滑动置顶示例
+ - 12.可配置自动加载更多机制 和 设置预加载条数
 
-> 最新：可配置自动加载更多机制 和 设置预加载条数
+> 最新：setPageData()一行代码处理 列表显示数据和空视图
 
 ## Document
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.3.2)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.3.5)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：更方便的使用下拉刷新及加载更多](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
  - [RecyclerView嵌套滑动置顶 项目应用篇](https://juejin.cn/post/6941996743974191111)
@@ -59,7 +60,7 @@ allprojects {
 ```
 dependencies {
 	// AndroidX版本引入
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.3.2'
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.3.5'
 }
 ```
 
@@ -108,6 +109,52 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
          mRecyclerView.loadMoreFail();      // 加载更多失败,点击重试
     }
 });
+```
+
+6.显示数据
+
+可直接调用adapter方法：`setPageData(boolean isFirstPage, List<T> data, int emptyLayoutId)`
+
+```java
+/**
+ * 设置数据 和 处理空视图。
+ * 如果想列表上方状态视图(StateView)，不能使用这个方法。
+ *
+ * @param isFirstPage 是否是第一页
+ * @param data        需要设置的数据
+ * @param emptyView   空视图的View
+ */
+public void setPageData(boolean isFirstPage, List<T> data, View emptyView) {
+    if (mRecyclerView == null) {
+        return;
+    }
+    if (isFirstPage) {
+        // 第一页
+        if (data != null && data.size() > 0) {
+            // 有数据
+            mRecyclerView.setStateViewEnabled(false);
+            mRecyclerView.setLoadMoreEnabled(true);
+            setNewData(data);
+        } else {
+            // 没数据，设置空布局
+            if (emptyView != null) {
+                mRecyclerView.setStateView(emptyView);
+            }
+            mRecyclerView.setLoadMoreEnabled(false);
+            setNewData(null);
+        }
+    } else {
+        // 第二页
+        if (data != null && data.size() > 0) {
+            // 有数据，显示更多数据
+            addData(data);
+            mRecyclerView.loadMoreComplete();
+        } else {
+            // 没数据，显示加载到底
+            mRecyclerView.loadMoreEnd();
+        }
+    }
+}
 ```
 
 ### 自动加载更多/预加载

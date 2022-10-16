@@ -247,11 +247,14 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
             return;
         }
         if (isFirstPage) {
+            // 第一页
             if (data != null && data.size() > 0) {
+                // 有数据，隐藏空视图，打开加载更多
                 mRecyclerView.setStateViewEnabled(false);
                 mRecyclerView.setLoadMoreEnabled(true);
                 setNewData(data);
             } else {
+                // 没数据，设置空布局，关闭加载更多
                 if (emptyView != null) {
                     mRecyclerView.setStateView(emptyView);
                 }
@@ -259,10 +262,13 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
                 setNewData(null);
             }
         } else {
+            // 第二页
             if (data != null && data.size() > 0) {
+                // 有数据，显示更多数据
                 addData(data);
                 mRecyclerView.loadMoreComplete();
             } else {
+                // 没数据，显示加载到底
                 mRecyclerView.loadMoreEnd();
             }
         }
