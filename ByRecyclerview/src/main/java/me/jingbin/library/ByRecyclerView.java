@@ -1126,7 +1126,7 @@ public class ByRecyclerView extends RecyclerView {
      *
      * @param layoutResId layoutResId
      */
-    private View getLayoutView(int layoutResId) {
+    public View getLayoutView(int layoutResId) {
         return LayoutInflater.from(getContext()).inflate(layoutResId, (ViewGroup) this.getParent(), false);
     }
 

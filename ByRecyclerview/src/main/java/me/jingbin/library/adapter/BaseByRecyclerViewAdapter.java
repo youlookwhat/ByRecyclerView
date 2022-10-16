@@ -1,6 +1,8 @@
 package me.jingbin.library.adapter;
 
 
+import android.view.View;
+
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -214,6 +216,55 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     private void checkNoNull() {
         if (mData == null) {
             mData = new ArrayList<>();
+        }
+    }
+
+    /**
+     * 设置数据和处理空视图。
+     * 如果想列表上方显示状态视图(StateView)，不能使用这个方法。
+     *
+     * @param isFirstPage   是否是第一页
+     * @param data          需要设置的数据
+     * @param emptyLayoutId 空视图的layoutId
+     */
+    public void setPageData(boolean isFirstPage, List<T> data, int emptyLayoutId) {
+        if (mRecyclerView == null) {
+            return;
+        }
+        setPageData(isFirstPage, data, mRecyclerView.getLayoutView(emptyLayoutId));
+    }
+
+    /**
+     * 设置数据 和 处理空视图。
+     * 如果想列表上方状态视图(StateView)，不能使用这个方法。
+     *
+     * @param isFirstPage 是否是第一页
+     * @param data        需要设置的数据
+     * @param emptyView   空视图的View
+     */
+    public void setPageData(boolean isFirstPage, List<T> data, View emptyView) {
+        if (mRecyclerView == null) {
+            return;
+        }
+        if (isFirstPage) {
+            if (data != null && data.size() > 0) {
+                mRecyclerView.setStateViewEnabled(false);
+                mRecyclerView.setLoadMoreEnabled(true);
+                setNewData(data);
+            } else {
+                if (emptyView != null) {
+                    mRecyclerView.setStateView(emptyView);
+                }
+                mRecyclerView.setLoadMoreEnabled(false);
+                setNewData(null);
+            }
+        } else {
+            if (data != null && data.size() > 0) {
+                addData(data);
+                mRecyclerView.loadMoreComplete();
+            } else {
+                mRecyclerView.loadMoreEnd();
+            }
         }
     }
 }

@@ -95,6 +95,8 @@ public class StateViewActivity extends BaseActivity<ActivitySimpleBinding> {
             public void run() {
                 if (statue == 1) {
                     binding.recyclerView.setStateView(errorBinding.getRoot());
+                    binding.recyclerView.setLoadMoreEnabled(false);
+                    mAdapter.setNewData(null);
                     statue = 2;
                 }
             }
@@ -106,11 +108,16 @@ public class StateViewActivity extends BaseActivity<ActivitySimpleBinding> {
         @Override
         public void onClick(View v) {
             binding.recyclerView.setStateView(R.layout.layout_loading);
+            binding.recyclerView.setLoadMoreEnabled(false);
+            mAdapter.setNewData(null);
+
             binding.recyclerView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (statue == 2) {
                         binding.recyclerView.setStateView(emptyBinding.getRoot());
+                        binding.recyclerView.setLoadMoreEnabled(false);
+                        mAdapter.setNewData(null);
                         statue = 3;
                         return;
                     }
