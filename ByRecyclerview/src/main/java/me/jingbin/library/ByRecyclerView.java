@@ -188,7 +188,7 @@ public class ByRecyclerView extends RecyclerView {
      * Load more failures. Continue to pull up or click load.
      */
     public void loadMoreFail() {
-        if (getLoadMoreSize() == 0 || mLoadMore.getFailureView() == null || mLoadMoreListener == null) {
+        if (getLoadMoreSize() == 0 || mLoadMore.getFailureView() == null) {
             return;
         }
         mLoadMore.setState(BaseLoadMore.STATE_FAILURE);
@@ -791,7 +791,7 @@ public class ByRecyclerView extends RecyclerView {
      * Is it a LoadMoreView layout
      */
     public boolean isLoadMoreView(int position) {
-        if (mLoadMoreEnabledStatus == 1 || mLoadMoreEnabledStatus == 2) {
+        if (isLoadMoreEnabled()) {
             return position == mWrapAdapter.getItemCount() - 1;
         } else {
             return false;
@@ -1047,7 +1047,7 @@ public class ByRecyclerView extends RecyclerView {
      * If a pull-up refresh is used, position needs to be counted
      */
     public int getLoadMoreSize() {
-        if (mLoadMoreEnabledStatus == 1 || mLoadMoreEnabledStatus == 2) {
+        if (isLoadMoreEnabled()) {
             return 1;
         } else {
             return 0;
@@ -1408,7 +1408,7 @@ public class ByRecyclerView extends RecyclerView {
     }
 
     public boolean isLoadMoreEnabled() {
-        return mLoadMoreEnabledStatus == 1 || mLoadMoreEnabledStatus == 2;
+        return mLoadMoreListener != null && (mLoadMoreEnabledStatus == 1 || mLoadMoreEnabledStatus == 2);
     }
 
     public boolean isHeaderViewEnabled() {
