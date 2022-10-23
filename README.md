@@ -118,7 +118,7 @@ mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
 ```java
 /**
  * 设置数据 和 处理空视图。
- * 如果想列表上方状态视图(StateView)，不能使用这个方法。
+ * 如果想列表上方显示状态视图(StateView)，不能使用这个方法。
  *
  * @param isFirstPage 是否是第一页
  * @param data        需要设置的数据
