@@ -338,6 +338,14 @@ skeletonScreen = BySkeleton
 skeletonScreen.hide();
 ```
 
+### ViewBinding 使用示例
+- 1、由于 DataBinding 和 ViewBinding 最好别同时集成在项目里，所以新建了一个新的项目实践。
+- 2、ViewBinding 对封装的不是很友好，demo里给的是没有进行反射处理的示例。
+- 3、针对于 ListView 和 RecyclerView 的 adapter 都进行了封装。
+- 4、推荐使用 DataBinding。
+
+具体见项目：[ByRv-viewbinding](https://github.com/youlookwhat/android-learning/tree/master/ByRv-viewbinding/app/src/main/java/me/jingbin/byrv/viewbinding)
+
 
 ## 与BRVAH、XRecyclerView对比
 
