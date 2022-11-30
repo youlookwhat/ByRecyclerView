@@ -63,11 +63,7 @@ public class GridAdapter extends BaseRecyclerAdapter<DataItemBean> {
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    if (byRecyclerView.isLoadMoreView(position)
-                            || byRecyclerView.isFootView(position)
-                            || byRecyclerView.isStateView(position)
-                            || byRecyclerView.isRefreshHeader(position)
-                            || byRecyclerView.isHeaderView(position)) {
+                    if (byRecyclerView.isGridSpanFull(position)) {
                         return gridManager.getSpanCount();
                     }
                     int adapterPosition = position - byRecyclerView.getCustomTopItemViewCount();
@@ -109,12 +105,7 @@ public class GridAdapter extends BaseRecyclerAdapter<DataItemBean> {
         if (lp != null
                 && byRecyclerView != null
                 && lp instanceof StaggeredGridLayoutManager.LayoutParams
-                && (byRecyclerView.isHeaderView(holder.getLayoutPosition())
-                || byRecyclerView.isFootView(holder.getLayoutPosition())
-                || byRecyclerView.isRefreshHeader(holder.getLayoutPosition())
-                || byRecyclerView.isLoadMoreView(holder.getLayoutPosition())
-                || byRecyclerView.isStateView(holder.getLayoutPosition())
-                || holder.getItemViewType() == StickyHeaderHandler.TYPE_STICKY_VIEW)) {
+                && (byRecyclerView.isGridSpanFull(holder.getLayoutPosition()) || holder.getItemViewType() == StickyHeaderHandler.TYPE_STICKY_VIEW)) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
             p.setFullSpan(true);
         }

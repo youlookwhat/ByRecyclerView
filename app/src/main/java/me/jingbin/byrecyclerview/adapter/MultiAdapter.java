@@ -33,7 +33,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
 
     @Override
     public int getItemViewType(int position) {
-        if ("title".equals(getItemData(position).getType())) {
+        if (getItemData(position) != null && "title".equals(getItemData(position).getType())) {
             return StickyHeaderHandler.TYPE_STICKY_VIEW;
         } else {
             return 2;
@@ -51,11 +51,7 @@ public class MultiAdapter extends BaseByRecyclerViewAdapter<DataItemBean, BaseBy
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    if (byRecyclerView.isLoadMoreView(position)
-                            || byRecyclerView.isFootView(position)
-                            || byRecyclerView.isStateView(position)
-                            || byRecyclerView.isRefreshHeader(position)
-                            || byRecyclerView.isHeaderView(position)) {
+                    if (byRecyclerView.isGridSpanFull(position)) {
                         return gridManager.getSpanCount();
                     }
                     int type = getItemViewType(position - byRecyclerView.getCustomTopItemViewCount());

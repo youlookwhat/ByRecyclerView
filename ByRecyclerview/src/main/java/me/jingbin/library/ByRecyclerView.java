@@ -327,12 +327,7 @@ public class ByRecyclerView extends RecyclerView {
                 gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return (isHeaderView(position)
-                                || isFootView(position)
-                                || isLoadMoreView(position)
-                                || isStateView(position)
-                                || isRefreshHeader(position))
-                                ? gridManager.getSpanCount() : 1;
+                        return isGridSpanFull(position) ? gridManager.getSpanCount() : 1;
                     }
                 });
 
@@ -491,6 +486,15 @@ public class ByRecyclerView extends RecyclerView {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 该position是否占满一行
+     *
+     * @param position 实际位置的position，包含下拉刷新头等
+     */
+    public boolean isGridSpanFull(int position) {
+        return isLoadMoreView(position) || isFootView(position) || isStateView(position) || isRefreshHeader(position) || isHeaderView(position);
     }
 
     private class DataObserver extends AdapterDataObserver {
@@ -680,12 +684,7 @@ public class ByRecyclerView extends RecyclerView {
                     @Override
                     public int getSpanSize(int position) {
                         // 占一行
-                        return (isHeaderView(position)
-                                || isFootView(position)
-                                || isLoadMoreView(position)
-                                || isStateView(position)
-                                || isRefreshHeader(position))
-                                ? gridManager.getSpanCount() : 1;
+                        return isGridSpanFull(position) ? gridManager.getSpanCount() : 1;
                     }
                 });
             }
@@ -701,13 +700,7 @@ public class ByRecyclerView extends RecyclerView {
         public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
             super.onViewAttachedToWindow(holder);
             ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-            if (lp != null
-                    && lp instanceof StaggeredGridLayoutManager.LayoutParams
-                    && (isHeaderView(holder.getLayoutPosition())
-                    || isFootView(holder.getLayoutPosition())
-                    || isRefreshHeader(holder.getLayoutPosition())
-                    || isLoadMoreView(holder.getLayoutPosition())
-                    || isStateView(holder.getLayoutPosition()))) {
+            if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams && isGridSpanFull(holder.getLayoutPosition())) {
                 StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
                 p.setFullSpan(true);
             }
