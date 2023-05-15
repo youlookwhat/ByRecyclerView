@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import me.jingbin.byrecyclerview.R;
+import me.jingbin.byrecyclerview.adapter.BadgeAdapter;
 import me.jingbin.byrecyclerview.adapter.PayloadAdapter;
 import me.jingbin.byrecyclerview.app.BaseActivity;
 import me.jingbin.byrecyclerview.bean.DataItemBean;
@@ -23,22 +24,22 @@ import me.jingbin.library.decoration.SpacesItemDecoration;
 /**
  * @author jingbin
  */
-public class ItemPayloadActivity extends BaseActivity<ActivitySimpleBinding> {
+public class BadgeActivity extends BaseActivity<ActivitySimpleBinding> {
 
-    private PayloadAdapter mAdapter;
+    private BadgeAdapter mAdapter;
     private int page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        setTitle("item 局部刷新");
+        setTitle("Badge 显示处理");
 
         initAdapter();
     }
 
     private void initAdapter() {
-        mAdapter = new PayloadAdapter(DataUtil.get(this, 6));
+        mAdapter = new BadgeAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -48,11 +49,12 @@ public class ItemPayloadActivity extends BaseActivity<ActivitySimpleBinding> {
         binding.recyclerView.setLoadingMoreView(new NeteaseLoadMoreView(this));
         binding.recyclerView.setRefreshHeaderView(new NeteaseRefreshHeaderView(this));
         binding.recyclerView.setAdapter(mAdapter);
+        mAdapter.setNewData(DataUtil.get(this, 6));
         binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 page = 1;
-                mAdapter.setNewData(DataUtil.get(ItemPayloadActivity.this, 6));
+                mAdapter.setNewData(DataUtil.get(BadgeActivity.this, 6));
                 binding.recyclerView.setRefreshing(false);
             }
         }, 1000);
@@ -67,7 +69,7 @@ public class ItemPayloadActivity extends BaseActivity<ActivitySimpleBinding> {
                             return;
                         }
                         page++;
-                        mAdapter.addData(DataUtil.getMore(ItemPayloadActivity.this, 20, page));
+                        mAdapter.addData(DataUtil.getMore(BadgeActivity.this, 20, page));
                         binding.recyclerView.loadMoreComplete();
                     }
                 }, 100);

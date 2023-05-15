@@ -48,6 +48,7 @@
         <activity android:name=".activity.LoadMoreActivity" />
         <activity android:name=".activity.StickyRvCoordinatorActivity" />
         <activity android:name=".activity.StickyRvCoordinatorOriginalActivity" />
+        <activity android:name=".activity.BadgeActivity" />
     </application>
 
 </manifest>

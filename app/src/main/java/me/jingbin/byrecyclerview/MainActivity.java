@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.jingbin.byrecyclerview.activity.AppBarLayoutActivity;
+import me.jingbin.byrecyclerview.activity.BadgeActivity;
 import me.jingbin.byrecyclerview.activity.FlexBoxActivity;
 import me.jingbin.byrecyclerview.activity.HeaderFooterActivity;
 import me.jingbin.byrecyclerview.activity.ItemClickActivity;
@@ -55,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
             "FlexboxLayoutManager 显示处理",
             "RecyclerView 嵌套滑动置顶",
             "CoordinatorLayout 嵌套滑动置顶(惯性滑动方案)",
-            "CoordinatorLayout 嵌套滑动置顶(原始方案)"
+            "CoordinatorLayout 嵌套滑动置顶(原始方案)",
+            "Badge 显示处理"
     );
     private ActivityMainBinding binding;
 
@@ -125,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 14:// CoordinatorLayout 嵌套滑动置顶
                         startActivity(new Intent(MainActivity.this, StickyRvCoordinatorOriginalActivity.class));
+                        break;
+                    case 15:// Badge 显示处理
+                        startActivity(new Intent(MainActivity.this, BadgeActivity.class));
                         break;
                     default:
                         break;
