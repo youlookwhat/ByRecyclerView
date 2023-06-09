@@ -153,7 +153,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
             notifyItemRemoved(internalPosition);
             // 如果移除的是最后一个，忽略
             if (position != mData.size()) {
-                notifyItemRangeChanged(internalPosition, mData.size() - internalPosition);
+                notifyItemRangeChanged(internalPosition, mData.size() - position);
             }
         }
     }
