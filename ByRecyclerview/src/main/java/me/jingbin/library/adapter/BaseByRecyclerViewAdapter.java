@@ -23,6 +23,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
 
     private ByRecyclerView mRecyclerView;
     private List<T> mData = new ArrayList<>();
+    private View mStateView;
 
     protected BaseByRecyclerViewAdapter() {
     }
@@ -217,6 +218,34 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
         if (mData == null) {
             mData = new ArrayList<>();
         }
+    }
+
+    /**
+     * 设置空布局(状态布局)，在 setPageData() 时使用到
+     */
+    public void setEmptyView(View emptyView) {
+        this.mStateView = emptyView;
+    }
+
+    /**
+     * 设置空布局(状态布局)，在 setPageData() 时使用到
+     */
+    public void setEmptyView(int emptyLayoutId) {
+        if (mRecyclerView == null) {
+            return;
+        }
+        this.mStateView = mRecyclerView.getLayoutView(emptyLayoutId);
+    }
+
+    /**
+     * 设置数据和处理空视图。空视图是在 setEmptyView() 设置的。
+     * 如果想列表上方显示状态视图(StateView)，不能使用这个方法。
+     *
+     * @param isFirstPage 是否是第一页
+     * @param data        需要设置的数据
+     */
+    public void setPageData(boolean isFirstPage, List<T> data) {
+        setPageData(isFirstPage, data, mStateView);
     }
 
     /**

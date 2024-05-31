@@ -87,7 +87,7 @@ public class MultiGridFragment extends BaseFragment<FragmentRefreshBinding> {
             @Override
             public void onRefresh() {
                 page = 1;
-                mAdapter.setNewData(DataUtil.getMultiData(getActivity(), 20));
+                mAdapter.setPageData(true, DataUtil.getMultiData(getActivity(), 20));
             }
         });
         binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
@@ -98,8 +98,7 @@ public class MultiGridFragment extends BaseFragment<FragmentRefreshBinding> {
                     return;
                 }
                 page++;
-                mAdapter.addData(DataUtil.getMultiData(getActivity(), 50));
-                binding.recyclerView.loadMoreComplete();
+                mAdapter.setPageData(page == 1, DataUtil.getMultiData(getActivity(), 50));
             }
         }, 500);
         binding.recyclerView.setOnItemClickListener(new ByRecyclerView.OnItemClickListener() {
