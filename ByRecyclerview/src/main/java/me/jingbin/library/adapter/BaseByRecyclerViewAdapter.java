@@ -223,14 +223,14 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     /**
      * 设置空布局(状态布局)，在 setPageData() 时使用到
      */
-    public void setEmptyView(View emptyView) {
+    public void setPageEmptyView(View emptyView) {
         this.mStateView = emptyView;
     }
 
     /**
      * 设置空布局(状态布局)，在 setPageData() 时使用到
      */
-    public void setEmptyView(int emptyLayoutId) {
+    public void setPageEmptyView(int emptyLayoutId) {
         if (mRecyclerView == null) {
             return;
         }
