@@ -37,17 +37,21 @@ public abstract class BaseListAdapter<T, VH extends BaseListHolder> extends Base
     }
 
     protected BaseListAdapter(List<T> data) {
-        this.mData = data == null ? new ArrayList<T>() : data;
+        mData = data == null ? new ArrayList<T>() : data;
     }
 
     @Override
     public int getCount() {
+        checkNoNull();
         return mData.size();
     }
 
     @Override
     public T getItem(int position) {
-        return mData.get(position);
+        if (mData != null && mData.size() > 0 && position >= 0 && position < mData.size()) {
+            return mData.get(position);
+        }
+        return null;
     }
 
     @Override
@@ -81,24 +85,41 @@ public abstract class BaseListAdapter<T, VH extends BaseListHolder> extends Base
     }
 
     public void setData(List<T> data) {
-        this.mData = data;
+        mData = data;
     }
 
     public void addAll(List<T> data) {
-        this.mData.addAll(data);
+        checkNoNull();
+        mData.addAll(data);
     }
 
     public void removeAll(List<T> data) {
-        this.mData.removeAll(data);
+        if (mData == null) return;
+        mData.removeAll(data);
     }
 
     public void add(T t) {
-        this.mData.add(t);
+        checkNoNull();
+        mData.add(t);
     }
 
     public void clear() {
-        this.mData.clear();
+        if (mData == null) return;
+        mData.clear();
     }
 
+    private void checkNoNull() {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
+    }
+
+    /**
+     * 初始化数据，并刷新页面
+     */
+    public void setNewData(List<T> data) {
+        this.mData = data == null ? new ArrayList<T>() : data;
+        notifyDataSetChanged();
+    }
 
 }

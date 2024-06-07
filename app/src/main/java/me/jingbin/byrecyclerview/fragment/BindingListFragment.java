@@ -71,10 +71,11 @@ public class BindingListFragment extends BaseFragment<FragmentListviewBinding> {
         LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.layout_header_view, binding.listView, false);
         LayoutFooterViewBinding footerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.layout_footer_view, binding.listView, false);
 
-        ListViewBindingAdapter mAdapter = new ListViewBindingAdapter(DataUtil.get(activity, 30));
+        ListViewBindingAdapter mAdapter = new ListViewBindingAdapter();
         binding.listView.setAdapter(mAdapter);
         binding.listView.addFooterView(footerBinding.getRoot());
         binding.listView.addHeaderView(headerBinding.getRoot());
+        mAdapter.setNewData(DataUtil.get(activity, 30));
 
         binding.listView.setHeaderDividersEnabled(false);
         binding.listView.setFooterDividersEnabled(false);

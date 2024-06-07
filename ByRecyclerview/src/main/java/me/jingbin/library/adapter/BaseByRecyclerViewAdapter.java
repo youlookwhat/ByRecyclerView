@@ -238,7 +238,7 @@ public abstract class BaseByRecyclerViewAdapter<T, K extends BaseByViewHolder> e
     }
 
     /**
-     * 设置数据和处理空视图。空视图是在 setEmptyView() 设置的。
+     * 设置数据和处理空视图。空视图是在 setPageEmptyView() 设置的。
      * 如果想列表上方显示状态视图(StateView)，不能使用这个方法。
      *
      * @param isFirstPage 是否是第一页
