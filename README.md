@@ -24,7 +24,7 @@ ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加
 > 最新：setPageData()一行代码处理 列表显示数据和空视图
 
 ## Document
- - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.4.0)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
+ - [项目介绍](https://github.com/youlookwhat/ByRecyclerView/wiki/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D) | [wiki示例文档](https://github.com/youlookwhat/ByRecyclerView/wiki) | [更新日志 (1.4.1)](https://github.com/youlookwhat/ByRecyclerView/wiki/Update-log)
  - [ByRecyclerView：更方便的使用下拉刷新及加载更多](https://juejin.im/post/5e0980fbe51d4558083345fc)
  - [ByRecyclerView：真·万能分割线 (线性/宫格/瀑布流)](https://juejin.im/post/5e4ff123e51d4527255ca2e1)
  - [RecyclerView嵌套滑动置顶 项目应用篇](https://juejin.cn/post/6941996743974191111)
@@ -60,7 +60,7 @@ allprojects {
 ```
 dependencies {
 	// AndroidX版本引入
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.4.0'
+	implementation 'com.github.youlookwhat:ByRecyclerView:1.4.1'
 }
 ```
 
