@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/main_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -13,7 +13,7 @@
         app:srlEnableOverScrollBounce="false"
         app:srlReboundDuration="600">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlAccentColor="@color/color_4"
@@ -152,7 +152,7 @@
 
         </me.jingbin.byrecyclerview.stickrvcool.PersistentCoordinatorLayout>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 
 </layout>

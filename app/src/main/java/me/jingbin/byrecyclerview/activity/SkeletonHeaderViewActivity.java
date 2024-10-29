@@ -57,7 +57,7 @@ public class SkeletonHeaderViewActivity extends BaseActivity<ActivitySimpleBindi
         skeletonScreen = BySkeleton
                 .bindItem(binding.recyclerView)
                 .adapter(mAdapter)
-                .load(R.layout.layout_by_default_item_skeleton)
+                .load(me.jingbin.library.R.layout.layout_by_default_item_skeleton)
                 .shimmer(false)// 是否有动画
                 .angle(30)// 微光角度
                 .frozen(false) // 是否不可滑动

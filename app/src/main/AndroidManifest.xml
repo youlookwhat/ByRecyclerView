@@ -14,7 +14,8 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".MainActivity"
+            android:name="me.jingbin.byrecyclerview.MainActivity"
+            android:exported="true"
             android:theme="@style/NoTitleTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,32 +23,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SimpleActivity" />
-        <activity android:name=".activity.RefreshActivity" />
-        <activity android:name=".activity.StateViewActivity" />
-        <activity android:name=".activity.HeaderFooterActivity" />
-        <activity android:name=".activity.ListViewActivity" />
-        <activity android:name=".activity.AppBarLayoutActivity" />
-        <activity android:name=".activity.DataBindingActivity" />
-        <activity android:name=".activity.CustomLayoutActivity" />
-        <activity android:name=".activity.DividerGridActivity" />
-        <activity android:name=".activity.ItemClickActivity" />
-        <activity android:name=".activity.StickyItemActivity" />
-        <activity android:name=".activity.MultiTypeItemActivity" />
-        <activity android:name=".activity.DividerLinearActivity" />
-        <activity android:name=".activity.CustomHorizontalLayoutActivity" />
-        <activity android:name=".activity.SkeletonListActivity" />
-        <activity android:name=".activity.SkeletonGridActivity" />
-        <activity android:name=".activity.SkeletonHeaderViewActivity" />
-        <activity android:name=".activity.SkeletonViewActivity" />
-        <activity android:name=".activity.SecondTypeActivity" />
-        <activity android:name=".activity.FlexBoxActivity" />
-        <activity android:name=".activity.StickyRvActivity" />
-        <activity android:name=".activity.HorizontalGridDividerActivity" />
-        <activity android:name=".activity.ItemPayloadActivity" />
-        <activity android:name=".activity.LoadMoreActivity" />
-        <activity android:name=".activity.StickyRvCoordinatorActivity" />
-        <activity android:name=".activity.StickyRvCoordinatorOriginalActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.SimpleActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.RefreshActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.StateViewActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.HeaderFooterActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.ListViewActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.AppBarLayoutActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.DataBindingActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.CustomLayoutActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.DividerGridActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.ItemClickActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.StickyItemActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.MultiTypeItemActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.DividerLinearActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.CustomHorizontalLayoutActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.SkeletonListActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.SkeletonGridActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.SkeletonHeaderViewActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.SkeletonViewActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.SecondTypeActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.FlexBoxActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.StickyRvActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.HorizontalGridDividerActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.ItemPayloadActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.LoadMoreActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.StickyRvCoordinatorActivity" />
+        <activity android:name="me.jingbin.byrecyclerview.activity.StickyRvCoordinatorOriginalActivity" />
     </application>
 
 </manifest>

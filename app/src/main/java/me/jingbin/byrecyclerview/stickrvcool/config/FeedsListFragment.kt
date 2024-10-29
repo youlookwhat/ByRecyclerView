@@ -3,7 +3,6 @@ package me.jingbin.byrecyclerview.stickrvcool.config
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_feeds_list.*
 import me.jingbin.byrecyclerview.R
 import me.jingbin.byrecyclerview.adapter.FeedStaggerAdapter
 import me.jingbin.byrecyclerview.stickrvcool.PersistentRecyclerView
@@ -21,7 +20,7 @@ class FeedsListFragment : Fragment(R.layout.fragment_feeds_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.recyclerView = this.recycler_view
+        this.recyclerView = view.findViewById<PersistentRecyclerView>(R.id.recycler_view)
         val layoutManager = PersistentStaggeredGridLayoutManager(2)
         this.recyclerView!!.layoutManager = layoutManager
         recyclerView!!.addItemDecoration(GridSpaceItemDecoration(DensityUtil.dip2px(context, 8f)))

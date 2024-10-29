@@ -1,36 +1,19 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    compileSdkVersion 30
+    namespace 'me.jingbin.byrecyclerview'
+    compileSdk 34
     defaultConfig {
         applicationId "me.jingbin.byrecyclerview"
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdk 21
+        targetSdk 34
         versionCode 12
         versionName "1.4.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    // gradle link错误终止编译
-    lintOptions {
-        abortOnError false
-    }
-
-    // 主app也需要
-    dataBinding {
-        enabled = true
-    }
-
-    // 其他 ByRecyclerview
     signingConfigs {
         release {
             storeFile file("./ByRecyclerView")
@@ -45,7 +28,6 @@ android {
             keyPassword "ByRecyclerView"
         }
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -64,6 +46,25 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    lintOptions {
+        abortOnError false
+    }
+    buildFeatures {
+        dataBinding = true
+        buildConfig = true
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
+    }
+
+    // gradle link错误终止编译
+
+    // 主app也需要
+
+    // 其他 ByRecyclerview
+
 }
 
 // 获取时间
@@ -85,13 +86,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     // 状态栏
-    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
     // 流式布局
-    implementation 'com.google.android:flexbox:2.0.1'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation project(':ByRecyclerview')
 //    implementation "com.github.youlookwhat:ByRecyclerView:1.3.1"
     // 支持CoordinatorLayout的下拉刷新
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    implementation 'io.github.scwang90:refresh-layout-kernel:2.1.0'
+    implementation 'io.github.scwang90:refresh-header-classics:2.1.0'
     // 解决[CoordinatorLayout 嵌套滑动置顶(惯性滑动方案)]反射问题
     implementation 'com.github.tiann:FreeReflection:3.1.0'
 }

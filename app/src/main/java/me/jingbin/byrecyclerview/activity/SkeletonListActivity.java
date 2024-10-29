@@ -57,7 +57,7 @@ public class SkeletonListActivity extends BaseActivity<ActivitySimpleBinding> {
                 .bindItem(binding.recyclerView)
                 .adapter(mAdapter)// 必须设置adapter，且在此之前不要设置adapter
                 .shimmer(false)// 是否有动画
-                .load(R.layout.layout_by_default_item_skeleton)// item骨架图
+                .load(me.jingbin.library.R.layout.layout_by_default_item_skeleton)// item骨架图
                 .angle(30)// 微光角度
                 .frozen(false) // 是否不可滑动
                 .color(R.color.colorWhite)// 动画的颜色
