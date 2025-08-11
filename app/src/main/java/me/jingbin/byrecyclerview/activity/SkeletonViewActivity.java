@@ -1,6 +1,7 @@
 package me.jingbin.byrecyclerview.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import me.jingbin.library.ByRecyclerView;
 import me.jingbin.library.decoration.SpacesItemDecoration;
 import me.jingbin.library.skeleton.BySkeleton;
 import me.jingbin.library.skeleton.ByStateViewSkeletonScreen;
+import me.jingbin.library.view.OnItemFilterClickListener;
 
 /**
  * @author jingbin
@@ -87,6 +89,19 @@ public class SkeletonViewActivity extends BaseActivity<ActivitySimpleBinding> {
                 binding.recyclerView.setRefreshing(true);
             }
         }, 200);
+
+        binding.recyclerView.setOnItemClickListener(new OnItemFilterClickListener() {
+            @Override
+            protected void onSingleClick(View v, int position) {
+                binding.recyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 延迟200毫秒后执行自动刷新
+                        binding.recyclerView.setRefreshing(true);
+                    }
+                }, 200);
+            }
+        });
     }
 
     private void refresh(boolean isLoadMore) {
