@@ -28,7 +28,7 @@ public class SkeletonViewActivity extends BaseActivity<ActivitySimpleBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-        setTitle("骨架图 View");
+        setTitle("骨架图 View + 自动刷新");
 
         initAdapter();
     }
@@ -56,6 +56,9 @@ public class SkeletonViewActivity extends BaseActivity<ActivitySimpleBinding> {
 
         binding.recyclerView.setHeaderViewEnabled(false);
 
+        // 使用 BySkeleton 时，要使用下拉刷新需要在show()之前设置
+        binding.recyclerView.setRefreshEnabled(true);
+
         /**
          * 这是通过setStateView设置的：需要放在配置recyclerView之后设置！！
          * 之前需要 setAdapter
@@ -66,9 +69,24 @@ public class SkeletonViewActivity extends BaseActivity<ActivitySimpleBinding> {
                 .shimmer(true)// 是否有动画
                 .angle(20)// 微光角度
                 .color(R.color.colorWhite)// 动画的颜色
-                .duration(1500)// 微光一次显示时间
+                .duration(1000)// 微光一次显示时间
                 .show();
         refresh(false);
+
+        // 下拉刷新监听
+        binding.recyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.recyclerView.setRefreshing(false);
+            }
+        }, 1000);
+        binding.recyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // 延迟200毫秒后执行自动刷新
+                binding.recyclerView.setRefreshing(true);
+            }
+        }, 200);
     }
 
     private void refresh(boolean isLoadMore) {
@@ -80,7 +98,7 @@ public class SkeletonViewActivity extends BaseActivity<ActivitySimpleBinding> {
                     skeletonScreen.hide();
                     mAdapter.setNewData(DataUtil.get(SkeletonViewActivity.this, 10));
                 }
-            }, 3000);
+            }, 2300);
         } else {
             mAdapter.addData(DataUtil.getMore(SkeletonViewActivity.this, 20, page));
             binding.recyclerView.loadMoreComplete();

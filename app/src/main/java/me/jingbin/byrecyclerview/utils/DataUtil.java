@@ -54,7 +54,7 @@ public class DataUtil {
         list.add(new MainItemBean("骨架图 list", SkeletonListActivity.class, "1"));
         list.add(new MainItemBean("骨架图 grid", SkeletonGridActivity.class, "2"));
         list.add(new MainItemBean("骨架图 headerView", SkeletonHeaderViewActivity.class, "3"));
-        list.add(new MainItemBean("骨架图 View", SkeletonViewActivity.class, "4"));
+        list.add(new MainItemBean("骨架图 View + 自动刷新", SkeletonViewActivity.class, "4"));
 
         list.add(new MainItemBean("Adapter", null).setCategoryName());
         list.add(new MainItemBean("多类型列表 (线性/宫格/瀑布流)", MultiTypeItemActivity.class, "1"));

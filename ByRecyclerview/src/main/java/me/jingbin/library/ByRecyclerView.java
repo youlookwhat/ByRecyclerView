@@ -1085,16 +1085,17 @@ public class ByRecyclerView extends RecyclerView {
 
     /**
      * Sets whether the StateView is displayed
+     * later need setNewData() or notifyDataSetChanged();
      *
      * @param isRemoveRefresh Whether to remove StateView immediately
      */
     public void setStateViewEnabled(boolean stateViewEnabled, boolean isRemoveRefresh) {
         this.mStateViewEnabled = stateViewEnabled;
-        if (isRemoveRefresh && !mStateViewEnabled) {
-            if (mWrapAdapter != null) {
-                mWrapAdapter.getOriginalAdapter().notifyItemRemoved(getPullHeaderSize() + getHeaderViewCount());
-            }
-        }
+//        if (isRemoveRefresh && !mStateViewEnabled) {
+//            if (mWrapAdapter != null) {
+//                mWrapAdapter.getOriginalAdapter().notifyItemRemoved(getPullHeaderSize() + getHeaderViewCount());
+//            }
+//        }
     }
 
     /**

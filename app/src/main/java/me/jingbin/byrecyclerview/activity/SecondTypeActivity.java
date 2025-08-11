@@ -60,7 +60,7 @@ public class SecondTypeActivity extends BaseActivity<ActivitySimpleBinding> {
                 setTitle("Skeleton 骨架图");
                 list.add(new DataItemBean("list", SkeletonListActivity.class));
                 list.add(new DataItemBean("grid", SkeletonGridActivity.class));
-                list.add(new DataItemBean("View", SkeletonViewActivity.class));
+                list.add(new DataItemBean("View + 自动刷新", SkeletonViewActivity.class));
                 list.add(new DataItemBean("HeaderView", SkeletonHeaderViewActivity.class));
                 break;
             default:
