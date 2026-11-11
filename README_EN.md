@@ -8,6 +8,14 @@ English | [简体中文](README.md)
 
 **Actively maintained.** Latest release: [1.4.2](https://github.com/youlookwhat/ByRecyclerView/releases/tag/1.4.2), available via JitPack. [![JitPack](https://jitpack.io/v/youlookwhat/ByRecyclerView.svg)](https://jitpack.io/#youlookwhat/ByRecyclerView) Please report problems in [Issues](https://github.com/youlookwhat/ByRecyclerView/issues).
 
+## Integrating with an AI coding assistant
+
+The [AI integration guide](AGENTS.md) describes the APIs and common pitfalls. It is not automatically loaded into other projects, so ask the assistant to read it explicitly. For example:
+
+> Use https://github.com/youlookwhat/ByRecyclerView to add pull-to-refresh and automatic load more to this Android View-based list. Read the repository's README and AGENTS.md first, adapt the integration to this project's Gradle configuration and data source, handle empty, failure, retry and end-of-list states, and build and verify it. Report anything you could not verify.
+
+Adjust the request to your app and preferred loading mode. ByRecyclerView is not a native Compose list.
+
 ## Features
 
 - Pull-to-refresh, with customizable refresh and load-more views; can also be used with SwipeRefreshLayout.

@@ -31,6 +31,14 @@ See [README_EN.md](README_EN.md) for full installation steps and Java/Kotlin exa
 
 **Actively maintained.** Latest release: 1.4.2, available via JitPack. Please report problems in [Issues](https://github.com/youlookwhat/ByRecyclerView/issues).
 
+## 使用 AI 接入
+
+如果希望 AI 帮你在现有 Android 项目中接入，可以附上仓库地址并要求它阅读 [AI 接入指南 AGENTS.md](AGENTS.md)（该文件不会自动加载到其他项目）。例如：
+
+> 请使用 https://github.com/youlookwhat/ByRecyclerView 为当前 Android View 项目的列表实现下拉刷新和自动加载更多。请先阅读仓库的 README 和 AGENTS.md，结合本项目的 Gradle 配置、数据接口和现有代码完成接入，处理空状态、加载失败、重试和没有更多数据，并编译及验证；无法验证的部分请说明。
+
+按实际项目替换需求，例如上拉松手加载、Kotlin 或 Java；Compose 原生列表不适用。完整的安装和 Java/Kotlin 示例见 [英文快速开始](README_EN.md#quick-start)。
+
 ## 功能特性
  - 1.下拉刷新 / 支持SwipeRefreshLayout
  - 2.自定义 下拉刷新布局 / 加载更多布局
@@ -274,8 +282,8 @@ recyclerView.addItemDecoration(itemDecoration);
 LayoutHeaderViewBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_header_view, (ViewGroup) binding.recyclerView.getParent(), false);
 recyclerView.addHeaderView(headerBinding.getRoot());
 
-recyclerView.addFooterView(getView() / layoutId));
-recyclerView.setStateView(getView() / layoutId);
+recyclerView.addFooterView(footerView); // 也可传入布局资源 ID
+recyclerView.setStateView(stateView);   // 也可传入布局资源 ID
 
 // headerView、footerView、setStateView 支持一键隐藏，设置后需要notify
 recyclerView.setHeaderViewEnabled(false);
