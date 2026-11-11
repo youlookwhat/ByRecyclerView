@@ -33,9 +33,11 @@ See [README_EN.md](README_EN.md) for full installation steps and Java/Kotlin exa
 
 ## 使用 AI 接入
 
-如果希望 AI 帮你在现有 Android 项目中接入，可以附上仓库地址并要求它阅读 [AI 接入指南 AGENTS.md](AGENTS.md)（该文件不会自动加载到其他项目）。例如：
+如果希望 AI 帮你在现有 Android 项目中接入，可以复制下面的提示词，并按实际需求修改。它会引导 AI 阅读 [AI 接入指南 AGENTS.md](AGENTS.md)（该文件不会自动加载到其他项目）：
 
-> 请使用 https://github.com/youlookwhat/ByRecyclerView 为当前 Android View 项目的列表实现下拉刷新和自动加载更多。请先阅读仓库的 README 和 AGENTS.md，结合本项目的 Gradle 配置、数据接口和现有代码完成接入，处理空状态、加载失败、重试和没有更多数据，并编译及验证；无法验证的部分请说明。
+```text
+请使用 https://github.com/youlookwhat/ByRecyclerView 为当前 Android View 项目的列表实现下拉刷新和自动加载更多。请先阅读仓库的 README 和 AGENTS.md，结合本项目的 Gradle 配置、数据接口和现有代码完成接入，处理空状态、加载失败、重试和没有更多数据，并编译及验证；无法验证的部分请说明。
+```
 
 按实际项目替换需求，例如上拉松手加载、Kotlin 或 Java；Compose 原生列表不适用。完整的安装和 Java/Kotlin 示例见 [英文快速开始](README_EN.md#quick-start)。
 

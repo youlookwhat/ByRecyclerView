@@ -10,9 +10,11 @@ English | [简体中文](README.md)
 
 ## Integrating with an AI coding assistant
 
-The [AI integration guide](AGENTS.md) describes the APIs and common pitfalls. It is not automatically loaded into other projects, so ask the assistant to read it explicitly. For example:
+The [AI integration guide](AGENTS.md) describes the APIs and common pitfalls. It is not automatically loaded into other projects, so ask the assistant to read it explicitly. Copy and adapt this prompt:
 
-> Use https://github.com/youlookwhat/ByRecyclerView to add pull-to-refresh and automatic load more to this Android View-based list. Read the repository's README and AGENTS.md first, adapt the integration to this project's Gradle configuration and data source, handle empty, failure, retry and end-of-list states, and build and verify it. Report anything you could not verify.
+```text
+Use https://github.com/youlookwhat/ByRecyclerView to add pull-to-refresh and automatic load more to this Android View-based list. Read the repository's README and AGENTS.md first, adapt the integration to this project's Gradle configuration and data source, handle empty, failure, retry and end-of-list states, and build and verify it. Report anything you could not verify.
+```
 
 Adjust the request to your app and preferred loading mode. ByRecyclerView is not a native Compose list.
 
