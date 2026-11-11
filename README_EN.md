@@ -6,7 +6,7 @@ English | [简体中文](README.md)
 
 ## Status
 
-**Actively maintained.** Latest release: [1.4.2](https://github.com/youlookwhat/ByRecyclerView/releases/tag/1.4.2), available via JitPack. [![JitPack](https://jitpack.io/v/youlookwhat/ByRecyclerView.svg)](https://jitpack.io/#youlookwhat/ByRecyclerView) [![Last commit](https://img.shields.io/github/last-commit/youlookwhat/ByRecyclerView.svg)](https://github.com/youlookwhat/ByRecyclerView/commits/master) Please report problems in [Issues](https://github.com/youlookwhat/ByRecyclerView/issues).
+**Actively maintained.** Latest release: [1.4.2](https://github.com/youlookwhat/ByRecyclerView/releases/tag/1.4.2), available via JitPack. [![JitPack](https://jitpack.io/v/youlookwhat/ByRecyclerView.svg)](https://jitpack.io/#youlookwhat/ByRecyclerView) Please report problems in [Issues](https://github.com/youlookwhat/ByRecyclerView/issues).
 
 ## Features
 

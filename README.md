@@ -7,7 +7,6 @@
 [![Apache License 2.0][3]][4]
 [![download][7]][8]
 [![Maintained][9]][10]
-[![Last commit][11]][12]
 
 ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、item局部刷新、万能分割线、粘性header、极简Adapter(databinding)等功能。
 
@@ -529,5 +528,3 @@ limitations under the License.
 [8]:https://github.com/youlookwhat/download/raw/main/ByRecyclerView.apk
 [9]:https://img.shields.io/badge/maintained-yes-brightgreen.svg
 [10]:https://github.com/youlookwhat/ByRecyclerView/issues
-[11]:https://img.shields.io/github/last-commit/youlookwhat/ByRecyclerView.svg
-[12]:https://github.com/youlookwhat/ByRecyclerView/commits/master
