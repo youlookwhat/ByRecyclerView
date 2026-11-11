@@ -1,11 +1,15 @@
 # ByRecyclerView
 
+[English](README_EN.md) | 简体中文
+
 [![jitpack][1]][2] 
 [![API][5]][6]
 [![Apache License 2.0][3]][4]
 [![download][7]][8]
 
 ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、item局部刷新、万能分割线、粘性header、极简Adapter(databinding)等功能。
+
+**ByRecyclerView is an Android RecyclerView library** for pull-to-refresh, automatic or pull-up load more, headers and footers, empty states, and a simplified adapter. 它适用于 Android View 系统中的列表页面，不是 Jetpack Compose 原生组件。
 
 ## 功能特性
  - 1.下拉刷新 / 支持SwipeRefreshLayout
@@ -44,27 +48,54 @@ ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加
 > 建议直接看 [示例代码](https://github.com/youlookwhat/ByRecyclerView/blob/master/app/src/main/java/me/jingbin/byrecyclerview/MainActivity.java) 或 [Wiki文档](https://github.com/youlookwhat/ByRecyclerView/wiki)
 
 ### 快速开始
-1.先在 build.gradle 的 repositories 添加
+以下是使用 `settings.gradle` 管理仓库的项目配置。如果项目仍使用根目录 `build.gradle` 中的 `allprojects.repositories`，请将 JitPack 加到那里，不要重复配置。确保同时保留 Google 和 Maven Central 仓库。
 
-```
-allprojects {
-	repositories {
-		...
-		maven { url "https://jitpack.io" }
-	}
+```groovy
+// settings.gradle
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
-2.然后在dependencies添加
+Kotlin DSL：
 
+```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
 ```
+
+在应用模块添加依赖：
+
+```groovy
 dependencies {
-	// AndroidX版本引入
-	implementation 'com.github.youlookwhat:ByRecyclerView:1.4.2'
+    implementation 'com.github.youlookwhat:ByRecyclerView:1.4.2'
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation 'com.google.android.material:material:1.10.0'
 }
 ```
 
-3.在XML布局中引用 ByRecyclerView
+```kotlin
+// build.gradle.kts
+dependencies {
+    implementation("com.github.youlookwhat:ByRecyclerView:1.4.2")
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("com.google.android.material:material:1.10.0")
+}
+```
+
+库模块将 RecyclerView 和 Material 声明为 `compileOnly`，应用需要提供这些依赖；已有依赖时请选用与项目兼容的版本。库模块声明的 `minSdk` 为 14，实际最低版本还取决于应用使用的依赖。
+
+在 XML 布局中引用 ByRecyclerView：
 
 ```xml
 <me.jingbin.library.ByRecyclerView
@@ -75,20 +106,21 @@ dependencies {
     tools:listitem="@layout/item_main" />
 ```
 
-4.使用BaseRecyclerAdapter
+使用 BaseRecyclerAdapter（示例中的 `list` 是可修改的 `List<String>`）：
 
 ```java
 mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-mRecyclerView.setAdapter(new BaseRecyclerAdapter<String>(R.layout.item_main, list) {
+BaseRecyclerAdapter<String> mAdapter = new BaseRecyclerAdapter<String>(R.layout.item_main, list) {
     @Override
     protected void bindView(BaseByViewHolder<String> holder, String bean, int position) {
         holder.setText(R.id.tv_text, bean);
     }
-});
+};
+mRecyclerView.setAdapter(mAdapter);
 
 mAdapter.setNewData(list);   // 设置第一页数据
 ```
-5.设置监听
+设置监听：
 
 ```java
 // 下拉刷新监听
@@ -103,17 +135,24 @@ mRecyclerView.setOnRefreshListener(new ByRecyclerView.OnRefreshListener() {
 mRecyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
     @Override
     public void onLoadMore() {
-         mAdapter.addData(list);            // 设置及刷新数据
-         mRecyclerView.loadMoreComplete();  // 加载更多完成 
-         mRecyclerView.loadMoreEnd();       // 没有更多内容了
-         mRecyclerView.loadMoreFail();      // 加载更多失败,点击重试
+         // 请求下一页后，根据结果选择一种状态：
+         // 成功且还有更多：mAdapter.addData(nextPage); mRecyclerView.loadMoreComplete();
+         // 没有更多：mRecyclerView.loadMoreEnd();
+         // 请求失败：mRecyclerView.loadMoreFail();
     }
 });
 ```
 
-6.显示数据
+显示数据：
 
-可直接调用adapter方法：`setPageData(boolean isFirstPage, List<T> data, int emptyLayoutId)`
+可直接调用 adapter 的 `setPageData(boolean isFirstPage, List<T> data, int emptyLayoutId)`；必须先通过 `setAdapter` 关联 ByRecyclerView。例如：
+
+```java
+mAdapter.setPageData(true, firstPage, R.layout.layout_empty);  // 首页，空列表时显示空布局
+mAdapter.setPageData(false, nextPage, R.layout.layout_empty); // 后续页，空列表表示没有更多
+```
+
+请求失败时不要传空列表来表示错误：刷新失败调用 `setRefreshing(false)`，加载更多失败调用 `loadMoreFail()`，并在应用中展示错误。完整 Java/Kotlin 示例见 [英文快速开始](README_EN.md#quick-start)。`setPageData` 的实现如下：
 
 ```java
 /**
@@ -176,7 +215,7 @@ void setOnLoadMoreListener(boolean isAutoLoadMore, int preLoadNumber, OnLoadMore
 ```
 
 - 1. 如果不设置，默认还是使用上拉松手加载更多机制
-- 2. 设置后如果想取消自动加载还是使用`recyclerView.setLoadMoreEnabled(false);`
+- 2. `recyclerView.setLoadMoreEnabled(false)` 会关闭加载更多，而不只是关闭自动模式。
 - 3. 不满一屏不加载更多`setNotFullScreenNoLoadMore()`，只对上拉松手加载更多有效
 
 ### ItemDecoration
