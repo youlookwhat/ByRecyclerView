@@ -11,6 +11,19 @@ ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加
 
 **ByRecyclerView is an Android RecyclerView library** for pull-to-refresh, automatic or pull-up load more, headers and footers, empty states, and a simplified adapter. 它适用于 Android View 系统中的列表页面，不是 Jetpack Compose 原生组件。
 
+### English summary
+
+- Pull-to-refresh (also works with SwipeRefreshLayout) and pull-up or automatic load more with a configurable preload distance.
+- Header, footer and state views; `setPageData()` handles first-page empty states and later-page updates.
+- Simplified adapters (DataBinding supported), item/child click and long-click listeners, payload partial refresh.
+- Item decorations for linear, grid and staggered-grid layouts, sticky headers, skeleton screens.
+
+```groovy
+implementation 'com.github.youlookwhat:ByRecyclerView:1.4.2' // requires the JitPack repository
+```
+
+See [README_EN.md](README_EN.md) for full installation steps and Java/Kotlin examples.
+
 ## 功能特性
  - 1.下拉刷新 / 支持SwipeRefreshLayout
  - 2.自定义 下拉刷新布局 / 加载更多布局
