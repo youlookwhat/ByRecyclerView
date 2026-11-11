@@ -4,6 +4,10 @@ English | [简体中文](README.md)
 
 **ByRecyclerView is an Android RecyclerView library** for building list screens with pull-to-refresh, automatic or pull-up load more, headers, footers, empty states, and a simplified adapter. It extends the Android View-based RecyclerView; it is not a native Jetpack Compose component.
 
+## Status
+
+**Actively maintained.** Latest release: [1.4.2](https://github.com/youlookwhat/ByRecyclerView/releases/tag/1.4.2), available via JitPack. [![JitPack](https://jitpack.io/v/youlookwhat/ByRecyclerView.svg)](https://jitpack.io/#youlookwhat/ByRecyclerView) Please report problems in [Issues](https://github.com/youlookwhat/ByRecyclerView/issues).
+
 ## Features
 
 - Pull-to-refresh, with customizable refresh and load-more views; can also be used with SwipeRefreshLayout.

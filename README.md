@@ -6,6 +6,7 @@
 [![API][5]][6]
 [![Apache License 2.0][3]][4]
 [![download][7]][8]
+[![Maintained][9]][10]
 
 ByRecyclerView 提供了下拉刷新、上拉松手/自动加载更多、 添加HeaderView/FooterView、setStateView、item点击/长按、item局部刷新、万能分割线、粘性header、极简Adapter(databinding)等功能。
 
@@ -23,6 +24,12 @@ implementation 'com.github.youlookwhat:ByRecyclerView:1.4.2' // requires the Jit
 ```
 
 See [README_EN.md](README_EN.md) for full installation steps and Java/Kotlin examples.
+
+## 维护状态 / Status
+
+**维护中（Actively maintained）**：最新版本 [1.4.2](https://github.com/youlookwhat/ByRecyclerView/releases/tag/1.4.2)，可通过 JitPack 引用（见上方 JitPack 徽章显示的最新版本）。欢迎在 [Issues](https://github.com/youlookwhat/ByRecyclerView/issues) 反馈问题。
+
+**Actively maintained.** Latest release: 1.4.2, available via JitPack. Please report problems in [Issues](https://github.com/youlookwhat/ByRecyclerView/issues).
 
 ## 功能特性
  - 1.下拉刷新 / 支持SwipeRefreshLayout
@@ -519,3 +526,5 @@ limitations under the License.
 [6]:https://android-arsenal.com/api?level=14
 [7]:https://img.shields.io/badge/download-apk-blue.svg?style=flat
 [8]:https://github.com/youlookwhat/download/raw/main/ByRecyclerView.apk
+[9]:https://img.shields.io/badge/maintained-yes-brightgreen.svg
+[10]:https://github.com/youlookwhat/ByRecyclerView/issues
