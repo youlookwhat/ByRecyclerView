@@ -1,14 +1,14 @@
 # AGENTS.md
 
-Guidance for AI coding agents that **integrate ByRecyclerView into an Android app** (and, secondarily, work on this repository). API names below were checked against the source of release 1.4.2; code samples were not compiled.
+Guidance for AI coding agents that **integrate ByRecyclerView into an Android app** (and, secondarily, work on this repository). Consult this file explicitly when working in another repository: it is not automatically loaded there. API names below were checked against the source of release 1.4.2; code samples were not compiled.
 
 ## What this library is
 
 ByRecyclerView is an Android **View-system** `RecyclerView` subclass (`me.jingbin.library.ByRecyclerView`) with pull-to-refresh, pull-up/automatic load more, header/footer/state (empty/loading/error) views, item and child click listeners, item decorations, sticky headers, skeleton screens and simplified adapters. It is **not** a Jetpack Compose component; do not recommend it for Compose-only screens.
 
 - Status: actively maintained. Latest release: `1.4.2`, published through JitPack.
-- Replaces `XRecyclerView` almost one-to-one (`ByRecyclerView` and the adapter are separate, so an existing custom adapter keeps working). Comparable to BRVAH (`BaseQuickAdapter`) but headers are separate item types, and load more does not trigger automatically on short lists unless you choose automatic mode.
-- Design points worth knowing: pull-to-refresh is built in but optional (you can use `SwipeRefreshLayout` instead); by default, load more happens only when the user pulls up past the end; automatic load more is opt-in.
+- `ByRecyclerView` can wrap a normal `RecyclerView.Adapter`; its `setPageData` convenience method requires a `BaseByRecyclerViewAdapter`. Evaluate migration from other libraries against their APIs rather than assuming a drop-in replacement.
+- Pull-to-refresh is built in but optional (you can use `SwipeRefreshLayout` instead); the default load-more mode uses a pull-up gesture for short lists and triggers at the bottom for full lists. Automatic mode is opt-in.
 
 ## Integrating into an app
 
@@ -20,8 +20,11 @@ Add it where the project declares repositories, keeping `google()` and `mavenCen
 - root `build.gradle` → `allprojects { repositories { ... } }` for older projects.
 
 ```groovy
-maven { url 'https://jitpack.io' }          // Groovy
-maven { url = uri("https://jitpack.io") }   // Kotlin DSL
+maven { url 'https://jitpack.io' }
+```
+
+```kotlin
+maven { url = uri("https://jitpack.io") }
 ```
 
 Do not add it in both places. If the project uses `RepositoriesMode.FAIL_ON_PROJECT_REPOS`, only use `settings.gradle`.
@@ -37,52 +40,57 @@ implementation 'com.google.android.material:material:1.10.0'
 - RecyclerView and Material are `compileOnly` in the library, so **the app must declare them**. If the project already has them, keep its existing compatible versions.
 - The coordinate is `com.github.youlookwhat:ByRecyclerView` (JitPack), **not** `me.jingbin.library`.
 - AndroidX only. The old support-library build (`1.0.18-support`) is no longer supported; migrate to AndroidX first.
-- Declared library `minSdk` is 14; the demo app uses 21.
+- Declared library `minSdk` is 14; the app's effective minimum also depends on the selected dependencies. The demo app uses 21.
 - No ProGuard/R8 rules are needed.
 
 ### 3. Layout
 
 ```xml
 <me.jingbin.library.ByRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layoutManager="LinearLayoutManager"
-    tools:listitem="@layout/item_main" />
+    android:layout_height="match_parent" />
 ```
 
-Replace an existing `RecyclerView` in place; `ByRecyclerView` extends it, so existing `LayoutManager`, `ItemDecoration` and `RecyclerView`-typed code keep working.
+`ByRecyclerView` extends `RecyclerView`. When replacing an existing view, verify the existing adapter, layout manager and event handling against the app's behavior.
 
-### 4. Minimal working setup (Kotlin)
+### 4. Minimal setup (Kotlin)
+
+Add these imports to an Activity:
 
 ```kotlin
 import androidx.recyclerview.widget.LinearLayoutManager
+import android.widget.TextView
 import me.jingbin.library.ByRecyclerView
 import me.jingbin.library.adapter.BaseByViewHolder
 import me.jingbin.library.adapter.BaseRecyclerAdapter
+```
 
+After `setContentView(...)`, use the following local-data example. Replace the simulated responses with the app's data source. `android.R.layout.simple_list_item_1` supplies the item layout.
+
+```kotlin
 val recyclerView = findViewById<ByRecyclerView>(R.id.recyclerView)
 recyclerView.layoutManager = LinearLayoutManager(this)
 
-val adapter = object : BaseRecyclerAdapter<String>(R.layout.item_text) {
+val adapter = object : BaseRecyclerAdapter<String>(android.R.layout.simple_list_item_1) {
     override fun bindView(holder: BaseByViewHolder<String>, bean: String, position: Int) {
-        holder.setText(R.id.tv_text, bean)
+        holder.setText(android.R.id.text1, bean)
     }
 }
 recyclerView.adapter = adapter                  // must come before setPageData()
-adapter.setPageEmptyView(R.layout.layout_empty) // optional, used by setPageData()
+adapter.setPageEmptyView(TextView(this).apply { text = "No items" })
 
 recyclerView.setOnRefreshListener {
-    // load page 1, then:
-    adapter.setPageData(true, firstPage)
+    adapter.setPageData(true, arrayListOf("First", "Second"))
 }
 recyclerView.setOnLoadMoreListener(true, 1) { // true = automatic load more
-    // load next page, then:
-    adapter.setPageData(false, nextPage)
+    adapter.setPageData(false, arrayListOf<String>()) // simulated end of list
 }
+adapter.setPageData(true, arrayListOf("First", "Second"))
 ```
 
-`R.layout.item_text`, `R.id.tv_text` and `R.layout.layout_empty` are placeholders: use resources that exist in the project (a layout containing a `TextView` with that id). Java uses `new ByRecyclerView.OnRefreshListener() {...}` / `OnLoadMoreListener() {...}`. More examples: `README_EN.md` and `app/src/main/java/me/jingbin/byrecyclerview/`.
+Java uses `new ByRecyclerView.OnRefreshListener() {...}` / `OnLoadMoreListener() {...}`. For real data, follow the pagination and error-handling rules below. More examples: `README_EN.md` and `app/src/main/java/me/jingbin/byrecyclerview/`.
 
 ## Pagination and state: the most important rules
 
@@ -180,7 +188,7 @@ recyclerView.getLayoutView(layoutResId);                   // inflate helper
 - **Do not repeatedly add/remove headers.** Add once and show/hide the header's inner content, or use `setHeaderViewEnabled`.
 - Headers and the state view can appear together (unlike `XRecyclerView`).
 - With DataBinding, inflate a header against the parent: `DataBindingUtil.inflate(inflater, R.layout.layout_header, (ViewGroup) recyclerView.getParent(), false)`.
-- `setStateViewEnabled(boolean, boolean)` was removed in 1.4.2; use the single-argument form.
+- Prefer `setStateViewEnabled(boolean)`. The two-argument overload still exists in the 1.4.2 source, but its immediate-removal code is commented out; do not rely on the second argument to refresh the adapter.
 
 ### Custom refresh / load-more views
 
@@ -230,7 +238,7 @@ DataBinding single type (needs the copied `binding` package):
 public class DataAdapter extends BaseBindingAdapter<DataItemBean, ItemHomeBinding> {
     public DataAdapter() { super(R.layout.item_home); }
     @Override
-    protected void bindView(BaseBindingHolder holder, ItemHomeBinding binding, DataItemBean bean, int position) {
+    protected void bindView(BaseBindingHolder holder, DataItemBean bean, ItemHomeBinding binding, int position) {
         binding.tvText.setText(bean.getTitle());
     }
 }
@@ -335,12 +343,18 @@ sv.hide();
 | Gradle cannot resolve `com.github.youlookwhat:ByRecyclerView` | JitPack repository missing, or added only in a place the project ignores (see step 1) |
 | `NoClassDefFoundError` / missing RecyclerView or Material classes | App did not declare `recyclerview` / `material` (they are `compileOnly` in the library) |
 | `setPageData` shows nothing | Adapter not yet set on the `ByRecyclerView`, or an empty first page and no empty view configured |
-| Load more never fires | No load-more listener set, `setLoadMoreEnabled(false)`, `loadMoreEnd()` already called, or pull-up mode with content that does not scroll |
-| Load more fires on every short page | Using automatic mode; switch to the pull-up overload or call `setNotFullScreenNoLoadMore()` (pull-up mode only) |
+| Load more never fires | No load-more listener set, `setLoadMoreEnabled(false)`, `loadMoreEnd()` already called, or `setNotFullScreenNoLoadMore()` enabled on a short list in pull-up mode |
+| Load more fires on short pages without a gesture | Check whether automatic mode is enabled; use the pull-up overload if that behavior is not wanted. In pull-up mode, `setNotFullScreenNoLoadMore()` additionally disables loading for short lists |
 | Wrong item refreshed / animation glitches | Raw `notifyItemChanged(position)` used; use `refreshNotify*` |
 | Items scrambled after toggling headers | Headers repeatedly added/removed; add once and show/hide content |
 | Custom load-more view crashes | `getState()` not implemented |
 | `BaseBindingAdapter` not found | It lives in the demo app; copy the `binding` package |
+
+## Integration verification
+
+Inspect the consuming app's Gradle files and existing list/data flow before editing. Use actual project resources and data types, and retain its existing pagination, lifecycle and error-handling conventions. Ensure only one request per page is in flight, update views on the main thread, and advance the page or cursor only on success. If an API returns an explicit `hasMore` or next cursor, honor it rather than assuming that a non-empty page always means more data.
+
+Run the consuming app's Gradle build and relevant tests when Android tooling and dependency access are available. Exercise the initial page, refresh, next page, empty first page, end of list, failure/retry, and refresh after reaching the end. Report any build or runtime checks that could not be performed; do not claim the integration works solely because a JitPack build is green.
 
 ## Working on this repository
 
